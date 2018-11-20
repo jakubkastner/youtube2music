@@ -381,22 +381,7 @@ namespace hudba
             {
                 menuNastaveni.Enabled = true;
             }
-        }
-
-        // složky interpretů - nalezne a uloží do souboru
-        private void HudebniKnihovnaNajdiSlozky()
-        {
-            // 2018-11-13 NOVÉ
-
-            if (!backgroundWorkerProhledejSlozky.IsBusy)
-            {
-                backgroundWorkerProhledejSlozky.RunWorkerAsync();
-            }
-            else
-            {
-                ZobrazNaLabelu("Prohledávám složky:", "Chyba - prohledávání složek", "Zkuste prohledat složky znovu.", "stazeno_chyba");
-            }
-        }
+        }        
 
         /**** MENU - VLOŽENÍ VIDEA ****/
 
@@ -943,105 +928,6 @@ namespace hudba
             }
         }
 
-        /**** MENU - NASTAVENÍ - prohledat hudební knihovnu ****/
-
-        private void menuNastaveniKnihovnaProhledat_Click(object sender, EventArgs e)
-        {
-            HudebniKnihovnaNajdiSlozky();
-        }
-
-        private void backgroundWorkerProhledejSlozky_DoWork(object sender, DoWorkEventArgs e)
-        {
-            // prohledá složky a zapíše je do souboru
-            if (backgroundWorkerStahniVideo.CancellationPending)
-            {
-                e.Cancel = true;
-                return;
-            }
-
-            // hudební knhihovna neexistuje
-            if (hudebniKnihovna == null)
-            {
-                ZobrazNaLabelu("Nebyla vybrána složka s hudební knihovnou.", "VYBRAT SLOŽKU", "hudebni_knihovna");
-                //HudebniKnihovnaVyber();
-                return;
-            }
-            if (!Directory.Exists(hudebniKnihovna))
-            {
-                ZobrazNaLabelu("Nebyla vybrána složka s hudební knihovnou.", "VYBRAT SLOŽKU", "hudebni_knihovna");
-                //HudebniKnihovnaVyber();
-                return;
-            }
-
-            List<string> slozkyinterpretu = new List<string>();
-            try
-            {
-                foreach (string cestaSlozky in Directory.GetDirectories(hudebniKnihovna, "*.*", SearchOption.AllDirectories))
-                {
-                    // projde složky ve vybrané hudební knihovně
-                    string nazevSlozky = Path.GetFileNameWithoutExtension(cestaSlozky);
-                    if (!Regex.IsMatch(nazevSlozky.Split(' ').First(), @"^\d{4}$")) // album -> 
-                    {
-                        // pokud se nejedná o album (název je "rok název" = první 4 znaky jsou číslice), přidám do seznamu
-                        slozkyinterpretu.Add(cestaSlozky);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // chyba
-                MessageBox.Show(ex.Message + Environment.NewLine + "Vyberte prosím jinou složku s hudební knihovnou.", "Chyba - výběr složky", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                ZobrazNaLabelu("", "Vyberte prosím jinou složku s hudební knihovnou.", "hudebni_knihovna");
-                //HudebniKnihovnaVyber();
-                return;
-            }
-            if (slozkyinterpretu == null)
-            {
-                MessageBox.Show("nenalezeny žádné složky");
-                return;
-            }
-            if (slozkyinterpretu.Count() == 0)
-            {
-                MessageBox.Show("nenalezeny žádné složky");
-                return;
-            }
-            // seřadí složky
-            slozkyinterpretu.Sort();
-            for (int i = 1; i < slozkyinterpretu.Count; i++)
-            {
-                if (slozkyinterpretu[i].Contains(slozkyinterpretu[i - 1]))
-                {
-                    if (!Path.GetFileNameWithoutExtension(slozkyinterpretu[i]).Contains(Path.GetFileNameWithoutExtension(slozkyinterpretu[i - 1])))
-                    {
-                        slozkyinterpretu.RemoveAt(i - 1);
-                        i--;
-                    }
-                }
-            }
-            // na 1. pozici vloží aktuální hudební knihovnu
-            slozkyinterpretu.Insert(0, hudebniKnihovna);
-            // zapíše do souboru
-            Soubory soubor = new Soubory();
-            soubor.Zapis(Path.Combine(slozkaProgramuData, "knihovna_slozky.txt"), slozkyinterpretu);
-            //HudebniKnihovnaNajdiSlozky(false);
-        }
-
-        private void backgroundWorkerProhledejSlozky_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            /*if (e.Cancelled)
-            {
-                ZobrazNaLabelu("Prohledávám složky:", "Zrušili jste práci", "stazeno_stormo");
-            }
-            else if (e.Error != null)
-            {
-                ZobrazNaLabelu("Prohledávám složky:", "Chyba - prohledávání složek", e.Error.ToString(), "Zkuste prohledat složky znovu.", "stazeno_chyba");
-            }
-            else
-            {
-                ZobrazNaLabelu("Prohledávám složky:", "Složky byly úspěšně prohledány", "OK", "slozky_ok");
-            }*/
-        }
-
         /**** NOVÉ ****/
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1051,6 +937,13 @@ namespace hudba
             //textBoxOdkaz.Text = "https://www.youtube.com/watch?v=6YJcaefdvao";
         }
 
+        /*******************************************************************************************************/
+        /*******************************************************************************************************/
+        /*******************************************************************************************************/
+        /*******************************************************************************************************/
+        /*******************************************************************************************************/
+        /*******************************************************************************************************/
+        /*******************************************************************************************************/
 
         // ok_new MENU - NASTAVENÍ - CESTY - otevření cest v průzkůmníku souborů
 
@@ -1131,7 +1024,7 @@ namespace hudba
             {
                 hudebniKnihovna = vyberSlozky.SelectedPath;
                 MenuCestaZobrazit(0);
-                HudebniKnihovnaNajdiSlozky();
+                //HudebniKnihovnaNajdiSlozky();
             }
         }
         private void menuNastaveniKnihovnaZmenit_Click(object sender, EventArgs e)
@@ -1186,7 +1079,6 @@ namespace hudba
             {
                 hudebniKnihovna = menu.Text;
                 MenuCestaZobrazit(0);
-                HudebniKnihovnaNajdiSlozky();
             }
             else
             {
@@ -1239,9 +1131,9 @@ namespace hudba
 
             // získá cestu souboru
             string cestaSouboru = null;
-            if (typ == 0)       cestaSouboru = Path.Combine(slozkaProgramuData, "knihovna_historie.txt");
-            else if (typ == 1)  cestaSouboru = Path.Combine(slozkaProgramuData, "youtubedl.txt");
-            else if (typ == 2)  cestaSouboru = Path.Combine(slozkaProgramuData, "ffmpeg.txt");
+            if      (typ == 0) cestaSouboru = Path.Combine(slozkaProgramuData, "knihovna_historie.txt");
+            else if (typ == 1) cestaSouboru = Path.Combine(slozkaProgramuData, "youtubedl.txt");
+            else if (typ == 2) cestaSouboru = Path.Combine(slozkaProgramuData, "ffmpeg.txt");
 
             // načte ze souboru cesty
             Soubory soubor = new Soubory();
@@ -1249,58 +1141,23 @@ namespace hudba
             if (pridejCesty == null)    return;
             if (pridejCesty.Count == 0) return;
 
-            // uloží první řádek ze souboru jako výchozí cestu
-            if (typ == 0)
-            {
-                if (Directory.Exists(pridejCesty.First()))
-                {
-                    hudebniKnihovna = pridejCesty.First();
-                    menuNastaveniKnihovnaProhledat.Text = "Prohledat hudební knihovnu";
-                    menuNastaveniKnihovnaProhledat.Enabled = true;
-                    menuNastaveniKnihovnaVybrana.Text = hudebniKnihovna;
-                    menuNastaveniKnihovnaVybrana.Enabled = true;
-                    menuNastaveniKnihovnaVybrana.ToolTipText = "Otevřít složku '" + hudebniKnihovna + "' v průzkumníku souborů";
-                }
-            }
-            else if (typ == 1)
-            {
-                if (File.Exists(pridejCesty.First()))
-                {
-                    cestaYoutubeDL = pridejCesty.First();
-                    menuNastaveniYoutubeDLCestaVybrana.Text = cestaYoutubeDL;
-                    menuNastaveniYoutubeDLCestaVybrana.Enabled = true;
-                    menuNastaveniYoutubeDLCestaVybrana.ToolTipText = "Najít soubor '" + cestaYoutubeDL + "' v průzkumníku souborů";
-                }
-            }
-            else if (typ == 2)
-            {
-                if (File.Exists(pridejCesty.First()))
-                {
-                    cestaFFmpeg = pridejCesty.First();
-                    menuNastaveniFFmpegCestaVybrana.Text = cestaFFmpeg;
-                    menuNastaveniFFmpegCestaVybrana.Enabled = true;
-                    menuNastaveniFFmpegCestaVybrana.ToolTipText = "Najít soubor '" + cestaFFmpeg + "' v průzkumníku souborů";
-                }
-            }
-
             // projde cesty a přidá je do menu
             foreach (string cesta in pridejCesty)
             {
-                string aktualniCesta = cesta.Trim();
-                if (typ == 0)
-                {
-                    if (Directory.Exists(aktualniCesta))
-                    {
-                        MenuCestaPridat(aktualniCesta, typ);
-                    }
-                }
-                else
-                {
-                    if (File.Exists(aktualniCesta))
-                    {
-                        MenuCestaPridat(aktualniCesta, typ);
-                    }
-                }
+                MenuCestaPridat(cesta.Trim(), typ);
+            }
+
+            // uloží první řádek ze souboru jako výchozí cestu
+            if (typ == 0 && Directory.Exists(pridejCesty.First().Trim()))
+            {
+                hudebniKnihovna = pridejCesty.First().Trim();
+                MenuCestaZobrazit(typ);
+            }
+            else if (File.Exists(pridejCesty.First().Trim()))
+            {
+                if (typ == 1) cestaYoutubeDL = pridejCesty.First().Trim();
+                else if (typ == 2) cestaFFmpeg = pridejCesty.First().Trim();
+                MenuCestaZobrazit(typ);
             }
         }
 
@@ -1318,6 +1175,9 @@ namespace hudba
             // 1 = cesty youtube-dl
             // 2 = cesty ffmpeg
 
+            // pokud se nejdená o existující složku / soubor, neuloží se do menu
+            if (typ == 0 && !Directory.Exists(cesta)) return;
+            else if ((typ == 1 || typ == 2) && !File.Exists(cesta)) return;
             // nastavení počátečních proměnných
             ToolStripMenuItem menuPridavane = new ToolStripMenuItem(cesta);
             menuPridavane.Text = cesta;
@@ -1411,35 +1271,13 @@ namespace hudba
             }
 
             bool nalezeno = false;
-            // projde menu a zjistí, zdali cesta již byla v minulosti vybrána
-            /*for (int i = 0; i < menuNaposledyVybraneCesty.DropDownItems.Count; i++)
-            {
-                ToolStripMenuItem menuCesta = (ToolStripMenuItem)menuNaposledyVybraneCesty.DropDownItems[i];
-                if (menuCesta.Text == cestaVychozi)
-                {
-                    menuCesta.Checked = true;
 
-                    if (menuNaposledyVybraneCesty.DropDownItems.Count > i + 1)
-                    {
-                        // pokud byla nalezena, přidám ji na konec a zaškrtnu ji v menu
-                        menuNaposledyVybraneCesty.DropDownItems.RemoveAt(i);
-                        i--;
-                        menuNaposledyVybraneCesty.DropDownItems.Add(menuCesta);
-                    }
-
-                    nalezeno = true;
-                }
-                else
-                {
-                    menuCesta.Checked = false;
-                }
-            }*/
-
+            // projde cesty v menu
             foreach (ToolStripMenuItem menuCesta in menuNaposledyVybraneCesty.DropDownItems)
             {
                 if (menuCesta.Text == cestaVychozi)
                 {
-                    // pokud byla nalezena, přidám ji na konec a zaškrtnu ji v menu
+                    // cesta byla nalezena v menu, zaškrtnu ji
                     menuCesta.Checked = true;
                     nalezeno = true;
                 }
@@ -1461,6 +1299,7 @@ namespace hudba
                 menuVybranaCesta.ToolTipText = "Otevřít složku '" + cestaVychozi + "' v průzkumníku souborů";
                 menuNastaveniKnihovnaProhledat.Text = "Prohledat hudební knihovnu";
                 menuNastaveniKnihovnaProhledat.Enabled = true;
+                HudebniKnihovnaNajdiSlozky();
             }
             else
             {
@@ -1469,9 +1308,134 @@ namespace hudba
         }
 
 
-        // ok_new MENU - NASTAVENÍ - CESTY - stažení youtube-dl / ffmpeg
 
-        private void menuNastaveniYoutubeDLStahnout_Click(object sender, EventArgs e)
+        // ok_new MENU - NASTAVENÍ - prohledat hudební knihovnu
+
+        private void menuNastaveniKnihovnaProhledat_Click(object sender, EventArgs e)
+        {
+            HudebniKnihovnaNajdiSlozky();
+        }
+
+        /// <summary>
+        /// Spustí BackgroundWorker s prohledáním všech složek v hudební knihovně.
+        /// Ten odstraní složky alb a další přebytečné.
+        /// Získá tedy složky interpretů a ty následně uloží do souboru.
+        /// </summary>
+        private void HudebniKnihovnaNajdiSlozky()
+        {
+            if (!backgroundWorkerProhledejSlozky.IsBusy)
+            {
+                backgroundWorkerProhledejSlozky.RunWorkerAsync();
+            }
+            else
+            {
+                ZobrazNaLabelu("Prohledávám složky:", "Chyba - prohledávání složek", "Zkuste prohledat složky znovu.", "stazeno_chyba");
+            }
+        }
+
+        private void backgroundWorkerProhledejSlozky_DoWork(object sender, DoWorkEventArgs e)
+        {
+            // prohledá složky a zapíše je do souboru
+            if (backgroundWorkerStahniVideo.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            // hudební knihovna neexistuje
+            if (hudebniKnihovna == null)
+            {
+                ZobrazNaLabelu("Nebyla vybrána složka s hudební knihovnou.", "VYBRAT SLOŽKU", "hudebni_knihovna");
+                //HudebniKnihovnaVyber();
+                return;
+            }
+            if (!Directory.Exists(hudebniKnihovna))
+            {
+                ZobrazNaLabelu("Nebyla vybrána složka s hudební knihovnou.", "VYBRAT SLOŽKU", "hudebni_knihovna");
+                //HudebniKnihovnaVyber();
+                return;
+            }
+
+            // získá složky z knihovny, krom složek alb
+            List<string> slozkyinterpretu = new List<string>();
+            try
+            {
+                foreach (string cestaSlozky in Directory.GetDirectories(hudebniKnihovna, "*.*", SearchOption.AllDirectories))
+                {
+                    // projde složky ve vybrané hudební knihovně
+                    string nazevSlozky = Path.GetFileNameWithoutExtension(cestaSlozky);
+                    if (!Regex.IsMatch(nazevSlozky.Split(' ').First(), @"^\d{4}$"))
+                    {
+                        // pokud se nejedná o album (název je "rok název" = první 4 znaky jsou číslice), přidám do seznamu
+                        slozkyinterpretu.Add(cestaSlozky);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // chyba
+                MessageBox.Show(ex.Message + Environment.NewLine + "Vyberte prosím jinou složku s hudební knihovnou.", "Chyba - výběr složky", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ZobrazNaLabelu("", "Vyberte prosím jinou složku s hudební knihovnou.", "hudebni_knihovna");
+                //HudebniKnihovnaVyber();
+                return;
+            }
+            if (slozkyinterpretu == null)
+            {
+                MessageBox.Show("nenalezeny žádné složky");
+                return;
+            }
+            if (slozkyinterpretu.Count() == 0)
+            {
+                MessageBox.Show("nenalezeny žádné složky");
+                return;
+            }
+
+            // seřadí složky
+            slozkyinterpretu.Sort();
+
+            // odstraní nepotřebné složky
+            for (int i = 1; i < slozkyinterpretu.Count; i++)
+            {
+                if (slozkyinterpretu[i].Contains(slozkyinterpretu[i - 1]))
+                {
+                    // složka má v názvu část předchozí složky
+                    if (!Path.GetFileNameWithoutExtension(slozkyinterpretu[i]).Contains(Path.GetFileNameWithoutExtension(slozkyinterpretu[i - 1])))
+                    {
+                        // název složky a předchozí není stejný, odstraním předchozí složku
+                        // tím zajistím neodstranění složek typu "interpret1 & interpret2" po složce "interpret1"
+                        slozkyinterpretu.RemoveAt(i - 1);
+                        i--;
+                    }
+                }
+            }
+            // na 1. pozici vloží aktuální hudební knihovnu
+            slozkyinterpretu.Insert(0, hudebniKnihovna);
+            // zapíše složky do souboru
+            Soubory soubor = new Soubory();
+            soubor.Zapis(Path.Combine(slozkaProgramuData, "knihovna_slozky.txt"), slozkyinterpretu);
+            //HudebniKnihovnaNajdiSlozky(false);
+        }
+
+        private void backgroundWorkerProhledejSlozky_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            /*if (e.Cancelled)
+            {
+                ZobrazNaLabelu("Prohledávám složky:", "Zrušili jste práci", "stazeno_stormo");
+            }
+            else if (e.Error != null)
+            {
+                ZobrazNaLabelu("Prohledávám složky:", "Chyba - prohledávání složek", e.Error.ToString(), "Zkuste prohledat složky znovu.", "stazeno_chyba");
+            }
+            else
+            {
+                ZobrazNaLabelu("Prohledávám složky:", "Složky byly úspěšně prohledány", "OK", "slozky_ok");
+            }*/
+    }
+
+
+    // ok_new MENU - NASTAVENÍ - CESTY - stažení youtube-dl / ffmpeg
+
+    private void menuNastaveniYoutubeDLStahnout_Click(object sender, EventArgs e)
         {
             // stažení youtube-dl
             StahniProgram(true);
