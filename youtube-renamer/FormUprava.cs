@@ -64,13 +64,13 @@ namespace hudba
             linkLabelID.Text = videa[pocet].id;
             linkLabelKanal.Text = videa[pocet].kanal;
             textBoxDatum.Text = String.Format("{0:yyyy-MM-dd}", videa[pocet].publikovano);
-            textBoxPuvodniNazev.Text = videa[pocet].puvodniNazev;
+            textBoxPuvodniNazev.Text = videa[pocet].nazevPuvodni;
             textBoxInterpret.Text = videa[pocet].interpret;
             labelInterpret.Text = videa[pocet].interpret.Replace("&", "&&");
             labelSkladba.Text = videa[pocet].skladbaFeaturing.Replace("&", "&&");
             textBoxSkladba.Text = videa[pocet].skladba;
             textBoxFeaturing.Text = videa[pocet].featuring;
-            textBoxNovyNazev.Text = videa[pocet].novyNazev;
+            textBoxNovyNazev.Text = videa[pocet].nazevNovy;
             textBoxSlozka.Text = videa[pocet].slozka;
             textBoxZanr.Text = videa[pocet].zanr;
 
@@ -112,7 +112,7 @@ namespace hudba
             {
                 videa[pocet].skladbaFeaturing = textBoxSkladba.Text;
             }
-            videa[pocet].novyNazev = textBoxNovyNazev.Text;
+            videa[pocet].nazevNovy = textBoxNovyNazev.Text;
             videa[pocet].zanr = textBoxZanr.Text;
 
             UlozSlozku(videa[pocet]);
@@ -176,7 +176,7 @@ namespace hudba
                     polozka.SubItems[4].Text = videa[pocet].interpret;
                     polozka.SubItems[5].Text = videa[pocet].skladba;
                     polozka.SubItems[6].Text = videa[pocet].featuring;
-                    polozka.SubItems[7].Text = videa[pocet].novyNazev;
+                    polozka.SubItems[7].Text = videa[pocet].nazevNovy;
                     string slozka = "";
                     if (videa[pocet].skupina == "Video bylo staženo dříve")
                     {
@@ -221,11 +221,11 @@ namespace hudba
 
             if (vid.slozka.ToLower().Contains("_ostatní"))
             {
-                vid.novyNazev = vid.interpret + "-" + vid.skladbaFeaturing;
+                vid.nazevNovy = vid.interpret + "-" + vid.skladbaFeaturing;
             }
             else
             {
-                vid.novyNazev = vid.skladbaFeaturing;
+                vid.nazevNovy = vid.skladbaFeaturing;
             }
 
             foreach (ListViewItem polozka in polozky)
@@ -236,7 +236,7 @@ namespace hudba
                     polozka.SubItems[4].Text = vid.interpret;
                     polozka.SubItems[5].Text = vid.skladba;
                     polozka.SubItems[6].Text = vid.featuring;
-                    polozka.SubItems[7].Text = vid.novyNazev;
+                    polozka.SubItems[7].Text = vid.nazevNovy;
                     polozka.SubItems[8].Text = vid.slozka;
                     polozka.SubItems[10].Text = vid.zanr;
                     foreach (ListViewGroup skupina in skupinyList)
@@ -258,7 +258,7 @@ namespace hudba
                 if (!(textBoxInterpret.Text == videa[pocet].interpret &&
                     textBoxSkladba.Text == videa[pocet].skladba &&
                     textBoxFeaturing.Text == videa[pocet].featuring &&
-                    textBoxNovyNazev.Text == videa[pocet].novyNazev &&
+                    textBoxNovyNazev.Text == videa[pocet].nazevNovy &&
                     textBoxSlozka.Text == videa[pocet].slozka &&
                     textBoxZanr.Text == videa[pocet].zanr))
                 {

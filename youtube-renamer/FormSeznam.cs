@@ -2,19 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Text.RegularExpressions;
-using System.Globalization;
-using System.Collections;
+using System.Linq;
 using System.Net;
-using System.Diagnostics;
-using System.Threading;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace hudba
 {
@@ -34,136 +28,6 @@ namespace hudba
         public FormSeznam()
         {
             InitializeComponent();
-        }
-
-        /**** START ****/
-
-        // start programu, načtení souborů, kontrola, youtube-dl
-        private void FormSeznam_Load(object sender, EventArgs e)
-        {
-            this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            menuStripMenu.Visible = false;
-
-
-            /*ZobrazNaLabelu("Spouštění programu:", "Příprava spouštění programu", "UKONČIT PROGRAM", "ukoncit_program");
-            labelStatus.Text = "Spouštím program...";
-
-            progressBarStatus.Maximum = 6;
-            progressBarStatus.Visible = true;*/
-            // -> DOČASNĚ
-
-            if (!backgroundWorkerNactiProgram.IsBusy)
-            {
-                backgroundWorkerNactiProgram.RunWorkerAsync();
-            }
-            else
-            {
-                ZobrazitChybuSpousteni("spouštění programu");
-            }
-        }
-
-        private void ZobrazitChybuSpousteni(string chyba)
-        {
-            ZobrazNaLabelu("Spouštění programu:", "Chyba - " + chyba, "", "Spusťte prosím program znovu.", "restart");
-            statusStripStatus.Invoke(new Action(() =>
-            {
-                labelStatus.Text = "Chyba - spouštění programu";
-            }));
-
-            /* POZOR - CHYBA !!!!!!!!!!!!!! */
-            //// -> progressBarStatus.Visible = false;
-        }
-
-
-        // vytvoření složek, stažení youtube-dl + ffmpeg
-        private void backgroundWorkerNactiProgram_DoWork(object sender, DoWorkEventArgs e)
-        {
-            slozkaProgramuData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            if (!Directory.Exists(slozkaProgramuData))
-            {
-                ZobrazitChybuSpousteni("získání složky programu");
-            }
-            slozkaProgramuData = Path.Combine(slozkaProgramuData, "youtube-renamer");
-            slozkaProgramuCache = Path.Combine(slozkaProgramuData, "cache", Process.GetCurrentProcess().Id.ToString());
-            slozkaProgramuData = Path.Combine(slozkaProgramuData, "data");
-
-            //ZobrazNaLabelu("Spouštění programu:", "Vytvářím složky...", "UKONČIT PROGRAM", "ukoncit_program");
-            // -> DOČASNĚ
-            backgroundWorkerNactiProgram.ReportProgress(1);
-
-            // 1. složka data = nastavení
-            if (!Directory.Exists(slozkaProgramuData))
-            {
-                try
-                {
-                    Directory.CreateDirectory(slozkaProgramuData);
-                }
-                catch (Exception)
-                {
-                    ZobrazitChybuSpousteni("Vytváření data složky");
-                }
-            }
-
-            // 2. složka cache = dočasné stažené soubory
-            if (Directory.Exists(slozkaProgramuCache))
-            {
-                try
-                {
-                    Directory.Delete(slozkaProgramuCache, true);
-                }
-                catch (Exception)
-                {
-                    ZobrazitChybuSpousteni("Mazání cache složky");
-                }
-            }
-            try
-            {
-                Directory.CreateDirectory(slozkaProgramuCache);
-            }
-            catch (Exception)
-            {
-                ZobrazitChybuSpousteni("Vytváření cache složky");
-            }
-            // 3. načtení nastavení
-            menuStripMenu.Invoke(new Action(() =>
-            {
-                // a) cesta hudebních složek
-                MenuCestaNactiZeSouboru(0);
-                // b) cesta youtube-dl
-                MenuCestaNactiZeSouboru(1);
-                // c) cesta ffmpeg
-                MenuCestaNactiZeSouboru(2);
-            }));
-
-            // 4. prohledá hudební knihovnu a uloží seznam do souboru
-            //HudebniKnihovnaNajdiSlozky(true);
-            // -> DOČASNĚ           
-        }
-
-        // zobrazuje proces na processBar
-        private void backgroundWorkerNactiProgram_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            progressBarStatus.Value = e.ProgressPercentage;
-        }
-
-
-        // přidání složek a ukončení backgroundworkeru
-        private void backgroundWorkerNactiProgram_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            progressBarStatus.Value = progressBarStatus.Maximum;
-            if (e.Error != null)
-            {
-                ZobrazitChybuSpousteni("spouštění programu");
-                MessageBox.Show("Chyba - spouštění programu" + Environment.NewLine + e.Error, "Spouštění programu - chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                labelStatus.Text = "Připraven";
-                menuStripMenu.Visible = true;
-                menuNastaveni.Enabled = true;
-                progressBarStatus.Visible = false;
-                this.FormBorderStyle = FormBorderStyle.Sizable;
-            }
         }
 
         /**** OSTATNÍ *****/
@@ -197,7 +61,7 @@ namespace hudba
         }
 
         /**** DODĚLAT **** LABELY ****/
-
+        #region labely
         // zobrazí zprávu na labelu
         private void ZobrazNaLabelu(string text1)
         {
@@ -356,6 +220,7 @@ namespace hudba
                     break;
             }
         }
+#endregion
 
         // zobrazí počet vybraných videí ke stažení a povoluje nebo zakazuje úpravu
         private void listViewSeznam_ItemChecked(object sender, ItemCheckedEventArgs e)
@@ -418,111 +283,239 @@ namespace hudba
         // spustí funkci získej info z videa nebo playlistu
         private void menuPridatVideoNeboPlaylist_Click(object sender, EventArgs e)
         {
-            ZobrazNaLabelu("Přidávám videa...", "");
-            labelStatus.Text = "Přidávám videa...";
-
-            progressBarStatus.Value = progressBarStatus.Minimum;
-            progressBarStatus.Maximum = 1;
-            progressBarStatus.Visible = true;
-
-            if (!backgroundWorkerPridejVidea.IsBusy)
+            if (menuPridatVideoNeboPlaylist.Text == "ZASTAVIT PŘIDÁVÁNÍ")
             {
-                menuStripMenu.Visible = false;
-                if (menuPridatVideoNeboPlaylist.Text == "PŘIDAT PLAYLIST")
-                {
-                    backgroundWorkerPridejVidea.RunWorkerAsync(true);
-                }
-                else if (menuPridatVideoNeboPlaylist.Text == "PŘIDAT VIDEO")
-                {
-                    backgroundWorkerPridejVidea.RunWorkerAsync(false);
-                }
+                // zastaví přidávání videa
+                backgroundWorkerPridejVidea.CancelAsync();
             }
             else
             {
-                ZobrazNaLabelu("Přidávám videa:", "Chyba - přidávání videa", "Zkuste přidat videa znovu.", "pridavani_chyba");
+                /*menuPridatVideoNeboPlaylist.Text = "ZASTAVIT PŘIDÁVÁNÍ";
+                ZobrazStatusProgressBar(1);*/
+                if (!backgroundWorkerPridejVidea.IsBusy)
+                {
+                    //menuStripMenu.Visible = false;
+                    if (menuPridatVideoNeboPlaylist.Text == "PŘIDAT PLAYLIST")
+                    {
+                        menuPridatVideoNeboPlaylist.Text = "ZASTAVIT PŘIDÁVÁNÍ";
+                        backgroundWorkerPridejVidea.RunWorkerAsync(true);
+                    }
+                    else if (menuPridatVideoNeboPlaylist.Text == "PŘIDAT VIDEO")
+                    {
+                        menuPridatVideoNeboPlaylist.Text = "ZASTAVIT PŘIDÁVÁNÍ";
+                        backgroundWorkerPridejVidea.RunWorkerAsync(false);
+                    }
+                }
+                else
+                {
+                    ZobrazChybu("přidávání videa", "Nepodařilo se přidat žádné videa.", "Zkuste přidat videa znovu.");
+                    ZobrazStatusLabel("Přidávání videa", "Nepodařilo se přidat žádné videa.");
+                    //ZobrazNaLabelu("Přidávám videa:", "Chyba - přidávání videa", "Zkuste přidat videa znovu.", "pridavani_chyba");
+                }
+
             }
+            //ZobrazNaLabelu("Přidávám videa...", "");
+            //labelStatus.Text = "Přidávám videa...";
+            /*progressBarStatus.Value = progressBarStatus.Minimum;
+            progressBarStatus.Maximum = 1;
+            progressBarStatus.Visible = true;*/
+
         }
+
+        /// <summary>
+        /// Zobrazí vybraný text na StatuStripLabelu.
+        /// </summary>
+        /// <param name="text">Text k zobrazení.</param>
+        private void ZobrazStatusLabel(string text)
+        {
+            statusStripStatus.Invoke(new Action(() =>
+            {
+                labelStatus.Text = text;
+            }));
+        }
+        /// <summary>
+        /// Zobrazí vybraný nadpis a text na StatuStripLabelu.
+        /// </summary>
+        /// <param name="nadpis">Nadpis k zobrazení před textem.</param>
+        /// <param name="text">Text k zobrazení.</param>
+        private void ZobrazStatusLabel(string nadpis, string text)
+        {
+            ZobrazStatusLabel(nadpis + ": " + text);
+        }
+        /// <summary>
+        /// Zobrazí ProgressBar a nastaví mu minimální a maximální hodnotu.
+        /// </summary>
+        /// <param name="maximum">Maximální hodnota ProgressBaru.</param>
+        private void ZobrazStatusProgressBar(int maximum)
+        {
+            statusStripStatus.Invoke(new Action(() =>
+            {
+                progressBarStatus.Value = progressBarStatus.Minimum;
+                progressBarStatus.Maximum = maximum;
+                progressBarStatus.Visible = true;
+            }));
+        }
+
+        /// <summary>
+        /// Zobrazí MessageBox s chybou.
+        /// </summary>
+        /// <param name="nadpis">Nadpis chyby.</param>
+        /// <param name="text">Text chyby.</param>
+        private void ZobrazChybu(string nadpis, string text)
+        {
+            nadpis = "Chyba: " + nadpis.ToLower();
+            MessageBox.Show(text, nadpis, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        /// <summary>
+        /// Zobrazí MessageBox s chybou.
+        /// </summary>
+        /// <param name="nadpis">Nadpis chyby.</param>
+        /// <param name="text1">Text chyby na 1. řádku.</param>
+        /// <param name="text2">Text chyby na 2. řádku.</param>
+        private void ZobrazChybu(string nadpis, string text1, string text2)
+        {
+            ZobrazChybu(nadpis, text1 + Environment.NewLine + text2);
+        }
+        /// <summary>
+        /// Zobrazí MessageBox s chybou.
+        /// </summary>
+        /// <param name="nadpis">Nadpis chyby.</param>
+        /// <param name="text1">Text chyby na 1. řádku.</param>
+        /// <param name="text2">Text chyby na 2. řádku.</param>
+        /// <param name="text3">Text chyby na 3. řádku.</param>
+        private void ZobrazChybu(string nadpis, string text1, string text2, string text3)
+        {
+            ZobrazChybu(nadpis, text1 + Environment.NewLine + text2 + Environment.NewLine + text3);
+        }
+
 
         // přidávání videí nebo videí z playlistu
         private void backgroundWorkerPridejVidea_DoWork(object sender, DoWorkEventArgs e)
         {
+            ZobrazStatusLabel("Přidávání videa...");
+            ZobrazStatusProgressBar(1);
             if (backgroundWorkerPridejVidea.CancellationPending)
             {
                 e.Cancel = true;
                 return;
             }
             bool playlist = (bool)e.Argument;
+            // true = playlist
+            // false = video
 
             // přidávání playlistu
             if (playlist)
             {
-                // získá id z youtube api
-                List<Video> videaNova = new List<Video>();
-                List<string> videaID = YouTubeApi.ZiskejIDVidei(youtubeID);
-                bool pridano = false;
-                int pridaneDrive = 0;
-
-                if (videaID == null)
+                // získá id videí z youtube api
+                List<string> videaNovaID = new List<string>();
+                try
                 {
-                    e.Result = "playlist_neexistuje";
+                    videaNovaID = YouTubeApi.ZiskejIDVidei(youtubeID);
+                }
+                catch (Exception)
+                {
+                    e.Result = "chyba";
                     return;
                 }
 
-                // nastvaví maximum na počet videí z playlistu
-                statusStripStatus.Invoke(new Action(() =>
+                // v playlistu nejsou žádné videa nebo neexistuje
+                if (videaNovaID == null)
                 {
-                    progressBarStatus.Maximum = videaID.Count;
-                }));
+                    e.Result = "neexistuje";
+                    return;
+                }
+                if (videaNovaID.Count < 1)
+                {
+                    e.Result = "zadne_videa";
+                    return;
+                }
+
+                // nastaví maximum ProgressBaru na počet videí z playlistu
+                ZobrazStatusProgressBar(videaNovaID.Count);
+                /*statusStripStatus.Invoke(new Action(() =>
+                {
+                    progressBarStatus.Maximum = videaNovaID.Count;
+                }));*/
+
+                int pridaneDrive = 0;
 
                 // kontrola zdali video už nebylo přidáno
-                foreach (string videoID in videaID)
+                foreach (string videoNoveID in videaNovaID)
                 {
-                    backgroundWorkerPridejVidea.ReportProgress(videaID.IndexOf(videoID) + 1);
-                    ZobrazNaLabelu("Přidávám videa (" + (videaID.IndexOf(videoID) + 1) + " z " + videaID.Count + "):", videoID, "");
+                    if (backgroundWorkerPridejVidea.CancellationPending)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                    bool pridano = false;
+
+                    backgroundWorkerPridejVidea.ReportProgress(videaNovaID.IndexOf(videoNoveID) + 1);
+                    ZobrazStatusLabel("Přidávání videí z playlistu", videoNoveID + " (" + (videaNovaID.IndexOf(videoNoveID) + 1) + " z " + videaNovaID.Count + ")");
+                    /*statusStripStatus.Invoke(new Action(() =>
+                    {
+                        labelStatus.Text = "Přidávám videa z playlistu: " + videoNoveID + " (" + (videaNovaID.IndexOf(videoNoveID) + 1) + " z " + videaNovaID.Count + ")";
+                    }));*/
+                    //ZobrazNaLabelu("Přidávám videa (" + (videaNovaID.IndexOf(videoNoveID) + 1) + " z " + videaNovaID.Count + "):", videoNoveID, "");
 
                     foreach (Video videoDrivePridane in videaVsechna)
                     {
-                        if (videoID == videoDrivePridane.id) // id nové == id z listview
+                        if (videoNoveID == videoDrivePridane.id)
                         {
+                            // nové id videa je shodné s již přidaným
+                            pridaneDrive++;
                             pridano = true;
                             break;
                         }
                     }
-                    // video už bylo přidáno dříve - nyní se nepřidá
-                    if (pridano)
+                    if (!pridano)
                     {
-                        pridaneDrive++;
-                    }
-                    else
-                    {
-                        videaNova.Add(new Video(videoID));
+                        // video nebylo dříve přidáno - přidá se nové video a získají se informace o něm
+                        videaVsechna.Add(new Video(videoNoveID));
+                        objectListViewSeznamVidei.SetObjects(videaVsechna);
                     }
                 }
                 // přidá nová videa a zobrazí je
-                videaVsechna.AddRange(videaNova);
-                listViewSeznam.Invoke(new Action(() =>
-                {
-                    ZobrazVidea(videaNova);
-                }));
 
+                /*if (pridaneDrive > 0)
+                {
+                    //ZobrazNaLabelu("Přidávám videa:", "Nebylo přidáno " + pridaneDrive + " videí z playlistu, protože už byly přidané dříve.", "OK", "stazeno_ok");
+                    //e.Result = "jiz_pridano";
+                }*/
+
+                string pridaneDriveText = "";
                 if (pridaneDrive > 0)
                 {
-                    ZobrazNaLabelu("Přidávám videa:", "Nebylo přidáno " + pridaneDrive + " videí z playlistu, protože už byly přidané dříve.", "OK", "stazeno_ok");
-                    e.Result = "jiz_pridano";
+                    pridaneDriveText = " Nepřidaná videa byla přidána již dříve.";
                 }
+                ZobrazStatusLabel("Přidávání videí z playlistu", "Bylo přidáno " + (videaNovaID.Count() - pridaneDrive) + " videí z " + videaNovaID.Count() + "." + pridaneDriveText);
+                /*statusStripStatus.Invoke(new Action(() =>
+                {
+                    labelStatus.Text = "Přidávám videa z playlistu: Bylo přidáno " + (videaNovaID.Count() - pridaneDrive) + " videí z " + videaNovaID.Count() + "." + pridaneDriveText;
+                }));*/
             }
             // přidávání jednoho videa
             else
             {
-                // pokud už bylo toto video přidáno, nepřidá se
                 bool pridano = false;
 
-                ZobrazNaLabelu("Přidávám videa (1 z 1):", youtubeID, "");
+                //ZobrazNaLabelu("Přidávám videa (1 z 1):", youtubeID, "");
                 backgroundWorkerPridejVidea.ReportProgress(1);
+                ZobrazStatusLabel("Přidávání videí", youtubeID + " (1 z 1)");
+                /*statusStripStatus.Invoke(new Action(() =>
+                {
+                    labelStatus.Text = "Přidávám videa: " + youtubeID + " (1 z 1)";
+                }));*/
 
                 foreach (Video videoDrivePridane in videaVsechna)
                 {
-                    if (youtubeID == videoDrivePridane.id) // id nové == id z listview
+                    if (backgroundWorkerPridejVidea.CancellationPending)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                    // pokud už bylo toto video přidáno, nepřidá se
+                    if (youtubeID == videoDrivePridane.id)
                     {
                         pridano = true;
                         break;
@@ -530,19 +523,23 @@ namespace hudba
                 }
                 if (pridano)
                 {
-                    ZobrazNaLabelu("Přidávám videa:", "Toto video nebylo přidáno, protože už bylo přidané dříve.", "OK", "stazeno_ok");
-                    e.Result = "jiz_pridano";
+                    //ZobrazNaLabelu("Přidávám videa:", "Toto video nebylo přidáno, protože už bylo přidané dříve.", "OK", "stazeno_ok");
+                    //e.Result = "jiz_pridano";
+                    ZobrazStatusLabel("Přidávání videí", "Video nebylo přidáno, protože už bylo přidané dříve.");
+                    /*statusStripStatus.Invoke(new Action(() =>
+                    {
+                        labelStatus.Text = "Přidávám videa: Video nebylo přidáno, protože už bylo přidané dříve.";
+                    }));*/
                 }
                 else
                 {
-                    List<Video> videaNova = new List<Video>(1);
-                    videaNova.Add(new Video(youtubeID));
-                    videaVsechna.AddRange(videaNova);
-
-                    listViewSeznam.Invoke(new Action(() =>
+                    videaVsechna.Add(new Video(youtubeID));
+                    objectListViewSeznamVidei.SetObjects(videaVsechna);
+                    ZobrazStatusLabel("Přidávání videí", "Video bylo úspěšně přidáno.");
+                    /*statusStripStatus.Invoke(new Action(() =>
                     {
-                        ZobrazVidea(videaNova);
-                    }));
+                        labelStatus.Text = "Přidávám videa: Video bylo úspěšně přidáno.";
+                    }));*/
                 }
             }
         }
@@ -557,32 +554,45 @@ namespace hudba
             progressBarStatus.Value = progressBarStatus.Maximum;
             if (e.Cancelled)
             {
-                ZobrazNaLabelu("Přidávám videa:", "Zrušili jste práci", "stazeno_stormo");
+                ZobrazStatusLabel("Přidávání videí", "Zrušeno uživatelem.");
+                //ZobrazNaLabelu("Přidávám videa:", "Zrušili jste práci", "stazeno_stormo");
             }
             else if (e.Error != null)
             {
-                ZobrazNaLabelu("Přidávám videa:", "Chyba - přidávání videa", e.Error.ToString(), "Zkuste stáhnout videa znovu.", "stazeno_chyba");
+                ZobrazStatusLabel("Přidávání videí", "Chyba.");
+                ZobrazChybu("Přidávání videí", "Došlo k chybě, videa nebyla přidána.", "Zkuste přidat videa znovu.", e.Error.ToString());
+                //ZobrazNaLabelu("Přidávám videa:", "Chyba - přidávání videa", e.Error.ToString(), , "stazeno_chyba");
             }
-            else if ((string)e.Result == "playlist_neexistuje")
+            else if ((string)e.Result == "chyba")
             {
-                ZobrazNaLabelu("Tento playlist neexistuje.", "ZKUSTE TO PROSÍM ZNOVU", "odkaz");
+                ZobrazStatusLabel("Přidávání videí", "Chyba.");
+                ZobrazChybu("Přidávání videí", "Nepodařilo se získat videa z Youtube API. Videa nebyla přidána.", "Zkuste přidat videa znovu.");
             }
-            else if ((string)e.Result == "jiz_pridano")
+            else if ((string)e.Result == "neexistuje")
             {
+                ZobrazStatusLabel("Přidávání videí z playlistu", "Tento playlist neexistuje.");
+                ZobrazChybu("Přidávání videí z playlistu", "Tento playlist neexistuje.", "Zkuste přidat jiný playlist.");
+                //ZobrazNaLabelu("Tento playlist neexistuje.", "ZKUSTE TO PROSÍM ZNOVU", "odkaz");
             }
-            else
+            else if ((string)e.Result == "zadne_videa")
+            {
+                ZobrazStatusLabel("Přidávání videí z playlistu", "V playlistu nejsou žádná videa.");
+                ZobrazChybu("Přidávání videí z playlistu", "V playlistu nejsou žádná videa.", "Zkuste přidat jiný playlist.");
+            }
+            /*else
             {
                 ZobrazLabel(false);
-                labelStatus.Text = "Připraven";
+                labelStatus.Text = "Připraven";*/
                 progressBarStatus.Visible = false;
-            }
+            textBoxOdkaz_TextChanged(null, null);
+            /*}
             listBox1.Visible = false;
             menuStripMenu.Visible = true;
-            textBoxOdkaz.Text = "VLOŽTE ODKAZ NA VIDEO NEBO PLAYLIST Z YOUTUBE";
+            textBoxOdkaz.Text = "VLOŽTE ODKAZ NA VIDEO NEBO PLAYLIST Z YOUTUBE";*/
         }
 
         // zobrazí videa na listView
-        private void ZobrazVidea(List<Video> videa)
+        /*private void ZobrazVidea(List<Video> videa)
         {
             menuStripMenu.Invoke(new Action(() =>
             {
@@ -614,7 +624,7 @@ namespace hudba
                         slozka = slozka.Replace(hudebniKnihovna, "");
                     }
                 }
-                ListViewItem polozka = new ListViewItem(new string[] { videoList.id, videoList.kanal, String.Format("{0:yyyy-MM-dd}", videoList.publikovano), videoList.puvodniNazev, videoList.interpret, videoList.skladba, videoList.featuring, videoList.novyNazev, slozka, videoList.chyba, videoList.zanr });
+                ListViewItem polozka = new ListViewItem(new string[] { videoList.id, videoList.kanal, String.Format("{0:yyyy-MM-dd}", videoList.publikovano), videoList.nazevPuvodni, videoList.interpret, videoList.skladba, videoList.featuring, videoList.nazevNovy, slozka, videoList.chyba, videoList.zanr });
                 polozka.Checked = videoList.zaskrtnuto;
                 foreach (ListViewGroup skupina in listViewSeznam.Groups)
                 {
@@ -627,7 +637,7 @@ namespace hudba
                 lvic.Add(polozka);
             }
             listViewSeznam.EndUpdate();
-        }
+        }*/
 
         /**** ID VIDEA A YOUTUBE API ****/
 
@@ -793,7 +803,7 @@ namespace hudba
             foreach (Video vid in videa)
             {
                 string adresaVidea = "https://youtu.be/" + vid.id;
-                string nazev = vid.novyNazev;
+                string nazev = vid.nazevNovy;
                 Process cmd = new Process();
                 ProcessStartInfo psi = new ProcessStartInfo();
 
@@ -879,7 +889,7 @@ namespace hudba
         {
             try
             {
-                TagLib.File soubor = TagLib.File.Create(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "stazene", vid.novyNazev + ".mp3"));
+                TagLib.File soubor = TagLib.File.Create(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "stazene", vid.nazevNovy + ".mp3"));
                 soubor.Tag.Year = Convert.ToUInt32(String.Format("{0:yyyy}", vid.publikovano));
                 soubor.Tag.Performers = new string[] { vid.interpret };
                 soubor.Tag.Title = vid.skladbaFeaturing;
@@ -897,8 +907,8 @@ namespace hudba
         {
             try
             {
-                File.Move(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "stazene", vid.novyNazev + ".mp3"),
-                            Path.Combine(vid.slozka, vid.novyNazev + ".mp3"));
+                File.Move(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "stazene", vid.nazevNovy + ".mp3"),
+                            Path.Combine(vid.slozka, vid.nazevNovy + ".mp3"));
                 vid.skupina = "Staženo";
             }
             catch (Exception ex)
@@ -930,11 +940,17 @@ namespace hudba
 
         /**** NOVÉ ****/
 
-        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
+            textBoxOdkaz.Text = "https://www.youtube.com/playlist?list=PLTFujRZGqO1Zxe-AFgLWX4esfmBVOm1-2"; //2018.11 us & others
             //textBoxOdkaz.Text = "https://www.youtube.com/playlist?list=PLTFujRZGqO1bLKMsXFkozb0tJNg-t3g4m"; // ZKOUŠKA
             //textBoxOdkaz.Text = "https://www.youtube.com/playlist?list=PLTFujRZGqO1b6j6ZP8glz9s8iqHi1v-KD!"; // 2017.04 us & others
             //textBoxOdkaz.Text = "https://www.youtube.com/watch?v=6YJcaefdvao";
+        }
+
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            objectListViewSeznamVidei.SetObjects(videaVsechna);
         }
 
         /*******************************************************************************************************/
@@ -944,6 +960,138 @@ namespace hudba
         /*******************************************************************************************************/
         /*******************************************************************************************************/
         /*******************************************************************************************************/
+
+        private void ZobrazitChybuSpousteni(string chyba)
+        {
+            ZobrazNaLabelu("Spouštění programu:", "Chyba - " + chyba, "", "Spusťte prosím program znovu.", "restart");
+            statusStripStatus.Invoke(new Action(() =>
+            {
+                labelStatus.Text = "Chyba - spouštění programu";
+            }));
+
+            /* POZOR - CHYBA !!!!!!!!!!!!!! */
+            //// -> progressBarStatus.Visible = false;
+        }
+
+
+        // vytvoření složek, stažení youtube-dl + ffmpeg
+        private void backgroundWorkerNactiProgram_DoWork(object sender, DoWorkEventArgs e)
+        {
+            slozkaProgramuData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            if (!Directory.Exists(slozkaProgramuData))
+            {
+                ZobrazitChybuSpousteni("získání složky programu");
+            }
+            slozkaProgramuData = Path.Combine(slozkaProgramuData, "youtube-renamer");
+            slozkaProgramuCache = Path.Combine(slozkaProgramuData, "cache", Process.GetCurrentProcess().Id.ToString());
+            slozkaProgramuData = Path.Combine(slozkaProgramuData, "data");
+
+            //ZobrazNaLabelu("Spouštění programu:", "Vytvářím složky...", "UKONČIT PROGRAM", "ukoncit_program");
+            // -> DOČASNĚ
+            backgroundWorkerNactiProgram.ReportProgress(1);
+
+            // 1. složka data = nastavení
+            if (!Directory.Exists(slozkaProgramuData))
+            {
+                try
+                {
+                    Directory.CreateDirectory(slozkaProgramuData);
+                }
+                catch (Exception)
+                {
+                    ZobrazitChybuSpousteni("Vytváření data složky");
+                }
+            }
+
+            // 2. složka cache = dočasné stažené soubory
+            if (Directory.Exists(slozkaProgramuCache))
+            {
+                try
+                {
+                    Directory.Delete(slozkaProgramuCache, true);
+                }
+                catch (Exception)
+                {
+                    ZobrazitChybuSpousteni("Mazání cache složky");
+                }
+            }
+            try
+            {
+                Directory.CreateDirectory(slozkaProgramuCache);
+            }
+            catch (Exception)
+            {
+                ZobrazitChybuSpousteni("Vytváření cache složky");
+            }
+            // 3. načtení nastavení
+            menuStripMenu.Invoke(new Action(() =>
+            {
+                // a) cesta hudebních složek
+                MenuCestaNactiZeSouboru(0);
+                // b) cesta youtube-dl
+                MenuCestaNactiZeSouboru(1);
+                // c) cesta ffmpeg
+                MenuCestaNactiZeSouboru(2);
+            }));
+
+            // 4. prohledá hudební knihovnu a uloží seznam do souboru
+            //HudebniKnihovnaNajdiSlozky(true);
+            // -> DOČASNĚ           
+        }
+
+        // zobrazuje proces na processBar
+        private void backgroundWorkerNactiProgram_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBarStatus.Value = e.ProgressPercentage;
+        }
+
+
+        // přidání složek a ukončení backgroundworkeru
+        private void backgroundWorkerNactiProgram_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            progressBarStatus.Value = progressBarStatus.Maximum;
+            if (e.Error != null)
+            {
+                ZobrazitChybuSpousteni("spouštění programu");
+                MessageBox.Show("Chyba - spouštění programu" + Environment.NewLine + e.Error, "Spouštění programu - chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                labelStatus.Text = "Připraven";
+                menuStripMenu.Visible = true;
+                menuNastaveni.Enabled = true;
+                progressBarStatus.Visible = false;
+                this.FormBorderStyle = FormBorderStyle.Sizable;
+            }
+        }
+        /**** START ****/
+
+        // start programu, načtení souborů, kontrola, youtube-dl
+        private void FormSeznam_Load(object sender, EventArgs e)
+        {
+            this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            menuStripMenu.Visible = false;
+
+            //
+            textBoxOdkaz.Enabled = true;
+            // -> DOČASNĚ
+
+            /*ZobrazNaLabelu("Spouštění programu:", "Příprava spouštění programu", "UKONČIT PROGRAM", "ukoncit_program");
+            labelStatus.Text = "Spouštím program...";
+
+            progressBarStatus.Maximum = 6;
+            progressBarStatus.Visible = true;*/
+            // -> DOČASNĚ
+
+            if (!backgroundWorkerNactiProgram.IsBusy)
+            {
+                backgroundWorkerNactiProgram.RunWorkerAsync();
+            }
+            else
+            {
+                ZobrazitChybuSpousteni("spouštění programu");
+            }
+        }
 
         // ok_new MENU - NASTAVENÍ - CESTY - otevření cest v průzkůmníku souborů
 
@@ -1007,6 +1155,14 @@ namespace hudba
             Process.Start("explorer", "/select, \"" + cestaFFmpeg + "\"");
         }
 
+        /*******************************************************************************************************/
+        /*******************************************************************************************************/
+        /*******************************************************************************************************/
+        /*******************************************************************************************************/
+        /*******************************************************************************************************/
+        /*******************************************************************************************************/
+        /*******************************************************************************************************/
+
 
         // ok_new MENU - NASTAVENÍ - CESTY - vybrání již dříve přidané složky / cesty z menu
 
@@ -1024,7 +1180,6 @@ namespace hudba
             {
                 hudebniKnihovna = vyberSlozky.SelectedPath;
                 MenuCestaZobrazit(0);
-                //HudebniKnihovnaNajdiSlozky();
             }
         }
         private void menuNastaveniKnihovnaZmenit_Click(object sender, EventArgs e)

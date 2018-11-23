@@ -21,14 +21,14 @@ namespace hudba
         public string kanalID { get; set; }
         public DateTime publikovano { get; set; }
         public string zanr { get; set; }
-        public string puvodniNazev { get; set; }
+        public string nazevPuvodni { get; set; }
         public string interpret { get; set; }
         public string skladba { get; set; }
         public string skladbaHledana { get; set; }
         public List<string> feat { get; set; }
         public string featuring { get; set; }
         public string skladbaFeaturing { get; set; }
-        public string novyNazev { get; set; }
+        public string nazevNovy { get; set; }
         public string slozka { get; set; }
         public string chyba { get; set; }
         public string skupina { get; set; }
@@ -41,18 +41,18 @@ namespace hudba
             kanal = "";
             kanalID = "";
             zanr = "";
-            puvodniNazev = "";
+            nazevPuvodni = "";
             interpret = "";
             skladba = "";
             skladbaHledana = "";
             featuring = "";
             skladbaFeaturing = "";
-            novyNazev = "";
+            nazevNovy = "";
             slozka = "";
             chyba = "";
             skupina = "";
             zaskrtnuto = false;
-            YouTubeApi.GetVideoInfo(this);
+            YouTubeApi.ZiskejInfoVidea(this);
             Prejmenuj();
         }
 
@@ -69,14 +69,14 @@ namespace hudba
             kanalID = polozky[3];
             publikovano = vidPublikovano;
             zanr = polozky[4];
-            puvodniNazev = polozky[5];
+            nazevPuvodni = polozky[5];
             interpret = polozky[6];
             skladba = polozky[7];
             skladbaHledana = polozky[7].Replace('/', ' ').Replace(':', ' ');
             feat = vidFeat;
             featuring = polozky[8];
             skladbaFeaturing = polozky[9];
-            novyNazev = polozky[10];
+            nazevNovy = polozky[10];
             slozka = polozky[11];
             chyba = polozky[12];
             skupina = polozky[13];
@@ -325,7 +325,7 @@ namespace hudba
                 return;
             }
 
-            puvodniNazevUpraveny = mezery.Replace(puvodniNazev, " "); // odstraní více mezer
+            puvodniNazevUpraveny = mezery.Replace(nazevPuvodni, " "); // odstraní více mezer
             puvodniNazevUpraveny = puvodniNazevUpraveny.ToLower()
                                                        .Replace('—', '-')
                                                        .Replace('–', '-')
@@ -596,7 +596,7 @@ namespace hudba
                         if (String.IsNullOrWhiteSpace(nalezenySoubor))
                         {
                             slozka = slozkaKnihovnaCesta;
-                            novyNazev = skladbaHledana;
+                            nazevNovy = skladbaHledana;
                             if (String.IsNullOrWhiteSpace(skupina))
                             {
                                 skupina = "Složka nalezena";
@@ -636,7 +636,7 @@ namespace hudba
                     // video nebylo nalezeno -> v pořádku, můžeme přidat
                     if (String.IsNullOrWhiteSpace(nalezenySoubor)) // nenalezen interpret
                     {
-                        novyNazev = interpret + "-" + skladbaHledana;
+                        nazevNovy = interpret + "-" + skladbaHledana;
                         skupina = "Složka nemohla být nalezena";
                     }
                     else // nalezen interpret ve složce -> víme složku
@@ -903,7 +903,7 @@ namespace hudba
                     if (nazevSoubor == (interpret.ToLower() + "-" + skladbaHledana.ToLower()))
                     {
                         skupina = "Video bylo staženo dříve";
-                        novyNazev = "";
+                        nazevNovy = "";
                         return cestaSoubor;
                     }
                     // video nenalezeno -> ale nalezen interpret ve složce -> správná složka
@@ -919,7 +919,7 @@ namespace hudba
             }
             if (!String.IsNullOrWhiteSpace(spravnaSlozka))
             {
-                novyNazev = interpret + "-" + skladbaHledana;
+                nazevNovy = interpret + "-" + skladbaHledana;
                 skupina = "Složka nalezena";
                 return spravnaSlozka;
             }
@@ -999,7 +999,7 @@ namespace hudba
                             {
                                 slozka = slozkaKnihovnaCesta;
                                 interpret = Path.GetFileNameWithoutExtension(slozkaKnihovnaCesta);
-                                novyNazev = skladba.Replace('/', ' ').Replace(':', ' ');
+                                nazevNovy = skladba.Replace('/', ' ').Replace(':', ' ');
                                 skupina = "Složka nalezena";
                                 return;
                             }
@@ -1011,7 +1011,7 @@ namespace hudba
                             {
                                 slozka = slozkaKnihovnaCesta;
                                 interpret = Path.GetFileNameWithoutExtension(slozkaKnihovnaCesta);
-                                novyNazev = skladba.Replace('/', ' ').Replace(':', ' ');
+                                nazevNovy = skladba.Replace('/', ' ').Replace(':', ' ');
                                 skupina = "Složka nalezena";
                                 return;
                             }
@@ -1113,7 +1113,7 @@ namespace hudba
                 }
                 slozka = interpretSlozkyNejlepsi.Last()[1];
                 interpret = Path.GetFileNameWithoutExtension(interpretSlozkyNejlepsi.Last()[1]);
-                novyNazev = hledanaSkladba.Replace('/', ' ').Replace(':', ' ');
+                nazevNovy = hledanaSkladba.Replace('/', ' ').Replace(':', ' ');
                 skupina = "Složka nalezena";
                 featuring = "";
                 for (int i = 0; i < feat.Count; i++)
@@ -1137,8 +1137,8 @@ namespace hudba
 
             // složka nenalezena -> ostatní, nebo nevím ani ostatní
             slozka = NajdiSlozkuOstatni(slozkyKnihovna);
-            novyNazev = interpret + "-" + skladbaFeaturing;
-            novyNazev = novyNazev.Replace('/', ' ').Replace(':', ' ');
+            nazevNovy = interpret + "-" + skladbaFeaturing;
+            nazevNovy = nazevNovy.Replace('/', ' ').Replace(':', ' ');
             if (slozka == "" || slozka == null)
             {
                 skupina = "Složka nemohla být nalezena";
