@@ -182,7 +182,7 @@ namespace hudba
                     interpret = "black eyed peas";
                     break;
                 case "6ixty9ine":
-                    interpret = "tekashi69";
+                    interpret = "6ix9ine";
                     break;
                 case "slim jxmmi of rae sremmurd":
                     interpret = "slim jxmmi";
@@ -214,8 +214,8 @@ namespace hudba
                 case "mgk":
                     interpret = "machine gun kelly";
                     break;
-                case "6ix9ine":
-                    interpret = "tekashi69";
+                case "tekashi69":
+                    interpret = "6ix9ine";
                     break;
                 default:
                     break;
@@ -228,8 +228,12 @@ namespace hudba
         //ok převede na velká písmena i u interpretů
         private string VelkaPismena(string vstup, char oddelovac)
         {
+            if (String.IsNullOrEmpty(vstup.Trim()))
+            {
+                return "";
+            }
             bool tecka = false;
-            if (vstup.Last() == '.') // spadne pokud je null ?? asi
+            if (vstup.Last() == '.') // spadne pokud je null ??
             {
                 interpret = interpret.TrimEnd('.');
                 tecka = true;
