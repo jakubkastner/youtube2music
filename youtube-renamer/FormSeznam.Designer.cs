@@ -35,7 +35,7 @@
             System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Video bylo staženo dříve", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Staženo", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup7 = new System.Windows.Forms.ListViewGroup("Následující videa jsou již možná stažena", System.Windows.Forms.HorizontalAlignment.Left);
-            this.backgroundWorkerStahniVideo = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorkerStahniVidea = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorkerNactiProgram = new System.ComponentModel.BackgroundWorker();
             this.labelInfo = new System.Windows.Forms.Label();
             this.statusStripStatus = new System.Windows.Forms.StatusStrip();
@@ -116,6 +116,7 @@
             this.olvColumn8 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn9 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn10 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn11 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.statusStripStatus.SuspendLayout();
             this.menuStripMenu.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -123,13 +124,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewSeznamVidei)).BeginInit();
             this.SuspendLayout();
             // 
-            // backgroundWorkerStahniVideo
+            // backgroundWorkerStahniVidea
             // 
-            this.backgroundWorkerStahniVideo.WorkerReportsProgress = true;
-            this.backgroundWorkerStahniVideo.WorkerSupportsCancellation = true;
-            this.backgroundWorkerStahniVideo.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerStahniVideo_DoWork);
-            this.backgroundWorkerStahniVideo.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerStahniVideo_ProgressChanged);
-            this.backgroundWorkerStahniVideo.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerStahniVideo_RunWorkerCompleted);
+            this.backgroundWorkerStahniVidea.WorkerReportsProgress = true;
+            this.backgroundWorkerStahniVidea.WorkerSupportsCancellation = true;
+            this.backgroundWorkerStahniVidea.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerStahniVidea_DoWork);
+            this.backgroundWorkerStahniVidea.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerStahniVideo_ProgressChanged);
+            this.backgroundWorkerStahniVidea.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerStahniVideo_RunWorkerCompleted);
             // 
             // backgroundWorkerNactiProgram
             // 
@@ -301,7 +302,6 @@
             this.toolStripSeparator6,
             this.menuNastaveniFFmpeg,
             this.menuNastaveniFFmpegStahnout});
-            this.menuNastaveni.Enabled = false;
             this.menuNastaveni.Name = "menuNastaveni";
             this.menuNastaveni.Size = new System.Drawing.Size(100, 23);
             this.menuNastaveni.Text = "NASTAVENÍ";
@@ -741,6 +741,7 @@
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn8);
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn9);
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn10);
+            this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn11);
             this.objectListViewSeznamVidei.CellEditUseWholeCell = false;
             this.objectListViewSeznamVidei.CheckBoxes = true;
             this.objectListViewSeznamVidei.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -753,7 +754,8 @@
             this.olvColumn7,
             this.olvColumn8,
             this.olvColumn9,
-            this.olvColumn10});
+            this.olvColumn10,
+            this.olvColumn11});
             this.objectListViewSeznamVidei.Cursor = System.Windows.Forms.Cursors.Default;
             this.objectListViewSeznamVidei.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectListViewSeznamVidei.FullRowSelect = true;
@@ -828,6 +830,11 @@
             this.olvColumn10.Text = "Chyba";
             this.olvColumn10.Width = 184;
             // 
+            // olvColumn11
+            // 
+            this.olvColumn11.AspectName = "stav";
+            this.olvColumn11.Text = "Stav";
+            // 
             // FormSeznam
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -859,7 +866,7 @@
 
         #endregion
 
-        private System.ComponentModel.BackgroundWorker backgroundWorkerStahniVideo;
+        private System.ComponentModel.BackgroundWorker backgroundWorkerStahniVidea;
         private System.ComponentModel.BackgroundWorker backgroundWorkerNactiProgram;
         private System.Windows.Forms.StatusStrip statusStripStatus;
         private System.Windows.Forms.ToolStripProgressBar progressBarStatus;
@@ -940,6 +947,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
+        private BrightIdeasSoftware.OLVColumn olvColumn11;
     }
 }
 

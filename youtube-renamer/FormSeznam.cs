@@ -72,7 +72,6 @@ namespace hudba
                 }
             }*/
         }
-
         // UPRAVIT
         // pouze soubory, které se nepodařilo přejmenovat
         private void filtrSouboruNeMenu_Click(object sender, EventArgs e)
@@ -85,12 +84,9 @@ namespace hudba
                     polozka.Checked = true;
                 }
             }*/
-        }
-
-        
+        }       
 
         /**** MENU - UPRAVIT NOVÝ NÁZEV SOUBORŮ ****/
-
         // zobrazí form s úpravou a předá položky v listView1
         private void menuUpravit_Click(object sender, EventArgs e)
         {
@@ -107,39 +103,128 @@ namespace hudba
         // menu - stáhnout video
         private void menuStahnout_Click(object sender, EventArgs e)
         {
-            List<Video> videa = ZiskejVybranaVidea(true);
+            if (menuStahnout.Text == "STÁHNOUT A PŘESUNOUT")
+            {
+                // spustí backGroundWorker se stáhnutím videí
+                ZobrazStatusLabel("Stahování videí...");
+                if (!backgroundWorkerStahniVidea.IsBusy)
+                {
+                    List<Video> videaKeStazeni = new List<Video>();
+
+                    foreach (Video videoKeStazeni in objectListViewSeznamVidei.CheckedObjects)
+                    {
+                        videaKeStazeni.Add(videoKeStazeni);
+                    }
+                    ZobrazStatusProgressBar(videaKeStazeni.Count * 4 + 1);
+                    menuStahnout.Text = "ZASTAVIT STAHOVÁNÍ";
+                    backgroundWorkerStahniVidea.RunWorkerAsync(videaKeStazeni);
+                }
+                else
+                {
+                    ZobrazStatusLabel("Stahování videí", "Chyba stahování videí.");
+                    ZobrazChybu("Stahování videí", "Videa se nepodařilo stáhnout.", "Zkuzte stáhnout videa znovu.");
+                }
+            }
+            else
+            {
+                // zastaví stahování videí
+                backgroundWorkerStahniVidea.CancelAsync();
+            }
+
+            //List<Video> videa = ZiskejVybranaVidea(true);
 
             //ZobrazNaLabelu("Stahuji videa:", "stahuji");
             //labelStatus.Text = "Stahuji videa...";
 
-            progressBarStatus.Maximum = videa.Count + 1;
-            progressBarStatus.Visible = true;
-
-            if (!backgroundWorkerStahniVideo.IsBusy)
-            {
-                menuStripMenu.Visible = false;
-                backgroundWorkerStahniVideo.RunWorkerAsync(videa);
-            }
-            else
-            {
-                //ZobrazNaLabelu("Stahuji videa:", "Chyba - stahování videa", "Zkuste stáhnout videa znovu.", "stazeno_chyba");
-            }
+            /*progressBarStatus.Maximum = videa.Count + 1;
+            progressBarStatus.Visible = true;*/
         }
 
         // stáhne video
-        private void backgroundWorkerStahniVideo_DoWork(object sender, DoWorkEventArgs e)
+        private void backgroundWorkerStahniVidea_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (backgroundWorkerStahniVideo.CancellationPending)
+            if (backgroundWorkerStahniVidea.CancellationPending)
             {
                 e.Cancel = true;
                 return;
             }
-            List<Video> videa = (List<Video>)e.Argument;
+            List<Video> videaKeStazeni = (List<Video>)e.Argument;
+            int stahovaneVideoIndex = 1;
+            int stahovaniReport = 1;
+            // postupně stáhne vybraná videa
+            foreach (Video stahovaneVideo in videaKeStazeni)
+            {
+                if (backgroundWorkerStahniVidea.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+                string adresaVidea = "https://youtu.be/" + stahovaneVideo.id;
+                string nazev = stahovaneVideo.nazevNovy;
+                Process cmd = new Process();
+                ProcessStartInfo psi = new ProcessStartInfo();
+
+                // zobrazí aktuální číslo stahovaného videa a aktuální stahované video
+                /*backgroundWorkerStahniVidea.ReportProgress(videa.IndexOf(videoStahovane));
+                int index = videa.IndexOf(videoStahovane) + 1;*/
+                //ZobrazNaLabelu("Stahuji video (" + index + " z(e) " + videa.Count + "):", vid.interpret + "-" + vid.skladbaFeaturing, "stahuji");
+
+                ZobrazStatusLabel("Stahování videí", "Stahuji " + stahovaneVideo.id + " (" + stahovaneVideoIndex++ + " z " + videaKeStazeni.Count + ")");
+                stahovaneVideo.stav = "Stahování";
+                objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
+                backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);
+
+                nazev = "zkouska" + stahovaneVideoIndex;
+
+                // nastaví vlastnosti programu na stažení
+                psi.Arguments = "-x -i -w  --audio-quality 0 --audio-format mp3 -o \"" + nazev + ".%(ext)s\" \"" + adresaVidea + "\""; // -U = update
+                //psi.CreateNoWindow = true;
+                psi.ErrorDialog = true;
+                psi.FileName = cestaYoutubeDL;
+                psi.RedirectStandardInput = true;
+                psi.RedirectStandardOutput = true;
+                psi.UseShellExecute = false;
+                psi.WorkingDirectory = slozkaProgramuCache;// Path.Combine(, "stazene");
+                                                           // Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "stazene");
+
+                // spustí program na stažení
+                cmd.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
+                cmd.ErrorDataReceived += new DataReceivedEventHandler(ErrorHandler);
+                cmd.StartInfo = psi;
+                cmd.SynchronizingObject = labelInfo;
+                //cmd.SynchronizingObject = statusStripStatus;
+                try
+                {
+                    cmd.Start();
+                    cmd.BeginOutputReadLine();
+                    cmd.WaitForExit();
+                    stahovaneVideo.stav = "Staženo";
+                    objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
+                    backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);
+                }
+                catch (Exception)
+                {
+                    stahovaneVideo.chyba = "Chyba stahování";
+                    objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
+                    continue;
+                }
+
+                //e.Result += Environment.NewLine + videoStahovane.interpret + "-" + videoStahovane.skladba;
+
+                // uloží metadata do souboru a přesune soubor
+                /*ZapisMetadata(stahovaneVideo);
+                backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);
+                PresunSoubor(stahovaneVideo);
+                backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);*/
+            }
+
+            /*List<Video> videa = (List<Video>)e.Argument;
             if (videa.Count <= 0)
             {
                 return;
             }
-            // postupně stáhne vybraná videa
+            
             foreach (Video vid in videa)
             {
                 string adresaVidea = "https://youtu.be/" + vid.id;
@@ -148,7 +233,7 @@ namespace hudba
                 ProcessStartInfo psi = new ProcessStartInfo();
 
                 // zobrazí aktuální číslo stahovaného videa a aktuální stahované video
-                backgroundWorkerStahniVideo.ReportProgress(videa.IndexOf(vid));
+                backgroundWorkerStahniVidea.ReportProgress(videa.IndexOf(vid));
                 int index = videa.IndexOf(vid) + 1;
                 //ZobrazNaLabelu("Stahuji video (" + index + " z(e) " + videa.Count + "):", vid.interpret + "-" + vid.skladbaFeaturing, "stahuji");
 
@@ -175,13 +260,13 @@ namespace hudba
                 // uloží metadata do souboru a přesune soubor
                 UlozMetadata(vid);
                 PresunSoubor(vid);
-            }
+            }*/
         }
 
         // zobrazí na progressBaru počet již stažených videí
         private void backgroundWorkerStahniVideo_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            listBox1.Items.Clear();
+            //listBox1.Items.Clear();
             progressBarStatus.Value = e.ProgressPercentage;
         }
 
@@ -202,7 +287,7 @@ namespace hudba
                 //labelStatus.Text = "Připraven";
                 progressBarStatus.Visible = false;
             }
-            listBox1.Visible = false;
+            //listBox1.Visible = false;
             menuStripMenu.Visible = true;
         }
 
@@ -224,37 +309,52 @@ namespace hudba
             }
         }
 
-        // uloží metadata do souboru
-        private void UlozMetadata(Video vid)
+        /// <summary>
+        /// Zapíše metadata do souboru.
+        /// </summary>
+        /// <param name="stahovaneVideo"></param>
+        private void ZapisMetadata(Video stahovaneVideo)
         {
+            stahovaneVideo.stav = "Zápis metadat";
+            objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             try
             {
-                TagLib.File soubor = TagLib.File.Create(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "stazene", vid.nazevNovy + ".mp3"));
-                soubor.Tag.Year = Convert.ToUInt32(String.Format("{0:yyyy}", vid.publikovano));
-                soubor.Tag.Performers = new string[] { vid.interpret };
-                soubor.Tag.Title = vid.skladbaFeaturing;
-                soubor.Tag.Genres = new string[] { vid.zanr };
+                string cesta = Path.Combine(slozkaProgramuCache/*, "stazene"*/, stahovaneVideo.nazevNovy + ".mp3");
+                TagLib.File soubor = TagLib.File.Create(cesta);
+                soubor.Tag.Year = Convert.ToUInt32(String.Format("{0:yyyy}", stahovaneVideo.publikovano));
+                soubor.Tag.Performers = new string[] { stahovaneVideo.interpret };
+                soubor.Tag.Title = stahovaneVideo.skladbaFeaturing;
+                soubor.Tag.Genres = new string[] { stahovaneVideo.zanr };
                 soubor.Save();
+                stahovaneVideo.stav = "Metadata zapsány";
+                objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
             catch (Exception)
             {
-                //ZobrazNaLabelu("Stahuji videa:", "Chyba - přidávání metadat do souboru", ex.ToString(), "Zkuste stáhnout videa znovu.", "stazeno_chyba");
-                MessageBox.Show("Test");
+                stahovaneVideo.chyba = "Zapsání metadat";
+                objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
         }
 
-        private void PresunSoubor(Video vid)
+        /// <summary>
+        /// Přesune soubor do cílové složky
+        /// </summary>
+        /// <param name="stahovaneVideo"></param>
+        private void PresunSoubor(Video stahovaneVideo)
         {
+            stahovaneVideo.stav = "Přesunování souboru";
+            objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
+            string cesta = Path.Combine(slozkaProgramuCache/*, "stazene"*/, stahovaneVideo.nazevNovy + ".mp3");
             try
             {
-                File.Move(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "stazene", vid.nazevNovy + ".mp3"),
-                            Path.Combine(vid.slozka, vid.nazevNovy + ".mp3"));
-                vid.skupina = "Staženo";
+                File.Move(cesta, Path.Combine(stahovaneVideo.slozka, stahovaneVideo.nazevNovy + ".mp3"));
+                stahovaneVideo.stav = "Soubor přesunut";
+                objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
             catch (Exception)
             {
-                //ZobrazNaLabelu("Stahuji videa:", "Chyba - přesunování souboru", ex.ToString(), "Zkuste stáhnout videa znovu.", "stazeno_chyba");
-                MessageBox.Show("Test");
+                stahovaneVideo.chyba = "Soubor se nepodařilo přesunout";
+                objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
         }
         /**** TESTOVÁNÍ ****/
@@ -1153,7 +1253,7 @@ namespace hudba
                 backgroundWorkerStahniProgram.ReportProgress(4);
 
                 // přesun souboru ffmpeg.exe
-                string souborFFmpeg = Path.Combine(slozkaFFmpeg, "bin", "ffmpeg.exe");
+                /*string souborFFmpeg = Path.Combine(slozkaFFmpeg, "bin", "ffmpeg.exe");
                 if (File.Exists(souborFFmpeg))
                 {
                     try
@@ -1165,7 +1265,11 @@ namespace hudba
                         e.Result = "presun";
                         return;
                     }
-                }
+                }*/
+                string souborCesta = Path.Combine(slozkaFFmpeg, "bin");
+                if (!PresunSoubor(Path.Combine(souborCesta, "ffmpeg.exe"), cilovaSlozka))  e.Result = "presun";
+                if (!PresunSoubor(Path.Combine(souborCesta, "ffplay.exe"), cilovaSlozka))  e.Result = "presun";
+                if (!PresunSoubor(Path.Combine(souborCesta, "ffprobe.exe"), cilovaSlozka)) e.Result = "presun";
                 backgroundWorkerStahniProgram.ReportProgress(5);
 
                 // odstranění složky ffpmeg a zip souboru
@@ -1187,12 +1291,29 @@ namespace hudba
                 backgroundWorkerStahniProgram.ReportProgress(6);
 
                 // uložení aktuální cesty a zobrazení v menu
-                cestaFFmpeg = Path.Combine(cilovaSlozka, Path.GetFileName(souborFFmpeg));
+                cestaFFmpeg = Path.Combine(cilovaSlozka, Path.GetFileName("ffmpeg.exe"));
                 menuStripMenu.Invoke(new Action(() =>
                 {
                     MenuCestaZobrazit(2);
                 }));
             }
+        }
+        private bool PresunSoubor(string soubor, string cilovaSlozka)
+        {
+            // přesun souboru
+            if (File.Exists(soubor))
+            {
+                try
+                {
+                    File.Copy(soubor, Path.Combine(cilovaSlozka, Path.GetFileName(soubor)), true);
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
         }
         // HOTOVO
         private void backgroundWorkerStahniProgram_ProgressChanged(object sender, ProgressChangedEventArgs e)

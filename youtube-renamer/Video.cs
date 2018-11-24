@@ -33,6 +33,7 @@ namespace hudba
         public string chyba { get; set; }
         public string skupina { get; set; }
         public bool zaskrtnuto { get; set; }
+        public string stav { get; set; }
 
         public Video(string videoID)
         {
