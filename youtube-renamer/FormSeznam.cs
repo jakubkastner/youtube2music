@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
 
-namespace hudba
+namespace youtube_renamer
 {
     public partial class FormSeznam : Form
     {
@@ -31,33 +31,7 @@ namespace hudba
             InitializeComponent();
         }
 
-        // získá vybraná videa
-        private List<Video> ZiskejVybranaVidea(bool pouzeOK)
-        {
-            List<Video> videaVybrana = new List<Video>();
-            foreach (Video videoSeznam in videaVsechna)
-            {
-                foreach (ListViewItem videoListView in listViewSeznam.Items)
-                {
-                    if (videoListView.Checked)
-                    {
-                        if (pouzeOK)
-                        {
-                            if (videoListView.Group.Header != "Složka nalezena")
-                            {
-                                continue;
-                            }
-                        }
-
-                        if (videoSeznam.id == videoListView.SubItems[0].Text)
-                        {
-                            videaVybrana.Add(videoSeznam);
-                        }
-                    }
-                }
-            }
-            return videaVybrana;
-        }
+        
 
         // UPRAVIT
         // pouze soubory, které se podařilo přejmenovat
@@ -84,22 +58,50 @@ namespace hudba
                     polozka.Checked = true;
                 }
             }*/
-        }       
-
-        /**** MENU - UPRAVIT NOVÝ NÁZEV SOUBORŮ ****/
-        // zobrazí form s úpravou a předá položky v listView1
-        private void menuUpravit_Click(object sender, EventArgs e)
-        {
-            List<Video> videa = ZiskejVybranaVidea(false);
-            ListViewItem[] polozky = new ListViewItem[listViewSeznam.Items.Count];
-            listViewSeznam.Items.CopyTo(polozky, 0);
-            FormUprava upravaForm = new FormUprava(videa, hudebniKnihovna, polozky, listViewSeznam.Groups);
-            upravaForm.ShowDialog();
         }
 
+        // HOTOVO
+        /**
+        ZÍSKÁNÍ VYBRANÝCH VIDEÍ A SPUŠTĚNÍ ÚPRAVY VIDEÍ
+        **/
 
-        /**** MENU - STÁHNOUT ****/
+        // HOTOVO
+        /// <summary>
+        /// Získá vybraná videa ze seznamu videí (ObjectListView).
+        /// Pokud je vybráno bez chyb, získá jen ty, kde není chyba.
+        /// </summary>
+        /// <param name="bezChyb">Získání videí bez chyb (true) nebo s chybami (false).</param>
+        /// <returns></returns>
+        private List<Video> ZiskejVybranaVidea(bool bezChyb)
+        {
+            List<Video> videaVybrana = new List<Video>();
+            foreach (Video videoVybrane in objectListViewSeznamVidei.CheckedObjects)
+            {
+                if (bezChyb && !String.IsNullOrEmpty(videoVybrane.chyba))
+                {
+                    // je vybráno získání bez chyb a existuje chyba, nepřidá se
+                    continue;
+                }
+                videaVybrana.Add(videoVybrane);
+            }
+            return videaVybrana;
+        }
+        // HOTOVO
+        // zobrazí Form s úpravou a předá vybraná videa ze seznamu
+        private void menuUpravit_Click(object sender, EventArgs e)
+        {
+            List<Video> upravovanaVidea = ZiskejVybranaVidea(false);
+            FormUprava uprava = new FormUprava(upravovanaVidea, hudebniKnihovna);
+            uprava.ShowDialog();
+            objectListViewSeznamVidei.UpdateObjects(upravovanaVidea);
+        }
 
+        // HOTOVO
+        /**
+        STAŽENÍ VIDEÍ
+        **/
+
+        // HOTOVO
         // menu - stáhnout video
         private void menuStahnout_Click(object sender, EventArgs e)
         {
@@ -109,12 +111,7 @@ namespace hudba
                 ZobrazStatusLabel("Stahování videí...");
                 if (!backgroundWorkerStahniVidea.IsBusy)
                 {
-                    List<Video> videaKeStazeni = new List<Video>();
-
-                    foreach (Video videoKeStazeni in objectListViewSeznamVidei.CheckedObjects)
-                    {
-                        videaKeStazeni.Add(videoKeStazeni);
-                    }
+                    List<Video> videaKeStazeni = ZiskejVybranaVidea(true);
                     ZobrazStatusProgressBar(videaKeStazeni.Count * 4 + 1);
                     menuStahnout.Text = "ZASTAVIT STAHOVÁNÍ";
                     backgroundWorkerStahniVidea.RunWorkerAsync(videaKeStazeni);
@@ -122,24 +119,19 @@ namespace hudba
                 else
                 {
                     ZobrazStatusLabel("Stahování videí", "Chyba stahování videí.");
-                    ZobrazChybu("Stahování videí", "Videa se nepodařilo stáhnout.", "Zkuzte stáhnout videa znovu.");
+                    Zobrazit.Chybu("Stahování videí", "Videa se nepodařilo stáhnout.", "Zkuzte stáhnout videa znovu.");
                 }
             }
-            else
+            else if (menuStahnout.Text == "ZASTAVIT STAHOVÁNÍ")
             {
                 // zastaví stahování videí
+                menuStahnout.Text = "ZASTAVUJI STAHOVÁNÍ...";
+                menuStahnout.Enabled = false;
                 backgroundWorkerStahniVidea.CancelAsync();
             }
-
-            //List<Video> videa = ZiskejVybranaVidea(true);
-
-            //ZobrazNaLabelu("Stahuji videa:", "stahuji");
-            //labelStatus.Text = "Stahuji videa...";
-
-            /*progressBarStatus.Maximum = videa.Count + 1;
-            progressBarStatus.Visible = true;*/
         }
-
+        // HOTOVO
+        private Video stahovaneVideoVerejne;
         // stáhne video
         private void backgroundWorkerStahniVidea_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -151,6 +143,7 @@ namespace hudba
             List<Video> videaKeStazeni = (List<Video>)e.Argument;
             int stahovaneVideoIndex = 1;
             int stahovaniReport = 1;
+            int prevedeno = 0;
             // postupně stáhne vybraná videa
             foreach (Video stahovaneVideo in videaKeStazeni)
             {
@@ -165,150 +158,154 @@ namespace hudba
                 Process cmd = new Process();
                 ProcessStartInfo psi = new ProcessStartInfo();
 
-                // zobrazí aktuální číslo stahovaného videa a aktuální stahované video
-                /*backgroundWorkerStahniVidea.ReportProgress(videa.IndexOf(videoStahovane));
-                int index = videa.IndexOf(videoStahovane) + 1;*/
-                //ZobrazNaLabelu("Stahuji video (" + index + " z(e) " + videa.Count + "):", vid.interpret + "-" + vid.skladbaFeaturing, "stahuji");
-
                 ZobrazStatusLabel("Stahování videí", "Stahuji " + stahovaneVideo.id + " (" + stahovaneVideoIndex++ + " z " + videaKeStazeni.Count + ")");
                 stahovaneVideo.stav = "Stahování";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
                 backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);
 
-                nazev = "zkouska" + stahovaneVideoIndex;
-
+                stahovaneVideoVerejne = stahovaneVideo;
                 // nastaví vlastnosti programu na stažení
                 psi.Arguments = "-x -i -w  --audio-quality 0 --audio-format mp3 -o \"" + nazev + ".%(ext)s\" \"" + adresaVidea + "\""; // -U = update
-                //psi.CreateNoWindow = true;
+                psi.CreateNoWindow = true;
                 psi.ErrorDialog = true;
                 psi.FileName = cestaYoutubeDL;
                 psi.RedirectStandardInput = true;
                 psi.RedirectStandardOutput = true;
                 psi.UseShellExecute = false;
                 psi.WorkingDirectory = slozkaProgramuCache;// Path.Combine(, "stazene");
-                                                           // Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "stazene");
 
                 // spustí program na stažení
-                cmd.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
-                cmd.ErrorDataReceived += new DataReceivedEventHandler(ErrorHandler);
+                cmd.OutputDataReceived += new DataReceivedEventHandler(CteckaVystupu);
+                cmd.ErrorDataReceived += new DataReceivedEventHandler(CteckaVystupuChyby);
                 cmd.StartInfo = psi;
-                cmd.SynchronizingObject = labelInfo;
-                //cmd.SynchronizingObject = statusStripStatus;
+                cmd.SynchronizingObject = objectListViewSeznamVidei;
                 try
                 {
                     cmd.Start();
-                    cmd.BeginOutputReadLine();
-                    cmd.WaitForExit();
-                    stahovaneVideo.stav = "Staženo";
-                    objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
-                    backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);
                 }
                 catch (Exception)
                 {
                     stahovaneVideo.chyba = "Chyba stahování";
+                    stahovaneVideo.stav = "";
                     objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
                     continue;
                 }
-
-                //e.Result += Environment.NewLine + videoStahovane.interpret + "-" + videoStahovane.skladba;
-
-                // uloží metadata do souboru a přesune soubor
-                /*ZapisMetadata(stahovaneVideo);
-                backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);
-                PresunSoubor(stahovaneVideo);
-                backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);*/
-            }
-
-            /*List<Video> videa = (List<Video>)e.Argument;
-            if (videa.Count <= 0)
-            {
-                return;
-            }
-            
-            foreach (Video vid in videa)
-            {
-                string adresaVidea = "https://youtu.be/" + vid.id;
-                string nazev = vid.nazevNovy;
-                Process cmd = new Process();
-                ProcessStartInfo psi = new ProcessStartInfo();
-
-                // zobrazí aktuální číslo stahovaného videa a aktuální stahované video
-                backgroundWorkerStahniVidea.ReportProgress(videa.IndexOf(vid));
-                int index = videa.IndexOf(vid) + 1;
-                //ZobrazNaLabelu("Stahuji video (" + index + " z(e) " + videa.Count + "):", vid.interpret + "-" + vid.skladbaFeaturing, "stahuji");
-
-                // nastaví vlastnosti programu na stažení
-                psi.Arguments = "-x -i -w  --audio-quality 0 --audio-format mp3 -o \"" + nazev + ".%(ext)s\" \"" + adresaVidea + "\""; // -U = update
-                psi.CreateNoWindow = true;
-                psi.ErrorDialog = true;
-                psi.FileName = Path.Combine(cestaYoutubeDL, "youtube-dl");
-                psi.RedirectStandardInput = true;
-                psi.RedirectStandardOutput = true;
-                psi.UseShellExecute = false;
-                psi.WorkingDirectory = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "stazene");
-
-                // spustí program na stažení
-                cmd.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
-                cmd.ErrorDataReceived += new DataReceivedEventHandler(ErrorHandler);
-                cmd.StartInfo = psi;
-                cmd.SynchronizingObject = labelInfo;
-                cmd.Start();
                 cmd.BeginOutputReadLine();
                 cmd.WaitForExit();
-                e.Result += Environment.NewLine + vid.interpret + "-" + vid.skladba;
+
+                if (String.IsNullOrEmpty(stahovaneVideo.chyba))
+                {
+                    // nedošlo k chybě stahování
+                    stahovaneVideo.stav = "Staženo";
+                }
+                else
+                {
+                    // došlo k chybě stahování
+                    stahovaneVideo.stav = "";
+                    objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
+                    continue;
+                }
+                objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
+                backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);
 
                 // uloží metadata do souboru a přesune soubor
-                UlozMetadata(vid);
-                PresunSoubor(vid);
-            }*/
-        }
+                ZapisMetadata(stahovaneVideo);
+                if (!String.IsNullOrEmpty(stahovaneVideo.chyba))
+                {
+                    // došlo k chybě zápisu metadat
+                    continue;
+                }
+                backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);
 
+                // přesune soubor
+                PresunSoubor(stahovaneVideo);
+                if (!String.IsNullOrEmpty(stahovaneVideo.chyba))
+                {
+                    // došlo k chybě přesunu souboru
+                    continue;
+                }
+                backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);
+                prevedeno++;
+            }
+            e.Result = prevedeno;
+        }
+        // HOTOVO
         // zobrazí na progressBaru počet již stažených videí
         private void backgroundWorkerStahniVideo_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            //listBox1.Items.Clear();
             progressBarStatus.Value = e.ProgressPercentage;
         }
-
+        // HOTOVO
         private void backgroundWorkerStahniVideo_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             progressBarStatus.Value = progressBarStatus.Maximum;
             if (e.Cancelled)
             {
-                //ZobrazNaLabelu("Stahuji videa:", "Zrušili jste práci", "stazeno_stormo");
+                ZobrazStatusLabel("Stahování videí", "Zrušeno uživatelem.");
             }
             else if (e.Error != null)
             {
-                //ZobrazNaLabelu("Stahuji videa:", "Chyba - stahování videa", e.Error.ToString(), "Zkuste stáhnout videa znovu.", "stazeno_chyba");
+                ZobrazStatusLabel("Stahování videí", "Chyba.");
+                Zobrazit.Chybu("Stahování videí", "Došlo k chybě, videa nemohla být stažena.", "Zkuste stáhnout videa znovu.", e.Error.ToString());
             }
             else
             {
-                //ZobrazNaLabelu("Následující videa byla úspěšně stažena:", e.Result.ToString(), "OK", "stazeno_ok");
-                //labelStatus.Text = "Připraven";
-                progressBarStatus.Visible = false;
+                ZobrazStatusLabel("Stahování videí", "Úspěšně bylo staženo " + e.Result.ToString() + " videí z(e) " + objectListViewSeznamVidei.CheckedObjects.Count.ToString());
             }
-            //listBox1.Visible = false;
-            menuStripMenu.Visible = true;
+            progressBarStatus.Visible = false;
+            menuStahnout.Text = "STÁHNOUT A PŘESUNOUT";
+            menuStahnout.Enabled = true;
         }
-
-        private void OutputHandler(Object source, DataReceivedEventArgs outLine)
+        // HOTOVO
+        /// <summary>
+        /// Zobrazuje aktuální proces stahování pomocí youtube-dl.
+        /// Aktualizuje stav jednotlivých videí.
+        /// </summary>
+        private void CteckaVystupu(Object source, DataReceivedEventArgs outLine)
         {
             if (!String.IsNullOrEmpty(outLine.Data))
             {
-                listBox1.Visible = true;
-                listBox1.Items.Add(outLine.Data);
+                string vystup = outLine.Data;
+                if (vystup.Contains("[youtube-dl]"))
+                {
+                    vystup = vystup.Replace("[youtube-dl]", "").Trim();
+                    vystup = "Stahování " + vystup;
+                }
+                else if (vystup.Contains("[download]"))
+                {
+                    vystup = vystup.Replace("[download]", "").Trim();
+                    vystup = "Stahování " + vystup;
+                }
+                else if (vystup.Contains("[ffmpeg] Destination:"))
+                {
+                    vystup = vystup.Replace("[ffmpeg] Destination:", "").Trim();
+                    vystup = "Převod souboru na hudební formát: '" + vystup + "'";
+                }
+                else if (vystup.Contains("[ffmpeg]"))
+                {
+                    vystup = vystup.Replace("[ffmpeg]", "").Trim();
+                    vystup = "Převod souboru: " + vystup;
+                }
+                else
+                {
+                    return;
+                }
+                stahovaneVideoVerejne.stav = vystup;
+                objectListViewSeznamVidei.RefreshObject(stahovaneVideoVerejne);
             }
         }
-
-        private void ErrorHandler(Object source, DataReceivedEventArgs outLine)
+        // DODĚLAT
+        /// <summary>
+        /// Zobrazuje chybu programu youtube-dl na MessageBox.
+        /// </summary>
+        private void CteckaVystupuChyby(Object source, DataReceivedEventArgs outLine)
         {
             if (!String.IsNullOrEmpty(outLine.Data))
             {
-                listBox1.Visible = true;
-                listBox1.Items.Add(outLine.Data);
+                MessageBox.Show(outLine.Data);
             }
         }
-
+        // HOTOVO
         /// <summary>
         /// Zapíše metadata do souboru.
         /// </summary>
@@ -332,10 +329,11 @@ namespace hudba
             catch (Exception)
             {
                 stahovaneVideo.chyba = "Zapsání metadat";
+                stahovaneVideo.stav = "";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
         }
-
+        // HOTOVO
         /// <summary>
         /// Přesune soubor do cílové složky
         /// </summary>
@@ -354,6 +352,7 @@ namespace hudba
             catch (Exception)
             {
                 stahovaneVideo.chyba = "Soubor se nepodařilo přesunout";
+                stahovaneVideo.stav = "";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
         }
@@ -570,7 +569,7 @@ namespace hudba
                 menuNastaveniYoutubeDLCestaVybrana.Text = "Nebyla vybrána žádná složka";
                 menuNastaveniYoutubeDLCestaVybrana.Enabled = false;
                 hudebniKnihovna = null;
-                ZobrazChybu("Spuštění průzkumníku Windows", "Složka hudební knihovny neexistuje.");
+                Zobrazit.Chybu("Spuštění průzkumníku Windows", "Složka hudební knihovny neexistuje.");
                 return;
             }
             Process.Start(hudebniKnihovna);
@@ -589,7 +588,7 @@ namespace hudba
                 menuNastaveniYoutubeDLCestaVybrana.Text = "Není vybrána žádná cesta";
                 menuNastaveniYoutubeDLCestaVybrana.Enabled = false;
                 cestaYoutubeDL = null;
-                ZobrazChybu("Spuštění průzkumníku Windows", "Složka programu YouTube-DL neexistuje.");
+                Zobrazit.Chybu("Spuštění průzkumníku Windows", "Složka programu YouTube-DL neexistuje.");
                 return;
             }
             Process.Start("explorer", "/select, \"" + cestaFFmpeg + "\"");
@@ -611,7 +610,7 @@ namespace hudba
                 menuNastaveniFFmpegCestaVybrana.Text = "Není vybrána žádná cesta";
                 menuNastaveniFFmpegCestaVybrana.Enabled = false;
                 cestaFFmpeg = null;
-                ZobrazChybu("Spuštění průzkumníku Windows", "Složka programu FFMmpeg neexistuje.");
+                Zobrazit.Chybu("Spuštění průzkumníku Windows", "Složka programu FFMmpeg neexistuje.");
                 return;
             }
             Process.Start("explorer", "/select, \"" + cestaFFmpeg + "\"");
@@ -660,7 +659,7 @@ namespace hudba
                 if (vyberSouboru.FilterIndex == 2)
                 {
                     // nejedná se o exe soubor
-                    ZobrazUpozorneni("Změna cesty YouTube-DL", "Nejedná se o spustitelý soubor (*.exe)!", "Program nemusí fungovat správně.");
+                    Zobrazit.Upozorneni("Změna cesty YouTube-DL", "Nejedná se o spustitelý soubor (*.exe)!", "Program nemusí fungovat správně.");
                 }
                 cestaYoutubeDL = vyberSouboru.FileName;
                 MenuCestaZobrazit(1);
@@ -679,7 +678,7 @@ namespace hudba
                 if (vyberSouboru.FilterIndex == 2)
                 {
                     // nejedná se o exe soubor
-                    ZobrazUpozorneni("Změna cesty FFmpeg", "Nejedná se o spustitelý soubor (*.exe)!", "Program nemusí fungovat správně.");
+                    Zobrazit.Upozorneni("Změna cesty FFmpeg", "Nejedná se o spustitelý soubor (*.exe)!", "Program nemusí fungovat správně.");
                 }
                 cestaFFmpeg = vyberSouboru.FileName;
                 MenuCestaZobrazit(2);
@@ -708,7 +707,7 @@ namespace hudba
             else
             {
                 ZobrazStatusLabel("Změna hudební knihovny", "Hudební knihovna nemohla být změněna. Složka '" + menu.Text + "' neexistuje.");
-                ZobrazChybu("Změna hudební knihovny", "Hudební knihovna nemohla být změněna.", "Složka '" + menu.Text + "' neexistuje.", "Zkuste to prosím znovu");
+                Zobrazit.Chybu("Změna hudební knihovny", "Hudební knihovna nemohla být změněna.", "Složka '" + menu.Text + "' neexistuje.", "Zkuste to prosím znovu");
             }
         }
         // HOTOVO
@@ -725,7 +724,7 @@ namespace hudba
             else
             {
                 ZobrazStatusLabel("Změna cesty YouTube-DL", "Cesta nemohla být změněna. Soubor '" + menu.Text + "' neexistuje.");
-                ZobrazChybu("Změna cesty YouTube-DL", "Cesta nemohla být změněna.", "Soubor '" + menu.Text + "' neexistuje.", "Zkuste to prosím znovu");
+                Zobrazit.Chybu("Změna cesty YouTube-DL", "Cesta nemohla být změněna.", "Soubor '" + menu.Text + "' neexistuje.", "Zkuste to prosím znovu");
             }
         }
         // HOTOVO
@@ -742,7 +741,7 @@ namespace hudba
             else
             {
                 ZobrazStatusLabel("Změna cesty FFmpeg", "Cesta nemohla být změněna. Soubor '" + menu.Text + "' neexistuje.");
-                ZobrazChybu("Změna cesty FFmpeg", "Cesta nemohla být změněna.", "Soubor '" + menu.Text + "' neexistuje.", "Zkuste to prosím znovu");
+                Zobrazit.Chybu("Změna cesty FFmpeg", "Cesta nemohla být změněna.", "Soubor '" + menu.Text + "' neexistuje.", "Zkuste to prosím znovu");
             }
         }
 
@@ -968,7 +967,7 @@ namespace hudba
             }
             else
             {
-                ZobrazChybu("Prohledávání hudební knihovny", "Zkuste prohledat hudební knihovnu znovu.");
+                Zobrazit.Chybu("Prohledávání hudební knihovny", "Zkuste prohledat hudební knihovnu znovu.");
             }
         }
         // HOTOVO
@@ -1064,22 +1063,22 @@ namespace hudba
             if (e.Error != null)
             {
                 ZobrazStatusLabel("Prohledávání hudební knihovny", "Chyba.");
-                ZobrazChybu("Prohledávání hudební knihovny", "Došlo k chybě, složka s hudební knihovnou nebyla prohledána.", "Zkuste změnit hudební složku.", e.Error.ToString());
+                Zobrazit.Chybu("Prohledávání hudební knihovny", "Došlo k chybě, složka s hudební knihovnou nebyla prohledána.", "Zkuste změnit hudební složku.", e.Error.ToString());
             }
             else if ((string)e.Result == "chyba")
             {
                 ZobrazStatusLabel("Prohledávání hudební knihovny", "Chyba.");
-                ZobrazChybu("Prohledávání hudební knihovny", "Došlo k chybě, složka s hudební knihovnou nebyla prohledána.", "Zkuste změnit hudební složku.");
+                Zobrazit.Chybu("Prohledávání hudební knihovny", "Došlo k chybě, složka s hudební knihovnou nebyla prohledána.", "Zkuste změnit hudební složku.");
             }
             else if ((string)e.Result == "neexistuje")
             {
                 ZobrazStatusLabel("Prohledávání hudební knihovny", "Neexistující hudební knihovna.");
-                ZobrazChybu("Prohledávání hudební knihovny", "Složka s hudební knihovnou neexistuje.", "Změňte prosím hudební složku.");
+                Zobrazit.Chybu("Prohledávání hudební knihovny", "Složka s hudební knihovnou neexistuje.", "Změňte prosím hudební složku.");
             }
             else if ((string)e.Result == "zadne_slozky")
             {
                 ZobrazStatusLabel("Prohledávání hudební knihovny", "Nenalezeny žádné složky.");
-                ZobrazChybu("Prohledávání hudební knihovny", "Ve složce s hudební knihovnou nebyly nalezeny žádné složky.", "Změňte prosím hudební složku.");
+                Zobrazit.Chybu("Prohledávání hudební knihovny", "Ve složce s hudební knihovnou nebyly nalezeny žádné složky.", "Změňte prosím hudební složku.");
             }
             else
             {
@@ -1135,7 +1134,7 @@ namespace hudba
             else
             {
                 ZobrazStatusLabel(typStahovani, "Program nebyl stažen.");
-                ZobrazChybu(typStahovani, "Program nebyl stažen.", "Nebyla vybrána cílová složka stahování.");
+                Zobrazit.Chybu(typStahovani, "Program nebyl stažen.", "Nebyla vybrána cílová složka stahování.");
                 return;
             }
             // stažení programu
@@ -1149,7 +1148,7 @@ namespace hudba
             else
             {
                 ZobrazStatusLabel(typStahovani, "Program nebyl stažen.");
-                ZobrazChybu(typStahovani, "Program nebyl stažen.", "Nelze spustit stahování.", "Zkuste to prosím znovu.");
+                Zobrazit.Chybu(typStahovani, "Program nebyl stažen.", "Nelze spustit stahování.", "Zkuste to prosím znovu.");
             }
         }
         // HOTOVO
@@ -1331,32 +1330,32 @@ namespace hudba
             if (e.Error != null)
             {
                 ZobrazStatusLabel("Stahování programu", "Chyba.");
-                ZobrazChybu("Stahování programu", "Došlo k chybě, program nemohl být stažen.", "Zkuste stáhnout program znovu.", e.Error.ToString());
+                Zobrazit.Chybu("Stahování programu", "Došlo k chybě, program nemohl být stažen.", "Zkuste stáhnout program znovu.", e.Error.ToString());
             }
             else if ((string)e.Result == "cilova_slozka")
             {
                 ZobrazStatusLabel("Stahování programu", "Problém při vytváření cílové složky.");
-                ZobrazChybu("Stahování programu", "Program nebyl stažen.", "Problém při vytváření cílové složky.", "Stáhněte program znovu.");
+                Zobrazit.Chybu("Stahování programu", "Program nebyl stažen.", "Problém při vytváření cílové složky.", "Stáhněte program znovu.");
             }
             else if ((string)e.Result == "stahovani")
             {
                 ZobrazStatusLabel("Stahování programu", "Problém při stahování souboru.");
-                ZobrazChybu("Stahování programu", "Program nebyl stažen.", "Problém při stahování souboru.", "Stáhněte program znovu.");
+                Zobrazit.Chybu("Stahování programu", "Program nebyl stažen.", "Problém při stahování souboru.", "Stáhněte program znovu.");
             }
             else if ((string)e.Result == "rozbaleni")
             {
                 ZobrazStatusLabel("Stahování programu", "Problém při rozbalování archivu.");
-                ZobrazChybu("Stahování programu", "Program nebyl stažen.", "Problém při rozbalování archivu.", "Stáhněte program znovu.");
+                Zobrazit.Chybu("Stahování programu", "Program nebyl stažen.", "Problém při rozbalování archivu.", "Stáhněte program znovu.");
             }
             else if ((string)e.Result == "presun")
             {
                 ZobrazStatusLabel("Stahování programu", "Problém při přesunování souborů.");
-                ZobrazChybu("Stahování programu", "Program nebyl stažen.", "Problém při přesunování souborů.", "Stáhněte program znovu.");
+                Zobrazit.Chybu("Stahování programu", "Program nebyl stažen.", "Problém při přesunování souborů.", "Stáhněte program znovu.");
             }
             else if ((string)e.Result == "presun")
             {
                 ZobrazStatusLabel("Stahování programu", "Program byl úspěšně stažen, ale nedošlo k odstranění přebytečných souborů.");
-                ZobrazChybu("Stahování programu", "Program úspěšně stažen.", "Chyba odstranění přebytečných souborů. Soubory nebyly odstraněny.");
+                Zobrazit.Chybu("Stahování programu", "Program úspěšně stažen.", "Chyba odstranění přebytečných souborů. Soubory nebyly odstraněny.");
             }
             else
             {
@@ -1444,7 +1443,7 @@ namespace hudba
                 }
                 catch (Exception ex)
                 {
-                    ZobrazChybu("Čištění souborů", "Nepodařilo se smazat cache programu.", ex.Message);
+                    Zobrazit.Chybu("Čištění souborů", "Nepodařilo se smazat cache programu.", ex.Message);
                 }
             }
         }
@@ -1602,8 +1601,11 @@ namespace hudba
             if (menuPridatVideoNeboPlaylist.Text == "ZASTAVIT PŘIDÁVÁNÍ")
             {
                 // zastaví přidávání videí
+                menuPridatVideoNeboPlaylist.Text = "ZASTAVUJI PŘIDÁVÁNÍ";
+                menuPridatVideoNeboPlaylist.Enabled = false;
                 backgroundWorkerPridejVidea.CancelAsync();
             }
+            else if (menuPridatVideoNeboPlaylist.Text == "ZASTAVUJI PŘIDÁVÁNÍ") { }
             else
             {
                 // spustí přidávání videí
@@ -1624,7 +1626,7 @@ namespace hudba
                 }
                 else
                 {
-                    ZobrazChybu("přidávání videa", "Nepodařilo se přidat žádné videa.", "Zkuste přidat videa znovu.");
+                    Zobrazit.Chybu("přidávání videa", "Nepodařilo se přidat žádné videa.", "Zkuste přidat videa znovu.");
                     ZobrazStatusLabel("Přidávání videa", "Nepodařilo se přidat žádné videa.");
                 }
             }
@@ -1707,8 +1709,9 @@ namespace hudba
                     if (!pridano)
                     {
                         // video nebylo dříve přidáno - přidá se nové video a získají se informace o něm
-                        videaVsechna.Add(new Video(videoNoveID));
-                        objectListViewSeznamVidei.SetObjects(videaVsechna);
+                        Video noveVideo = new Video(videoNoveID, youtubeID);
+                        videaVsechna.Add(noveVideo);
+                        objectListViewSeznamVidei.AddObject(noveVideo);
                     }
                 }
                 string pridaneDriveText = "";
@@ -1747,8 +1750,9 @@ namespace hudba
                 else
                 {
                     // pokud video nebylo přidáno, přidá se
-                    videaVsechna.Add(new Video(youtubeID));
-                    objectListViewSeznamVidei.SetObjects(videaVsechna);
+                    Video noveVideo = new Video(youtubeID, youtubeID);
+                    videaVsechna.Add(noveVideo);
+                    objectListViewSeznamVidei.AddObject(noveVideo);
                     ZobrazStatusLabel("Přidávání videí", "Video bylo úspěšně přidáno.");
                 }
             }
@@ -1772,22 +1776,22 @@ namespace hudba
             else if (e.Error != null)
             {
                 ZobrazStatusLabel("Přidávání videí", "Chyba.");
-                ZobrazChybu("Přidávání videí", "Došlo k chybě, videa nebyla přidána.", "Zkuste přidat videa znovu.", e.Error.ToString());
+                Zobrazit.Chybu("Přidávání videí", "Došlo k chybě, videa nebyla přidána.", "Zkuste přidat videa znovu.", e.Error.ToString());
             }
             else if ((string)e.Result == "chyba")
             {
                 ZobrazStatusLabel("Přidávání videí", "Chyba.");
-                ZobrazChybu("Přidávání videí", "Nepodařilo se získat videa z Youtube API. Videa nebyla přidána.", "Zkuste přidat videa znovu.");
+                Zobrazit.Chybu("Přidávání videí", "Nepodařilo se získat videa z Youtube API. Videa nebyla přidána.", "Zkuste přidat videa znovu.");
             }
             else if ((string)e.Result == "neexistuje")
             {
                 ZobrazStatusLabel("Přidávání videí z playlistu", "Tento playlist neexistuje.");
-                ZobrazChybu("Přidávání videí z playlistu", "Tento playlist neexistuje.", "Zkuste přidat jiný playlist.");
+                Zobrazit.Chybu("Přidávání videí z playlistu", "Tento playlist neexistuje.", "Zkuste přidat jiný playlist.");
             }
             else if ((string)e.Result == "zadne_videa")
             {
                 ZobrazStatusLabel("Přidávání videí z playlistu", "V playlistu nejsou žádná videa.");
-                ZobrazChybu("Přidávání videí z playlistu", "V playlistu nejsou žádná videa.", "Zkuste přidat jiný playlist.");
+                Zobrazit.Chybu("Přidávání videí z playlistu", "V playlistu nejsou žádná videa.", "Zkuste přidat jiný playlist.");
             }
             // skryje se ProgressBar
             progressBarStatus.Visible = false;
@@ -1969,83 +1973,6 @@ namespace hudba
         private void ZobrazStatusLabel(string nadpis, string text)
         {
             ZobrazStatusLabel(nadpis.ToUpper() + ": " + text);
-        }
-        #endregion
-
-
-        // HOTOVO
-        /**
-        ZOBRAZENÍ INFORMACÍ - Chyby
-        **/
-        #region ZobrazChybu
-        /// <summary>
-        /// Zobrazí MessageBox s chybou.
-        /// </summary>
-        /// <param name="nadpis">Nadpis chyby.</param>
-        /// <param name="text">Text chyby.</param>
-        private void ZobrazChybu(string nadpis, string text)
-        {
-            nadpis = "Chyba: " + nadpis.ToLower();
-            MessageBox.Show(text, nadpis, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
-        /// <summary>
-        /// Zobrazí MessageBox s chybou.
-        /// </summary>
-        /// <param name="nadpis">Nadpis chyby.</param>
-        /// <param name="text1">Text chyby na 1. řádku.</param>
-        /// <param name="text2">Text chyby na 2. řádku.</param>
-        private void ZobrazChybu(string nadpis, string text1, string text2)
-        {
-            ZobrazChybu(nadpis, text1 + Environment.NewLine + text2);
-        }
-        /// <summary>
-        /// Zobrazí MessageBox s chybou.
-        /// </summary>
-        /// <param name="nadpis">Nadpis chyby.</param>
-        /// <param name="text1">Text chyby na 1. řádku.</param>
-        /// <param name="text2">Text chyby na 2. řádku.</param>
-        /// <param name="text3">Text chyby na 3. řádku.</param>
-        private void ZobrazChybu(string nadpis, string text1, string text2, string text3)
-        {
-            ZobrazChybu(nadpis, text1 + Environment.NewLine + text2 + Environment.NewLine + text3);
-        }
-        #endregion
-
-
-        // HOTOVO
-        /**
-        ZOBRAZENÍ INFORMACÍ - Upozornění
-        **/
-        #region ZobrazUpozorneni
-        /// <summary>
-        /// Zobrazí MessageBox s upozorněním.
-        /// </summary>
-        /// <param name="nadpis">Nadpis upozornění.</param>
-        /// <param name="text">Text upozornění.</param>
-        private void ZobrazUpozorneni(string nadpis, string text)
-        {
-            MessageBox.Show(text, nadpis, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
-        /// <summary>
-        /// Zobrazí MessageBox s upozorněním.
-        /// </summary>
-        /// <param name="nadpis">Nadpis upozornění.</param>
-        /// <param name="text1">Text upozornění na 1. řádku.</param>
-        /// <param name="text2">Text upozornění na 2. řádku.</param>
-        private void ZobrazUpozorneni(string nadpis, string text1, string text2)
-        {
-            ZobrazUpozorneni(nadpis, text1 + Environment.NewLine + text2);
-        }
-        /// <summary>
-        /// Zobrazí MessageBox s upozorněním.
-        /// </summary>
-        /// <param name="nadpis">Nadpis upozornění.</param>
-        /// <param name="text1">Text upozornění na 1. řádku.</param>
-        /// <param name="text2">Text upozornění na 2. řádku.</param>
-        /// <param name="text3">Text upozornění na 3. řádku.</param>
-        private void ZobrazUpozorneni(string nadpis, string text1, string text2, string text3)
-        {
-            ZobrazUpozorneni(nadpis, text1 + Environment.NewLine + text2 + Environment.NewLine + text3);
         }
         #endregion
     }

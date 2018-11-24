@@ -1,4 +1,4 @@
-﻿namespace hudba
+﻿namespace youtube_renamer
 {
     partial class FormUprava
     {
@@ -48,21 +48,21 @@
             this.textBoxDatum = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.linkLabelID = new System.Windows.Forms.LinkLabel();
             this.buttonSlozkaJina = new System.Windows.Forms.Button();
             this.textBoxSlozka = new System.Windows.Forms.TextBox();
             this.buttonSlozkaNajit = new System.Windows.Forms.Button();
-            this.checkBoxSlozkaInterpret = new System.Windows.Forms.CheckBox();
-            this.checkBoxSlozkaVybrane = new System.Windows.Forms.CheckBox();
+            this.checkBoxStejnaSlozkaInterpret = new System.Windows.Forms.CheckBox();
+            this.checkBoxStejnaSlozkaVybrane = new System.Windows.Forms.CheckBox();
             this.webBrowserVideo = new System.Windows.Forms.WebBrowser();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.textBoxZanr = new System.Windows.Forms.TextBox();
-            this.checkBoxZanrInterpret = new System.Windows.Forms.CheckBox();
-            this.checkBoxZanrVybrane = new System.Windows.Forms.CheckBox();
+            this.checkBoxStejnyZanrInterpret = new System.Windows.Forms.CheckBox();
+            this.checkBoxStejnyZanrVybrane = new System.Windows.Forms.CheckBox();
             this.labelInterpret = new System.Windows.Forms.Label();
             this.labelSkladba = new System.Windows.Forms.Label();
-            this.linkLabelKanal = new System.Windows.Forms.LinkLabel();
+            this.textBoxID = new System.Windows.Forms.TextBox();
+            this.linkLabelID = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // textBoxInterpret
@@ -93,10 +93,8 @@
             // 
             this.textBoxNovyNazev.Location = new System.Drawing.Point(111, 450);
             this.textBoxNovyNazev.Name = "textBoxNovyNazev";
-            this.textBoxNovyNazev.ReadOnly = true;
             this.textBoxNovyNazev.Size = new System.Drawing.Size(816, 20);
             this.textBoxNovyNazev.TabIndex = 3;
-            this.textBoxNovyNazev.Click += new System.EventHandler(this.textBoxNovyNazev_Click);
             this.textBoxNovyNazev.TextChanged += new System.EventHandler(this.textBoxNovyNazev_TextChanged);
             // 
             // textBoxPuvodniNazev
@@ -249,18 +247,6 @@
             this.label11.TabIndex = 27;
             this.label11.Text = "ID videa";
             // 
-            // linkLabelID
-            // 
-            this.linkLabelID.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.linkLabelID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.linkLabelID.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.linkLabelID.LinkColor = System.Drawing.Color.Black;
-            this.linkLabelID.Location = new System.Drawing.Point(111, 195);
-            this.linkLabelID.Name = "linkLabelID";
-            this.linkLabelID.Size = new System.Drawing.Size(280, 20);
-            this.linkLabelID.TabIndex = 28;
-            this.linkLabelID.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelID_LinkClicked);
-            // 
             // buttonSlozkaJina
             // 
             this.buttonSlozkaJina.Location = new System.Drawing.Point(412, 525);
@@ -275,13 +261,13 @@
             // 
             this.textBoxSlozka.Location = new System.Drawing.Point(111, 476);
             this.textBoxSlozka.Name = "textBoxSlozka";
-            this.textBoxSlozka.ReadOnly = true;
             this.textBoxSlozka.Size = new System.Drawing.Size(816, 20);
             this.textBoxSlozka.TabIndex = 30;
             this.textBoxSlozka.TextChanged += new System.EventHandler(this.textBoxSlozka_TextChanged);
             // 
             // buttonSlozkaNajit
             // 
+            this.buttonSlozkaNajit.Enabled = false;
             this.buttonSlozkaNajit.Location = new System.Drawing.Point(111, 525);
             this.buttonSlozkaNajit.Name = "buttonSlozkaNajit";
             this.buttonSlozkaNajit.Size = new System.Drawing.Size(220, 27);
@@ -290,25 +276,27 @@
             this.buttonSlozkaNajit.UseVisualStyleBackColor = true;
             this.buttonSlozkaNajit.Click += new System.EventHandler(this.buttonSlozkaNajit_Click);
             // 
-            // checkBoxSlozkaInterpret
+            // checkBoxStejnaSlozkaInterpret
             // 
-            this.checkBoxSlozkaInterpret.AutoSize = true;
-            this.checkBoxSlozkaInterpret.Location = new System.Drawing.Point(111, 502);
-            this.checkBoxSlozkaInterpret.Name = "checkBoxSlozkaInterpret";
-            this.checkBoxSlozkaInterpret.Size = new System.Drawing.Size(260, 17);
-            this.checkBoxSlozkaInterpret.TabIndex = 32;
-            this.checkBoxSlozkaInterpret.Text = "Použít složku pro všechny videa tohoto interpreta";
-            this.checkBoxSlozkaInterpret.UseVisualStyleBackColor = true;
+            this.checkBoxStejnaSlozkaInterpret.AutoSize = true;
+            this.checkBoxStejnaSlozkaInterpret.Location = new System.Drawing.Point(111, 502);
+            this.checkBoxStejnaSlozkaInterpret.Name = "checkBoxStejnaSlozkaInterpret";
+            this.checkBoxStejnaSlozkaInterpret.Size = new System.Drawing.Size(260, 17);
+            this.checkBoxStejnaSlozkaInterpret.TabIndex = 32;
+            this.checkBoxStejnaSlozkaInterpret.Text = "Použít složku pro všechny videa tohoto interpreta";
+            this.checkBoxStejnaSlozkaInterpret.UseVisualStyleBackColor = true;
+            this.checkBoxStejnaSlozkaInterpret.CheckedChanged += new System.EventHandler(this.checkBoxStejnaSlozkaInterpret_CheckedChanged);
             // 
-            // checkBoxSlozkaVybrane
+            // checkBoxStejnaSlozkaVybrane
             // 
-            this.checkBoxSlozkaVybrane.AutoSize = true;
-            this.checkBoxSlozkaVybrane.Location = new System.Drawing.Point(662, 502);
-            this.checkBoxSlozkaVybrane.Name = "checkBoxSlozkaVybrane";
-            this.checkBoxSlozkaVybrane.Size = new System.Drawing.Size(265, 17);
-            this.checkBoxSlozkaVybrane.TabIndex = 33;
-            this.checkBoxSlozkaVybrane.Text = "Použít složku pro všechny aktuálně vybrané videa";
-            this.checkBoxSlozkaVybrane.UseVisualStyleBackColor = true;
+            this.checkBoxStejnaSlozkaVybrane.AutoSize = true;
+            this.checkBoxStejnaSlozkaVybrane.Location = new System.Drawing.Point(662, 502);
+            this.checkBoxStejnaSlozkaVybrane.Name = "checkBoxStejnaSlozkaVybrane";
+            this.checkBoxStejnaSlozkaVybrane.Size = new System.Drawing.Size(265, 17);
+            this.checkBoxStejnaSlozkaVybrane.TabIndex = 33;
+            this.checkBoxStejnaSlozkaVybrane.Text = "Použít složku pro všechny aktuálně vybrané videa";
+            this.checkBoxStejnaSlozkaVybrane.UseVisualStyleBackColor = true;
+            this.checkBoxStejnaSlozkaVybrane.CheckedChanged += new System.EventHandler(this.checkBoxStejnaSlozkaVybrane_CheckedChanged);
             // 
             // webBrowserVideo
             // 
@@ -352,71 +340,84 @@
             // 
             // checkBoxZanrInterpret
             // 
-            this.checkBoxZanrInterpret.AutoSize = true;
-            this.checkBoxZanrInterpret.Location = new System.Drawing.Point(111, 300);
-            this.checkBoxZanrInterpret.Name = "checkBoxZanrInterpret";
-            this.checkBoxZanrInterpret.Size = new System.Drawing.Size(250, 17);
-            this.checkBoxZanrInterpret.TabIndex = 38;
-            this.checkBoxZanrInterpret.Text = "Použít žánr pro všechny videa tohoto interpreta";
-            this.checkBoxZanrInterpret.UseVisualStyleBackColor = true;
+            this.checkBoxStejnyZanrInterpret.AutoSize = true;
+            this.checkBoxStejnyZanrInterpret.Location = new System.Drawing.Point(111, 300);
+            this.checkBoxStejnyZanrInterpret.Name = "checkBoxZanrInterpret";
+            this.checkBoxStejnyZanrInterpret.Size = new System.Drawing.Size(250, 17);
+            this.checkBoxStejnyZanrInterpret.TabIndex = 38;
+            this.checkBoxStejnyZanrInterpret.Text = "Použít žánr pro všechny videa tohoto interpreta";
+            this.checkBoxStejnyZanrInterpret.UseVisualStyleBackColor = true;
+            this.checkBoxStejnyZanrInterpret.CheckedChanged += new System.EventHandler(this.checkBoxStejnyZanrInterpret_CheckedChanged);
             // 
-            // checkBoxZanrVybrane
+            // checkBoxStejnyZanrVybrane
             // 
-            this.checkBoxZanrVybrane.AutoSize = true;
-            this.checkBoxZanrVybrane.Location = new System.Drawing.Point(111, 323);
-            this.checkBoxZanrVybrane.Name = "checkBoxZanrVybrane";
-            this.checkBoxZanrVybrane.Size = new System.Drawing.Size(255, 17);
-            this.checkBoxZanrVybrane.TabIndex = 39;
-            this.checkBoxZanrVybrane.Text = "Použít žánr pro všechny aktuálně vybrané videa";
-            this.checkBoxZanrVybrane.UseVisualStyleBackColor = true;
+            this.checkBoxStejnyZanrVybrane.AutoSize = true;
+            this.checkBoxStejnyZanrVybrane.Location = new System.Drawing.Point(111, 323);
+            this.checkBoxStejnyZanrVybrane.Name = "checkBoxStejnyZanrVybrane";
+            this.checkBoxStejnyZanrVybrane.Size = new System.Drawing.Size(255, 17);
+            this.checkBoxStejnyZanrVybrane.TabIndex = 39;
+            this.checkBoxStejnyZanrVybrane.Text = "Použít žánr pro všechny aktuálně vybrané videa";
+            this.checkBoxStejnyZanrVybrane.UseVisualStyleBackColor = true;
+            this.checkBoxStejnyZanrVybrane.CheckedChanged += new System.EventHandler(this.checkBoxStejnyZanrVybrane_CheckedChanged);
             // 
             // labelInterpret
             // 
-            this.labelInterpret.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelInterpret.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.labelInterpret.Location = new System.Drawing.Point(20, 9);
             this.labelInterpret.Name = "labelInterpret";
             this.labelInterpret.Size = new System.Drawing.Size(371, 87);
             this.labelInterpret.TabIndex = 40;
             this.labelInterpret.Text = "-";
             this.labelInterpret.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelInterpret.UseMnemonic = false;
             // 
             // labelSkladba
             // 
-            this.labelSkladba.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelSkladba.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.labelSkladba.Location = new System.Drawing.Point(20, 96);
             this.labelSkladba.Name = "labelSkladba";
             this.labelSkladba.Size = new System.Drawing.Size(371, 87);
             this.labelSkladba.TabIndex = 41;
             this.labelSkladba.Text = "-";
             this.labelSkladba.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelSkladba.UseMnemonic = false;
             // 
-            // linkLabelKanal
+            // textBoxID
             // 
-            this.linkLabelKanal.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.linkLabelKanal.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.linkLabelKanal.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.linkLabelKanal.LinkColor = System.Drawing.Color.Black;
-            this.linkLabelKanal.Location = new System.Drawing.Point(111, 225);
-            this.linkLabelKanal.Name = "linkLabelKanal";
-            this.linkLabelKanal.Size = new System.Drawing.Size(280, 20);
-            this.linkLabelKanal.TabIndex = 42;
-            this.linkLabelKanal.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelKanal_LinkClicked);
+            this.textBoxID.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBoxID.Location = new System.Drawing.Point(111, 222);
+            this.textBoxID.Name = "textBoxID";
+            this.textBoxID.ReadOnly = true;
+            this.textBoxID.Size = new System.Drawing.Size(280, 20);
+            this.textBoxID.TabIndex = 43;
+            // 
+            // linkLabelID
+            // 
+            this.linkLabelID.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.linkLabelID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.linkLabelID.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.linkLabelID.LinkColor = System.Drawing.Color.Black;
+            this.linkLabelID.Location = new System.Drawing.Point(111, 195);
+            this.linkLabelID.Name = "linkLabelID";
+            this.linkLabelID.Size = new System.Drawing.Size(280, 20);
+            this.linkLabelID.TabIndex = 28;
+            this.linkLabelID.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelID_LinkClicked);
             // 
             // FormUprava
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(939, 642);
-            this.Controls.Add(this.linkLabelKanal);
+            this.Controls.Add(this.textBoxID);
             this.Controls.Add(this.labelInterpret);
-            this.Controls.Add(this.checkBoxZanrVybrane);
-            this.Controls.Add(this.checkBoxZanrInterpret);
+            this.Controls.Add(this.checkBoxStejnyZanrVybrane);
+            this.Controls.Add(this.checkBoxStejnyZanrInterpret);
             this.Controls.Add(this.textBoxZanr);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.webBrowserVideo);
-            this.Controls.Add(this.checkBoxSlozkaVybrane);
-            this.Controls.Add(this.checkBoxSlozkaInterpret);
+            this.Controls.Add(this.checkBoxStejnaSlozkaVybrane);
+            this.Controls.Add(this.checkBoxStejnaSlozkaInterpret);
             this.Controls.Add(this.buttonSlozkaNajit);
             this.Controls.Add(this.textBoxSlozka);
             this.Controls.Add(this.buttonSlozkaJina);
@@ -446,7 +447,7 @@
             this.Name = "FormUprava";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "too";
+            this.Text = "Úprava videa";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormUprava_FormClosing);
             this.Load += new System.EventHandler(this.FormUprava_Load);
             this.ResumeLayout(false);
@@ -476,20 +477,20 @@
         private System.Windows.Forms.TextBox textBoxDatum;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.LinkLabel linkLabelID;
         private System.Windows.Forms.Button buttonSlozkaJina;
         private System.Windows.Forms.TextBox textBoxSlozka;
         private System.Windows.Forms.Button buttonSlozkaNajit;
-        private System.Windows.Forms.CheckBox checkBoxSlozkaInterpret;
-        private System.Windows.Forms.CheckBox checkBoxSlozkaVybrane;
+        private System.Windows.Forms.CheckBox checkBoxStejnaSlozkaInterpret;
+        private System.Windows.Forms.CheckBox checkBoxStejnaSlozkaVybrane;
         private System.Windows.Forms.WebBrowser webBrowserVideo;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBoxZanr;
-        private System.Windows.Forms.CheckBox checkBoxZanrInterpret;
-        private System.Windows.Forms.CheckBox checkBoxZanrVybrane;
+        private System.Windows.Forms.CheckBox checkBoxStejnyZanrInterpret;
+        private System.Windows.Forms.CheckBox checkBoxStejnyZanrVybrane;
         private System.Windows.Forms.Label labelInterpret;
         private System.Windows.Forms.Label labelSkladba;
-        private System.Windows.Forms.LinkLabel linkLabelKanal;
+        private System.Windows.Forms.TextBox textBoxID;
+        private System.Windows.Forms.LinkLabel linkLabelID;
     }
 }

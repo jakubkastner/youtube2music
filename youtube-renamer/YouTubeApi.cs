@@ -7,7 +7,7 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
 
-namespace hudba
+namespace youtube_renamer
 {
     public class YouTubeApi
     {
@@ -37,7 +37,7 @@ namespace hudba
             return sluzba;
         }
 
-        public static void ZiskejInfoVidea(Video vid)
+        public static void ZiskejInfoVidea(Video vid, string playlist)
         {
             var pozadavek = sluzbaYoutube.Videos.List("snippet");
             pozadavek.Id = vid.id;
@@ -50,6 +50,7 @@ namespace hudba
                 vid.kanal = response.Items[0].Snippet.ChannelTitle;
                 vid.poznamka = response.Items[0].Snippet.Description;
                 vid.publikovano = response.Items[0].Snippet.PublishedAt.Value;
+                vid.playlist = playlist;
             }
             else
             {

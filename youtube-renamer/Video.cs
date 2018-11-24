@@ -9,7 +9,7 @@ using System.Globalization;
 using System.IO;
 using System.ComponentModel;
 
-namespace hudba
+namespace youtube_renamer
 {
     public class Video
     {
@@ -34,8 +34,9 @@ namespace hudba
         public string skupina { get; set; }
         public bool zaskrtnuto { get; set; }
         public string stav { get; set; }
+        public string playlist { get; set; }
 
-        public Video(string videoID)
+        public Video(string videoID, string playlist)
         {
             id = videoID;
             poznamka = "";
@@ -53,7 +54,7 @@ namespace hudba
             chyba = "";
             skupina = "";
             zaskrtnuto = false;
-            YouTubeApi.ZiskejInfoVidea(this);
+            YouTubeApi.ZiskejInfoVidea(this, playlist);
             Prejmenuj();
         }
 

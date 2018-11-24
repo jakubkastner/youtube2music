@@ -109,6 +109,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Zobrazit.cs" />
     <Compile Include="FormSeznam.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace hudba
+namespace youtube_renamer
 {
     class Soubory
     {
