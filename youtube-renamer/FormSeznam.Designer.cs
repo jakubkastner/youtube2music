@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup50 = new System.Windows.Forms.ListViewGroup("Složka nalezena", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup51 = new System.Windows.Forms.ListViewGroup("Následující videa se nepodařilo přejmenovat", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup52 = new System.Windows.Forms.ListViewGroup("Následující videa byly smazány z Youtube a nebo neexistují", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup53 = new System.Windows.Forms.ListViewGroup("Složka nemohla být nalezena", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup54 = new System.Windows.Forms.ListViewGroup("Video bylo staženo dříve", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup55 = new System.Windows.Forms.ListViewGroup("Staženo", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup56 = new System.Windows.Forms.ListViewGroup("Následující videa jsou již možná stažena", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Složka nalezena", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Následující videa se nepodařilo přejmenovat", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Následující videa byly smazány z Youtube a nebo neexistují", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Složka nemohla být nalezena", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Video bylo staženo dříve", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Staženo", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup7 = new System.Windows.Forms.ListViewGroup("Následující videa jsou již možná stažena", System.Windows.Forms.HorizontalAlignment.Left);
             this.backgroundWorkerStahniVideo = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorkerNactiProgram = new System.ComponentModel.BackgroundWorker();
             this.labelInfo = new System.Windows.Forms.Label();
@@ -83,6 +83,11 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
+            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorkerProhledejSlozky = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorkerPridejVidea = new System.ComponentModel.BackgroundWorker();
             this.listViewSeznam = new System.Windows.Forms.ListView();
@@ -111,10 +116,6 @@
             this.olvColumn8 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn9 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn10 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripStatus.SuspendLayout();
             this.menuStripMenu.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -148,7 +149,6 @@
             this.labelInfo.Tag = "";
             this.labelInfo.Text = "--------------";
             this.labelInfo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.labelInfo.Click += new System.EventHandler(this.labelInfo_Click);
             // 
             // statusStripStatus
             // 
@@ -158,7 +158,7 @@
             this.statusStripStatus.Location = new System.Drawing.Point(0, 665);
             this.statusStripStatus.Name = "statusStripStatus";
             this.statusStripStatus.ShowItemToolTips = true;
-            this.statusStripStatus.Size = new System.Drawing.Size(1362, 25);
+            this.statusStripStatus.Size = new System.Drawing.Size(1396, 25);
             this.statusStripStatus.TabIndex = 13;
             // 
             // progressBarStatus
@@ -194,7 +194,6 @@
             // textBoxOdkaz
             // 
             this.textBoxOdkaz.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxOdkaz.Enabled = false;
             this.textBoxOdkaz.MaxLength = 1000;
             this.textBoxOdkaz.Name = "textBoxOdkaz";
             this.textBoxOdkaz.Size = new System.Drawing.Size(400, 23);
@@ -225,7 +224,7 @@
             this.menuVybratZrusit});
             this.menuVybrat.Enabled = false;
             this.menuVybrat.Name = "menuVybrat";
-            this.menuVybrat.Size = new System.Drawing.Size(100, 23);
+            this.menuVybrat.Size = new System.Drawing.Size(122, 23);
             this.menuVybrat.Text = "VYBRAT";
             // 
             // menuVybratVse
@@ -247,6 +246,7 @@
             this.filtrSouboruOkMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K)));
             this.filtrSouboruOkMenu.Size = new System.Drawing.Size(371, 22);
             this.filtrSouboruOkMenu.Text = "Pouze soubory, které se podařilo přejmenovat";
+            this.filtrSouboruOkMenu.Visible = false;
             this.filtrSouboruOkMenu.Click += new System.EventHandler(this.filtrSouboruOkMenu_Click);
             // 
             // filtrSouboruNeMenu
@@ -255,12 +255,14 @@
             this.filtrSouboruNeMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.filtrSouboruNeMenu.Size = new System.Drawing.Size(371, 22);
             this.filtrSouboruNeMenu.Text = "Pouze soubory, které se nepodařilo přejmenovat";
+            this.filtrSouboruNeMenu.Visible = false;
             this.filtrSouboruNeMenu.Click += new System.EventHandler(this.filtrSouboruNeMenu_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(368, 6);
+            this.toolStripSeparator5.Visible = false;
             // 
             // menuVybratObratit
             // 
@@ -499,7 +501,7 @@
             this.toolStripMenuItem1});
             this.menuStripMenu.Location = new System.Drawing.Point(0, 0);
             this.menuStripMenu.Name = "menuStripMenu";
-            this.menuStripMenu.Size = new System.Drawing.Size(1248, 27);
+            this.menuStripMenu.Size = new System.Drawing.Size(1270, 27);
             this.menuStripMenu.TabIndex = 2;
             this.menuStripMenu.Text = "Menu";
             // 
@@ -520,7 +522,8 @@
             this.toolStripMenuItem5,
             this.toolStripMenuItem6,
             this.toolStripMenuItem7,
-            this.toolStripMenuItem8});
+            this.toolStripMenuItem8,
+            this.testToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(38, 23);
             this.toolStripMenuItem1.Text = "test";
@@ -528,16 +531,51 @@
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem3.Text = "1";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem4.Text = "2";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem5.Text = "3";
+            this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
+            // 
+            // toolStripMenuItem6
+            // 
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem6.Text = "4";
+            this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem7.Text = "5";
+            this.toolStripMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
+            // 
+            // toolStripMenuItem8
+            // 
+            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem8.Text = "6";
+            this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
+            // 
+            // testToolStripMenuItem
+            // 
+            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
+            this.testToolStripMenuItem.Text = "test";
+            this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
             // backgroundWorkerProhledejSlozky
             // 
@@ -571,29 +609,29 @@
             this.columnHeaderChyba,
             this.columnHeaderZanr});
             this.listViewSeznam.FullRowSelect = true;
-            listViewGroup50.Header = "Složka nalezena";
-            listViewGroup50.Name = "listViewGroupOK";
-            listViewGroup51.Header = "Následující videa se nepodařilo přejmenovat";
-            listViewGroup51.Name = "listViewGroupChybaPrejmenovani";
-            listViewGroup52.Header = "Následující videa byly smazány z Youtube a nebo neexistují";
-            listViewGroup52.Name = "listViewGroupChybaVideoNeexistuje";
-            listViewGroup53.Header = "Složka nemohla být nalezena";
-            listViewGroup53.Name = "listViewGroupChybaSlozka";
-            listViewGroup54.Header = "Video bylo staženo dříve";
-            listViewGroup54.Name = "listViewGroupExistuje";
-            listViewGroup55.Header = "Staženo";
-            listViewGroup55.Name = "listViewGroupStazeno";
-            listViewGroup55.Tag = "stazeno";
-            listViewGroup56.Header = "Následující videa jsou již možná stažena";
-            listViewGroup56.Name = "listViewGroupKontrola";
+            listViewGroup1.Header = "Složka nalezena";
+            listViewGroup1.Name = "listViewGroupOK";
+            listViewGroup2.Header = "Následující videa se nepodařilo přejmenovat";
+            listViewGroup2.Name = "listViewGroupChybaPrejmenovani";
+            listViewGroup3.Header = "Následující videa byly smazány z Youtube a nebo neexistují";
+            listViewGroup3.Name = "listViewGroupChybaVideoNeexistuje";
+            listViewGroup4.Header = "Složka nemohla být nalezena";
+            listViewGroup4.Name = "listViewGroupChybaSlozka";
+            listViewGroup5.Header = "Video bylo staženo dříve";
+            listViewGroup5.Name = "listViewGroupExistuje";
+            listViewGroup6.Header = "Staženo";
+            listViewGroup6.Name = "listViewGroupStazeno";
+            listViewGroup6.Tag = "stazeno";
+            listViewGroup7.Header = "Následující videa jsou již možná stažena";
+            listViewGroup7.Name = "listViewGroupKontrola";
             this.listViewSeznam.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup50,
-            listViewGroup51,
-            listViewGroup52,
-            listViewGroup53,
-            listViewGroup54,
-            listViewGroup55,
-            listViewGroup56});
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3,
+            listViewGroup4,
+            listViewGroup5,
+            listViewGroup6,
+            listViewGroup7});
             this.listViewSeznam.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewSeznam.Location = new System.Drawing.Point(3, 208);
             this.listViewSeznam.Name = "listViewSeznam";
@@ -603,7 +641,6 @@
             this.listViewSeznam.UseCompatibleStateImageBehavior = false;
             this.listViewSeznam.View = System.Windows.Forms.View.Details;
             this.listViewSeznam.Visible = false;
-            this.listViewSeznam.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewSeznam_ItemChecked);
             // 
             // columnHeaderID
             // 
@@ -675,7 +712,7 @@
             this.flowLayoutPanel1.Controls.Add(this.listBox1);
             this.flowLayoutPanel1.Controls.Add(this.listViewSeznam);
             this.flowLayoutPanel1.Controls.Add(this.labelInfo);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(587, 346);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(621, 346);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(775, 283);
             this.flowLayoutPanel1.TabIndex = 25;
@@ -689,7 +726,7 @@
             this.panelSeznamVidei.Controls.Add(this.objectListViewSeznamVidei);
             this.panelSeznamVidei.Location = new System.Drawing.Point(0, 30);
             this.panelSeznamVidei.Name = "panelSeznamVidei";
-            this.panelSeznamVidei.Size = new System.Drawing.Size(1362, 632);
+            this.panelSeznamVidei.Size = new System.Drawing.Size(1396, 632);
             this.panelSeznamVidei.TabIndex = 26;
             // 
             // objectListViewSeznamVidei
@@ -723,11 +760,13 @@
             this.objectListViewSeznamVidei.GridLines = true;
             this.objectListViewSeznamVidei.Location = new System.Drawing.Point(0, 0);
             this.objectListViewSeznamVidei.Name = "objectListViewSeznamVidei";
-            this.objectListViewSeznamVidei.Size = new System.Drawing.Size(1362, 632);
+            this.objectListViewSeznamVidei.Size = new System.Drawing.Size(1396, 632);
             this.objectListViewSeznamVidei.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.objectListViewSeznamVidei.TabIndex = 0;
             this.objectListViewSeznamVidei.UseCompatibleStateImageBehavior = false;
             this.objectListViewSeznamVidei.View = System.Windows.Forms.View.Details;
+            this.objectListViewSeznamVidei.ItemsChanged += new System.EventHandler<BrightIdeasSoftware.ItemsChangedEventArgs>(this.objectListViewSeznamVidei_ItemsChanged);
+            this.objectListViewSeznamVidei.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.objectListViewSeznamVidei_ItemChecked);
             // 
             // olvColumn1
             // 
@@ -789,40 +828,12 @@
             this.olvColumn10.Text = "Chyba";
             this.olvColumn10.Width = 184;
             // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem5.Text = "3";
-            this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
-            // 
-            // toolStripMenuItem6
-            // 
-            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem6.Text = "4";
-            this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
-            // 
-            // toolStripMenuItem7
-            // 
-            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem7.Text = "5";
-            this.toolStripMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
-            // 
-            // toolStripMenuItem8
-            // 
-            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem8.Text = "6";
-            this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
-            // 
             // FormSeznam
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1362, 690);
+            this.ClientSize = new System.Drawing.Size(1396, 690);
             this.Controls.Add(this.statusStripStatus);
             this.Controls.Add(this.menuStripMenu);
             this.Controls.Add(this.panelSeznamVidei);
@@ -928,6 +939,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
+        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
     }
 }
 
