@@ -83,6 +83,7 @@
             this.backgroundWorkerPridejVidea = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorkerStahniProgram = new System.ComponentModel.BackgroundWorker();
             this.objectListViewSeznamVidei = new BrightIdeasSoftware.ObjectListView();
+            this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -94,7 +95,6 @@
             this.olvColumn10 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn11 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn12 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.statusStripStatus.SuspendLayout();
             this.menuStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewSeznamVidei)).BeginInit();
@@ -597,6 +597,11 @@
             this.objectListViewSeznamVidei.ItemsChanged += new System.EventHandler<BrightIdeasSoftware.ItemsChangedEventArgs>(this.objectListViewSeznamVidei_ItemsChanged);
             this.objectListViewSeznamVidei.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.objectListViewSeznamVidei_ItemChecked);
             // 
+            // olvColumn1
+            // 
+            this.olvColumn1.AspectName = "playlist";
+            this.olvColumn1.Text = "Playlist";
+            // 
             // olvColumn2
             // 
             this.olvColumn2.AspectName = "id";
@@ -629,7 +634,7 @@
             // 
             // olvColumn7
             // 
-            this.olvColumn7.AspectName = "featuring";
+            this.olvColumn7.AspectName = "Featuring";
             this.olvColumn7.Text = "Featuring";
             this.olvColumn7.Width = 102;
             // 
@@ -661,11 +666,6 @@
             // 
             this.olvColumn12.AspectName = "stav";
             this.olvColumn12.Text = "Stav";
-            // 
-            // olvColumn1
-            // 
-            this.olvColumn1.AspectName = "playlist";
-            this.olvColumn1.Text = "Playlist";
             // 
             // FormSeznam
             // 

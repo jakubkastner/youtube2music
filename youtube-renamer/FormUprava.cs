@@ -9,7 +9,7 @@ namespace youtube_renamer
 {
     public partial class FormUprava : Form
     {
-        public List<Video> upravovanaVidea { get; set; }
+        public List<VideoStare> upravovanaVidea { get; set; }
         string hudebniKnihovna = "";
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace youtube_renamer
         /// </summary>
         /// <param name="upravovanaVideaForm">Upravovaná videa.</param>
         /// <param name="hudebniKnihovnaForm">Složka hudební knihovny.</param>
-        public FormUprava(List<Video> upravovanaVideaForm, string hudebniKnihovnaForm/*, ListViewItem[] pol, ListViewGroupCollection listSkupiny*/)
+        public FormUprava(List<VideoStare> upravovanaVideaForm, string hudebniKnihovnaForm/*, ListViewItem[] pol, ListViewGroupCollection listSkupiny*/)
         {
             InitializeComponent();
             upravovanaVidea = upravovanaVideaForm;
@@ -87,7 +87,7 @@ namespace youtube_renamer
             labelInterpret.Text = upravovanaVidea[index].interpret;
             labelSkladba.Text = upravovanaVidea[index].skladbaFeaturing;
             textBoxSkladba.Text = upravovanaVidea[index].skladba;
-            textBoxFeaturing.Text = upravovanaVidea[index].featuring;
+            textBoxFeaturing.Text = upravovanaVidea[index].Featuring;
             textBoxNovyNazev.Text = upravovanaVidea[index].nazevNovy;
             textBoxSlozka.Text = upravovanaVidea[index].slozka;
             textBoxZanr.Text = upravovanaVidea[index].zanr;
@@ -273,7 +273,7 @@ namespace youtube_renamer
             // kontroluje jestli je upravovaná hodnota shodná s výchozí hodnotou
             if (textBoxInterpret.Text != upravovanaVidea[index].interpret ||
                 textBoxSkladba.Text != upravovanaVidea[index].skladba ||
-                textBoxFeaturing.Text != upravovanaVidea[index].featuring ||
+                textBoxFeaturing.Text != upravovanaVidea[index].Featuring ||
                 textBoxNovyNazev.Text != upravovanaVidea[index].nazevNovy ||
                 textBoxSlozka.Text != upravovanaVidea[index].slozka ||
                 textBoxZanr.Text != upravovanaVidea[index].zanr ||
@@ -338,7 +338,7 @@ namespace youtube_renamer
             // uloží hodnoty
             upravovanaVidea[index].interpret = textBoxInterpret.Text;
             upravovanaVidea[index].skladba = textBoxSkladba.Text;
-            upravovanaVidea[index].featuring = textBoxFeaturing.Text;
+            upravovanaVidea[index].Featuring = textBoxFeaturing.Text;
             if (textBoxFeaturing.Text != "")
             {
                 upravovanaVidea[index].skladbaFeaturing = textBoxSkladba.Text + " (ft. " + textBoxFeaturing.Text + ")";
@@ -355,7 +355,7 @@ namespace youtube_renamer
             // pokud je zaškrtnuto použití stejné složky u všech upravovaných videí, uložím složku i u nich
             if (checkBoxStejnaSlozkaVybrane.Checked)
             {
-                foreach (Video vid in upravovanaVidea)
+                foreach (VideoStare vid in upravovanaVidea)
                 {
                     UlozSlozku(vid);
                 }
@@ -363,7 +363,7 @@ namespace youtube_renamer
             // pokud je zaškrtnuto použití stejné složky u všech upravovaných videí stejného interpreta, uložím složku i u nich
             if (checkBoxStejnaSlozkaInterpret.Checked)
             {
-                foreach (Video vid in upravovanaVidea)
+                foreach (VideoStare vid in upravovanaVidea)
                 {
                     if (vid.interpret == textBoxInterpret.Text)
                     {
@@ -376,7 +376,7 @@ namespace youtube_renamer
             // pokud je zaškrtnuto použití stejného žánru u všech upravovaných videí, uložím žánr i u nich
             if (checkBoxStejnyZanrVybrane.Checked)
             {
-                foreach (Video vid in upravovanaVidea)
+                foreach (VideoStare vid in upravovanaVidea)
                 {
                     vid.zanr = textBoxZanr.Text;
                 }
@@ -384,7 +384,7 @@ namespace youtube_renamer
             // pokud je zaškrtnuto použití stejného žánru u všech upravovaných videí stejného interpreta, uložím žánr i u nich
             if (checkBoxStejnyZanrInterpret.Checked)
             {
-                foreach (Video vid in upravovanaVidea)
+                foreach (VideoStare vid in upravovanaVidea)
                 {
                     if (vid.interpret == textBoxInterpret.Text)
                     {
@@ -399,7 +399,7 @@ namespace youtube_renamer
         /// Pokud není vybrána, zapíše se jako chyba.
         /// </summary>
         /// <param name="ukladaneVideo">Video k uložení složky.</param>
-        private void UlozSlozku(Video ukladaneVideo)
+        private void UlozSlozku(VideoStare ukladaneVideo)
         {
             string ukladanaSlozka = textBoxSlozka.Text;
             if (String.IsNullOrEmpty(ukladanaSlozka))
@@ -417,9 +417,9 @@ namespace youtube_renamer
                 }
                 novyNazev += ukladaneVideo.skladba;
 
-                if (!String.IsNullOrEmpty(ukladaneVideo.featuring))
+                if (!String.IsNullOrEmpty(ukladaneVideo.Featuring))
                 {
-                    novyNazev += " (ft. " + ukladaneVideo.featuring + ")";
+                    novyNazev += " (ft. " + ukladaneVideo.Featuring + ")";
                 }
                 ukladaneVideo.nazevNovy = novyNazev;
 

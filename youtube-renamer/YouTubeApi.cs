@@ -37,7 +37,7 @@ namespace youtube_renamer
             return sluzba;
         }
 
-        public static void ZiskejInfoVidea(Video vid, string playlist)
+        public static void ZiskejInfoVideaStare(VideoStare vid, string playlist)
         {
             var pozadavek = sluzbaYoutube.Videos.List("snippet");
             pozadavek.Id = vid.id;
@@ -48,13 +48,35 @@ namespace youtube_renamer
                 vid.nazevPuvodni = response.Items[0].Snippet.Title;
                 vid.kanalID = response.Items[0].Snippet.ChannelId;
                 vid.kanal = response.Items[0].Snippet.ChannelTitle;
-                vid.poznamka = response.Items[0].Snippet.Description;
+                vid.popis = response.Items[0].Snippet.Description;
                 vid.publikovano = response.Items[0].Snippet.PublishedAt.Value;
                 vid.playlist = playlist;
             }
             else
             {
                 vid.chyba = "video neexistuje";
+            }
+        }
+        /// <summary>
+        /// Získá z YouTube API informace o videu (název, kanál, popis, publikováno).
+        /// </summary>
+        /// <param name="noveVideo">Nové video k získání informací z YouTube API.</param>
+        public static void ZiskejInfoVidea(Video noveVideo)
+        {
+            var pozadavek = sluzbaYoutube.Videos.List("snippet");
+            pozadavek.Id = noveVideo.ID;
+
+            var response = pozadavek.Execute();
+            if (response.Items.Count > 0)
+            {
+                noveVideo.Nazev.Puvodni = response.Items[0].Snippet.Title;
+                noveVideo.Kanal = new VideoKanal(response.Items[0].Snippet.ChannelId, response.Items[0].Snippet.ChannelTitle);
+                noveVideo.Popis = response.Items[0].Snippet.Description;
+                noveVideo.Publikovano = response.Items[0].Snippet.PublishedAt.Value;
+            }
+            else
+            {
+                noveVideo.Chyba = "Video neexistuje";
             }
         }
 

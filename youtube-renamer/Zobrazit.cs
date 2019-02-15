@@ -9,7 +9,7 @@ namespace youtube_renamer
     public class Zobrazit
     {
         /**
-        CHYBA
+        ZOBRAZIT CHYBU
         **/
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace youtube_renamer
         }
 
         /**
-        UPOZORNĚNÍ
+        ZOBRAZIT UPOZORNĚNÍ
         **/
 
         /// <summary>
