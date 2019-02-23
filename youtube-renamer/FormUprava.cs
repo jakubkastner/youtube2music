@@ -9,7 +9,7 @@ namespace youtube_renamer
 {
     public partial class FormUprava : Form
     {
-        public List<VideoStare> upravovanaVidea { get; set; }
+        public List<Video> upravovanaVidea { get; set; }
         string hudebniKnihovna = "";
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace youtube_renamer
         /// </summary>
         /// <param name="upravovanaVideaForm">Upravovaná videa.</param>
         /// <param name="hudebniKnihovnaForm">Složka hudební knihovny.</param>
-        public FormUprava(List<VideoStare> upravovanaVideaForm, string hudebniKnihovnaForm/*, ListViewItem[] pol, ListViewGroupCollection listSkupiny*/)
+        public FormUprava(List<Video> upravovanaVideaForm, string hudebniKnihovnaForm/*, ListViewItem[] pol, ListViewGroupCollection listSkupiny*/)
         {
             InitializeComponent();
             upravovanaVidea = upravovanaVideaForm;
@@ -79,18 +79,18 @@ namespace youtube_renamer
             }
             
             // naplnění prvků hodnotami
-            linkLabelID.Text = upravovanaVidea[index].id;
-            textBoxID.Text = upravovanaVidea[index].kanal;
-            textBoxDatum.Text = String.Format("{0:yyyy-MM-dd}", upravovanaVidea[index].publikovano);
-            textBoxPuvodniNazev.Text = upravovanaVidea[index].nazevPuvodni;
-            textBoxInterpret.Text = upravovanaVidea[index].interpret;
-            labelInterpret.Text = upravovanaVidea[index].interpret;
-            labelSkladba.Text = upravovanaVidea[index].skladbaFeaturing;
-            textBoxSkladba.Text = upravovanaVidea[index].skladba;
-            textBoxFeaturing.Text = upravovanaVidea[index].Featuring;
-            textBoxNovyNazev.Text = upravovanaVidea[index].nazevNovy;
-            textBoxSlozka.Text = upravovanaVidea[index].slozka;
-            textBoxZanr.Text = upravovanaVidea[index].zanr;
+            linkLabelID.Text = upravovanaVidea[index].ID;
+            textBoxID.Text = upravovanaVidea[index].Kanal.ID;
+            textBoxDatum.Text = String.Format("{0:yyyy-MM-dd}", upravovanaVidea[index].Publikovano);
+            textBoxPuvodniNazev.Text = upravovanaVidea[index].NazevPuvodni;
+            textBoxInterpret.Text = upravovanaVidea[index].Interpret;
+            labelInterpret.Text = upravovanaVidea[index].Interpret;
+            labelSkladba.Text = upravovanaVidea[index].NazevCely; // SkladbaFeaturing
+            textBoxSkladba.Text = upravovanaVidea[index].Skladba;
+            textBoxFeaturing.Text = upravovanaVidea[index].InterpretiFeat;
+            textBoxNovyNazev.Text = upravovanaVidea[index].NazevCely; // NazevNovy
+            textBoxSlozka.Text = upravovanaVidea[index].Slozka;
+            textBoxZanr.Text = upravovanaVidea[index].Zanr;
 
             if (textBoxNovyNazev.Text == "")
             {
@@ -271,12 +271,12 @@ namespace youtube_renamer
             // pokud nebylo načteno, nedochází ke změnám
             if (!nacteno) return;
             // kontroluje jestli je upravovaná hodnota shodná s výchozí hodnotou
-            if (textBoxInterpret.Text != upravovanaVidea[index].interpret ||
-                textBoxSkladba.Text != upravovanaVidea[index].skladba ||
-                textBoxFeaturing.Text != upravovanaVidea[index].Featuring ||
-                textBoxNovyNazev.Text != upravovanaVidea[index].nazevNovy ||
-                textBoxSlozka.Text != upravovanaVidea[index].slozka ||
-                textBoxZanr.Text != upravovanaVidea[index].zanr ||
+            if (textBoxInterpret.Text != upravovanaVidea[index].Interpret ||
+                textBoxSkladba.Text != upravovanaVidea[index].Skladba ||
+                textBoxFeaturing.Text != upravovanaVidea[index].InterpretiFeat ||
+                textBoxNovyNazev.Text != upravovanaVidea[index].NazevCely || // NazevNovy
+                textBoxSlozka.Text != upravovanaVidea[index].Slozka ||
+                textBoxZanr.Text != upravovanaVidea[index].Zanr ||
                 checkBoxStejnaSlozkaInterpret.Checked ||
                 checkBoxStejnaSlozkaVybrane.Checked ||
                 checkBoxStejnyZanrInterpret.Checked ||
@@ -336,26 +336,26 @@ namespace youtube_renamer
                 return;
             }
             // uloží hodnoty
-            upravovanaVidea[index].interpret = textBoxInterpret.Text;
-            upravovanaVidea[index].skladba = textBoxSkladba.Text;
-            upravovanaVidea[index].Featuring = textBoxFeaturing.Text;
-            if (textBoxFeaturing.Text != "")
+            //upravovanaVidea[index].Interpret = textBoxInterpret.Text; //UPRAVIT INTERPRET READONLY
+            upravovanaVidea[index].Skladba = textBoxSkladba.Text;
+            //upravovanaVidea[index].InterpretiFeat = textBoxFeaturing.Text; //UPRAVIT INTERPRETI FEAT READONLY
+            /*if (textBoxFeaturing.Text != "")
             {
                 upravovanaVidea[index].skladbaFeaturing = textBoxSkladba.Text + " (ft. " + textBoxFeaturing.Text + ")";
             }
             else
             {
                 upravovanaVidea[index].skladbaFeaturing = textBoxSkladba.Text;
-            }
-            upravovanaVidea[index].nazevNovy = textBoxNovyNazev.Text;
-            upravovanaVidea[index].zanr = textBoxZanr.Text;
+            }*/
+            //upravovanaVidea[index].NazevCely = textBoxNovyNazev.Text; // NazevNovy = readonly
+            upravovanaVidea[index].Zanr = textBoxZanr.Text;
             // uloží složku
             UlozSlozku(upravovanaVidea[index]);
 
             // pokud je zaškrtnuto použití stejné složky u všech upravovaných videí, uložím složku i u nich
             if (checkBoxStejnaSlozkaVybrane.Checked)
             {
-                foreach (VideoStare vid in upravovanaVidea)
+                foreach (Video vid in upravovanaVidea)
                 {
                     UlozSlozku(vid);
                 }
@@ -363,9 +363,9 @@ namespace youtube_renamer
             // pokud je zaškrtnuto použití stejné složky u všech upravovaných videí stejného interpreta, uložím složku i u nich
             if (checkBoxStejnaSlozkaInterpret.Checked)
             {
-                foreach (VideoStare vid in upravovanaVidea)
+                foreach (Video vid in upravovanaVidea)
                 {
-                    if (vid.interpret == textBoxInterpret.Text)
+                    if (vid.Interpret == textBoxInterpret.Text)
                     {
                         // interpret je stejný
                         UlozSlozku(vid);
@@ -376,19 +376,19 @@ namespace youtube_renamer
             // pokud je zaškrtnuto použití stejného žánru u všech upravovaných videí, uložím žánr i u nich
             if (checkBoxStejnyZanrVybrane.Checked)
             {
-                foreach (VideoStare vid in upravovanaVidea)
+                foreach (Video vid in upravovanaVidea)
                 {
-                    vid.zanr = textBoxZanr.Text;
+                    vid.Zanr = textBoxZanr.Text;
                 }
             }
             // pokud je zaškrtnuto použití stejného žánru u všech upravovaných videí stejného interpreta, uložím žánr i u nich
             if (checkBoxStejnyZanrInterpret.Checked)
             {
-                foreach (VideoStare vid in upravovanaVidea)
+                foreach (Video vid in upravovanaVidea)
                 {
-                    if (vid.interpret == textBoxInterpret.Text)
+                    if (vid.Interpret == textBoxInterpret.Text)
                     {
-                        vid.zanr = textBoxZanr.Text;
+                        vid.Zanr = textBoxZanr.Text;
                     }
                 }
             }
@@ -399,13 +399,13 @@ namespace youtube_renamer
         /// Pokud není vybrána, zapíše se jako chyba.
         /// </summary>
         /// <param name="ukladaneVideo">Video k uložení složky.</param>
-        private void UlozSlozku(VideoStare ukladaneVideo)
+        private void UlozSlozku(Video ukladaneVideo)
         {
             string ukladanaSlozka = textBoxSlozka.Text;
             if (String.IsNullOrEmpty(ukladanaSlozka))
             {
                 // není vybrána žádná složka
-                ukladaneVideo.chyba = "Složka nenalezena";
+                ukladaneVideo.Chyba = "Složka nenalezena";
                 ukladanaSlozka = "";
             }
             else
@@ -413,21 +413,21 @@ namespace youtube_renamer
                 string novyNazev = "";
                 if (ukladanaSlozka.ToLower().Contains("_ostatní"))
                 {
-                    novyNazev = ukladaneVideo.interpret + "-";
+                    novyNazev = ukladaneVideo.Interpret + "-";
                 }
-                novyNazev += ukladaneVideo.skladba;
+                novyNazev += ukladaneVideo.Skladba;
 
-                if (!String.IsNullOrEmpty(ukladaneVideo.Featuring))
+                if (!String.IsNullOrEmpty(ukladaneVideo.InterpretiFeat))
                 {
-                    novyNazev += " (ft. " + ukladaneVideo.Featuring + ")";
+                    novyNazev += " (ft. " + ukladaneVideo.InterpretiFeat + ")";
                 }
-                ukladaneVideo.nazevNovy = novyNazev;
+                //ukladaneVideo.NazevCely = novyNazev; // NazevNovy - readonly
 
                 // ODSTRANIT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 // JEN DOČASNĚ
-                ukladaneVideo.chyba = "";
+                ukladaneVideo.Chyba = "";
             }
-            ukladaneVideo.slozka = ukladanaSlozka;
+            ukladaneVideo.Slozka = ukladanaSlozka;
         }
 
         // STARÉ UKLÁDÁNÍ
@@ -489,7 +489,7 @@ namespace youtube_renamer
         // geckowebbrowser
         private void webBrowserVideo_NewWindow(object sender, CancelEventArgs e)
         {
-            Process.Start("https://youtu.be/" + upravovanaVidea[index].id);
+            Process.Start("https://youtu.be/" + upravovanaVidea[index].ID);
             e.Cancel = true;
         }
 

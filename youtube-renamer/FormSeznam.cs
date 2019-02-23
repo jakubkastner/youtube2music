@@ -24,7 +24,7 @@ namespace youtube_renamer
         string slozkaProgramuCache = null;
 
         string youtubeID = null;
-        List<VideoStare> videaVsechna = new List<VideoStare>();
+        List<Video> videaVsechna = new List<Video>();
 
         public FormSeznam()
         {
@@ -72,12 +72,12 @@ namespace youtube_renamer
         /// </summary>
         /// <param name="bezChyb">Získání videí bez chyb (true) nebo s chybami (false).</param>
         /// <returns></returns>
-        private List<VideoStare> ZiskejVybranaVidea(bool bezChyb)
+        private List<Video> ZiskejVybranaVidea(bool bezChyb)
         {
-            List<VideoStare> videaVybrana = new List<VideoStare>();
-            foreach (VideoStare videoVybrane in objectListViewSeznamVidei.CheckedObjects)
+            List<Video> videaVybrana = new List<Video>();
+            foreach (Video videoVybrane in objectListViewSeznamVidei.CheckedObjects)
             {
-                if (bezChyb && !String.IsNullOrEmpty(videoVybrane.chyba))
+                if (bezChyb && !String.IsNullOrEmpty(videoVybrane.Chyba))
                 {
                     // je vybráno získání bez chyb a existuje chyba, nepřidá se
                     continue;
@@ -90,7 +90,7 @@ namespace youtube_renamer
         // zobrazí Form s úpravou a předá vybraná videa ze seznamu
         private void menuUpravit_Click(object sender, EventArgs e)
         {
-            List<VideoStare> upravovanaVidea = ZiskejVybranaVidea(false);
+            List<Video> upravovanaVidea = ZiskejVybranaVidea(false);
             FormUprava uprava = new FormUprava(upravovanaVidea, hudebniKnihovna);
             uprava.ShowDialog();
             objectListViewSeznamVidei.UpdateObjects(upravovanaVidea);
@@ -111,7 +111,7 @@ namespace youtube_renamer
                 ZobrazStatusLabel("Stahování videí...");
                 if (!backgroundWorkerStahniVidea.IsBusy)
                 {
-                    List<VideoStare> videaKeStazeni = ZiskejVybranaVidea(true);
+                    List<Video> videaKeStazeni = ZiskejVybranaVidea(true);
                     ZobrazStatusProgressBar(videaKeStazeni.Count * 4 + 1);
                     menuStahnout.Text = "ZASTAVIT STAHOVÁNÍ";
                     backgroundWorkerStahniVidea.RunWorkerAsync(videaKeStazeni);
@@ -131,7 +131,7 @@ namespace youtube_renamer
             }
         }
         // HOTOVO
-        private VideoStare stahovaneVideoVerejne;
+        private Video stahovaneVideoVerejne;
         // stáhne video
         private void backgroundWorkerStahniVidea_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -140,12 +140,12 @@ namespace youtube_renamer
                 e.Cancel = true;
                 return;
             }
-            List<VideoStare> videaKeStazeni = (List<VideoStare>)e.Argument;
+            List<Video> videaKeStazeni = (List<Video>)e.Argument;
             int stahovaneVideoIndex = 1;
             int stahovaniReport = 1;
             int prevedeno = 0;
             // postupně stáhne vybraná videa
-            foreach (VideoStare stahovaneVideo in videaKeStazeni)
+            foreach (Video stahovaneVideo in videaKeStazeni)
             {
                 if (backgroundWorkerStahniVidea.CancellationPending)
                 {
@@ -153,13 +153,13 @@ namespace youtube_renamer
                     return;
                 }
 
-                string adresaVidea = "https://youtu.be/" + stahovaneVideo.id;
-                string nazev = stahovaneVideo.nazevNovy;
+                string adresaVidea = "https://youtu.be/" + stahovaneVideo.ID;
+                string nazev = stahovaneVideo.NazevCely; // NazevNovy
                 Process cmd = new Process();
                 ProcessStartInfo psi = new ProcessStartInfo();
 
-                ZobrazStatusLabel("Stahování videí", "Stahuji " + stahovaneVideo.id + " (" + stahovaneVideoIndex++ + " z " + videaKeStazeni.Count + ")");
-                stahovaneVideo.stav = "Stahování";
+                ZobrazStatusLabel("Stahování videí", "Stahuji " + stahovaneVideo.ID + " (" + stahovaneVideoIndex++ + " z " + videaKeStazeni.Count + ")");
+                stahovaneVideo.Stav = "Stahování";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
                 backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);
 
@@ -185,23 +185,23 @@ namespace youtube_renamer
                 }
                 catch (Exception)
                 {
-                    stahovaneVideo.chyba = "Chyba stahování";
-                    stahovaneVideo.stav = "";
+                    stahovaneVideo.Chyba = "Chyba stahování";
+                    stahovaneVideo.Stav = "";
                     objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
                     continue;
                 }
                 cmd.BeginOutputReadLine();
                 cmd.WaitForExit();
 
-                if (String.IsNullOrEmpty(stahovaneVideo.chyba))
+                if (String.IsNullOrEmpty(stahovaneVideo.Chyba))
                 {
                     // nedošlo k chybě stahování
-                    stahovaneVideo.stav = "Staženo";
+                    stahovaneVideo.Stav = "Staženo";
                 }
                 else
                 {
                     // došlo k chybě stahování
-                    stahovaneVideo.stav = "";
+                    stahovaneVideo.Stav = "";
                     objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
                     continue;
                 }
@@ -210,7 +210,7 @@ namespace youtube_renamer
 
                 // uloží metadata do souboru a přesune soubor
                 ZapisMetadata(stahovaneVideo);
-                if (!String.IsNullOrEmpty(stahovaneVideo.chyba))
+                if (!String.IsNullOrEmpty(stahovaneVideo.Chyba))
                 {
                     // došlo k chybě zápisu metadat
                     continue;
@@ -219,7 +219,7 @@ namespace youtube_renamer
 
                 // přesune soubor
                 PresunSoubor(stahovaneVideo);
-                if (!String.IsNullOrEmpty(stahovaneVideo.chyba))
+                if (!String.IsNullOrEmpty(stahovaneVideo.Chyba))
                 {
                     // došlo k chybě přesunu souboru
                     continue;
@@ -290,7 +290,7 @@ namespace youtube_renamer
                 {
                     return;
                 }
-                stahovaneVideoVerejne.stav = vystup;
+                stahovaneVideoVerejne.Stav = vystup;
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideoVerejne);
             }
         }
@@ -310,26 +310,26 @@ namespace youtube_renamer
         /// Zapíše metadata do souboru.
         /// </summary>
         /// <param name="stahovaneVideo"></param>
-        private void ZapisMetadata(VideoStare stahovaneVideo)
+        private void ZapisMetadata(Video stahovaneVideo)
         {
-            stahovaneVideo.stav = "Zápis metadat";
+            stahovaneVideo.Stav = "Zápis metadat";
             objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             try
             {
-                string cesta = Path.Combine(slozkaProgramuCache/*, "stazene"*/, stahovaneVideo.nazevNovy + ".mp3");
+                string cesta = Path.Combine(slozkaProgramuCache/*, "stazene"*/, stahovaneVideo.NazevCely + ".mp3"); // NazevNovy
                 TagLib.File soubor = TagLib.File.Create(cesta);
-                soubor.Tag.Year = Convert.ToUInt32(String.Format("{0:yyyy}", stahovaneVideo.publikovano));
-                soubor.Tag.Performers = new string[] { stahovaneVideo.interpret };
-                soubor.Tag.Title = stahovaneVideo.skladbaFeaturing;
-                soubor.Tag.Genres = new string[] { stahovaneVideo.zanr };
+                soubor.Tag.Year = Convert.ToUInt32(String.Format("{0:yyyy}", stahovaneVideo.Publikovano));
+                soubor.Tag.Performers = new string[] { stahovaneVideo.Interpret };
+                soubor.Tag.Title = stahovaneVideo.NazevCely; // SkladbaFeaturing
+                soubor.Tag.Genres = new string[] { stahovaneVideo.Zanr };
                 soubor.Save();
-                stahovaneVideo.stav = "Metadata zapsány";
+                stahovaneVideo.Stav = "Metadata zapsány";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
             catch (Exception)
             {
-                stahovaneVideo.chyba = "Zapsání metadat";
-                stahovaneVideo.stav = "";
+                stahovaneVideo.Chyba = "Zapsání metadat";
+                stahovaneVideo.Stav = "";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
         }
@@ -338,21 +338,21 @@ namespace youtube_renamer
         /// Přesune soubor do cílové složky
         /// </summary>
         /// <param name="stahovaneVideo"></param>
-        private void PresunSoubor(VideoStare stahovaneVideo)
+        private void PresunSoubor(Video stahovaneVideo)
         {
-            stahovaneVideo.stav = "Přesunování souboru";
+            stahovaneVideo.Stav = "Přesunování souboru";
             objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
-            string cesta = Path.Combine(slozkaProgramuCache/*, "stazene"*/, stahovaneVideo.nazevNovy + ".mp3");
+            string cesta = Path.Combine(slozkaProgramuCache/*, "stazene"*/, stahovaneVideo.NazevCely + ".mp3"); // NazevNovy
             try
             {
-                File.Move(cesta, Path.Combine(stahovaneVideo.slozka, stahovaneVideo.nazevNovy + ".mp3"));
-                stahovaneVideo.stav = "Soubor přesunut";
+                File.Move(cesta, Path.Combine(stahovaneVideo.Slozka, stahovaneVideo.NazevCely + ".mp3"));
+                stahovaneVideo.Stav = "Soubor přesunut";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
             catch (Exception)
             {
-                stahovaneVideo.chyba = "Soubor se nepodařilo přesunout";
-                stahovaneVideo.stav = "";
+                stahovaneVideo.Chyba = "Soubor se nepodařilo přesunout";
+                stahovaneVideo.Stav = "";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
         }
@@ -1696,9 +1696,9 @@ namespace youtube_renamer
                     backgroundWorkerPridejVidea.ReportProgress(videaNovaID.IndexOf(videoNoveID) + 1);
                     ZobrazStatusLabel("Přidávání videí z playlistu", videoNoveID + " (" + (videaNovaID.IndexOf(videoNoveID) + 1) + " z " + videaNovaID.Count + ")");
 
-                    foreach (VideoStare videoDrivePridane in videaVsechna)
+                    foreach (Video videoDrivePridane in videaVsechna)
                     {
-                        if (videoNoveID == videoDrivePridane.id)
+                        if (videoNoveID == videoDrivePridane.ID)
                         {
                             // nové id videa je shodné s již přidaným
                             pridaneDrive++;
@@ -1709,8 +1709,8 @@ namespace youtube_renamer
                     if (!pridano)
                     {
                         // video nebylo dříve přidáno - přidá se nové video a získají se informace o něm
-                        VideoStare noveVideo = new VideoStare(videoNoveID, youtubeID);
-                        Video noveVideo2 = new Video(videoNoveID, youtubeID);
+                        //VideoStare noveVideo = new VideoStare(videoNoveID, youtubeID);
+                        Video noveVideo = new Video(videoNoveID, youtubeID);
                         videaVsechna.Add(noveVideo);
                         objectListViewSeznamVidei.AddObject(noveVideo);
                     }
@@ -1730,7 +1730,7 @@ namespace youtube_renamer
                 backgroundWorkerPridejVidea.ReportProgress(1);
                 ZobrazStatusLabel("Přidávání videí", youtubeID + " (1 z 1)");
 
-                foreach (VideoStare videoDrivePridane in videaVsechna)
+                foreach (Video videoDrivePridane in videaVsechna)
                 {
                     if (backgroundWorkerPridejVidea.CancellationPending)
                     {
@@ -1738,7 +1738,7 @@ namespace youtube_renamer
                         return;
                     }
                     // pokud už bylo toto video přidáno, nepřidá se
-                    if (youtubeID == videoDrivePridane.id)
+                    if (youtubeID == videoDrivePridane.ID)
                     {
                         pridano = true;
                         break;
@@ -1751,7 +1751,7 @@ namespace youtube_renamer
                 else
                 {
                     // pokud video nebylo přidáno, přidá se
-                    VideoStare noveVideo = new VideoStare(youtubeID, youtubeID);
+                    Video noveVideo = new Video(youtubeID, youtubeID);
                     videaVsechna.Add(noveVideo);
                     objectListViewSeznamVidei.AddObject(noveVideo);
                     ZobrazStatusLabel("Přidávání videí", "Video bylo úspěšně přidáno.");
@@ -1862,7 +1862,7 @@ namespace youtube_renamer
             }
 
             int odstraneno = 0;
-            foreach (VideoStare polozka in objectListViewSeznamVidei.CheckedObjects)
+            foreach (Video polozka in objectListViewSeznamVidei.CheckedObjects)
             {
                 // odstraní vybraná videa ze seznamu a ObjectListView
                 objectListViewSeznamVidei.RemoveObject(polozka);

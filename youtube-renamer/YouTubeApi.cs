@@ -69,15 +69,20 @@ namespace youtube_renamer
             var response = pozadavek.Execute();
             if (response.Items.Count > 0)
             {
-                noveVideo.Nazev.Puvodni = response.Items[0].Snippet.Title;
-                noveVideo.Kanal = new VideoKanal(response.Items[0].Snippet.ChannelId, response.Items[0].Snippet.ChannelTitle);
-                noveVideo.Popis = response.Items[0].Snippet.Description;
-                noveVideo.Publikovano = response.Items[0].Snippet.PublishedAt.Value;
+                var snippet = response.Items[0].Snippet;
+                // video existuje
+                if (!String.IsNullOrEmpty(snippet.ChannelId))
+                {
+                    // získám původní název, kanál, popis, datum publikování
+                    noveVideo.NazevPuvodni = snippet.Title;
+                    noveVideo.Kanal = new VideoKanal(snippet.ChannelId, snippet.ChannelTitle);
+                    noveVideo.Popis = snippet.Description;
+                    noveVideo.Publikovano = snippet.PublishedAt.Value;
+                    return;
+                }
             }
-            else
-            {
-                noveVideo.Chyba = "Video neexistuje";
-            }
+            // video neexistuje nebo nastala chyba
+            noveVideo.Chyba = "Video neexistuje";
         }
 
         /// <summary>

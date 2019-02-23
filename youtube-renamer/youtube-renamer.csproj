@@ -103,7 +103,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="VideoInterpret.cs" />
-    <Compile Include="VideoNazev.cs" />
     <Compile Include="VideoKanal.cs" />
     <Compile Include="Video.cs" />
     <Compile Include="Zobrazit.cs" />

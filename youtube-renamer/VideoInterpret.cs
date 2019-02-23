@@ -2,24 +2,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace youtube_renamer
 {
     public class VideoInterpret
     {
-        private string nazev;
-        public string Nazev
+        public string Nazev { get; set; }
+
+        public VideoInterpret(string nazevInterpreta)
         {
-            get
+            this.Nazev = nazevInterpreta.Trim();
+            Regex zavorka = new Regex(@"\(([^\}]+)\)"); // odstraní cokoliv v závorce ( )
+            this.Nazev = zavorka.Replace(this.Nazev, "");
+
+            // nový interpret je prázdný
+            if (String.IsNullOrEmpty(this.Nazev))
             {
-                return this.nazev;
+                this.Nazev = "";
+                return;
             }
-            set
-            {
-                Prejmenuj();
-                this.nazev = value;
-            }
+
+            Prejmenuj();
+
+            this.Nazev = this.Nazev.ToLower();
+            VelkaPismena(' ');
+            VelkaPismena('.');
+            VelkaPismena('-');
+
+            // interpreti s tečkou
+            /*
+             PeatyF.
+             M.I.A.
+             B.o.B.
+             */
         }
 
         // HOTOVO
@@ -28,112 +45,197 @@ namespace youtube_renamer
         /// </summary>
         /// <param name="interpret">Interpret ke změně názvu.</param>
         /// <returns>Změněný název interpreta.</returns>
-        private string Prejmenuj()
+        private void Prejmenuj()
         {
-            #region switch
-            switch (this.nazev)
+            Nazev = Nazev.Replace("asap", "a$ap");
+            switch (this.Nazev)
             {
                 // cz + sk
                 case "jickson":
-                    nazev = "jimmy dickson";
+                    Nazev = "jimmy dickson";
                     break;
                 case "jckpt":
-                    nazev = "jackpot";
+                    Nazev = "jackpot";
                     break;
                 case "radikal chef":
-                    nazev = "radikal";
+                    Nazev = "radikal";
                     break;
                 case "s.barracuda":
-                    nazev = "sergei barracuda";
+                    Nazev = "sergei barracuda";
                     break;
                 case "white russian":
-                    nazev = "igor";
+                    Nazev = "igor";
                     break;
                 case "white rusian":
-                    nazev = "igor";
+                    Nazev = "igor";
                     break;
                 case "mladej moris":
-                    nazev = "yg moris";
+                    Nazev = "yg moris";
                     break;
                 case "gleb : zoo":
-                    nazev = "gleb";
+                    Nazev = "gleb";
                     break;
                 case "peatyf":
-                    nazev = "peatyf.";
+                    Nazev = "peatyf.";
                     break;
                 case "sheen":
-                    nazev = "viktor sheen";
+                    Nazev = "viktor sheen";
                     break;
                 case "yzomandias":
-                    nazev = "logic";
+                    Nazev = "logic";
                     break;
                 case "hráč roku":
-                    nazev = "logic";
+                    Nazev = "logic";
                     break;
                 case "lvcas":
-                    nazev = "lvcas dope";
+                    Nazev = "lvcas dope";
                     break;
                 case "kanabis":
-                    nazev = "lvcas dope";
+                    Nazev = "lvcas dope";
                     break;
                 case "mike t":
-                    nazev = "dj mike trafik";
+                    Nazev = "dj mike trafik";
                     break;
                 case "mike trafik":
-                    nazev = "dj mike trafik";
+                    Nazev = "dj mike trafik";
                     break;
                 case "sensey syfu":
-                    nazev = "senseysyfu";
+                    Nazev = "senseysyfu";
                     break;
                 case "karlo":
-                    nazev = "gumbgu";
+                    Nazev = "gumbgu";
                     break;
                 // zahraniční
                 case "the black eyed peas":
-                    nazev = "black eyed peas";
+                    Nazev = "black eyed peas";
                     break;
                 case "tekashi69":
-                    nazev = "6ix9ine";
+                    Nazev = "6ix9ine";
                     break;
                 case "6ixty9ine":
-                    nazev = "6ix9ine";
+                    Nazev = "6ix9ine";
                     break;
                 case "slim jxmmi of rae sremmurd":
-                    nazev = "slim jxmmi";
+                    Nazev = "slim jxmmi";
                     break;
                 case "jeezy":
-                    nazev = "young jeezy";
+                    Nazev = "young jeezy";
                     break;
                 case "waka flocka":
-                    nazev = "waka flocka flame";
+                    Nazev = "waka flocka flame";
                     break;
                 case "g herbo":
-                    nazev = "lil herb";
+                    Nazev = "lil herb";
                     break;
                 case "v.cha$e":
-                    nazev = "vinny cha$e";
+                    Nazev = "vinny cha$e";
                     break;
                 case "joey bada$$":
-                    nazev = "joey badass";
+                    Nazev = "joey badass";
                     break;
                 case "gab3":
-                    nazev = "uzi";
+                    Nazev = "uzi";
                     break;
                 case "travis scott":
-                    nazev = "travi$ scott";
+                    Nazev = "travi$ scott";
                     break;
                 case "ty dolla sign":
-                    nazev = "ty dolla $ign";
+                    Nazev = "ty dolla $ign";
                     break;
                 case "mgk":
-                    nazev = "machine gun kelly";
+                    Nazev = "machine gun kelly";
                     break;
                 default:
                     break;
             }
-            #endregion
-            nazev = nazev.Replace("asap", "a$ap");
-            return nazev;
+        }
+
+        // HOTOVO
+        /// <summary>
+        /// Převede text na velká počáteční písmena po oddělovači.
+        /// </summary>
+        /// <param name="vstup">Text k převedení na velká písmena po oddělovači.</param>
+        /// <param name="oddelovac">Znak, po kterém budou velká písmena ve vstupu.</param>
+        /// <returns>Převedený text na velká písmena po oddělovači.</returns>
+        private void VelkaPismena(char oddelovac)
+        {
+            // pokud je posledním indexu oddělovač, odstraním ho a na konci zase přidám
+            bool oddelovacNaKonci = false;
+            if (Nazev.Last() == oddelovac)
+            {
+                Nazev = Nazev.TrimEnd(oddelovac);
+                oddelovacNaKonci = true;
+            }
+
+            // rozdělí vstupní text pomocí oddělovače
+            string[] oddelene = Nazev.Split(oddelovac);
+            Nazev = "";
+            for (int i = 0; i < oddelene.Length; i++)
+            {
+                if (!String.IsNullOrEmpty(oddelene[i]))
+                {
+                    // převede první znak na velké písmeno
+                    Nazev += oddelene[i][0].ToString().ToUpper() + oddelene[i].Substring(1, oddelene[i].Length - 1);
+                }
+                if (oddelene.Length > 1)
+                {
+                    // nejedná se o poslední část nebo byl odstraněn oddělovač na začátku
+                    if ((oddelene.Length - 1 != i) || oddelovacNaKonci)
+                    {
+                        // přidám oddělovač
+                        Nazev += oddelovac;
+                    }
+                }
+            }
+            // převedení velikosti názvů u interpretů
+            Nazev = Nazev.Replace("..", ".")
+                         .Replace("Dj", "DJ")
+                         .Replace("A$ap", "A$AP")
+                         .Replace("Mike Will Made It", "Mike WiLL Made It")
+                         .Replace("Og Maco", "OG Maco")
+                         .Replace("Schoolboy Q", "ScHoolboy Q")
+                         .Replace("114kd", "114KD")
+                         .Replace("B.O.B", "B.o.B")
+                         .Replace("Yg", "YG")
+                         .Replace("Bomfunk Mc", "Bomfunk MC")
+                         .Replace("Travie Mccoy", "Travie McCoy")
+                         .Replace("Ca$h Out", "CA$H OUT")
+                         .Replace("Cl", "CL")
+                         .Replace("DJ Xo", "DJ XO")
+                         .Replace("Ishdarr", "IshDARR")
+                         .Replace("Ost", "OST")
+                         .Replace("Outkast", "OutKast")
+                         .Replace("6lack", "6LACK")
+                         .Replace("Charli Xcx", "Charli XCX")
+                         .Replace("Xxxtentacion", "XXXTentacion")
+                         .Replace("Omenxiii", "OmenXIII")
+                         .Replace("Olaawave", "OlaaWave")
+                         .Replace("Partynextdoor", "PARTYNEXTDOOR")
+                         .Replace("Ilovemakonnen", "ILoveMakonnen")
+                         .Replace("Ilovemakonnen", "ILoveMakonnen")
+                         .Replace("Rj", "RJ")
+                         .Replace("Smoke Dza", "Smoke DZA")
+                         .Replace("Tc Da Loc", "TC Da Loc")
+                         .Replace("Jay Z", "Jay-Z")
+                         .Replace("T Pain", "T-Pain")
+                         .Replace("Flo Rida", "Flo-Rida")
+                         .Replace("T Wayne", "T-Wayne")
+                         .Replace("Yeezuz2020", "yeezuz2020")
+                         .Replace("4d", "4D")
+                         .Replace("DstfrsS", "DSTFRS")
+                         .Replace("Inny Rap", "INNY rap")
+                         .Replace("Jmy", "JMY")
+                         .Replace("Maat", "MAAT")
+                         .Replace("Nobodylisten", "NobodyListen")
+                         .Replace("Peatyf", "PeatyF")
+                         .Replace("Pnzkjs", "PNZKJS")
+                         .Replace("Psh", "PSH")
+                         .Replace("Senseysyfu", "SenseySyfu")
+                         .Replace("Wip", "WIP")
+                         .Replace("Www", "WWW")
+                         .Replace("Dms", "DMS")
+                         .Replace("Mpp", "MPP")
+                         .Trim();
         }
     }
 }

@@ -599,72 +599,72 @@
             // 
             // olvColumn1
             // 
-            this.olvColumn1.AspectName = "playlist";
+            this.olvColumn1.AspectName = "Playlist";
             this.olvColumn1.Text = "Playlist";
             // 
             // olvColumn2
             // 
-            this.olvColumn2.AspectName = "id";
+            this.olvColumn2.AspectName = "ID";
             this.olvColumn2.Text = "ID videa";
             this.olvColumn2.Width = 97;
             // 
             // olvColumn3
             // 
-            this.olvColumn3.AspectName = "kanal";
+            this.olvColumn3.AspectName = "Kanal.Nazev";
             this.olvColumn3.Text = "Kanál";
             this.olvColumn3.Width = 96;
             // 
             // olvColumn4
             // 
-            this.olvColumn4.AspectName = "nazevPuvodni";
+            this.olvColumn4.AspectName = "NazevPuvodni";
             this.olvColumn4.Text = "Původní název";
             this.olvColumn4.Width = 159;
             // 
             // olvColumn5
             // 
-            this.olvColumn5.AspectName = "interpret";
+            this.olvColumn5.AspectName = "Interpret";
             this.olvColumn5.Text = "Interpret";
             this.olvColumn5.Width = 135;
             // 
             // olvColumn6
             // 
-            this.olvColumn6.AspectName = "skladba";
+            this.olvColumn6.AspectName = "Skladba";
             this.olvColumn6.Text = "Skladba";
             this.olvColumn6.Width = 125;
             // 
             // olvColumn7
             // 
-            this.olvColumn7.AspectName = "Featuring";
-            this.olvColumn7.Text = "Featuring";
+            this.olvColumn7.AspectName = "InterpretiFeat";
+            this.olvColumn7.Text = "InterpretiFeat";
             this.olvColumn7.Width = 102;
             // 
             // olvColumn8
             // 
-            this.olvColumn8.AspectName = "nazevNovy";
+            this.olvColumn8.AspectName = "NazevCely";
             this.olvColumn8.Text = "Nový název";
             this.olvColumn8.Width = 135;
             // 
             // olvColumn9
             // 
-            this.olvColumn9.AspectName = "slozka";
+            this.olvColumn9.AspectName = "Slozka";
             this.olvColumn9.Text = "Složka";
             this.olvColumn9.Width = 143;
             // 
             // olvColumn10
             // 
-            this.olvColumn10.AspectName = "zanr";
+            this.olvColumn10.AspectName = "Zanr";
             this.olvColumn10.Text = "Žánr";
             this.olvColumn10.Width = 78;
             // 
             // olvColumn11
             // 
-            this.olvColumn11.AspectName = "chyba";
+            this.olvColumn11.AspectName = "Chyba";
             this.olvColumn11.Text = "Chyba";
             this.olvColumn11.Width = 100;
             // 
             // olvColumn12
             // 
-            this.olvColumn12.AspectName = "stav";
+            this.olvColumn12.AspectName = "Stav";
             this.olvColumn12.Text = "Stav";
             // 
             // FormSeznam

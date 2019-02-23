@@ -111,34 +111,6 @@ namespace youtube_renamer
             Prejmenuj();
         }
 
-        // 0 video id, 1 poznámka, 2 kanál, 3 kanál id, 4 žánr, 5 původní název, 6 interpret, 7 skladba, 
-        // 8 featuring text, 9 skladba + featuring 10 nový název, 11 složka, 12 chyba, 13 skupina
-        // datum publikování
-        // feat (featuring) list
-        // zaškrtnuto
-        /*public Video(string[] polozky, DateTime vidPublikovano, List<string> vidFeat, bool vidZaskrtnuto)
-        {
-            id = polozky[0];
-            popis = polozky[1];
-            kanal = polozky[2];
-            kanalID = polozky[3];
-            publikovano = vidPublikovano;
-            zanr = polozky[4];
-            nazevPuvodni = polozky[5];
-            interpret = polozky[6];
-            skladba = polozky[7];
-            skladbaHledana = polozky[7].Replace('/', ' ').Replace(':', ' ');
-            feat = vidFeat;
-            featuring = polozky[8];
-            skladbaFeaturing = polozky[9];
-            nazevNovy = polozky[10];
-            slozka = polozky[11];
-            chyba = polozky[12];
-            skupina = polozky[13];
-            NajdiSlozku();
-            // NajdiSlozku(true);
-        }*/
-
         // HOTOVO
         /// <summary>
         /// Odstraní přebytečný text z názvu (např. "music video", "officaial video", ...).
@@ -171,7 +143,8 @@ namespace youtube_renamer
                 (vstup[posledniIndex] == '*') ||
                 (vstup[posledniIndex] == '-') ||
                 (vstup[posledniIndex] == '"') ||
-                (vstup[posledniIndex] == '~'))
+                (vstup[posledniIndex] == '~') ||
+                (vstup[posledniIndex] == ','))
             {
                 // odtraním ho
                 vstup = vstup.Substring(0, posledniIndex).Trim();
@@ -182,7 +155,8 @@ namespace youtube_renamer
                 (vstup[0] == '*') ||
                 (vstup[0] == '-') ||
                 (vstup[0] == '"') ||
-                (vstup[0] == '~'))
+                (vstup[0] == '~') ||
+                (vstup[0] == '.'))
             {
                 // odtraním ho
                 vstup = vstup.Substring(1, posledniIndex).Trim();
