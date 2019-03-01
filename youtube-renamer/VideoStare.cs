@@ -1,26 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using System.Text.RegularExpressions;
-using System.Globalization;
 using System.IO;
-using System.ComponentModel;
 
 namespace youtube_renamer
 {
     public class VideoStare
     {
-        // 0 video id, 1 poznámka, 2 kanál, 3 kanál id, 4 datum publikování, 5 žánr, 6 původní název, 7 interpret, 8 skladba, 9 feat (featuring) list
-        // 10 featuring text, 11 skladba + featuring 12 nový název, 13 složka, 14 chyba, 15 skupina, 16 zaškrtnuto
-        public string id { get; set; }
-        public string popis { get; set; }
+        // deklarace proměnných
+        #region proměnné
         public string kanal { get; set; }
-        public string kanalID { get; set; }
-        public DateTime publikovano { get; set; }
-        public string zanr { get; set; }
         public string nazevPuvodni { get; set; }
         public string interpret { get; set; }
         public string skladba { get; set; }
@@ -37,340 +27,201 @@ namespace youtube_renamer
         /// Seznam interpretů na featuringu.
         /// </summary>
         public List<string> feat { get; set; }
-
-
-        private string featuringUpraveny;
-        /// <summary>
-        /// Interpreti na featuringu v textové podobě.
-        /// </summary>
-        public string Featuring
-        {
-            get
-            {
-                if (!String.IsNullOrEmpty(this.featuringUpraveny))
-                {
-                    // featuring byl upraven
-                    return this.featuringUpraveny;
-                }
-                if (feat == null)
-                {
-                    return "";
-                }
-                if (feat.Count == 0)
-                {
-                    return "";
-                }
-                if (feat.Count == 1)
-                {
-                    return feat.First();
-                }
-
-                // odstraní cokoliv v závorce ( ); 
-                string vysledek = String.Join(", ", feat);
-                vysledek = vysledek.Replace(", " + feat.Last(), " & " + feat.Last());
-                return vysledek;
-            }
-            set
-            {
-                this.featuringUpraveny = value;
-            }
-        }
         public string skladbaFeaturing { get; set; }
         public string nazevNovy { get; set; }
         public string slozka { get; set; }
         public string chyba { get; set; }
         public string skupina { get; set; }
-        public string stav { get; set; }
-        public string playlist { get; set; }
+        #endregion
 
-        
-        // HOTOVO
-        /// <summary>
-        /// Vytvoří nové Video.
-        /// </summary>
-        /// <param name="videoID">ID nového videa.</param>
-        /// <param name="playlist">Playlist, ze kterého je video. Pokud se nejdená o playlist, použije se id vieda.</param>
-        public VideoStare(string videoID, string playlist)
-        {
-            id = videoID;
-            popis = "";
-            kanal = "";
-            kanalID = "";
-            zanr = "";
-            nazevPuvodni = "";
-            interpret = "";
-            skladba = "";
-            skladbaFeaturing = "";
-            nazevNovy = "";
-            slozka = "";
-            chyba = "";
-            skupina = "";
-            // získá informace z youtube api
-            YouTubeApi.ZiskejInfoVideaStare(this, playlist);
-            // přejmenuje 
-            Prejmenuj();
-        }
 
-        // HOTOVO
-        /// <summary>
-        /// Odstraní přebytečný text z názvu (např. "music video", "officaial video", ...).
-        /// </summary>
-        /// <param name="vstup">Text k odstranění přebytečného textu.</param>
-        /// <returns>Název bez přebytečného textu.</returns>
-        private string OdstranZbytecnosti(string vstup)
+        private string OdstranZacatek(string vstup)
         {
-            string[] odstran = { "off.", "off vid", "off vd", "music video", "official", " vd", "audio", "prod", "wshh" };
-            for (int i = 0; i < odstran.Length; i++)
+            // 48 - 57 = 0 - 9
+            // 65 - 90 = A - Z (ale tolower() takže nepořebujeme)
+            // 97 - 122 = a - z
+            //if (!((vstup.First() >= 48 && vstup.First() <= 57) || (vstup.First() >= 97 && vstup.First() <= 122)))
+
+            if ((vstup.First() >= 32 && vstup.First() <= 47) || (vstup.First() >= 58 && vstup.First() <= 63) || (vstup.First() >= 91 && vstup.First() <= 96) || (vstup.First() >= 123 && vstup.First() <= 126))
             {
-                // odstraní postupně všehchny přebytečn text z pole
-                if (vstup.Contains(odstran[i]))
+                vstup = vstup.Substring(1);
+                OdstranZacatek(vstup);
+            }
+            return vstup;
+        }
+        private string OdstranKonec(string vstup)
+        {
+            //if (!((vstup.Last() >= 48 && vstup.Last() <= 57) || (vstup.Last() >= 97 && vstup.Last() <= 122)))
+            if ((vstup.Last() >= 32 && vstup.Last() <= 47) || (vstup.Last() >= 58 && vstup.Last() <= 63) || (vstup.Last() >= 91 && vstup.Last() <= 96) || (vstup.Last() >= 123 && vstup.Last() <= 126))
+            {
+                vstup = vstup.Substring(0, vstup.Length - 1);
+                OdstranKonec(vstup);
+            }
+            return vstup;
+        }
+        private string OdstranMezery(string vstup)
+        {
+            if (vstup.Contains("  "))
+            {
+                vstup = vstup.Replace("  ", " ");
+                OdstranMezery(vstup);
+            }
+            
+            return vstup;
+        }
+        private string OdstranZbytek(string vstup)
+        {
+            foreach (char znak in vstup)
+            {
+                if ((znak >= 32 && znak <= 47) || (znak >= 58 && znak <= 63) || (znak >= 91 && znak <= 96) || (znak >= 123 && znak <= 126))
                 {
-                    vstup = vstup.Substring(0, vstup.IndexOf(odstran[i])).Trim();
+                    vstup.Replace(znak, ' ');
                 }
             }
-            // nahradí lomítka
-            vstup = vstup.Replace("//", "/")
-                         .Replace(@"\\", "/")
-                         .Trim();
-            int posledniIndex = vstup.Length - 1;
-            if (posledniIndex < 0)
-            {
-                // krátký název
-                return vstup;
-            }
-            // poslední slovo obsahuje zbytečnost
-            if ((vstup[posledniIndex] == '/') ||
-                (vstup[posledniIndex] == '*') ||
-                (vstup[posledniIndex] == '-') ||
-                (vstup[posledniIndex] == '"') ||
-                (vstup[posledniIndex] == '~') ||
-                (vstup[posledniIndex] == ','))
-            {
-                // odtraním ho
-                vstup = vstup.Substring(0, posledniIndex).Trim();
-                posledniIndex = vstup.Length - 1;
-            }
-            // první slovo obsahuje zbytečnost
-            if ((vstup[0] == '/') ||
-                (vstup[0] == '*') ||
-                (vstup[0] == '-') ||
-                (vstup[0] == '"') ||
-                (vstup[0] == '~') ||
-                (vstup[0] == '.'))
-            {
-                // odtraním ho
-                vstup = vstup.Substring(1, posledniIndex).Trim();
-            }
-            vstup = vstup.Trim();
+            OdstranMezery(vstup);
             return vstup;
         }
 
-        // HOTOVO
-        // přesunuto
-        private string ZmenaNazvuInterpreta(string interpret)
+
+        // najdi soubor ve složce (vrací soubor, který existuje NEBO null pokud soubor neexistuje)
+        private string NajdiSoubor(string slozkaHledana)
         {
-            #region switch
-            switch (interpret)
+            Regex zavorka = new Regex(@"\(([^\}]+)\)"); // odstraní cokoliv v závorce ( );  
+            // ÚPRAVA - přidat další koncovky !!!!!!!
+            try
             {
-                // cz + sk
-                case "jickson":
-                    interpret = "jimmy dickson";
-                    break;
-                case "jckpt":
-                    interpret = "jackpot";
-                    break;
-                case "radikal chef":
-                    interpret = "radikal";
-                    break;
-                case "s.barracuda":
-                    interpret = "sergei barracuda";
-                    break;
-                case "white russian":
-                    interpret = "igor";
-                    break;
-                case "white rusian":
-                    interpret = "igor";
-                    break;
-                case "mladej moris":
-                    interpret = "yg moris";
-                    break;
-                case "gleb : zoo":
-                    interpret = "gleb";
-                    break;
-                case "peatyf":
-                    interpret = "peatyf.";
-                    break;
-                case "sheen":
-                    interpret = "viktor sheen";
-                    break;
-                case "yzomandias":
-                    interpret = "logic";
-                    break;
-                case "hráč roku":
-                    interpret = "logic";
-                    break;
-                case "lvcas":
-                    interpret = "lvcas dope";
-                    break;
-                case "kanabis":
-                    interpret = "lvcas dope";
-                    break;
-                case "mike t":
-                    interpret = "dj mike trafik";
-                    break;
-                case "mike trafik":
-                    interpret = "dj mike trafik";
-                    break;
-                case "sensey syfu":
-                    interpret = "senseysyfu";
-                    break;
-                case "karlo":
-                    interpret = "gumbgu";
-                    break;
-                // zahraniční
-                case "the black eyed peas":
-                    interpret = "black eyed peas";
-                    break;
-                case "6ixty9ine":
-                    interpret = "6ix9ine";
-                    break;
-                case "slim jxmmi of rae sremmurd":
-                    interpret = "slim jxmmi";
-                    break;
-                case "jeezy":
-                    interpret = "young jeezy";
-                    break;
-                case "waka flocka":
-                    interpret = "waka flocka flame";
-                    break;
-                case "g herbo":
-                    interpret = "lil herb";
-                    break;
-                case "v.cha$e":
-                    interpret = "vinny cha$e";
-                    break;
-                case "joey bada$$":
-                    interpret = "joey badass";
-                    break;
-                case "gab3":
-                    interpret = "uzi";
-                    break;
-                case "travis scott":
-                    interpret = "travi$ scott";
-                    break;
-                case "ty dolla sign":
-                    interpret = "ty dolla $ign";
-                    break;
-                case "mgk":
-                    interpret = "machine gun kelly";
-                    break;
-                case "tekashi69":
-                    interpret = "6ix9ine";
-                    break;
-                default:
-                    break;
-            }
-            #endregion
-            interpret = interpret.Replace("asap", "a$ap");
-            return interpret;
-        }
-
-        // HOTOVO
-        /// <summary>
-        /// Převede text na velká počáteční písmena po oddělovači.
-        /// </summary>
-        /// <param name="vstup">Text k převedení na velká písmena po oddělovači.</param>
-        /// <param name="oddelovac">Znak, po kterém budou velká písmena ve vstupu.</param>
-        /// <returns>Převedený text na velká písmena po oddělovači.</returns>
-        private string VelkaPismena(string vstup, char oddelovac)
-        {
-            // vstup je krátký
-            if (String.IsNullOrEmpty(vstup.Trim()))
-            {
-                return "";
-            }
-
-            // pokud je posledním indexu oddělovač, odstraním ho a na konci zase přidám
-            bool oddelovacNaKonci = false;
-            if (vstup.Last() == oddelovac)
-            {
-                interpret = interpret.TrimEnd(oddelovac);
-                oddelovacNaKonci = true;
-            }
-
-            // rozdělí vstupní text pomocí oddělovače
-            string[] oddelene = vstup.Split(oddelovac);
-            vstup = "";
-            for (int i = 0; i < oddelene.Length; i++)
-            {
-                if (!String.IsNullOrEmpty(oddelene[i]))
+                foreach (string cestaSoubor in Directory.GetFiles(slozkaHledana, "*.*", SearchOption.AllDirectories).Where(s => "*.mp3".Contains(Path.GetExtension(s).ToLower())))
                 {
-                    // převede první znak na velké písmeno
-                    //vstup += CultureInfo.CurrentCulture.TextInfo.ToTitleCase(oddelene[i][0].ToString()) + oddelene[i].Substring(1, oddelene[i].Length - 1);
-                    vstup += oddelene[i][0].ToString().ToUpper() + oddelene[i].Substring(1, oddelene[i].Length - 1).ToLower();
-                }
-                if (oddelene.Length > 1)
-                {
-                    // nejedná se o poslední část nebo byl odstraněn oddělovač na začátku
-                    if ((oddelene.Length - 1 != i) || oddelovacNaKonci)
+                    string kontolovanySoubor = Path.GetFileNameWithoutExtension(cestaSoubor);
+                    kontolovanySoubor = kontolovanySoubor.ToLower();
+
+                    if (!kontolovanySoubor.Contains("(ft."))
                     {
-                        // přidám oddělovač
-                        vstup += oddelovac;
+                        kontolovanySoubor = zavorka.Replace(kontolovanySoubor, ""); // odstraní i featuring
+                        kontolovanySoubor = OdstranZacatek(kontolovanySoubor);
+                        kontolovanySoubor = OdstranKonec(kontolovanySoubor);
+                        kontolovanySoubor = OdstranZbytek(kontolovanySoubor);
+                    }
+
+                    string hledanaSkladba = skladbaHledana.ToLower();
+
+                    if (!hledanaSkladba.Contains("(ft."))
+                    {
+                        hledanaSkladba = zavorka.Replace(hledanaSkladba, ""); // odstraní i featuring
+                        hledanaSkladba = OdstranZacatek(hledanaSkladba);
+                        hledanaSkladba = OdstranKonec(hledanaSkladba);
+                        hledanaSkladba = OdstranZbytek(hledanaSkladba);
+                    }
+
+                    if (kontolovanySoubor == hledanaSkladba)
+                    {
+                        return cestaSoubor;
+                    }
+                    else if (Regex.IsMatch(kontolovanySoubor.Split(' ').First(), @"^\d{2}$")) // album -> rok název (první 4 znaky jsou číslice)
+                    {
+                        if (kontolovanySoubor.Substring(2, kontolovanySoubor.Length - 2).Trim() == hledanaSkladba)
+                        {
+                            return cestaSoubor;
+                        }
                     }
                 }
             }
-            // převedení velikosti názvů u interpretů
-            vstup = vstup.Replace("..", ".")
-                         .Replace("Dj", "DJ")
-                         .Replace("A$ap", "A$AP")
-                         .Replace("Mike Will Made It", "Mike WiLL Made It")
-                         .Replace("Og Maco", "OG Maco")
-                         .Replace("Schoolboy Q", "ScHoolboy Q")
-                         .Replace("114kd", "114KD")
-                         .Replace("B.O.B", "B.o.B")
-                         .Replace("Yg", "YG")
-                         .Replace("Bomfunk Mc", "Bomfunk MC")
-                         .Replace("Travie Mccoy", "Travie McCoy")
-                         .Replace("Ca$h Out", "CA$H OUT")
-                         .Replace("Cl", "CL")
-                         .Replace("DJ Xo", "DJ XO")
-                         .Replace("Ishdarr", "IshDARR")
-                         .Replace("Ost", "OST")
-                         .Replace("Outkast", "OutKast")
-                         .Replace("6lack", "6LACK")
-                         .Replace("Charli Xcx", "Charli XCX")
-                         .Replace("Xxxtentacion", "XXXTentacion")
-                         .Replace("Omenxiii", "OmenXIII")
-                         .Replace("Olaawave", "OlaaWave")
-                         .Replace("Partynextdoor", "PARTYNEXTDOOR")
-                         .Replace("Ilovemakonnen", "ILoveMakonnen")
-                         .Replace("Ilovemakonnen", "ILoveMakonnen")
-                         .Replace("Rj", "RJ")
-                         .Replace("Smoke Dza", "Smoke DZA")
-                         .Replace("Tc Da Loc", "TC Da Loc")
-                         .Replace("Jay Z", "Jay-Z")
-                         .Replace("T Pain", "T-Pain")
-                         .Replace("Flo Rida", "Flo-Rida")
-                         .Replace("T Wayne", "T-Wayne")
-                         .Replace("Yeezuz2020", "yeezuz2020")
-                         .Replace("4d", "4D")
-                         .Replace("DstfrsS", "DSTFRS")
-                         .Replace("Inny Rap", "INNY rap")
-                         .Replace("Jmy", "JMY")
-                         .Replace("Maat", "MAAT")
-                         .Replace("Nobodylisten", "NobodyListen")
-                         .Replace("Peatyf", "PeatyF")
-                         .Replace("Pnzkjs", "PNZKJS")
-                         .Replace("Psh", "PSH")
-                         .Replace("Senseysyfu", "SenseySyfu")
-                         .Replace("Wip", "WIP")
-                         .Replace("Www", "WWW")
-                         .Replace("Dms", "DMS")
-                         .Replace("Mpp", "MPP")
-                         .Trim();
-            return vstup;
+            catch (Exception)
+            {
+                return "Chyba - výběr složky";
+            }
+
+            // soubor předtím nenalezen -> nyní zkusím odstranit i featuring a najít shodné názvy
+            try
+            {
+                foreach (string cestaSoubor in Directory.GetFiles(slozkaHledana, "*.*", SearchOption.AllDirectories).Where(s => "*.mp3".Contains(Path.GetExtension(s).ToLower())))
+                {
+                    string kontolovanySoubor = Path.GetFileNameWithoutExtension(cestaSoubor);
+                    kontolovanySoubor = kontolovanySoubor.ToLower();
+                    kontolovanySoubor = zavorka.Replace(kontolovanySoubor, ""); // odstraní i featuring
+                    kontolovanySoubor = OdstranZacatek(kontolovanySoubor);
+                    kontolovanySoubor = OdstranKonec(kontolovanySoubor);
+                    kontolovanySoubor = OdstranZbytek(kontolovanySoubor);
+
+                    string hledanaSkladba = skladbaHledana.ToLower();
+                    hledanaSkladba = zavorka.Replace(hledanaSkladba, ""); // odstraní i featuring
+                    hledanaSkladba = OdstranZacatek(hledanaSkladba);
+                    hledanaSkladba = OdstranKonec(hledanaSkladba);
+                    hledanaSkladba = OdstranZbytek(hledanaSkladba);
+
+                    if (kontolovanySoubor == hledanaSkladba)
+                    {
+                        skupina = "Následující videa jsou již možná stažena";
+                        return cestaSoubor;
+                    }
+                    else if (Regex.IsMatch(kontolovanySoubor.Split(' ').First(), @"^\d{2}$")) // album -> rok název (první 4 znaky jsou číslice)
+                    {
+                        if (kontolovanySoubor.Substring(2, kontolovanySoubor.Length - 2).Trim() == hledanaSkladba)
+                        {
+                            skupina = "Následující videa jsou již možná stažena";
+                            return cestaSoubor;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return "Chyba - výběr složky";
+            }
+            return null;
         }
 
+        // najdi soubor ve složce _ostatní
+        private string NajdiSouborOstatni(string slozkaHledana)
+        {
+            string spravnaSlozka = null;
+            // ÚPRAVA - přidat další koncovky !!!!!!!
+            try
+            {
+                foreach (string cestaSoubor in Directory.GetFiles(slozkaHledana, "*.*", SearchOption.TopDirectoryOnly).Where(s => "*.mp3".Contains(Path.GetExtension(s).ToLower())))
+                {
+                    string nazevSoubor = Path.GetFileNameWithoutExtension(cestaSoubor);
+                    nazevSoubor = nazevSoubor.ToLower();
+
+                    string[] rozdelenyNazev = nazevSoubor.Split('-');
+                    if (rozdelenyNazev == null)
+                    {
+                        return "chyba - není pomlčka";
+                    }
+                    if (rozdelenyNazev.Length < 2)
+                    {
+                        return "chyba - není pomlčka";
+                    }
+                    // video nalezeno
+                    if (nazevSoubor == (interpret.ToLower() + "-" + skladbaHledana.ToLower()))
+                    {
+                        skupina = "Video bylo staženo dříve";
+                        nazevNovy = "";
+                        return cestaSoubor;
+                    }
+                    // video nenalezeno -> ale nalezen interpret ve složce -> správná složka
+                    if (rozdelenyNazev[0] == interpret.ToLower())
+                    {
+                        spravnaSlozka = slozkaHledana;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return "Chyba - výběr složky";
+            }
+            if (!String.IsNullOrWhiteSpace(spravnaSlozka))
+            {
+                nazevNovy = interpret + "-" + skladbaHledana;
+                skupina = "Složka nalezena";
+                return spravnaSlozka;
+            }
+            return null;
+        }
+
+
+        // ok = předěláno
+        #region ok
         //ok přejmenuje interprety
         private void Prejmenuj()
         {
@@ -463,11 +314,11 @@ namespace youtube_renamer
 
             // úprava interpreta - odstraní zbytečnosti a převede na velká písmena
             interpret = zavorka.Replace(interpret, "");
-            interpret = OdstranZbytecnosti(interpret);
-            interpret = ZmenaNazvuInterpreta(interpret);
+            //// interpret = OdstranZbytecnosti(interpret);
+            //// interpret = ZmenaNazvuInterpreta(interpret);
 
-            interpret = VelkaPismena(interpret, ' ');
-            interpret = VelkaPismena(interpret, '.');
+            //// interpret = VelkaPismena(interpret, ' ');
+            //// interpret = VelkaPismena(interpret, '.');
 
             // úprava skladby
             // skladba je remix -> přidám to co je v závorce do názvu
@@ -515,10 +366,10 @@ namespace youtube_renamer
                 feat.AddRange(uprava[1].Split(','));
             }
 
-            skladba = OdstranZbytecnosti(skladba);
+            //// skladba = OdstranZbytecnosti(skladba);
             skladba = skladba.Trim() + pridejNaKonec;
             //skladba = OdstranZbytecnosti(skladba);
-            skladba = OdstranZbytecnosti(skladba);
+            //// skladba = OdstranZbytecnosti(skladba);
 
             // skladba je prázdná - soubor se nepodařilo přejmenovat -> konec
             if (String.IsNullOrEmpty(skladba))
@@ -528,7 +379,7 @@ namespace youtube_renamer
             }
 
             skladba = skladba[0].ToString().ToUpper() + skladba.Substring(1, skladba.Length - 1).ToLower();
-            
+
             skladbaFeaturing = skladba;
 
             /*if (feat.Count != 0)
@@ -623,12 +474,10 @@ namespace youtube_renamer
                 }
             }*/
         }
-
-        /**** NAJDI SLOŽKU ****/
-
+        //ok najde složku
         private void NajdiSlozku()
         {
-            Soubory soubor = new Soubory();
+            Soubor soubor = new Soubor();
 
             List<string> slozkyKnihovna = soubor.Precti(@"data/knihovna_slozky.txt");
             List<string> slozkyKnihovnaOstatni = new List<string>();
@@ -814,193 +663,10 @@ namespace youtube_renamer
                 slozka = slozkyInterpretaOK[0];
             }
         }
+        #endregion
 
-        private string OdstranZacatek(string vstup)
-        {
-            // 48 - 57 = 0 - 9
-            // 65 - 90 = A - Z (ale tolower() takže nepořebujeme)
-            // 97 - 122 = a - z
-            //if (!((vstup.First() >= 48 && vstup.First() <= 57) || (vstup.First() >= 97 && vstup.First() <= 122)))
-
-            if ((vstup.First() >= 32 && vstup.First() <= 47) || (vstup.First() >= 58 && vstup.First() <= 63) || (vstup.First() >= 91 && vstup.First() <= 96) || (vstup.First() >= 123 && vstup.First() <= 126))
-            {
-                vstup = vstup.Substring(1);
-                OdstranZacatek(vstup);
-            }
-            return vstup;
-        }
-
-        private string OdstranKonec(string vstup)
-        {
-            //if (!((vstup.Last() >= 48 && vstup.Last() <= 57) || (vstup.Last() >= 97 && vstup.Last() <= 122)))
-            if ((vstup.Last() >= 32 && vstup.Last() <= 47) || (vstup.Last() >= 58 && vstup.Last() <= 63) || (vstup.Last() >= 91 && vstup.Last() <= 96) || (vstup.Last() >= 123 && vstup.Last() <= 126))
-            {
-                vstup = vstup.Substring(0, vstup.Length - 1);
-                OdstranKonec(vstup);
-            }
-            return vstup;
-        }
-
-        private string OdstranMezery(string vstup)
-        {
-            if (vstup.Contains("  "))
-            {
-                vstup = vstup.Replace("  ", " ");
-                OdstranMezery(vstup);
-            }
-            
-            return vstup;
-        }
-        private string OdstranZbytek(string vstup)
-        {
-            foreach (char znak in vstup)
-            {
-                if ((znak >= 32 && znak <= 47) || (znak >= 58 && znak <= 63) || (znak >= 91 && znak <= 96) || (znak >= 123 && znak <= 126))
-                {
-                    vstup.Replace(znak, ' ');
-                }
-            }
-            OdstranMezery(vstup);
-            return vstup;
-        }
-
-
-        // najdi soubor ve složce (vrací soubor, který existuje NEBO null pokud soubor neexistuje)
-        private string NajdiSoubor(string slozkaHledana)
-        {
-            Regex zavorka = new Regex(@"\(([^\}]+)\)"); // odstraní cokoliv v závorce ( );  
-            // ÚPRAVA - přidat další koncovky !!!!!!!
-            try
-            {
-                foreach (string cestaSoubor in Directory.GetFiles(slozkaHledana, "*.*", SearchOption.AllDirectories).Where(s => "*.mp3".Contains(Path.GetExtension(s).ToLower())))
-                {
-                    string kontolovanySoubor = Path.GetFileNameWithoutExtension(cestaSoubor);
-                    kontolovanySoubor = kontolovanySoubor.ToLower();
-
-                    if (!kontolovanySoubor.Contains("(ft."))
-                    {
-                        kontolovanySoubor = zavorka.Replace(kontolovanySoubor, ""); // odstraní i featuring
-                        kontolovanySoubor = OdstranZacatek(kontolovanySoubor);
-                        kontolovanySoubor = OdstranKonec(kontolovanySoubor);
-                        kontolovanySoubor = OdstranZbytek(kontolovanySoubor);
-                    }
-
-                    string hledanaSkladba = skladbaHledana.ToLower();
-
-                    if (!hledanaSkladba.Contains("(ft."))
-                    {
-                        hledanaSkladba = zavorka.Replace(hledanaSkladba, ""); // odstraní i featuring
-                        hledanaSkladba = OdstranZacatek(hledanaSkladba);
-                        hledanaSkladba = OdstranKonec(hledanaSkladba);
-                        hledanaSkladba = OdstranZbytek(hledanaSkladba);
-                    }
-
-                    if (kontolovanySoubor == hledanaSkladba)
-                    {
-                        return cestaSoubor;
-                    }
-                    else if (Regex.IsMatch(kontolovanySoubor.Split(' ').First(), @"^\d{2}$")) // album -> rok název (první 4 znaky jsou číslice)
-                    {
-                        if (kontolovanySoubor.Substring(2, kontolovanySoubor.Length - 2).Trim() == hledanaSkladba)
-                        {
-                            return cestaSoubor;
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return "Chyba - výběr složky";
-            }
-
-            // soubor předtím nenalezen -> nyní zkusím odstranit i featuring a najít shodné názvy
-            try
-            {
-                foreach (string cestaSoubor in Directory.GetFiles(slozkaHledana, "*.*", SearchOption.AllDirectories).Where(s => "*.mp3".Contains(Path.GetExtension(s).ToLower())))
-                {
-                    string kontolovanySoubor = Path.GetFileNameWithoutExtension(cestaSoubor);
-                    kontolovanySoubor = kontolovanySoubor.ToLower();
-                    kontolovanySoubor = zavorka.Replace(kontolovanySoubor, ""); // odstraní i featuring
-                    kontolovanySoubor = OdstranZacatek(kontolovanySoubor);
-                    kontolovanySoubor = OdstranKonec(kontolovanySoubor);
-                    kontolovanySoubor = OdstranZbytek(kontolovanySoubor);
-
-                    string hledanaSkladba = skladbaHledana.ToLower();
-                    hledanaSkladba = zavorka.Replace(hledanaSkladba, ""); // odstraní i featuring
-                    hledanaSkladba = OdstranZacatek(hledanaSkladba);
-                    hledanaSkladba = OdstranKonec(hledanaSkladba);
-                    hledanaSkladba = OdstranZbytek(hledanaSkladba);
-
-                    if (kontolovanySoubor == hledanaSkladba)
-                    {
-                        skupina = "Následující videa jsou již možná stažena";
-                        return cestaSoubor;
-                    }
-                    else if (Regex.IsMatch(kontolovanySoubor.Split(' ').First(), @"^\d{2}$")) // album -> rok název (první 4 znaky jsou číslice)
-                    {
-                        if (kontolovanySoubor.Substring(2, kontolovanySoubor.Length - 2).Trim() == hledanaSkladba)
-                        {
-                            skupina = "Následující videa jsou již možná stažena";
-                            return cestaSoubor;
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return "Chyba - výběr složky";
-            }
-            return null;
-        }
-
-        // najdi soubor ve složce _ostatní
-        private string NajdiSouborOstatni(string slozkaHledana)
-        {
-            string spravnaSlozka = null;
-            // ÚPRAVA - přidat další koncovky !!!!!!!
-            try
-            {
-                foreach (string cestaSoubor in Directory.GetFiles(slozkaHledana, "*.*", SearchOption.TopDirectoryOnly).Where(s => "*.mp3".Contains(Path.GetExtension(s).ToLower())))
-                {
-                    string nazevSoubor = Path.GetFileNameWithoutExtension(cestaSoubor);
-                    nazevSoubor = nazevSoubor.ToLower();
-
-                    string[] rozdelenyNazev = nazevSoubor.Split('-');
-                    if (rozdelenyNazev == null)
-                    {
-                        return "chyba - není pomlčka";
-                    }
-                    if (rozdelenyNazev.Length < 2)
-                    {
-                        return "chyba - není pomlčka";
-                    }
-                    // video nalezeno
-                    if (nazevSoubor == (interpret.ToLower() + "-" + skladbaHledana.ToLower()))
-                    {
-                        skupina = "Video bylo staženo dříve";
-                        nazevNovy = "";
-                        return cestaSoubor;
-                    }
-                    // video nenalezeno -> ale nalezen interpret ve složce -> správná složka
-                    if (rozdelenyNazev[0] == interpret.ToLower())
-                    {
-                        spravnaSlozka = slozkaHledana;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return "Chyba - výběr složky";
-            }
-            if (!String.IsNullOrWhiteSpace(spravnaSlozka))
-            {
-                nazevNovy = interpret + "-" + skladbaHledana;
-                skupina = "Složka nalezena";
-                return spravnaSlozka;
-            }
-            return null;
-        }
-
+        // již nepoužívané
+        #region nepoužívané
         /*                 
             if (kontolovanySoubor.Contains("(ft."))
             {
@@ -1016,7 +682,7 @@ namespace youtube_renamer
         /********************************************************************************************************************************************************************************/
         private void NajdiSlozku(bool posledni)
         {
-            Soubory soubor = new Soubory();
+            Soubor soubor = new Soubor();
             if (posledni)
             {
                 interpret = interpret.TrimEnd('.');
@@ -1307,6 +973,6 @@ namespace youtube_renamer
             }
             return null;
         }
-
+        #endregion
     }
 }

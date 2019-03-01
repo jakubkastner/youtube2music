@@ -635,12 +635,12 @@
             // olvColumn7
             // 
             this.olvColumn7.AspectName = "InterpretiFeat";
-            this.olvColumn7.Text = "InterpretiFeat";
-            this.olvColumn7.Width = 102;
+            this.olvColumn7.Text = "Hostující interpreti";
+            this.olvColumn7.Width = 134;
             // 
             // olvColumn8
             // 
-            this.olvColumn8.AspectName = "NazevCely";
+            this.olvColumn8.AspectName = "NazevNovy";
             this.olvColumn8.Text = "Nový název";
             this.olvColumn8.Width = 135;
             // 

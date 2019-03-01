@@ -9,7 +9,7 @@ namespace youtube_renamer
     static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// Základ aplikace a její spuštění.
         /// </summary>
         [STAThread]
         static void Main()

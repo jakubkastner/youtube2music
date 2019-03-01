@@ -37,26 +37,6 @@ namespace youtube_renamer
             return sluzba;
         }
 
-        public static void ZiskejInfoVideaStare(VideoStare vid, string playlist)
-        {
-            var pozadavek = sluzbaYoutube.Videos.List("snippet");
-            pozadavek.Id = vid.id;
-
-            var response = pozadavek.Execute();
-            if (response.Items.Count > 0)
-            {
-                vid.nazevPuvodni = response.Items[0].Snippet.Title;
-                vid.kanalID = response.Items[0].Snippet.ChannelId;
-                vid.kanal = response.Items[0].Snippet.ChannelTitle;
-                vid.popis = response.Items[0].Snippet.Description;
-                vid.publikovano = response.Items[0].Snippet.PublishedAt.Value;
-                vid.playlist = playlist;
-            }
-            else
-            {
-                vid.chyba = "video neexistuje";
-            }
-        }
         /// <summary>
         /// Získá z YouTube API informace o videu (název, kanál, popis, publikováno).
         /// </summary>
@@ -75,7 +55,7 @@ namespace youtube_renamer
                 {
                     // získám původní název, kanál, popis, datum publikování
                     noveVideo.NazevPuvodni = snippet.Title;
-                    noveVideo.Kanal = new VideoKanal(snippet.ChannelId, snippet.ChannelTitle);
+                    noveVideo.Kanal = new Kanal(snippet.ChannelId, snippet.ChannelTitle);
                     noveVideo.Popis = snippet.Description;
                     noveVideo.Publikovano = snippet.PublishedAt.Value;
                     return;

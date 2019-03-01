@@ -3,7 +3,7 @@
     /// <summary>
     /// YouTube kanál videa.
     /// </summary>
-    public class VideoKanal
+    public class Kanal
     {
         /// <summary>
         /// ID YouTube kanálu.
@@ -19,7 +19,7 @@
         /// </summary>
         /// <param name="id">ID YouTube kanálu.</param>
         /// <param name="nazev">Název YouTube kanálu.</param>
-        public VideoKanal(string id, string nazev)
+        public Kanal(string id, string nazev)
         {
             ID = id;
             Nazev = nazev;

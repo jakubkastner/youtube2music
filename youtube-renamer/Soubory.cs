@@ -1,21 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
 
 namespace youtube_renamer
 {
-    class Soubory
+    /// <summary>
+    /// Soubor k přečtení nebo zápisu.
+    /// </summary>
+    class Soubor
     {
-        // přečte řádky
+        /// <summary>
+        /// Získá obsah (přečte a uloží) po řádcích zadaného souboru.
+        /// </summary>
+        /// <param name="cesta">Cesta souboru k získání obsahu.</param>
+        /// <returns>Obsah souboru po jednotlivých řádcích.</returns>
         public List<string> Precti(string cesta)
         {
             if (!File.Exists(cesta))
             {
+                // soubor neexistuje
                 return null;
             }
 
@@ -25,13 +27,18 @@ namespace youtube_renamer
             {
                 while (!ctecka.EndOfStream)
                 {
+                    // přidá jednotlivé řádky souboru do listu "radky"
                     radky.Add(ctecka.ReadLine());
                 }
             }
             return radky;
         }
 
-        // zapíše řádky
+        /// <summary>
+        /// Zapíše obsah (po řádcích ze seznamu) do souboru.
+        /// </summary>
+        /// <param name="cesta">Cesta souboru k uložení.</param>
+        /// <param name="radkyKZapisu">Seznam řádků k zápisu do souboru.</param>
         public void Zapis(string cesta, List<string> radkyKZapisu)
         {
             using (FileStream str = new FileStream(cesta, FileMode.Create, FileAccess.Write))
@@ -40,6 +47,7 @@ namespace youtube_renamer
                 {
                     foreach (string radek in radkyKZapisu)
                     {
+                        // zapíše jednotlivé řádky do souboru
                         zapisovacka.WriteLine(radek);
                     }
                 }

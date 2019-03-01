@@ -85,10 +85,10 @@ namespace youtube_renamer
             textBoxPuvodniNazev.Text = upravovanaVidea[index].NazevPuvodni;
             textBoxInterpret.Text = upravovanaVidea[index].Interpret;
             labelInterpret.Text = upravovanaVidea[index].Interpret;
-            labelSkladba.Text = upravovanaVidea[index].NazevCely; // SkladbaFeaturing
+            labelSkladba.Text = upravovanaVidea[index].NazevInterpretSkladbaFeat; // SkladbaFeaturing
             textBoxSkladba.Text = upravovanaVidea[index].Skladba;
             textBoxFeaturing.Text = upravovanaVidea[index].InterpretiFeat;
-            textBoxNovyNazev.Text = upravovanaVidea[index].NazevCely; // NazevNovy
+            textBoxNovyNazev.Text = upravovanaVidea[index].NazevInterpretSkladbaFeat; // NazevNovy
             textBoxSlozka.Text = upravovanaVidea[index].Slozka;
             textBoxZanr.Text = upravovanaVidea[index].Zanr;
 
@@ -274,7 +274,7 @@ namespace youtube_renamer
             if (textBoxInterpret.Text != upravovanaVidea[index].Interpret ||
                 textBoxSkladba.Text != upravovanaVidea[index].Skladba ||
                 textBoxFeaturing.Text != upravovanaVidea[index].InterpretiFeat ||
-                textBoxNovyNazev.Text != upravovanaVidea[index].NazevCely || // NazevNovy
+                textBoxNovyNazev.Text != upravovanaVidea[index].NazevInterpretSkladbaFeat || // NazevNovy
                 textBoxSlozka.Text != upravovanaVidea[index].Slozka ||
                 textBoxZanr.Text != upravovanaVidea[index].Zanr ||
                 checkBoxStejnaSlozkaInterpret.Checked ||
