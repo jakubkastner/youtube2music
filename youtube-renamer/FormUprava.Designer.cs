@@ -53,7 +53,6 @@
             this.buttonSlozkaNajit = new System.Windows.Forms.Button();
             this.checkBoxStejnaSlozkaInterpret = new System.Windows.Forms.CheckBox();
             this.checkBoxStejnaSlozkaVybrane = new System.Windows.Forms.CheckBox();
-            this.webBrowserVideo = new System.Windows.Forms.WebBrowser();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.textBoxZanr = new System.Windows.Forms.TextBox();
@@ -63,10 +62,13 @@
             this.labelSkladba = new System.Windows.Forms.Label();
             this.textBoxID = new System.Windows.Forms.TextBox();
             this.linkLabelID = new System.Windows.Forms.LinkLabel();
+            this.geckoWebBrowserVideo = new Gecko.GeckoWebBrowser();
             this.SuspendLayout();
             // 
             // textBoxInterpret
             // 
+            this.textBoxInterpret.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxInterpret.Location = new System.Drawing.Point(111, 372);
             this.textBoxInterpret.Name = "textBoxInterpret";
             this.textBoxInterpret.Size = new System.Drawing.Size(816, 20);
@@ -75,6 +77,8 @@
             // 
             // textBoxSkladba
             // 
+            this.textBoxSkladba.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxSkladba.Location = new System.Drawing.Point(111, 398);
             this.textBoxSkladba.Name = "textBoxSkladba";
             this.textBoxSkladba.Size = new System.Drawing.Size(816, 20);
@@ -83,6 +87,8 @@
             // 
             // textBoxFeaturing
             // 
+            this.textBoxFeaturing.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxFeaturing.Location = new System.Drawing.Point(111, 424);
             this.textBoxFeaturing.Name = "textBoxFeaturing";
             this.textBoxFeaturing.Size = new System.Drawing.Size(816, 20);
@@ -91,6 +97,8 @@
             // 
             // textBoxNovyNazev
             // 
+            this.textBoxNovyNazev.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxNovyNazev.Location = new System.Drawing.Point(111, 450);
             this.textBoxNovyNazev.Name = "textBoxNovyNazev";
             this.textBoxNovyNazev.Size = new System.Drawing.Size(816, 20);
@@ -99,6 +107,8 @@
             // 
             // textBoxPuvodniNazev
             // 
+            this.textBoxPuvodniNazev.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxPuvodniNazev.Location = new System.Drawing.Point(111, 346);
             this.textBoxPuvodniNazev.Name = "textBoxPuvodniNazev";
             this.textBoxPuvodniNazev.ReadOnly = true;
@@ -107,6 +117,7 @@
             // 
             // buttonPredchozi
             // 
+            this.buttonPredchozi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonPredchozi.Location = new System.Drawing.Point(111, 601);
             this.buttonPredchozi.Name = "buttonPredchozi";
             this.buttonPredchozi.Size = new System.Drawing.Size(220, 27);
@@ -117,6 +128,7 @@
             // 
             // buttonNasledujici
             // 
+            this.buttonNasledujici.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonNasledujici.Cursor = System.Windows.Forms.Cursors.Default;
             this.buttonNasledujici.Location = new System.Drawing.Point(707, 601);
             this.buttonNasledujici.Name = "buttonNasledujici";
@@ -128,6 +140,7 @@
             // 
             // checkBoxUlozit
             // 
+            this.checkBoxUlozit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxUlozit.AutoSize = true;
             this.checkBoxUlozit.Location = new System.Drawing.Point(111, 568);
             this.checkBoxUlozit.Name = "checkBoxUlozit";
@@ -139,7 +152,10 @@
             // 
             // buttonObnovit
             // 
+            this.buttonObnovit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonObnovit.Location = new System.Drawing.Point(412, 601);
+            this.buttonObnovit.MaximumSize = new System.Drawing.Size(220, 27);
             this.buttonObnovit.Name = "buttonObnovit";
             this.buttonObnovit.Size = new System.Drawing.Size(220, 27);
             this.buttonObnovit.TabIndex = 12;
@@ -149,6 +165,7 @@
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(17, 222);
             this.label1.Name = "label1";
@@ -158,6 +175,7 @@
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(17, 346);
             this.label2.Name = "label2";
@@ -167,6 +185,7 @@
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(17, 372);
             this.label3.Name = "label3";
@@ -176,6 +195,7 @@
             // 
             // label4
             // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(17, 398);
             this.label4.Name = "label4";
@@ -185,6 +205,7 @@
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(17, 424);
             this.label5.Name = "label5";
@@ -194,6 +215,7 @@
             // 
             // label6
             // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(17, 450);
             this.label6.Name = "label6";
@@ -203,6 +225,7 @@
             // 
             // buttonSlozkaOtevrit
             // 
+            this.buttonSlozkaOtevrit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSlozkaOtevrit.Enabled = false;
             this.buttonSlozkaOtevrit.Location = new System.Drawing.Point(707, 525);
             this.buttonSlozkaOtevrit.Name = "buttonSlozkaOtevrit";
@@ -214,6 +237,7 @@
             // 
             // label9
             // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(17, 476);
             this.label9.Name = "label9";
@@ -223,6 +247,7 @@
             // 
             // textBoxDatum
             // 
+            this.textBoxDatum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBoxDatum.Location = new System.Drawing.Point(111, 248);
             this.textBoxDatum.Name = "textBoxDatum";
             this.textBoxDatum.ReadOnly = true;
@@ -231,6 +256,7 @@
             // 
             // label10
             // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(17, 248);
             this.label10.Name = "label10";
@@ -240,6 +266,7 @@
             // 
             // label11
             // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(17, 195);
             this.label11.Name = "label11";
@@ -249,7 +276,10 @@
             // 
             // buttonSlozkaJina
             // 
+            this.buttonSlozkaJina.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSlozkaJina.Location = new System.Drawing.Point(412, 525);
+            this.buttonSlozkaJina.MaximumSize = new System.Drawing.Size(220, 27);
             this.buttonSlozkaJina.Name = "buttonSlozkaJina";
             this.buttonSlozkaJina.Size = new System.Drawing.Size(220, 27);
             this.buttonSlozkaJina.TabIndex = 29;
@@ -259,6 +289,8 @@
             // 
             // textBoxSlozka
             // 
+            this.textBoxSlozka.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxSlozka.Location = new System.Drawing.Point(111, 476);
             this.textBoxSlozka.Name = "textBoxSlozka";
             this.textBoxSlozka.Size = new System.Drawing.Size(816, 20);
@@ -267,6 +299,7 @@
             // 
             // buttonSlozkaNajit
             // 
+            this.buttonSlozkaNajit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonSlozkaNajit.Enabled = false;
             this.buttonSlozkaNajit.Location = new System.Drawing.Point(111, 525);
             this.buttonSlozkaNajit.Name = "buttonSlozkaNajit";
@@ -278,6 +311,7 @@
             // 
             // checkBoxStejnaSlozkaInterpret
             // 
+            this.checkBoxStejnaSlozkaInterpret.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxStejnaSlozkaInterpret.AutoSize = true;
             this.checkBoxStejnaSlozkaInterpret.Location = new System.Drawing.Point(111, 502);
             this.checkBoxStejnaSlozkaInterpret.Name = "checkBoxStejnaSlozkaInterpret";
@@ -289,6 +323,7 @@
             // 
             // checkBoxStejnaSlozkaVybrane
             // 
+            this.checkBoxStejnaSlozkaVybrane.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxStejnaSlozkaVybrane.AutoSize = true;
             this.checkBoxStejnaSlozkaVybrane.Location = new System.Drawing.Point(662, 502);
             this.checkBoxStejnaSlozkaVybrane.Name = "checkBoxStejnaSlozkaVybrane";
@@ -298,31 +333,20 @@
             this.checkBoxStejnaSlozkaVybrane.UseVisualStyleBackColor = true;
             this.checkBoxStejnaSlozkaVybrane.CheckedChanged += new System.EventHandler(this.checkBoxStejnaSlozkaVybrane_CheckedChanged);
             // 
-            // webBrowserVideo
-            // 
-            this.webBrowserVideo.IsWebBrowserContextMenuEnabled = false;
-            this.webBrowserVideo.Location = new System.Drawing.Point(406, 9);
-            this.webBrowserVideo.Margin = new System.Windows.Forms.Padding(0);
-            this.webBrowserVideo.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowserVideo.Name = "webBrowserVideo";
-            this.webBrowserVideo.ScriptErrorsSuppressed = true;
-            this.webBrowserVideo.ScrollBarsEnabled = false;
-            this.webBrowserVideo.Size = new System.Drawing.Size(521, 325);
-            this.webBrowserVideo.TabIndex = 34;
-            this.webBrowserVideo.Visible = false;
-            this.webBrowserVideo.NewWindow += new System.ComponentModel.CancelEventHandler(this.webBrowserVideo_NewWindow);
-            // 
             // label7
             // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(369, 330);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(34, 13);
             this.label7.TabIndex = 35;
             this.label7.Text = "Video";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // label8
             // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(17, 274);
             this.label8.Name = "label8";
@@ -332,17 +356,19 @@
             // 
             // textBoxZanr
             // 
+            this.textBoxZanr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBoxZanr.Location = new System.Drawing.Point(111, 274);
             this.textBoxZanr.Name = "textBoxZanr";
             this.textBoxZanr.Size = new System.Drawing.Size(280, 20);
             this.textBoxZanr.TabIndex = 37;
             this.textBoxZanr.TextChanged += new System.EventHandler(this.textBoxZanr_TextChanged);
             // 
-            // checkBoxZanrInterpret
+            // checkBoxStejnyZanrInterpret
             // 
+            this.checkBoxStejnyZanrInterpret.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxStejnyZanrInterpret.AutoSize = true;
             this.checkBoxStejnyZanrInterpret.Location = new System.Drawing.Point(111, 300);
-            this.checkBoxStejnyZanrInterpret.Name = "checkBoxZanrInterpret";
+            this.checkBoxStejnyZanrInterpret.Name = "checkBoxStejnyZanrInterpret";
             this.checkBoxStejnyZanrInterpret.Size = new System.Drawing.Size(250, 17);
             this.checkBoxStejnyZanrInterpret.TabIndex = 38;
             this.checkBoxStejnyZanrInterpret.Text = "Použít žánr pro všechny videa tohoto interpreta";
@@ -351,6 +377,7 @@
             // 
             // checkBoxStejnyZanrVybrane
             // 
+            this.checkBoxStejnyZanrVybrane.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxStejnyZanrVybrane.AutoSize = true;
             this.checkBoxStejnyZanrVybrane.Location = new System.Drawing.Point(111, 323);
             this.checkBoxStejnyZanrVybrane.Name = "checkBoxStejnyZanrVybrane";
@@ -373,6 +400,8 @@
             // 
             // labelSkladba
             // 
+            this.labelSkladba.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.labelSkladba.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.labelSkladba.Location = new System.Drawing.Point(20, 96);
             this.labelSkladba.Name = "labelSkladba";
@@ -384,6 +413,7 @@
             // 
             // textBoxID
             // 
+            this.textBoxID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBoxID.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.textBoxID.Location = new System.Drawing.Point(111, 222);
             this.textBoxID.Name = "textBoxID";
@@ -393,6 +423,7 @@
             // 
             // linkLabelID
             // 
+            this.linkLabelID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.linkLabelID.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.linkLabelID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.linkLabelID.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
@@ -403,11 +434,25 @@
             this.linkLabelID.TabIndex = 28;
             this.linkLabelID.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelID_LinkClicked);
             // 
+            // geckoWebBrowserVideo
+            // 
+            this.geckoWebBrowserVideo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.geckoWebBrowserVideo.FrameEventsPropagateToMainWindow = false;
+            this.geckoWebBrowserVideo.Location = new System.Drawing.Point(409, 9);
+            this.geckoWebBrowserVideo.Name = "geckoWebBrowserVideo";
+            this.geckoWebBrowserVideo.Size = new System.Drawing.Size(518, 331);
+            this.geckoWebBrowserVideo.TabIndex = 44;
+            this.geckoWebBrowserVideo.UseHttpActivityObserver = false;
+            // 
             // FormUprava
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(939, 642);
+            this.Controls.Add(this.geckoWebBrowserVideo);
             this.Controls.Add(this.textBoxID);
             this.Controls.Add(this.labelInterpret);
             this.Controls.Add(this.checkBoxStejnyZanrVybrane);
@@ -415,7 +460,6 @@
             this.Controls.Add(this.textBoxZanr);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.webBrowserVideo);
             this.Controls.Add(this.checkBoxStejnaSlozkaVybrane);
             this.Controls.Add(this.checkBoxStejnaSlozkaInterpret);
             this.Controls.Add(this.buttonSlozkaNajit);
@@ -443,7 +487,7 @@
             this.Controls.Add(this.textBoxSkladba);
             this.Controls.Add(this.textBoxInterpret);
             this.Controls.Add(this.labelSkladba);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MinimumSize = new System.Drawing.Size(955, 681);
             this.Name = "FormUprava";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -482,7 +526,6 @@
         private System.Windows.Forms.Button buttonSlozkaNajit;
         private System.Windows.Forms.CheckBox checkBoxStejnaSlozkaInterpret;
         private System.Windows.Forms.CheckBox checkBoxStejnaSlozkaVybrane;
-        private System.Windows.Forms.WebBrowser webBrowserVideo;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBoxZanr;
@@ -492,5 +535,6 @@
         private System.Windows.Forms.Label labelSkladba;
         private System.Windows.Forms.TextBox textBoxID;
         private System.Windows.Forms.LinkLabel linkLabelID;
+        private Gecko.GeckoWebBrowser geckoWebBrowserVideo;
     }
 }

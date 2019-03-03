@@ -30,6 +30,9 @@ namespace youtube_renamer
             Jmeno = jmenoInterpreta.Trim();
             Regex zavorka = new Regex(@"\(([^\}]+)\)"); // odstraní cokoliv v závorce ( )
             Jmeno = zavorka.Replace(Jmeno, "");
+            Jmeno = Jmeno.Replace("(", "")
+                         .Replace(")", "")
+                         .Trim();
 
             // nový interpret je prázdný
             if (String.IsNullOrEmpty(Jmeno))
@@ -79,18 +82,27 @@ namespace youtube_renamer
 
             List<string> slozkyKnihovnaOstatni = new List<string>();
             string hledanyInterpret = Jmeno.Trim().ToLower();
+            // zdali existuje složka s názvem interpreta bez jiných hostujících interpretů
+            bool zakladniSlozka = false;
+
             // projde názvy složek ze souboru "knihovna_slozky.txt"
             foreach (string slozkaKnihovnaCesta in slozkyKnihovna)
             {
                 // název složky z knihovny
                 string slozkaKnihovnaNazev = Path.GetFileName(slozkaKnihovnaCesta).Trim().ToLower();
                 // první interpret z názvu složky v knihovně
-                string slozkaKnihovnaPrvniInterpret = slozkaKnihovnaNazev.Split(new[] { " & ", ", " }, StringSplitOptions.None).First().ToLower().Trim();
+                string[] interpretiSlozky = slozkaKnihovnaNazev.Split(new[] { " & ", ", " }, StringSplitOptions.None);
+                string slozkaKnihovnaPrvniInterpret = interpretiSlozky.First().ToLower().Trim();
 
                 // existuje složka s názvem interpreta
                 if (slozkaKnihovnaPrvniInterpret == hledanyInterpret)
                 {
                     Slozky.Add(slozkaKnihovnaCesta);
+                    if (interpretiSlozky.Length == 1)
+                    {
+                        // existuje složka s názvem interpreta bez jiných hostujících interpretů
+                        zakladniSlozka = true;
+                    }
                 }
                 // najdi soubor ve složce _ostatní a zjisti zdali tam již není
                 else if (slozkaKnihovnaNazev == "_ostatní")
@@ -98,8 +110,8 @@ namespace youtube_renamer
                     slozkyKnihovnaOstatni.Add(slozkaKnihovnaCesta);
                 }
             }
-            // nebyly nalezeny složky interpreta
-            if (Slozky.Count == 0)
+            // nebyly nalezeny složky interpreta nebo nebyla nalezena základní složka interpreta
+            if (Slozky.Count == 0 || !zakladniSlozka)
             {
                 // najde zdali se interpret nenachází ve složce ostatní 
                 foreach (string ostatniSlozka in slozkyKnihovnaOstatni)
@@ -150,6 +162,9 @@ namespace youtube_renamer
             switch (Jmeno)
             {
                 // cz + sk
+                case "smack one":
+                    Jmeno = "smack";
+                    break;
                 case "jickson":
                     Jmeno = "jimmy dickson";
                     break;
@@ -159,17 +174,26 @@ namespace youtube_renamer
                 case "radikal chef":
                     Jmeno = "radikal";
                     break;
-                case "s.barracuda":
-                    Jmeno = "sergei barracuda";
-                    break;
                 case "white russian":
                     Jmeno = "igor";
                     break;
                 case "white rusian":
                     Jmeno = "igor";
                     break;
-                case "mladej moris":
-                    Jmeno = "yg moris";
+                case "bílej rus":
+                    Jmeno = "igor";
+                    break;
+                case "s.barracuda":
+                    Jmeno = "sergei barracuda";
+                    break;
+                case "s. barracuda":
+                    Jmeno = "sergei barracuda";
+                    break;
+                case "ak":
+                    Jmeno = "pastor & sergei barracuda"; // asi problém s velkýma písmenama
+                    break;
+                case "yg moris":
+                    Jmeno = "mladej moris";
                     break;
                 case "gleb : zoo":
                     Jmeno = "gleb";
@@ -203,6 +227,12 @@ namespace youtube_renamer
                     break;
                 case "karlo":
                     Jmeno = "gumbgu";
+                    break;
+                case "dokkey":
+                    Jmeno = "dokkeytino";
+                    break;
+                case "otis":
+                    Jmeno = "otecko";
                     break;
                 // zahraniční
                 case "the black eyed peas":
@@ -331,7 +361,15 @@ namespace youtube_renamer
                          .Replace("Wip", "WIP")
                          .Replace("Www", "WWW")
                          .Replace("Dms", "DMS")
+                         .Replace("Rnz", "RNZ")
                          .Replace("Mpp", "MPP")
+                         .Replace("G Eazy", "G-Eazy")
+                         .Replace("Lordk", "LordK")
+                         .Replace("Idk", "IDK")
+                         .Replace("Jpegmafia", "JPEGmafia")
+                         .Replace("Zillakami", "ZillaKami")
+                         .Replace("Pashapg", "PashaPG")
+                         .Replace("Juice Wrld", "Juice WRLD")
                          .Trim();
         }
     }

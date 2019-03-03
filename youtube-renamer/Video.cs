@@ -12,6 +12,7 @@ namespace youtube_renamer
     public class Video
     {
         private SeznamInterpretu vsichniInterpreti;
+        private string novyNazevVidea;
 
         public string ID { get; set; }
         public string Playlist { get; set; }
@@ -51,14 +52,37 @@ namespace youtube_renamer
                     // spojí pole interpretů na featu pomocí ", "
                     string vysledek = String.Join(", ", inteprerti);
                     // spojí poslední dva interprety na featuringu znakem " & "
-                    string posledni = inteprerti[inteprerti.Count - 1];
+                    string posledni = inteprerti.Last();
                     vysledek = vysledek.Replace(", " + posledni, " & " + posledni);
                     return vysledek;
                 }
                 return "";
             }
         }
-        public string NazevNovy { get; set; }
+        public string NazevNovy
+        {
+            get
+            {
+                return novyNazevVidea;
+            }
+            set
+            {
+                string novyNazev = value;
+                if (String.IsNullOrEmpty(novyNazev))
+                {
+                    this.novyNazevVidea = novyNazev;
+                    return;
+                }
+                string nalezenySoubor = NajdiSoubor(novyNazev);
+                if (!String.IsNullOrEmpty(nalezenySoubor))
+                {
+                    // soubor již existuje
+                    novyNazev = "";
+                    Slozka = nalezenySoubor;
+                }
+                this.novyNazevVidea = novyNazev;
+            }
+        }
         public string NazevPuvodni { get; set; }
         public string Skladba { get; set; }
         public string NazevSkladbaFeat
@@ -106,14 +130,14 @@ namespace youtube_renamer
                 {
                     return "";
                 }
-                return Interpreti[0].Jmeno;
+                return Interpreti.First().Jmeno;
             }
         }
 
         public Video(string videoID, string videoPlaylist, SeznamInterpretu interpreti)
         {
-            vsichniInterpreti = interpreti;
-            NazevNovy = "";
+            this.vsichniInterpreti = interpreti;
+            this.novyNazevVidea = "";
             ID = videoID;
             Playlist = videoPlaylist;
             Popis = ""; // -> viz YouTubeApi.ZiskejInfoVidea()
@@ -154,6 +178,8 @@ namespace youtube_renamer
         /// </summary>
         private void ZiskejInformace()
         {
+            bool remix = false;
+
             // neexistuje název videa
             if (String.IsNullOrEmpty(NazevPuvodni))
             {
@@ -166,7 +192,7 @@ namespace youtube_renamer
 
             string interpret = "";
             string skladba = "";
-            string pridejNaKonec = "";
+            //string pridejNaKonec = "";
             string upravenyNazev = mezery.Replace(NazevPuvodni, " "); // odstraní více mezer
 
             // nahradí oddělovací znaky a feat
@@ -175,8 +201,8 @@ namespace youtube_renamer
                                          .Replace('–', '-')
                                          .Replace("[", "(")
                                          .Replace("]", ")")
-                                         .Replace("feat", "ft")
-                                         .Replace("featuring", "ft");
+                                         .Replace("featuring", "ft") // musí být před
+                                         .Replace("feat", "ft");
 
             // nahradí znak '|' za závorky
             if (upravenyNazev.Contains("|"))
@@ -217,6 +243,7 @@ namespace youtube_renamer
             upravenyNazev = upravenyNazev.Replace("_", "")
                                          .Replace("gleb - zoo", "gleb")
                                          .Replace("mike will made-it", "mike will made it")
+                                         .Replace("g-eazy", "g eazy")
                                          .Replace("flo-rida", "flo rida")
                                          .Replace("jay-z", "jay z")
                                          .Replace("t-pain", "t pain")
@@ -259,6 +286,10 @@ namespace youtube_renamer
             // skladba je remix -> přidám to co je v závorce do názvu
             if (skladba.Contains("remix"))
             {
+                remix = true;
+                skladba = skladba.Replace("remix", "")
+                                 .Replace("()", "");
+                /*
                 // nahradním otevírací závorku pomlčkou, zavírací odstraním
                 skladba = skladba.Replace("(", "-")
                                  .Replace(")", "");
@@ -268,7 +299,7 @@ namespace youtube_renamer
                     // na konec přidám to co je mezi 1. a . pomlčkou
                     pridejNaKonec = " " + uprava[1].Trim();
                 }
-                skladba = uprava[0];
+                skladba = uprava[0];*/
             }
 
             // odstranění textu v závorce
@@ -302,7 +333,11 @@ namespace youtube_renamer
             }
 
             skladba = OdstranZbytecnosti(skladba);
-            skladba = skladba.Trim() + pridejNaKonec;
+            skladba = skladba.Trim();
+            if (remix)
+            {
+                skladba = skladba + " remix";
+            }
             skladba = OdstranZbytecnosti(skladba);
 
             // skladba je prázdná - soubor se nepodařilo přejmenovat -> konec
@@ -313,7 +348,7 @@ namespace youtube_renamer
             }
 
             // převedení na velká písmenka na začátku a uložení jako nový název
-            Skladba = skladba[0].ToString().ToUpper() + skladba.Substring(1, skladba.Length - 1).ToLower();
+            Skladba = skladba[0].ToString().ToUpper() + skladba.Substring(1, skladba.Length - 1).ToLower().Replace(" i ", " I ");
         }
 
 
@@ -326,7 +361,7 @@ namespace youtube_renamer
             string[] odstran = { "off.", "off vid", "off vd", "music video", "official", " vd", "audio", "prod", "wshh" };
             for (int i = 0; i < odstran.Length; i++)
             {
-                // odstraní postupně všehchny přebytečn text z pole
+                // odstraní postupně všehchen přebytečný text z pole
                 if (vstup.Contains(odstran[i]))
                 {
                     vstup = vstup.Substring(0, vstup.IndexOf(odstran[i])).Trim();
@@ -374,11 +409,15 @@ namespace youtube_renamer
         }
 
         // přidá interpreta ze stringu
-        private void PridejInterpreta(string nazevInterpreta)
+        private void PridejInterpreta(string jmenoInterpreta)
         {
+            if (String.IsNullOrEmpty(jmenoInterpreta))
+            {
+                return;
+            }
             // úprava interpreta - odstranění zbytečnosti a převedení na velká písmena
-            nazevInterpreta = OdstranZbytecnosti(nazevInterpreta);
-            Interpret novyInterpret = new Interpret(nazevInterpreta);
+            jmenoInterpreta = OdstranZbytecnosti(jmenoInterpreta);
+            Interpret novyInterpret = new Interpret(jmenoInterpreta);
 
             // zamezí duplicitním interpretům
             if (!JeInterpretNaFeatu(novyInterpret.Jmeno))
@@ -397,18 +436,35 @@ namespace youtube_renamer
                 }
             }
         }
-
         // přidá interprety z pole stringů
-        private void PridejInterpreta(List<string> nazvyInterpretu)
+        private void PridejInterpreta(List<string> jmenaInterpretu)
         {
-            foreach (string nazevInterpreta in nazvyInterpretu)
+            foreach (string jmenoInterpreta in jmenaInterpretu)
             {
-                PridejInterpreta(nazevInterpreta);
+                if (!String.IsNullOrEmpty(jmenoInterpreta))
+                {
+                    PridejInterpreta(jmenoInterpreta);
+                }
             }
         }
+
+
+        // odstraní interpreta ze seznamu featuringů
+        private void OdstranInterpreta(string jmenoInterpreta)
+        {
+            if (JeInterpretNaFeatu(jmenoInterpreta))
+            {
+                Interpret interpretKOdstraneni = vsichniInterpreti.VratInterpreta(jmenoInterpreta);
+                if (interpretKOdstraneni != null)
+                {
+                    Interpreti.Remove(interpretKOdstraneni);
+                }
+            }
+        }
+
         private bool JeInterpretNaFeatu(string hledanyInterpret)
         {
-            // zjistí zdali je už interpret přidaný dříve
+            // zjistí zdali je už interpret přidaný do seznamu dříve
             foreach (Interpret interpret in this.Interpreti)
             {
                 if (interpret.Jmeno.ToLower().Equals(hledanyInterpret.ToLower()))
@@ -454,11 +510,12 @@ namespace youtube_renamer
             }
 
 
+            // složka, která obsahuje nejvíce interpretů
+            string nejlepsiSlozka = "";
             // projde názvy složek ze získaných složek interpreta
             foreach (string slozkaInterpretaCesta in hledanyInterpret.Slozky)
             {
                 string slozkaInterpretaNazev = Path.GetFileName(slozkaInterpretaCesta).ToLower().Trim();
-
                 // je featuring v přidávaném videu
                 if (Interpreti.Count > 1)
                 {
@@ -479,160 +536,225 @@ namespace youtube_renamer
                     }
                     if (spravnaSlozka)
                     {
-                        // DODĚLAT
-                        // zkontrolovat, jestli už se ve složce nenalézá
-
                         // jedná se o složku, kde se nachází interpreti, kteří jsou na featu
-                        Slozka = slozkaInterpretaCesta;
-                        if (interpretiNazevSlozky.Length < 2)
+                        if (String.IsNullOrEmpty(nejlepsiSlozka))
                         {
-                            NazevNovy = NazevSkladbaFeat;
+                            // ještě nebyla nalezena žádná složka
+                            nejlepsiSlozka = slozkaInterpretaCesta;
                         }
                         else
                         {
-                            // NazevNovy = změnit interpety na featuringu
-                            // !!!!! DODĚLAT !!!!!!!!!
-                            NazevNovy = Skladba; // zatím dávám název bez featuringů a neupravuji interpreta
+                            string nejlepsiSlozkaNazev = Path.GetFileName(nejlepsiSlozka).ToLower().Trim();
+                            int pocetInterpretuNejlepsiSlozky = nejlepsiSlozkaNazev.Split(new[] { " & ", ", " }, StringSplitOptions.None).Count();
+                            if (interpretiNazevSlozky.Count() > pocetInterpretuNejlepsiSlozky)
+                            {
+                                // nová složka má více správných interpetů než ta dosud nalezená
+                                nejlepsiSlozka = slozkaInterpretaCesta;
+                            }
                         }
-                        return;
                     }
                 }
-                // není featuring ve videu nebo nebyla nalezena hromadná složka interpretů
-
-                // existuje složka s názvem interpreta
-                if (slozkaInterpretaNazev == hledanyInterpretNazev)
+                else if (slozkaInterpretaNazev == hledanyInterpretNazev)
                 {
-                    // najdi soubor, zdali už neexistuje
-                    string nalezenySoubor = NajdiSoubor(slozkaInterpretaCesta);
+                    // není featuring ve videu nebo nebyla nalezena hromadná složka interpretů
 
-                    // soubor nebyl nalezen -> v pořádku, můžeme přidat
-                    if (String.IsNullOrWhiteSpace(nalezenySoubor))
-                    {
-                        Slozka = slozkaInterpretaCesta;
-                        NazevNovy = NazevSkladbaFeat;
-                    }
-                    // video již existuje -> nepřidám ho
-                    else
-                    {
-                        Slozka = nalezenySoubor;
-                        Chyba = "Video bylo staženo dříve";
-                    }
+                    // existuje složka s názvem interpreta
+                    Slozka = slozkaInterpretaCesta;
+                    NazevNovy = NazevSkladbaFeat;
                     return;
                 }
-                // najdi soubor ve složce _ostatní a zjisti zdali tam již není
                 if (slozkaInterpretaNazev == "_ostatní")
                 {
-                    string nalezenySoubor = ""; // NajdiSouborOstatni(slozkaKnihovnaOstatniCesta);
-                                                // video nebylo nalezeno -> v pořádku, můžeme přidat
-                                                // nalezen interpret ve složce -> víme složku
-                    // soubor nebyl nalezen -> v pořádku, můžeme přidat
-                    if (String.IsNullOrWhiteSpace(nalezenySoubor))
-                    {
-                        Slozka = slozkaInterpretaCesta;
-                        NazevNovy = NazevInterpretSkladbaFeat;
-                        return;
-                    }
-                    // video již existuje -> nepřidám ho
-                    else
-                    {
-                        Slozka = nalezenySoubor;
-                        Chyba = "Video bylo staženo dříve";
-                    }
-                }                    
-                Chyba = "Složka nenalezena";
+                    // najdi soubor ve složce _ostatní a zjisti zdali tam již není
+                    Slozka = slozkaInterpretaCesta;
+                    NazevNovy = NazevInterpretSkladbaFeat;
+                    return;
+                }
             }
+            if (!String.IsNullOrEmpty(nejlepsiSlozka))
+            {
+                string nejlepsiSlozkaNazev = Path.GetFileName(nejlepsiSlozka).ToLower().Trim();
+                string[] interpretiSlozky = nejlepsiSlozkaNazev.Split(new[] { " & ", ", " }, StringSplitOptions.None);
+                // byla nalezena složka s více interprety
+                if (interpretiSlozky.Length > 1)
+                {
+                    // jedná se o složku s více interprety
+
+                    // změní jméno interpreta skladby
+                    Interpreti[0] = new Interpret(nejlepsiSlozkaNazev);
+                    // odstraní přebytečné featuringy
+                    foreach (string interpretSlozka in interpretiSlozky)
+                    {
+                        OdstranInterpreta(interpretSlozka);
+                    }
+                }
+                Slozka = nejlepsiSlozka;
+                NazevNovy = NazevSkladbaFeat;
+                return;
+            }
+            Chyba = "Složka nenalezena";
         }
 
 
         // najdi soubor ve složce (vrací soubor, který existuje NEBO null pokud soubor neexistuje)
-        private string NajdiSoubor(string slozkaHledana)
+        private string NajdiSoubor(string hledanaSkladba)
         {
-            Regex zavorka = new Regex(@"\(([^\}]+)\)"); // odstraní cokoliv v závorce ( );  
-            // ÚPRAVA - přidat další koncovky !!!!!!!
+
+            // DODĚLAT
+            // kontrola souboru na začátku - pozor padá při nesprávných znacích v názvu souboru
+            // 1. zkontroluje, zdali se ve složce nenachází stejný soubor
+            /*if (File.Exists(Path.Combine(Slozka, novyNazev + ".opus")))
+            {
+                // soubor již existuje
+                Slozka = Path.Combine(Slozka, novyNazev + ".opus");
+                novyNazev = "";
+                Chyba = "Video bylo staženo dříve";
+                return;
+            }*/
+
+            // 2. zkontroluje i další složky
+            Regex zavorka = new Regex(@"\(([^\}]+)\)"); // odstraní cokoliv v závorce ( ), včetně featuringu !
+
+            // získá soubory ze složky
+            List<string> soubory = new List<string>();
             try
             {
-                foreach (string cestaSoubor in Directory.GetFiles(slozkaHledana, "*.*", SearchOption.AllDirectories).Where(s => "*.opus".Contains(Path.GetExtension(s).ToLower())))
+                soubory.AddRange(Directory.GetFiles(Slozka, "*.*", SearchOption.AllDirectories).Where(s => "*.opus".Contains(Path.GetExtension(s).ToLower())));
+            }
+            catch (Exception)
+            {
+                Chyba = "Chyba hledání souboru";
+                return null;
+            }
+
+            hledanaSkladba = hledanaSkladba.ToLower();
+
+            if (!hledanaSkladba.Contains("(ft."))
+            {
+                hledanaSkladba = zavorka.Replace(hledanaSkladba, "");
+                hledanaSkladba = OdstranZacatek(hledanaSkladba);
+                hledanaSkladba = OdstranKonec(hledanaSkladba);
+                hledanaSkladba = OdstranZbytek(hledanaSkladba);
+            }
+            foreach (string souborCesta in soubory)
+            {
+                string souborNazev = Path.GetFileNameWithoutExtension(souborCesta).ToLower();
+                if (!souborNazev.Contains("(ft."))
                 {
+                    souborNazev = OdstranZacatek(souborNazev);
+                    souborNazev = OdstranKonec(souborNazev);
+                    souborNazev = OdstranZbytek(souborNazev);
+                }
 
-                    /*if (!kontolovanySoubor.Contains("(ft."))
-                    {
-                        kontolovanySoubor = OdstranZacatek(kontolovanySoubor);
-                        kontolovanySoubor = OdstranKonec(kontolovanySoubor);
-                        kontolovanySoubor = OdstranZbytek(kontolovanySoubor);
-                    }*/
-                    /*if (!hledanaSkladba.Contains("(ft."))
-                    {
-                        hledanaSkladba = zavorka.Replace(hledanaSkladba, ""); // odstraní i featuring
-                        hledanaSkladba = OdstranZacatek(hledanaSkladba);
-                        hledanaSkladba = OdstranKonec(hledanaSkladba);
-                        hledanaSkladba = OdstranZbytek(hledanaSkladba);
-                    }*/
-
-                    string kontrolovanySoubor = Path.GetFileNameWithoutExtension(cestaSoubor).ToLower();
-                    kontrolovanySoubor = zavorka.Replace(kontrolovanySoubor, ""); // odstraní i featuring
-                    string hledanaSkladba = Skladba.ToLower();
-                    if (kontrolovanySoubor == hledanaSkladba)
+                if (souborNazev == hledanaSkladba)
+                {
+                    Chyba = "Video bylo staženo dříve";
+                    return souborCesta;
+                }
+                else if (!Slozka.Contains("_ostatní") && Regex.IsMatch(souborNazev.Split(' ').First(), @"^\d{2}$")) // album -> rok název (první 4 znaky jsou číslice)
+                {
+                    // pro složku ostatní toto neplatí
+                    if (souborNazev.Substring(2, souborNazev.Length - 2).Trim() == hledanaSkladba)
                     {
                         Chyba = "Video bylo staženo dříve";
-                        return cestaSoubor;
-                    }
-                    else if (Regex.IsMatch(kontrolovanySoubor.Split(' ').First(), @"^\d{2}$")) // album -> rok název (první 4 znaky jsou číslice)
-                    {
-                        if (kontrolovanySoubor.Substring(2, kontrolovanySoubor.Length - 2).Trim() == hledanaSkladba)
-                        {
-                            Chyba = "Video bylo staženo dříve";
-                            return cestaSoubor;
-                        }
+                        return souborCesta;
                     }
                 }
             }
-            catch (Exception)
-            {
-                Chyba = "Chyba hledání souboru";
-                return null;
-            }
-            return null;
+
+            hledanaSkladba = zavorka.Replace(hledanaSkladba, "");
+            hledanaSkladba = OdstranZacatek(hledanaSkladba);
+            hledanaSkladba = OdstranKonec(hledanaSkladba);
+            hledanaSkladba = OdstranZbytek(hledanaSkladba);
 
             // soubor předtím nenalezen -> nyní zkusím odstranit i featuring a najít shodné názvy
-            /*try
+            foreach (string souborCesta in soubory)
             {
-                foreach (string cestaSoubor in Directory.GetFiles(slozkaHledana, "*.*", SearchOption.AllDirectories).Where(s => "*.mp3".Contains(Path.GetExtension(s).ToLower())))
+                string souborNazev = Path.GetFileNameWithoutExtension(souborCesta).ToLower();
+                souborNazev = zavorka.Replace(souborNazev, "");
+                souborNazev = OdstranZacatek(souborNazev);
+                souborNazev = OdstranKonec(souborNazev);
+                souborNazev = OdstranZbytek(souborNazev);
+
+
+                if (souborNazev == hledanaSkladba)
                 {
-                    string kontolovanySoubor = Path.GetFileNameWithoutExtension(cestaSoubor);
-                    kontolovanySoubor = kontolovanySoubor.ToLower();
-                    kontolovanySoubor = zavorka.Replace(kontolovanySoubor, ""); // odstraní i featuring
-                    kontolovanySoubor = OdstranZacatek(kontolovanySoubor);
-                    kontolovanySoubor = OdstranKonec(kontolovanySoubor);
-                    kontolovanySoubor = OdstranZbytek(kontolovanySoubor);
-
-                    string hledanaSkladba = skladbaHledana.ToLower();
-                    hledanaSkladba = zavorka.Replace(hledanaSkladba, ""); // odstraní i featuring
-                    hledanaSkladba = OdstranZacatek(hledanaSkladba);
-                    hledanaSkladba = OdstranKonec(hledanaSkladba);
-                    hledanaSkladba = OdstranZbytek(hledanaSkladba);
-
-                    if (kontolovanySoubor == hledanaSkladba)
+                    Chyba = "Video bylo nejspíš staženo dříve";
+                    return souborCesta;
+                }
+                else if (!Slozka.Contains("_ostatní") && Regex.IsMatch(souborNazev.Split(' ').First(), @"^\d{2}$")) // album -> rok název (první 4 znaky jsou číslice)
+                {
+                    // pro složku ostatní toto neplatí
+                    if (souborNazev.Substring(2, souborNazev.Length - 2).Trim() == hledanaSkladba)
                     {
-                        skupina = "Následující videa jsou již možná stažena";
-                        return cestaSoubor;
-                    }
-                    else if (Regex.IsMatch(kontolovanySoubor.Split(' ').First(), @"^\d{2}$")) // album -> rok název (první 4 znaky jsou číslice)
-                    {
-                        if (kontolovanySoubor.Substring(2, kontolovanySoubor.Length - 2).Trim() == hledanaSkladba)
-                        {
-                            skupina = "Následující videa jsou již možná stažena";
-                            return cestaSoubor;
-                        }
+                        Chyba = "Video bylo nejspíš staženo dříve";
+                        return souborCesta;
                     }
                 }
             }
-            catch (Exception)
-            {
-                Chyba = "Chyba hledání souboru";
-                return null;
-            }
-            return null;*/
+            return null;
         }
 
+
+        private string OdstranZacatek(string vstup)
+        {
+            // 48 - 57 = 0 - 9
+            // 65 - 90 = A - Z (ale tolower() takže nepořebujeme)
+            // 97 - 122 = a - z
+            //if (!((vstup.First() >= 48 && vstup.First() <= 57) || (vstup.First() >= 97 && vstup.First() <= 122)))
+            if (string.IsNullOrEmpty(vstup))
+            {
+                return vstup;
+            }
+            if ((vstup.First() >= 32 && vstup.First() <= 47) || (vstup.First() >= 58 && vstup.First() <= 63) || (vstup.First() >= 91 && vstup.First() <= 96) || (vstup.First() >= 123 && vstup.First() <= 126))
+            {
+                vstup = vstup.Substring(1);
+            }
+            vstup = OdstranMezery(vstup);
+            return vstup;
+        }
+        private string OdstranKonec(string vstup)
+        {
+            if (string.IsNullOrEmpty(vstup))
+            {
+                return vstup;
+            }
+            //if (!((vstup.Last() >= 48 && vstup.Last() <= 57) || (vstup.Last() >= 97 && vstup.Last() <= 122)))
+            if ((vstup.Last() >= 32 && vstup.Last() <= 47) || (vstup.Last() >= 58 && vstup.Last() <= 63) || (vstup.Last() >= 91 && vstup.Last() <= 96) || (vstup.Last() >= 123 && vstup.Last() <= 126))
+            {
+                vstup = vstup.Substring(0, vstup.Length - 1);
+            }
+            vstup = OdstranMezery(vstup);
+            return vstup;
+        }
+        private string OdstranMezery(string vstup)
+        {
+            if (string.IsNullOrEmpty(vstup))
+            {
+                return vstup;
+            }
+            while (vstup.Contains("  "))
+            {
+                vstup = vstup.Replace("  ", " ");
+            }
+
+            return vstup;
+        }
+        private string OdstranZbytek(string vstup)
+        {
+            if (string.IsNullOrEmpty(vstup))
+            {
+                return vstup;
+            }
+            foreach (char znak in vstup)
+            {
+                if ((znak >= 32 && znak <= 47) || (znak >= 58 && znak <= 63) || (znak >= 91 && znak <= 96) || (znak >= 123 && znak <= 126))
+                {
+                    vstup = vstup.Replace(znak, ' ');
+                }
+            }
+            vstup = OdstranMezery(vstup);
+            return vstup;
+        }
     }
 }

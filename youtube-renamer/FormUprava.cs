@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gecko;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -33,6 +34,11 @@ namespace youtube_renamer
         public FormUprava(List<Video> upravovanaVideaForm, string hudebniKnihovnaForm/*, ListViewItem[] pol, ListViewGroupCollection listSkupiny*/)
         {
             InitializeComponent();
+
+            Xpcom.Initialize("Firefox"); // prohlížeč
+            Gecko.GeckoPreferences.User["general.useragent.override"] = "User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0";
+
+
             upravovanaVidea = upravovanaVideaForm;
             hudebniKnihovna = hudebniKnihovnaForm;
 
@@ -109,6 +115,7 @@ namespace youtube_renamer
             //webBrowserVideo.AllowNavigation = true;
             //webBrowserVideo.Navigate("https://www.youtube.com/embed/" + upravovanaVidea[index].id);
             //webBrowserVideo.AllowNavigation = false;
+            geckoWebBrowserVideo.Navigate("https://www.youtube.com/embed/" + upravovanaVidea[index].ID);
 
             nacteno = true;
         }
@@ -539,6 +546,18 @@ namespace youtube_renamer
             {
                 Zmena();
             }
+        }
+
+        private void webBrowserVideo_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+            geckoWebBrowserVideo.Navigate("https://www.youtube.com/watch?v=" + upravovanaVidea[index].ID);
+            // https://www.youtube.com/tv#/watch/video/idle?v=Ijb0gKrPtbk&resume
+            //geckoWebBrowserVideo.Navigate("https://www.youtube.com/tv#/watch/video/idle?v=" + upravovanaVidea[index].ID); padá geckofx
         }
     }
 }
