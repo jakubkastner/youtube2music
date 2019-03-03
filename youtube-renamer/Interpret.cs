@@ -91,14 +91,22 @@ namespace youtube_renamer
                 // název složky z knihovny
                 string slozkaKnihovnaNazev = Path.GetFileName(slozkaKnihovnaCesta).Trim().ToLower();
                 // první interpret z názvu složky v knihovně
-                string[] interpretiSlozky = slozkaKnihovnaNazev.Split(new[] { " & ", ", " }, StringSplitOptions.None);
+                List<string> interpretiSlozky = new List<string>();
+                if (slozkaKnihovnaNazev.Contains(" & "))
+                {
+                    interpretiSlozky.AddRange(slozkaKnihovnaNazev.Split(new[] { " & ", ", " }, StringSplitOptions.None));
+                }
+                else
+                {
+                    interpretiSlozky.Add(slozkaKnihovnaNazev);
+                }
                 string slozkaKnihovnaPrvniInterpret = interpretiSlozky.First().ToLower().Trim();
 
                 // existuje složka s názvem interpreta
                 if (slozkaKnihovnaPrvniInterpret == hledanyInterpret)
                 {
                     Slozky.Add(slozkaKnihovnaCesta);
-                    if (interpretiSlozky.Length == 1)
+                    if (interpretiSlozky.Count == 1)
                     {
                         // existuje složka s názvem interpreta bez jiných hostujících interpretů
                         zakladniSlozka = true;
@@ -370,6 +378,7 @@ namespace youtube_renamer
                          .Replace("Zillakami", "ZillaKami")
                          .Replace("Pashapg", "PashaPG")
                          .Replace("Juice Wrld", "Juice WRLD")
+                         .Replace("Tyler The Creator", "Tyler, The Creator")
                          .Trim();
         }
     }
