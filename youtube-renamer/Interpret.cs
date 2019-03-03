@@ -15,6 +15,7 @@ namespace youtube_renamer
         /// Upravené jméno interpreta.
         /// </summary>
         public string Jmeno { get; set; }
+
         /// <summary>
         /// Seznam nalezených složek interpreta.
         /// </summary>
@@ -26,7 +27,7 @@ namespace youtube_renamer
         /// <param name="jmenoInterpreta">Jméno přidávaného interpreta.</param>
         public Interpret(string jmenoInterpreta)
         {
-            this.Slozky = new List<string>();
+            Slozky = new List<string>();
             Jmeno = jmenoInterpreta.Trim();
             Regex zavorka = new Regex(@"\(([^\}]+)\)"); // odstraní cokoliv v závorce ( )
             Jmeno = zavorka.Replace(Jmeno, "");
@@ -58,11 +59,6 @@ namespace youtube_renamer
 
         public void NajdiSlozky()
         {
-            /*string hledanyInterpret = OdstranZacatek(Interpret);
-            hledanyInterpret = OdstranKonec(hledanyInterpret);
-            hledanyInterpret = hledanyInterpret.Trim().ToLower();*/
-
-
             string slozkaProgramuData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             slozkaProgramuData = Path.Combine(slozkaProgramuData, "youtube-renamer", "data");
 
@@ -131,9 +127,9 @@ namespace youtube_renamer
                 }
             }
         }
+
         private bool NajdiSouborOstatni(string slozka)
         {
-            // úprava - přidat další koncovky !!!!!!
             // vrací true, pokud nalezne soubor, který má před pomlčkou název interpreta
             try
             {
@@ -159,7 +155,6 @@ namespace youtube_renamer
             return false;
         }
 
-        // HOTOVO
         /// <summary>
         /// Změní jméno interpreta dle preferovaných úprav.
         /// </summary>
@@ -287,7 +282,6 @@ namespace youtube_renamer
             }
         }
 
-        // HOTOVO
         /// <summary>
         /// Změní jméno interpreta na velká počáteční písmena po zadaném oddělovači.
         /// </summary>
@@ -371,6 +365,7 @@ namespace youtube_renamer
                          .Replace("Dms", "DMS")
                          .Replace("Rnz", "RNZ")
                          .Replace("Mpp", "MPP")
+                         .Replace("Ptk", "PTK")
                          .Replace("G Eazy", "G-Eazy")
                          .Replace("Lordk", "LordK")
                          .Replace("Idk", "IDK")
