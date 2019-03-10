@@ -124,7 +124,7 @@
             this.statusStripStatus.Location = new System.Drawing.Point(0, 665);
             this.statusStripStatus.Name = "statusStripStatus";
             this.statusStripStatus.ShowItemToolTips = true;
-            this.statusStripStatus.Size = new System.Drawing.Size(1411, 25);
+            this.statusStripStatus.Size = new System.Drawing.Size(1434, 25);
             this.statusStripStatus.TabIndex = 13;
             // 
             // progressBarStatus
@@ -461,6 +461,7 @@
             // 
             this.menuStripMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.menuStripMenu.AutoSize = false;
             this.menuStripMenu.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.textBoxOdkaz,
@@ -472,8 +473,9 @@
             this.menuNastaveni,
             this.toolStripMenuItem1});
             this.menuStripMenu.Location = new System.Drawing.Point(0, 0);
+            this.menuStripMenu.MinimumSize = new System.Drawing.Size(1432, 27);
             this.menuStripMenu.Name = "menuStripMenu";
-            this.menuStripMenu.Size = new System.Drawing.Size(1270, 27);
+            this.menuStripMenu.Size = new System.Drawing.Size(1432, 27);
             this.menuStripMenu.TabIndex = 2;
             this.menuStripMenu.Text = "Menu";
             // 
@@ -504,49 +506,49 @@
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem3.Text = "1";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem4.Text = "2";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem5.Text = "3";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem6.Text = "4";
             this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem7.Text = "5";
             this.toolStripMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem8.Text = "6";
             this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
             // 
             // testToolStripMenuItem
             // 
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.testToolStripMenuItem.Text = "test";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
@@ -607,7 +609,7 @@
             this.objectListViewSeznamVidei.GridLines = true;
             this.objectListViewSeznamVidei.Location = new System.Drawing.Point(0, 30);
             this.objectListViewSeznamVidei.Name = "objectListViewSeznamVidei";
-            this.objectListViewSeznamVidei.Size = new System.Drawing.Size(1411, 632);
+            this.objectListViewSeznamVidei.Size = new System.Drawing.Size(1434, 632);
             this.objectListViewSeznamVidei.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.objectListViewSeznamVidei.TabIndex = 0;
             this.objectListViewSeznamVidei.UseCompatibleStateImageBehavior = false;
@@ -624,19 +626,19 @@
             // 
             this.olvColumn3.AspectName = "Kanal.Nazev";
             this.olvColumn3.Text = "Kanál";
-            this.olvColumn3.Width = 96;
+            this.olvColumn3.Width = 86;
             // 
             // olvColumn4
             // 
             this.olvColumn4.AspectName = "NazevPuvodni";
             this.olvColumn4.Text = "Původní název";
-            this.olvColumn4.Width = 159;
+            this.olvColumn4.Width = 163;
             // 
             // olvColumn5
             // 
             this.olvColumn5.AspectName = "Interpret";
             this.olvColumn5.Text = "Interpret";
-            this.olvColumn5.Width = 135;
+            this.olvColumn5.Width = 123;
             // 
             // olvColumn6
             // 
@@ -648,19 +650,19 @@
             // 
             this.olvColumn7.AspectName = "InterpretiFeat";
             this.olvColumn7.Text = "Hostující interpreti";
-            this.olvColumn7.Width = 134;
+            this.olvColumn7.Width = 143;
             // 
             // olvColumn8
             // 
             this.olvColumn8.AspectName = "NazevNovy";
             this.olvColumn8.Text = "Nový název";
-            this.olvColumn8.Width = 135;
+            this.olvColumn8.Width = 153;
             // 
             // olvColumn9
             // 
             this.olvColumn9.AspectName = "SlozkaZkracena";
             this.olvColumn9.Text = "Složka";
-            this.olvColumn9.Width = 143;
+            this.olvColumn9.Width = 195;
             // 
             // olvColumn10
             // 
@@ -672,19 +674,20 @@
             // 
             this.olvColumn11.AspectName = "Chyba";
             this.olvColumn11.Text = "Chyba";
-            this.olvColumn11.Width = 100;
+            this.olvColumn11.Width = 132;
             // 
             // olvColumn12
             // 
             this.olvColumn12.AspectName = "Stav";
             this.olvColumn12.Text = "Stav";
+            this.olvColumn12.Width = 124;
             // 
             // FormSeznam
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1411, 690);
+            this.ClientSize = new System.Drawing.Size(1434, 690);
             this.Controls.Add(this.objectListViewSeznamVidei);
             this.Controls.Add(this.statusStripStatus);
             this.Controls.Add(this.menuStripMenu);
