@@ -86,7 +86,6 @@
             this.backgroundWorkerStahniProgram = new System.ComponentModel.BackgroundWorker();
             this.objectListViewSeznamVidei = new BrightIdeasSoftware.ObjectListView();
             this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn5 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -190,20 +189,20 @@
             // 
             this.menuVybratVse.Name = "menuVybratVse";
             this.menuVybratVse.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.menuVybratVse.Size = new System.Drawing.Size(319, 22);
+            this.menuVybratVse.Size = new System.Drawing.Size(321, 22);
             this.menuVybratVse.Text = "Vybrat vše";
             this.menuVybratVse.Click += new System.EventHandler(this.menuVybratVse_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(316, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(318, 6);
             // 
             // menuVybratBezChyb
             // 
             this.menuVybratBezChyb.Name = "menuVybratBezChyb";
             this.menuVybratBezChyb.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K)));
-            this.menuVybratBezChyb.Size = new System.Drawing.Size(319, 22);
+            this.menuVybratBezChyb.Size = new System.Drawing.Size(321, 22);
             this.menuVybratBezChyb.Text = "Videa bez chyb";
             this.menuVybratBezChyb.Click += new System.EventHandler(this.menuVybratBezChyb_Click);
             // 
@@ -219,7 +218,7 @@
             // 
             this.menuVybratSlozkaNenalezena.Name = "menuVybratSlozkaNenalezena";
             this.menuVybratSlozkaNenalezena.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.menuVybratSlozkaNenalezena.Size = new System.Drawing.Size(319, 22);
+            this.menuVybratSlozkaNenalezena.Size = new System.Drawing.Size(321, 22);
             this.menuVybratSlozkaNenalezena.Text = "Videa bez nalezených složek";
             this.menuVybratSlozkaNenalezena.Click += new System.EventHandler(this.menuVybratSlozkaNenalezena_Click);
             // 
@@ -234,13 +233,13 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(316, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(318, 6);
             // 
             // menuVybratObratit
             // 
             this.menuVybratObratit.Name = "menuVybratObratit";
             this.menuVybratObratit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.menuVybratObratit.Size = new System.Drawing.Size(319, 22);
+            this.menuVybratObratit.Size = new System.Drawing.Size(321, 22);
             this.menuVybratObratit.Text = "Obrátit výběr";
             this.menuVybratObratit.Click += new System.EventHandler(this.menuVybratObratit_Click);
             // 
@@ -248,7 +247,7 @@
             // 
             this.menuVybratZrusit.Name = "menuVybratZrusit";
             this.menuVybratZrusit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.menuVybratZrusit.Size = new System.Drawing.Size(319, 22);
+            this.menuVybratZrusit.Size = new System.Drawing.Size(321, 22);
             this.menuVybratZrusit.Text = "Zrušit výběř";
             this.menuVybratZrusit.Click += new System.EventHandler(this.menuVybratZrusit_Click);
             // 
@@ -505,49 +504,49 @@
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem3.Text = "1";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem4.Text = "2";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem5.Text = "3";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem6.Text = "4";
             this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem7.Text = "5";
             this.toolStripMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem8.Text = "6";
             this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
             // 
             // testToolStripMenuItem
             // 
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
             this.testToolStripMenuItem.Text = "test";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
@@ -576,7 +575,6 @@
             // objectListViewSeznamVidei
             // 
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn1);
-            this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn2);
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn3);
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn4);
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn5);
@@ -594,7 +592,6 @@
             this.objectListViewSeznamVidei.CheckBoxes = true;
             this.objectListViewSeznamVidei.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn1,
-            this.olvColumn2,
             this.olvColumn3,
             this.olvColumn4,
             this.olvColumn5,
@@ -620,14 +617,8 @@
             // 
             // olvColumn1
             // 
-            this.olvColumn1.AspectName = "Playlist";
+            this.olvColumn1.AspectName = "PlaylistVidea.Nazev";
             this.olvColumn1.Text = "Playlist";
-            // 
-            // olvColumn2
-            // 
-            this.olvColumn2.AspectName = "ID";
-            this.olvColumn2.Text = "ID videa";
-            this.olvColumn2.Width = 97;
             // 
             // olvColumn3
             // 
@@ -764,7 +755,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniYoutubeDLCestaNaposledyVymazat;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniFFmpegCestaNaposledyVymazat;
         private BrightIdeasSoftware.ObjectListView objectListViewSeznamVidei;
-        private BrightIdeasSoftware.OLVColumn olvColumn2;
         private BrightIdeasSoftware.OLVColumn olvColumn3;
         private BrightIdeasSoftware.OLVColumn olvColumn4;
         private BrightIdeasSoftware.OLVColumn olvColumn5;

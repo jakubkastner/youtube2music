@@ -65,6 +65,32 @@ namespace youtube_renamer
             noveVideo.Chyba = "Video neexistuje";
         }
 
+        // získá seznam uživatelovo playlistů
+        internal static void ZiskejPlaylistyUzivatele(string uzivatelovoID)
+        {
+            var channelsListRequest = sluzbaYoutube.Playlists.List("snippet,contentDetails");
+            channelsListRequest.ChannelId = uzivatelovoID;
+            channelsListRequest.MaxResults = 50;
+            var channelsListResponse = channelsListRequest.Execute();
+            foreach (var list in channelsListResponse.Items)
+            {
+                Console.WriteLine(list.Id);
+                Console.WriteLine(list.Snippet.Title);
+            }
+        }
+
+        internal static string ZiskejNazevPlaylistu(string playlistID)
+        {
+            var pozadavek = sluzbaYoutube.Playlists.List("snippet");
+            pozadavek.Id = playlistID;
+            var channelsListResponse = pozadavek.Execute();
+            foreach (var list in channelsListResponse.Items)
+            {
+                return list.Snippet.Title;
+            }
+            return playlistID;
+        }
+
         /// <summary>
         /// Získá seznam ID videí z playlistu.
         /// </summary>

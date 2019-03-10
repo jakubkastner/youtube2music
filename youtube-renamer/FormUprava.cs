@@ -100,27 +100,25 @@ namespace youtube_renamer
             textBoxZanr.Text = upravovaneVideo.Zanr;
             labelChyba.Text = upravovaneVideo.Chyba;
 
-            // nadpis programu
-            if (String.IsNullOrEmpty(textBoxNovyNazev.Text))
-            {
-                this.Text = textBoxPuvodniNazev.Text + " ~ Youtube Renamer";
-            }
-            else
-            {
-                this.Text = textBoxInterpret.Text + "-" + textBoxSkladba.Text;
-                if (textBoxFeaturing.Text != "")
-                {
-                    this.Text += " (ft. " + textBoxFeaturing.Text + ")";
-                }
-                this.Text += " ~ Youtube Renamer";
-            }
-
             // načtení nového videa
             if (!obnovit)
             {
                 // naplnění prvků hodnotami
                 linkLabelID.Text = upravovaneVideo.ID;
                 linkLabelKanal.Text = upravovaneVideo.Kanal.Nazev;
+                if (upravovaneVideo.PlaylistVidea.Nazev == upravovaneVideo.ID)
+                {
+                    // nejedná se o playlist
+                    linkLabelPlaylist.Visible = false;
+                    label12.Visible = false;
+                }
+                else
+                {
+                    // jedná se o playlist
+                    linkLabelPlaylist.Visible = true;
+                    label12.Visible = true;
+                    linkLabelPlaylist.Text = upravovaneVideo.PlaylistVidea.Nazev;
+                }
                 textBoxDatum.Text = String.Format("{0:yyyy-MM-dd}", upravovaneVideo.Publikovano);
                 textBoxPuvodniNazev.Text = upravovaneVideo.NazevPuvodni;
 
@@ -178,6 +176,21 @@ namespace youtube_renamer
                     checkBoxStejnyZanrPlaylist.Enabled = true;
                 }
                 geckoWebBrowserVideo.Navigate("https://www.youtube.com/embed/" + upravovaneVideo.ID);
+            }
+
+            // nadpis programu
+            if (String.IsNullOrEmpty(textBoxNovyNazev.Text))
+            {
+                this.Text = textBoxPuvodniNazev.Text + " ~ Youtube Renamer";
+            }
+            else
+            {
+                this.Text = textBoxInterpret.Text + "-" + textBoxSkladba.Text;
+                if (textBoxFeaturing.Text != "")
+                {
+                    this.Text += " (ft. " + textBoxFeaturing.Text + ")";
+                }
+                this.Text += " ~ Youtube Renamer";
             }
 
             nacteno = true;
@@ -504,7 +517,7 @@ namespace youtube_renamer
                 // je zaškrtnuto použití stejné složky u všech upravovaných videí ze stejného playlistu, uložím složku i u nich
                 foreach (Video vid in upravovanaVidea)
                 {
-                    if (vid.Playlist == upravovaneVideo.Playlist)
+                    if (vid.PlaylistVidea.ID == upravovaneVideo.PlaylistVidea.ID)
                     {
                         // žánr je stejný
                         UlozSlozku(vid);
@@ -537,7 +550,7 @@ namespace youtube_renamer
                 // je zaškrtnuto použití stejného žánru u všech upravovaných videí ze stejného playlistu, uložím žánr i u nich
                 foreach (Video vid in upravovanaVidea)
                 {
-                    if (vid.Playlist == upravovaneVideo.Playlist)
+                    if (vid.PlaylistVidea.ID == upravovaneVideo.PlaylistVidea.ID)
                     {
                         // žánr je stejný
                         vid.Zanr = textBoxZanr.Text;
@@ -601,6 +614,11 @@ namespace youtube_renamer
         {
             // otevření stránky videa klasicky
             geckoWebBrowserVideo.Navigate("https://www.youtube.com/watch?v=" + upravovaneVideo.ID);
+        }
+
+        private void linkLabelPlaylist_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://www.youtube.com/playlist?list=" + upravovaneVideo.PlaylistVidea.ID);
         }
     }
 }

@@ -1632,7 +1632,7 @@ namespace youtube_renamer
             bool playlist = (bool)e.Argument;
             // true = playlist
             // false = video
-
+            string playlistNazev = "";
             // přidávání playlistu
             if (playlist)
             {
@@ -1640,6 +1640,7 @@ namespace youtube_renamer
                 List<string> videaNovaID = new List<string>();
                 try
                 {
+                    playlistNazev = YouTubeApi.ZiskejNazevPlaylistu(youtubeID);
                     videaNovaID = YouTubeApi.ZiskejIDVidei(youtubeID);
                 }
                 catch (Exception)
@@ -1664,7 +1665,7 @@ namespace youtube_renamer
                 ZobrazStatusProgressBar(videaNovaID.Count);
 
                 int pridaneDrive = 0;
-
+                Playlist playlistVidei = new Playlist(youtubeID, playlistNazev);
                 // kontrola zdali video už nebylo přidáno
                 foreach (string videoNoveID in videaNovaID)
                 {
@@ -1692,7 +1693,7 @@ namespace youtube_renamer
                     {
                         // video nebylo dříve přidáno - přidá se nové video a získají se informace o něm
                         //VideoStare noveVideo = new VideoStare(videoNoveID, youtubeID);
-                        Video noveVideo = new Video(videoNoveID, youtubeID, hudebniKnihovna, vsichniInterpreti);
+                        Video noveVideo = new Video(videoNoveID, playlistVidei, hudebniKnihovna, vsichniInterpreti);
                         videaVsechna.Add(noveVideo);
                         objectListViewSeznamVidei.Invoke(new Action(() =>
                         {
@@ -1738,7 +1739,7 @@ namespace youtube_renamer
                 else
                 {
                     // pokud video nebylo přidáno, přidá se
-                    Video noveVideo = new Video(youtubeID, youtubeID, hudebniKnihovna, vsichniInterpreti);
+                    Video noveVideo = new Video(youtubeID, new Playlist(youtubeID, youtubeID), hudebniKnihovna, vsichniInterpreti);
                     videaVsechna.Add(noveVideo);
                     objectListViewSeznamVidei.Invoke(new Action(() =>
                     {

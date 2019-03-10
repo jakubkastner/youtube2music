@@ -30,9 +30,10 @@ namespace youtube_renamer
         /// </summary>
         public string ID { get; set; }
         /// <summary>
-        /// ID playlistu nebo videa, pokud není z playlistu.
+        /// ID playlistu s názvem nebo ID videa, pokud není z playlistu.
         /// </summary>
-        public string Playlist { get; set; }
+        public Playlist PlaylistVidea { get; set; }
+
         /// <summary>
         /// Popis videa.
         /// </summary>
@@ -229,13 +230,13 @@ namespace youtube_renamer
         /// <param name="videoID">ID přidávaného videa.</param>
         /// <param name="videoPlaylist">ID playlistu ze kterého je video přidáváno. Pokud se nejedná o playlist, použiji ID videa.</param>
         /// <param name="interpreti">Seznam nalezených interpretů ze všech dosud přidaných videí.</param>
-        public Video(string videoID, string videoPlaylist, string knihovnaSlozka, SeznamInterpretu interpreti)
+        public Video(string videoID, Playlist videoPlaylist, string knihovnaSlozka, SeznamInterpretu interpreti)
         {
             this.vsichniInterpreti = interpreti;
             this.novyNazevVidea = "";
             this.hudebniKnihovna = knihovnaSlozka;
             ID = videoID;
-            Playlist = videoPlaylist;
+            PlaylistVidea = videoPlaylist;
             Popis = ""; // -> viz YouTubeApi.ZiskejInfoVidea()
             // kanál - id + název -> viz YouTubeApi.ZiskejInfoVidea()
             Publikovano = new DateTime(); // -> viz YouTubeApi.ZiskejInfoVidea()
