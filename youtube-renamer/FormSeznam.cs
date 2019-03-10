@@ -30,36 +30,7 @@ namespace youtube_renamer
         public FormSeznam()
         {
             InitializeComponent();
-        }
-
-        
-
-        // UPRAVIT
-        // pouze soubory, které se podařilo přejmenovat
-        private void filtrSouboruOkMenu_Click(object sender, EventArgs e)
-        {
-            /*foreach (ListViewItem polozka in listViewSeznam.Items)
-            {
-                polozka.Checked = false;
-                if (polozka.Group.Header == "Složka nalezena")
-                {
-                    polozka.Checked = true;
-                }
-            }*/
-        }
-        // UPRAVIT
-        // pouze soubory, které se nepodařilo přejmenovat
-        private void filtrSouboruNeMenu_Click(object sender, EventArgs e)
-        {
-           /* foreach (ListViewItem polozka in listViewSeznam.Items)
-            {
-                polozka.Checked = false;
-                if (polozka.Group.Header == "Následující videa se nepodařilo přejmenovat")
-                {
-                    polozka.Checked = true;
-                }
-            }*/
-        }
+        }        
 
         // HOTOVO
         /**
@@ -186,7 +157,7 @@ namespace youtube_renamer
                 }
                 catch (Exception)
                 {
-                    stahovaneVideo.Chyba = "Chyba stahování";
+                    stahovaneVideo.Chyba = "Stahování se nezdařilo";
                     stahovaneVideo.Stav = "";
                     objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
                     continue;
@@ -317,7 +288,14 @@ namespace youtube_renamer
             objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             try
             {
-                string cesta = Path.Combine(slozkaProgramuCache/*, "stazene"*/, stahovaneVideo.NazevInterpretSkladbaFeat + ".mp3"); // NazevNovy
+                string cesta = Path.Combine(slozkaProgramuCache, stahovaneVideo.NazevInterpretSkladbaFeat + ".mp3"); // NazevNovy
+                if (!File.Exists(cesta))
+                {
+                    stahovaneVideo.Chyba = "Stažený soubor nenalezen";
+                    stahovaneVideo.Stav = "";
+                    objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
+                    return;
+                }
                 TagLib.File soubor = TagLib.File.Create(cesta);
                 soubor.Tag.Year = Convert.ToUInt32(String.Format("{0:yyyy}", stahovaneVideo.Publikovano));
                 soubor.Tag.Performers = new string[] { stahovaneVideo.Interpret };
@@ -329,7 +307,7 @@ namespace youtube_renamer
             }
             catch (Exception)
             {
-                stahovaneVideo.Chyba = "Zapsání metadat";
+                stahovaneVideo.Chyba = "Zapisování metadat se nezdařilo";
                 stahovaneVideo.Stav = "";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
@@ -352,7 +330,7 @@ namespace youtube_renamer
             }
             catch (Exception)
             {
-                stahovaneVideo.Chyba = "Soubor se nepodařilo přesunout";
+                stahovaneVideo.Chyba = "Soubor se nezdařilo přesunout";
                 stahovaneVideo.Stav = "";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
@@ -385,7 +363,6 @@ namespace youtube_renamer
         }
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            objectListViewSeznamVidei.SetObjects(videaVsechna);
         }
 
         /*******************************************************************************************************/
@@ -1377,10 +1354,14 @@ namespace youtube_renamer
         // uložení nastavení a smazání cache složky
         private void FormSeznam_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // zeptá se na uzavření programu
-            if (MessageBox.Show("Opravdu chcete ukončit program?", "Ukončení programu", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            if (objectListViewSeznamVidei.Items.Count > 0 || progressBarStatus.Visible)
             {
-                e.Cancel = true;
+                // seznam videí není prázdný nebo běží nějaká operace
+                if (MessageBox.Show("Opravdu chcete ukončit program?", "Ukončení programu", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                {
+                    // zeptá se na uzavření programu
+                    e.Cancel = true;
+                }
             }
 
             // uloží cesty z menu nastavení do souborů
@@ -1711,7 +1692,7 @@ namespace youtube_renamer
                     {
                         // video nebylo dříve přidáno - přidá se nové video a získají se informace o něm
                         //VideoStare noveVideo = new VideoStare(videoNoveID, youtubeID);
-                        Video noveVideo = new Video(videoNoveID, youtubeID, vsichniInterpreti);
+                        Video noveVideo = new Video(videoNoveID, youtubeID, hudebniKnihovna, vsichniInterpreti);
                         videaVsechna.Add(noveVideo);
                         objectListViewSeznamVidei.Invoke(new Action(() =>
                         {
@@ -1757,7 +1738,7 @@ namespace youtube_renamer
                 else
                 {
                     // pokud video nebylo přidáno, přidá se
-                    Video noveVideo = new Video(youtubeID, youtubeID, vsichniInterpreti);
+                    Video noveVideo = new Video(youtubeID, youtubeID, hudebniKnihovna, vsichniInterpreti);
                     videaVsechna.Add(noveVideo);
                     objectListViewSeznamVidei.Invoke(new Action(() =>
                     {
@@ -1818,7 +1799,94 @@ namespace youtube_renamer
         VÝBĚR VIDEÍ ZE SEZNAMU VIDEÍ
         */
 
-
+        // HOTOVO
+        // vybere videa bez chyb
+        private void menuVybratBezChyb_Click(object sender, EventArgs e)
+        {
+            objectListViewSeznamVidei.BeginUpdate();
+            objectListViewSeznamVidei.UncheckAll();
+            foreach (OLVListItem polozka in objectListViewSeznamVidei.Items)
+            {
+                // získá instanci videa
+                Video prohledavaneVideo = ZiskejVideo(polozka.SubItems[1].Text);
+                if (prohledavaneVideo == null)
+                {
+                    continue;
+                }
+                if (String.IsNullOrEmpty(prohledavaneVideo.Chyba))
+                {
+                    // video nemá žádnou chybu
+                    polozka.Checked = true;
+                }
+            }
+            objectListViewSeznamVidei.EndUpdate();
+        }
+        // HOTOVO
+        // vybere videa u kterých se nepodařilo najít složku
+        private void menuVybratSlozkaNenalezena_Click(object sender, EventArgs e)
+        {
+            objectListViewSeznamVidei.BeginUpdate();
+            objectListViewSeznamVidei.UncheckAll();
+            foreach (OLVListItem polozka in objectListViewSeznamVidei.Items)
+            {
+                // získá instanci videa
+                Video prohledavaneVideo = ZiskejVideo(polozka.SubItems[1].Text);
+                if (prohledavaneVideo == null)
+                {
+                    continue;
+                }
+                if (prohledavaneVideo.Chyba == "Složka nenalezena")
+                {
+                    // video nemá žádnou chybu
+                    polozka.Checked = true;
+                }
+            }
+            objectListViewSeznamVidei.EndUpdate();
+        }
+        // HOTOVO
+        // vybere videa u kterých se nepodařilo přejmenování
+        private void menuVybratNeprejmenovana_Click(object sender, EventArgs e)
+        {
+            objectListViewSeznamVidei.BeginUpdate();
+            objectListViewSeznamVidei.UncheckAll();
+            foreach (OLVListItem polozka in objectListViewSeznamVidei.Items)
+            {
+                // získá instanci videa
+                Video prohledavaneVideo = ZiskejVideo(polozka.SubItems[1].Text);
+                if (prohledavaneVideo == null)
+                {
+                    continue;
+                }
+                if (prohledavaneVideo.Chyba == "Nenalezen oddělovač" || prohledavaneVideo.Chyba == "Neexistující název videa")
+                {
+                    // video nemá žádnou chybu
+                    polozka.Checked = true;
+                }
+            }
+            objectListViewSeznamVidei.EndUpdate();
+        }
+        // HOTOVO
+        // vybere videa, která už byla stažena dříve
+        private void menuVybratDriveStazene_Click(object sender, EventArgs e)
+        {
+            objectListViewSeznamVidei.BeginUpdate();
+            objectListViewSeznamVidei.UncheckAll();
+            foreach (OLVListItem polozka in objectListViewSeznamVidei.Items)
+            {
+                // získá instanci videa
+                Video prohledavaneVideo = ZiskejVideo(polozka.SubItems[1].Text);
+                if (prohledavaneVideo == null)
+                {
+                    continue;
+                }
+                if (prohledavaneVideo.Chyba == "Video bylo staženo dříve" || prohledavaneVideo.Chyba == "Video bylo nejspíš staženo dříve")
+                {
+                    // video nemá žádnou chybu
+                    polozka.Checked = true;
+                }
+            }
+            objectListViewSeznamVidei.EndUpdate();
+        }
         // HOTOVO
         // vybere všechna videa
         private void menuVybratVse_Click(object sender, EventArgs e)
@@ -1829,10 +1897,9 @@ namespace youtube_renamer
                 try
                 {
                     objectListViewSeznamVidei.CheckAll();
-                }
-                catch (Exception) { }
-                objectListViewSeznamVidei.EndUpdate();
+                } catch (Exception) { }
             }
+            objectListViewSeznamVidei.EndUpdate();
         }
         // HOTOVO
         // obrátí výběr
@@ -1995,5 +2062,22 @@ namespace youtube_renamer
             ZobrazStatusLabel(nadpis.ToUpper() + ": " + text);
         }
         #endregion
+
+        /// <summary>
+        /// Získá instanci videa pomocí zadaného ID videa.
+        /// </summary>
+        /// <param name="IDvidea">ID videa k nalezení.</param>
+        /// <returns>Instance hledaného videa.</returns>
+        private Video ZiskejVideo(string IDvidea)
+        {
+            foreach (Video prohledavaneVideo in videaVsechna)
+            {
+                if (String.Compare(prohledavaneVideo.ID, IDvidea, false) == 0)
+                {
+                    return prohledavaneVideo;
+                }
+            }
+            return null;
+        }
     }
 }

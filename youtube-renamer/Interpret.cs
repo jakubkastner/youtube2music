@@ -57,8 +57,12 @@ namespace youtube_renamer
             */
         }
 
+        /// <summary>
+        /// Najde složky přidávaného interpreta.
+        /// </summary>
         public void NajdiSlozky()
         {
+            // získá umístění složky programu
             string slozkaProgramuData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             slozkaProgramuData = Path.Combine(slozkaProgramuData, "youtube-renamer", "data");
 
@@ -66,7 +70,7 @@ namespace youtube_renamer
             // složky hudební knihovny načtené ze souboru "knihovna_slozky.txt"
             List<string> slozkyKnihovna = soubor.Precti(Path.Combine(slozkaProgramuData, "knihovna_slozky.txt"));
 
-            // slozkyKnihovna == null nebo slozkyKnihovna.Count == 0 -> chyba čtení souboru
+            // nenalezeny žádné složky knihovny
             if (slozkyKnihovna == null)
             {
                 return;
@@ -77,30 +81,31 @@ namespace youtube_renamer
             }
 
             List<string> slozkyKnihovnaOstatni = new List<string>();
-            string hledanyInterpret = Jmeno.Trim().ToLower();
-            // zdali existuje složka s názvem interpreta bez jiných hostujících interpretů
-            bool zakladniSlozka = false;
+            string hledanyInterpret = Jmeno.Trim().ToLower();            
+            bool zakladniSlozka = false; // true pokud existuje složka s názvem interpreta bez jiných hostujících interpretů
 
             // projde názvy složek ze souboru "knihovna_slozky.txt"
             foreach (string slozkaKnihovnaCesta in slozkyKnihovna)
             {
-                // název složky z knihovny
-                string slozkaKnihovnaNazev = Path.GetFileName(slozkaKnihovnaCesta).Trim().ToLower();
-                // první interpret z názvu složky v knihovně
+                // získá název složky z knihovny a seznam interpretů
+                string slozkaKnihovnaNazev = Path.GetFileName(slozkaKnihovnaCesta).Trim().ToLower();                
                 List<string> interpretiSlozky = new List<string>();
                 if (slozkaKnihovnaNazev.Contains(" & "))
                 {
+                    // v názvu složky je více intepretů, rozdělím je
                     interpretiSlozky.AddRange(slozkaKnihovnaNazev.Split(new[] { " & ", ", " }, StringSplitOptions.None));
                 }
                 else
                 {
+                    // v názvu složky není více interpretů
                     interpretiSlozky.Add(slozkaKnihovnaNazev);
                 }
-                string slozkaKnihovnaPrvniInterpret = interpretiSlozky.First().ToLower().Trim();
 
-                // existuje složka s názvem interpreta
+                // získá název prvního interpreta složky
+                string slozkaKnihovnaPrvniInterpret = interpretiSlozky.First().ToLower().Trim();
                 if (slozkaKnihovnaPrvniInterpret == hledanyInterpret)
                 {
+                    // existuje složka s názvem interpreta
                     Slozky.Add(slozkaKnihovnaCesta);
                     if (interpretiSlozky.Count == 1)
                     {
@@ -114,29 +119,38 @@ namespace youtube_renamer
                     slozkyKnihovnaOstatni.Add(slozkaKnihovnaCesta);
                 }
             }
+
             // nebyly nalezeny složky interpreta nebo nebyla nalezena základní složka interpreta
             if (Slozky.Count == 0 || !zakladniSlozka)
             {
                 // najde zdali se interpret nenachází ve složce ostatní 
                 foreach (string ostatniSlozka in slozkyKnihovnaOstatni)
                 {
-                    if (NajdiSouborOstatni(ostatniSlozka))
+                    if (NajdiSlozkuOstatni(ostatniSlozka))
                     {
+                        // interpret byl nalezen ve složce "ostatní"
                         Slozky.Add(ostatniSlozka);
                     }
                 }
             }
         }
 
-        private bool NajdiSouborOstatni(string slozka)
+        /// <summary>
+        /// Najde interperta ve složce "ostatní".
+        /// </summary>
+        /// <param name="slozka">Cesta prohledávané složky.</param>
+        /// <returns>true = interpret nalezen ve složce, false = interpret ve složce nenalezen</returns>
+        private bool NajdiSlozkuOstatni(string slozka)
         {
-            // vrací true, pokud nalezne soubor, který má před pomlčkou název interpreta
             try
             {
+                // prohledá všechy soubory ve složce "ostatní"
                 foreach (string cestaSoubor in Directory.GetFiles(slozka))
                 {
+                    // získá jméno hledaného interpreta a název souboru ve složce "ostatní"
                     string hledanyInterpret = Jmeno.Trim().ToLower();
                     string nazevSoubor = Path.GetFileNameWithoutExtension(cestaSoubor).ToLower().Trim();
+                    // rozdělí název souboru ze složky "ostatní" podle pomlčky
                     string[] rozdelenyNazev = nazevSoubor.Split('-');
                     if (rozdelenyNazev == null)
                     {
@@ -144,6 +158,7 @@ namespace youtube_renamer
                     }
                     if (rozdelenyNazev[0].Trim() == hledanyInterpret)
                     {
+                        // interpet ze souboru ve složce "ostatní" se shoduje s názvem interpreta
                         return true;
                     }
                 }
