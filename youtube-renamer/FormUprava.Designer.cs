@@ -151,7 +151,6 @@
             this.checkBoxUlozit.TabIndex = 11;
             this.checkBoxUlozit.Text = "Uložit";
             this.checkBoxUlozit.UseVisualStyleBackColor = true;
-            this.checkBoxUlozit.CheckedChanged += new System.EventHandler(this.checkBoxUlozit_CheckedChanged);
             // 
             // buttonObnovit
             // 
