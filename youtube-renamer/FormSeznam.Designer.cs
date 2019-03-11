@@ -47,13 +47,19 @@
             this.menuVybratZrusit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuUpravit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveni = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniKnihovnaSlozka = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniKnihovnaVybrana = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniKnihovnaZmenit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniKnihovnaSlozkaOpus = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniKnihovnaOpusVybrana = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniKnihovnaOpusZmenit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuNastaveniKnihovnaNaposledyVybrane = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniKnihovnaNaposledyVymazat = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniKnihovnaProhledat = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniKnihovnaOpusNaposledyVybrane = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniKnihovnaOpusNaposledyVymazat = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniKnihovnaOpusProhledat = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniKnihovnaSlozkaMp3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniKnihovnaMp3Vybrana = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniKnihovnaMp3Zmenit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuNastaveniKnihovnaMp3NaposledyVybrane = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniKnihovnaMp3NaposledyVymazat = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.menuNastaveniYoutubeDL = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniYoutubeDLCestaVybrana = new System.Windows.Forms.ToolStripMenuItem();
@@ -265,8 +271,9 @@
             // 
             this.menuNastaveni.AutoSize = false;
             this.menuNastaveni.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuNastaveniKnihovnaSlozka,
-            this.menuNastaveniKnihovnaProhledat,
+            this.menuNastaveniKnihovnaSlozkaOpus,
+            this.menuNastaveniKnihovnaOpusProhledat,
+            this.menuNastaveniKnihovnaSlozkaMp3,
             this.toolStripSeparator2,
             this.menuNastaveniYoutubeDL,
             this.menuNastaveniYoutubeDLStahnout,
@@ -277,59 +284,105 @@
             this.menuNastaveni.Size = new System.Drawing.Size(100, 23);
             this.menuNastaveni.Text = "NASTAVENÍ";
             // 
-            // menuNastaveniKnihovnaSlozka
+            // menuNastaveniKnihovnaSlozkaOpus
             // 
-            this.menuNastaveniKnihovnaSlozka.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuNastaveniKnihovnaVybrana,
-            this.menuNastaveniKnihovnaZmenit,
+            this.menuNastaveniKnihovnaSlozkaOpus.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuNastaveniKnihovnaOpusVybrana,
+            this.menuNastaveniKnihovnaOpusZmenit,
             this.toolStripSeparator1,
-            this.menuNastaveniKnihovnaNaposledyVybrane,
-            this.menuNastaveniKnihovnaNaposledyVymazat});
-            this.menuNastaveniKnihovnaSlozka.Name = "menuNastaveniKnihovnaSlozka";
-            this.menuNastaveniKnihovnaSlozka.Size = new System.Drawing.Size(255, 22);
-            this.menuNastaveniKnihovnaSlozka.Text = "Složka s hudební knihovnou";
+            this.menuNastaveniKnihovnaOpusNaposledyVybrane,
+            this.menuNastaveniKnihovnaOpusNaposledyVymazat});
+            this.menuNastaveniKnihovnaSlozkaOpus.Name = "menuNastaveniKnihovnaSlozkaOpus";
+            this.menuNastaveniKnihovnaSlozkaOpus.Size = new System.Drawing.Size(255, 22);
+            this.menuNastaveniKnihovnaSlozkaOpus.Text = "Složka s hudební knihovnou opus";
             // 
-            // menuNastaveniKnihovnaVybrana
+            // menuNastaveniKnihovnaOpusVybrana
             // 
-            this.menuNastaveniKnihovnaVybrana.Enabled = false;
-            this.menuNastaveniKnihovnaVybrana.Name = "menuNastaveniKnihovnaVybrana";
-            this.menuNastaveniKnihovnaVybrana.Size = new System.Drawing.Size(331, 22);
-            this.menuNastaveniKnihovnaVybrana.Text = "Nebyla vybrána žádná složka";
-            this.menuNastaveniKnihovnaVybrana.Click += new System.EventHandler(this.menuNastaveniKnihovnaVybrana_Click);
+            this.menuNastaveniKnihovnaOpusVybrana.Enabled = false;
+            this.menuNastaveniKnihovnaOpusVybrana.Name = "menuNastaveniKnihovnaOpusVybrana";
+            this.menuNastaveniKnihovnaOpusVybrana.Size = new System.Drawing.Size(331, 22);
+            this.menuNastaveniKnihovnaOpusVybrana.Text = "Nebyla vybrána žádná složka";
+            this.menuNastaveniKnihovnaOpusVybrana.Click += new System.EventHandler(this.menuNastaveniKnihovnaOpusVybrana_Click);
             // 
-            // menuNastaveniKnihovnaZmenit
+            // menuNastaveniKnihovnaOpusZmenit
             // 
-            this.menuNastaveniKnihovnaZmenit.Name = "menuNastaveniKnihovnaZmenit";
-            this.menuNastaveniKnihovnaZmenit.Size = new System.Drawing.Size(331, 22);
-            this.menuNastaveniKnihovnaZmenit.Text = "Změnit složku";
-            this.menuNastaveniKnihovnaZmenit.Click += new System.EventHandler(this.menuNastaveniKnihovnaZmenit_Click);
+            this.menuNastaveniKnihovnaOpusZmenit.Name = "menuNastaveniKnihovnaOpusZmenit";
+            this.menuNastaveniKnihovnaOpusZmenit.Size = new System.Drawing.Size(331, 22);
+            this.menuNastaveniKnihovnaOpusZmenit.Text = "Změnit složku";
+            this.menuNastaveniKnihovnaOpusZmenit.Click += new System.EventHandler(this.menuNastaveniKnihovnaOpusZmenit_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(328, 6);
             // 
-            // menuNastaveniKnihovnaNaposledyVybrane
+            // menuNastaveniKnihovnaOpusNaposledyVybrane
             // 
-            this.menuNastaveniKnihovnaNaposledyVybrane.Enabled = false;
-            this.menuNastaveniKnihovnaNaposledyVybrane.Name = "menuNastaveniKnihovnaNaposledyVybrane";
-            this.menuNastaveniKnihovnaNaposledyVybrane.Size = new System.Drawing.Size(331, 22);
-            this.menuNastaveniKnihovnaNaposledyVybrane.Text = "Nebyla nalezena žádná naposledy vybraná šložka";
+            this.menuNastaveniKnihovnaOpusNaposledyVybrane.Enabled = false;
+            this.menuNastaveniKnihovnaOpusNaposledyVybrane.Name = "menuNastaveniKnihovnaOpusNaposledyVybrane";
+            this.menuNastaveniKnihovnaOpusNaposledyVybrane.Size = new System.Drawing.Size(331, 22);
+            this.menuNastaveniKnihovnaOpusNaposledyVybrane.Text = "Nebyla nalezena žádná naposledy vybraná šložka";
             // 
-            // menuNastaveniKnihovnaNaposledyVymazat
+            // menuNastaveniKnihovnaOpusNaposledyVymazat
             // 
-            this.menuNastaveniKnihovnaNaposledyVymazat.Name = "menuNastaveniKnihovnaNaposledyVymazat";
-            this.menuNastaveniKnihovnaNaposledyVymazat.Size = new System.Drawing.Size(331, 22);
-            this.menuNastaveniKnihovnaNaposledyVymazat.Text = "Vymazat historii";
-            this.menuNastaveniKnihovnaNaposledyVymazat.Click += new System.EventHandler(this.menuNastaveniKnihovnaNaposledyVymazat_Click);
+            this.menuNastaveniKnihovnaOpusNaposledyVymazat.Name = "menuNastaveniKnihovnaOpusNaposledyVymazat";
+            this.menuNastaveniKnihovnaOpusNaposledyVymazat.Size = new System.Drawing.Size(331, 22);
+            this.menuNastaveniKnihovnaOpusNaposledyVymazat.Text = "Vymazat historii";
+            this.menuNastaveniKnihovnaOpusNaposledyVymazat.Click += new System.EventHandler(this.menuNastaveniKnihovnaOpusNaposledyVymazat_Click);
             // 
-            // menuNastaveniKnihovnaProhledat
+            // menuNastaveniKnihovnaOpusProhledat
             // 
-            this.menuNastaveniKnihovnaProhledat.Enabled = false;
-            this.menuNastaveniKnihovnaProhledat.Name = "menuNastaveniKnihovnaProhledat";
-            this.menuNastaveniKnihovnaProhledat.Size = new System.Drawing.Size(255, 22);
-            this.menuNastaveniKnihovnaProhledat.Text = "Nebyla vybrána hudební knihovna";
-            this.menuNastaveniKnihovnaProhledat.Click += new System.EventHandler(this.menuNastaveniKnihovnaProhledat_Click);
+            this.menuNastaveniKnihovnaOpusProhledat.Enabled = false;
+            this.menuNastaveniKnihovnaOpusProhledat.Name = "menuNastaveniKnihovnaOpusProhledat";
+            this.menuNastaveniKnihovnaOpusProhledat.Size = new System.Drawing.Size(255, 22);
+            this.menuNastaveniKnihovnaOpusProhledat.Text = "Nebyla vybrána hudební knihovna";
+            this.menuNastaveniKnihovnaOpusProhledat.Click += new System.EventHandler(this.menuNastaveniKnihovnaOpusProhledat_Click);
+            // 
+            // menuNastaveniKnihovnaSlozkaMp3
+            // 
+            this.menuNastaveniKnihovnaSlozkaMp3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuNastaveniKnihovnaMp3Vybrana,
+            this.menuNastaveniKnihovnaMp3Zmenit,
+            this.toolStripSeparator8,
+            this.menuNastaveniKnihovnaMp3NaposledyVybrane,
+            this.menuNastaveniKnihovnaMp3NaposledyVymazat});
+            this.menuNastaveniKnihovnaSlozkaMp3.Name = "menuNastaveniKnihovnaSlozkaMp3";
+            this.menuNastaveniKnihovnaSlozkaMp3.Size = new System.Drawing.Size(255, 22);
+            this.menuNastaveniKnihovnaSlozkaMp3.Text = "Složka s hudební knihovnou mp3";
+            // 
+            // menuNastaveniKnihovnaMp3Vybrana
+            // 
+            this.menuNastaveniKnihovnaMp3Vybrana.Enabled = false;
+            this.menuNastaveniKnihovnaMp3Vybrana.Name = "menuNastaveniKnihovnaMp3Vybrana";
+            this.menuNastaveniKnihovnaMp3Vybrana.Size = new System.Drawing.Size(331, 22);
+            this.menuNastaveniKnihovnaMp3Vybrana.Text = "Nebyla vybrána žádná složka";
+            this.menuNastaveniKnihovnaMp3Vybrana.Click += new System.EventHandler(this.menuNastaveniKnihovnaMp3Vybrana_Click);
+            // 
+            // menuNastaveniKnihovnaMp3Zmenit
+            // 
+            this.menuNastaveniKnihovnaMp3Zmenit.Name = "menuNastaveniKnihovnaMp3Zmenit";
+            this.menuNastaveniKnihovnaMp3Zmenit.Size = new System.Drawing.Size(331, 22);
+            this.menuNastaveniKnihovnaMp3Zmenit.Text = "Změnit složku";
+            this.menuNastaveniKnihovnaMp3Zmenit.Click += new System.EventHandler(this.menuNastaveniKnihovnaMp3Zmenit_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(328, 6);
+            // 
+            // menuNastaveniKnihovnaMp3NaposledyVybrane
+            // 
+            this.menuNastaveniKnihovnaMp3NaposledyVybrane.Enabled = false;
+            this.menuNastaveniKnihovnaMp3NaposledyVybrane.Name = "menuNastaveniKnihovnaMp3NaposledyVybrane";
+            this.menuNastaveniKnihovnaMp3NaposledyVybrane.Size = new System.Drawing.Size(331, 22);
+            this.menuNastaveniKnihovnaMp3NaposledyVybrane.Text = "Nebyla nalezena žádná naposledy vybraná šložka";
+            // 
+            // menuNastaveniKnihovnaMp3NaposledyVymazat
+            // 
+            this.menuNastaveniKnihovnaMp3NaposledyVymazat.Name = "menuNastaveniKnihovnaMp3NaposledyVymazat";
+            this.menuNastaveniKnihovnaMp3NaposledyVymazat.Size = new System.Drawing.Size(331, 22);
+            this.menuNastaveniKnihovnaMp3NaposledyVymazat.Text = "Vymazat historii";
+            this.menuNastaveniKnihovnaMp3NaposledyVymazat.Click += new System.EventHandler(this.menuNastaveniKnihovnaMp3NaposledyVymazat_Click);
             // 
             // toolStripSeparator2
             // 
@@ -506,49 +559,49 @@
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem3.Text = "1";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem4.Text = "2";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem5.Text = "3";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem6.Text = "4";
             this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem7.Text = "5";
             this.toolStripMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem8.Text = "6";
             this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
             // 
             // testToolStripMenuItem
             // 
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
             this.testToolStripMenuItem.Text = "test";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
@@ -728,12 +781,12 @@
         private System.Windows.Forms.ToolStripMenuItem menuVybratZrusit;
         private System.Windows.Forms.ToolStripMenuItem menuUpravit;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveni;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaSlozka;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaVybrana;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaZmenit;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaSlozkaOpus;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaOpusVybrana;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaOpusZmenit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaNaposledyVybrane;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaProhledat;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaOpusNaposledyVybrane;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaOpusProhledat;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem menuStahnout;
         private System.Windows.Forms.MenuStrip menuStripMenu;
@@ -754,7 +807,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniFFmpegStahnout;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniYoutubeDLStahnout;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaNaposledyVymazat;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaOpusNaposledyVymazat;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniYoutubeDLCestaNaposledyVymazat;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniFFmpegCestaNaposledyVymazat;
         private BrightIdeasSoftware.ObjectListView objectListViewSeznamVidei;
@@ -779,6 +832,12 @@
         private BrightIdeasSoftware.OLVColumn olvColumn1;
         private System.Windows.Forms.ToolStripMenuItem menuVybratSlozkaNenalezena;
         private System.Windows.Forms.ToolStripMenuItem menuVybratNeprejmenovana;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaSlozkaMp3;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaMp3Vybrana;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaMp3Zmenit;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaMp3NaposledyVybrane;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaMp3NaposledyVymazat;
     }
 }
 

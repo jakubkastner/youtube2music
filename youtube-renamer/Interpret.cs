@@ -389,6 +389,7 @@ namespace youtube_renamer
                          .Replace("Pashapg", "PashaPG")
                          .Replace("Juice Wrld", "Juice WRLD")
                          .Replace("Tyler The Creator", "Tyler, The Creator")
+                         .Replace("Iamddb", "IAMDDB")
                          .Trim();
         }
     }

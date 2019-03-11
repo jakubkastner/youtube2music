@@ -66,7 +66,10 @@ namespace youtube_renamer
             get
             {
                 string vrat = Slozka;
-                vrat = Slozka.Replace(hudebniKnihovna, "");
+                if (!String.IsNullOrEmpty(vrat))
+                {
+                    vrat = Slozka.Replace(hudebniKnihovna, "");
+                }
                 return vrat;
             }
         }
