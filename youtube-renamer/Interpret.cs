@@ -252,6 +252,12 @@ namespace youtube_renamer
                 case "otis":
                     Jmeno = "otecko";
                     break;
+                case "samurai pítr":
+                    Jmeno = "samuraj pítr";
+                    break;
+                case "samuray pítr":
+                    Jmeno = "samuraj pítr";
+                    break;
                 // zahraniční
                 case "the black eyed peas":
                     Jmeno = "black eyed peas";
@@ -291,6 +297,9 @@ namespace youtube_renamer
                     break;
                 case "mgk":
                     Jmeno = "machine gun kelly";
+                    break;
+                case "mustard":
+                    Jmeno = "dj mustard";
                     break;
                 default:
                     break;
@@ -364,6 +373,8 @@ namespace youtube_renamer
                          .Replace("T Pain", "T-Pain")
                          .Replace("Flo Rida", "Flo-Rida")
                          .Replace("T Wayne", "T-Wayne")
+                         .Replace("Ta Ra", "Ta-Ra")
+                         .Replace("Alt J", "Alt-J")
                          .Replace("Yeezuz2020", "yeezuz2020")
                          .Replace("4d", "4D")
                          .Replace("DstfrsS", "DSTFRS")
@@ -381,6 +392,7 @@ namespace youtube_renamer
                          .Replace("Rnz", "RNZ")
                          .Replace("Mpp", "MPP")
                          .Replace("Ptk", "PTK")
+                         .Replace("Tkx", "TKX")
                          .Replace("G Eazy", "G-Eazy")
                          .Replace("Lordk", "LordK")
                          .Replace("Idk", "IDK")

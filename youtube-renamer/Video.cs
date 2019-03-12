@@ -342,6 +342,8 @@ namespace youtube_renamer
                                          .Replace("mike will made-it", "mike will made it")
                                          .Replace("g-eazy", "g eazy")
                                          .Replace("flo-rida", "flo rida")
+                                         .Replace("ra-ra", "ta ra")
+                                         .Replace("alt-j", "alt j")
                                          .Replace("jay-z", "jay z")
                                          .Replace("t-pain", "t pain")
                                          .Replace("t-wayne", "t wayne")

@@ -80,7 +80,7 @@ namespace youtube_renamer
             // nastavení ovládacích prvků
             checkBoxUlozit.Checked = false;
             checkBoxStejnaSlozkaInterpret.Enabled = false;
-            checkBoxStejnaSlozkaInterpret.Checked = false;
+            checkBoxStejnaSlozkaInterpret.Checked = true;
             checkBoxStejnaSlozkaVybrane.Enabled = false;
             checkBoxStejnaSlozkaVybrane.Checked = false;
             checkBoxStejnaSlozkaPlaylist.Enabled = false;
@@ -88,6 +88,7 @@ namespace youtube_renamer
             checkBoxStejnyZanrInterpret.Checked = false;
             checkBoxStejnyZanrVybrane.Checked = false;
             checkBoxStejnyZanrPlaylist.Checked = false;
+            checkBoxNovyNazevAutomaticky.Checked = true;
 
             // naplnění prvků hodnotami
             textBoxInterpret.Text = upravovaneVideo.Interpret;
@@ -106,6 +107,7 @@ namespace youtube_renamer
                 // naplnění prvků hodnotami
                 linkLabelID.Text = upravovaneVideo.ID;
                 linkLabelKanal.Text = upravovaneVideo.Kanal.Nazev;
+                richTextBoxPopis.Text = upravovaneVideo.Popis;
                 if (upravovaneVideo.PlaylistVidea.Nazev == upravovaneVideo.ID)
                 {
                     // nejedná se o playlist
@@ -438,22 +440,26 @@ namespace youtube_renamer
             // zobrazení interpreta na labelu
             labelInterpret.Text = textBoxInterpret.Text;
 
-            string novyNazev = "";
-            if (textBoxSlozka.Text.ToLower().Contains("_ostatní") || String.IsNullOrEmpty(textBoxSlozka.Text))
+            if (checkBoxNovyNazevAutomaticky.Checked)
             {
-                // v názvu bude interpret
-                novyNazev = textBoxInterpret.Text + "-";
-            }
-            novyNazev += textBoxSkladba.Text;
-            labelSkladba.Text = textBoxSkladba.Text;
+                // automaticky se mění název
+                string novyNazev = "";
+                if (textBoxSlozka.Text.ToLower().Contains("_ostatní") || String.IsNullOrEmpty(textBoxSlozka.Text))
+                {
+                    // v názvu bude interpret
+                    novyNazev = textBoxInterpret.Text + "-";
+                }
+                novyNazev += textBoxSkladba.Text;
+                labelSkladba.Text = textBoxSkladba.Text;
 
-            if (!String.IsNullOrEmpty(textBoxFeaturing.Text))
-            {
-                // v názvu bude featuring
-                novyNazev += " (ft. " + textBoxFeaturing.Text + ")";
-                labelSkladba.Text += " (ft. " + textBoxFeaturing.Text + ")";
+                if (!String.IsNullOrEmpty(textBoxFeaturing.Text))
+                {
+                    // v názvu bude featuring
+                    novyNazev += " (ft. " + textBoxFeaturing.Text + ")";
+                    labelSkladba.Text += " (ft. " + textBoxFeaturing.Text + ")";
+                }
+                textBoxNovyNazev.Text = novyNazev;
             }
-            textBoxNovyNazev.Text = novyNazev;
         }
 
 
@@ -487,9 +493,9 @@ namespace youtube_renamer
             // uloží skladbu a žánr
             upravovaneVideo.Skladba = textBoxSkladba.Text;
             upravovaneVideo.Zanr = textBoxZanr.Text;
-            upravovaneVideo.NazevNovy = textBoxNovyNazev.Text;
             // uloží složku
             UlozSlozku(upravovaneVideo);
+            upravovaneVideo.NazevNovy = textBoxNovyNazev.Text;
 
             // zašktnuto ukládání u jiných videí
             if (checkBoxStejnaSlozkaVybrane.Checked)
@@ -576,7 +582,7 @@ namespace youtube_renamer
             }
             else
             {
-                string novyNazev = "";
+                /*string novyNazev = "";
                 if (ukladanaSlozka.ToLower().Contains("_ostatní"))
                 {
                     novyNazev = ukladaneVideo.Interpret + "-";
@@ -587,9 +593,9 @@ namespace youtube_renamer
                 {
                     novyNazev += " (ft. " + ukladaneVideo.InterpretiFeat + ")";
                 }
-                ukladaneVideo.NazevNovy = novyNazev;
-                // ?
-                ukladaneVideo.Chyba = "";
+                ukladaneVideo.NazevNovy = novyNazev;*/
+
+                ukladaneVideo.Chyba = "";// ?
             }
             ukladaneVideo.Slozka = ukladanaSlozka;
         }
@@ -619,6 +625,15 @@ namespace youtube_renamer
         private void linkLabelPlaylist_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://www.youtube.com/playlist?list=" + upravovaneVideo.PlaylistVidea.ID);
+        }
+
+        private void checkBoxNovyNazevAutomaticky_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxNovyNazevAutomaticky.Checked)
+            {
+                Zmena();
+                ZmenaNazvu();
+            }
         }
     }
 }

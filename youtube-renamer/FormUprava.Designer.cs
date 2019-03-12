@@ -68,6 +68,8 @@
             this.labelChyba = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.linkLabelPlaylist = new System.Windows.Forms.LinkLabel();
+            this.checkBoxNovyNazevAutomaticky = new System.Windows.Forms.CheckBox();
+            this.richTextBoxPopis = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // textBoxInterpret
@@ -441,7 +443,7 @@
             this.geckoWebBrowserVideo.FrameEventsPropagateToMainWindow = false;
             this.geckoWebBrowserVideo.Location = new System.Drawing.Point(409, 26);
             this.geckoWebBrowserVideo.Name = "geckoWebBrowserVideo";
-            this.geckoWebBrowserVideo.Size = new System.Drawing.Size(518, 359);
+            this.geckoWebBrowserVideo.Size = new System.Drawing.Size(518, 187);
             this.geckoWebBrowserVideo.TabIndex = 44;
             this.geckoWebBrowserVideo.UseHttpActivityObserver = false;
             // 
@@ -517,12 +519,36 @@
             this.linkLabelPlaylist.TabIndex = 28;
             this.linkLabelPlaylist.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelPlaylist_LinkClicked);
             // 
+            // checkBoxNovyNazevAutomaticky
+            // 
+            this.checkBoxNovyNazevAutomaticky.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxNovyNazevAutomaticky.AutoSize = true;
+            this.checkBoxNovyNazevAutomaticky.Location = new System.Drawing.Point(5, 603);
+            this.checkBoxNovyNazevAutomaticky.Name = "checkBoxNovyNazevAutomaticky";
+            this.checkBoxNovyNazevAutomaticky.Size = new System.Drawing.Size(170, 17);
+            this.checkBoxNovyNazevAutomaticky.TabIndex = 11;
+            this.checkBoxNovyNazevAutomaticky.Text = "Automaticky měnit nový název";
+            this.checkBoxNovyNazevAutomaticky.UseVisualStyleBackColor = true;
+            this.checkBoxNovyNazevAutomaticky.CheckedChanged += new System.EventHandler(this.checkBoxNovyNazevAutomaticky_CheckedChanged);
+            // 
+            // richTextBoxPopis
+            // 
+            this.richTextBoxPopis.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxPopis.Location = new System.Drawing.Point(409, 220);
+            this.richTextBoxPopis.Name = "richTextBoxPopis";
+            this.richTextBoxPopis.ReadOnly = true;
+            this.richTextBoxPopis.Size = new System.Drawing.Size(518, 165);
+            this.richTextBoxPopis.TabIndex = 45;
+            this.richTextBoxPopis.Text = "";
+            // 
             // FormUprava
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(939, 687);
+            this.Controls.Add(this.richTextBoxPopis);
             this.Controls.Add(this.geckoWebBrowserVideo);
             this.Controls.Add(this.labelInterpret);
             this.Controls.Add(this.checkBoxStejnyZanrPlaylist);
@@ -553,6 +579,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonObnovit);
+            this.Controls.Add(this.checkBoxNovyNazevAutomaticky);
             this.Controls.Add(this.checkBoxUlozit);
             this.Controls.Add(this.buttonNasledujici);
             this.Controls.Add(this.buttonPredchozi);
@@ -617,5 +644,7 @@
         private System.Windows.Forms.Label labelChyba;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.LinkLabel linkLabelPlaylist;
+        private System.Windows.Forms.CheckBox checkBoxNovyNazevAutomaticky;
+        private System.Windows.Forms.RichTextBox richTextBoxPopis;
     }
 }

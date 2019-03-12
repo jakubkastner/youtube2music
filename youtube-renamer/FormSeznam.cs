@@ -127,7 +127,7 @@ namespace youtube_renamer
                 }
 
                 string adresaVidea = "https://youtu.be/" + stahovaneVideo.ID;
-                string nazev = stahovaneVideo.NazevNovy; // NazevNovy
+                string nazev = stahovaneVideo.NazevNovySoubor;
                 Process cmd = new Process();
                 ProcessStartInfo psi = new ProcessStartInfo();
 
@@ -306,7 +306,7 @@ namespace youtube_renamer
             objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             try
             {
-                string cesta = Path.Combine(slozkaProgramuCache, stahovaneVideo.NazevNovy + ".mp3");
+                string cesta = Path.Combine(slozkaProgramuCache, stahovaneVideo.NazevNovySoubor + ".mp3");
                 if (!File.Exists(cesta))
                 {
                     stahovaneVideo.Chyba = "Stažený soubor nenalezen";
@@ -341,7 +341,7 @@ namespace youtube_renamer
 
             stahovaneVideoVerejne = stahovaneVideo;
             // nastaví vlastnosti programu na stažení
-            string parametry = "-i \"" + stahovaneVideo.NazevNovy + ".mp3\" -acodec libopus -b:a 128000 -vbr on -compression_level 10 -map a \"" + stahovaneVideo.NazevNovy + ".opus\"";
+            string parametry = "-i \"" + stahovaneVideo.NazevNovySoubor + ".mp3\" -acodec libopus -b:a 128000 -vbr on -compression_level 10 -map a \"" + stahovaneVideo.NazevNovySoubor + ".opus\"";
             psi.Arguments = parametry;
             psi.CreateNoWindow = true;
             psi.ErrorDialog = true;
@@ -381,7 +381,7 @@ namespace youtube_renamer
             stahovaneVideo.Stav = "Přesunování souboru mp3";
             objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
 
-            string cesta = Path.Combine(slozkaProgramuCache, stahovaneVideo.NazevNovy + ".mp3");
+            string cesta = Path.Combine(slozkaProgramuCache, stahovaneVideo.NazevNovySoubor + ".mp3");
             try
             {
                 // nahradí složku za mp3 knihovnu
@@ -400,7 +400,7 @@ namespace youtube_renamer
                         return;
                     }
                 }
-                File.Move(cesta, Path.Combine(slozka, stahovaneVideo.NazevNovy + ".mp3"));
+                File.Move(cesta, Path.Combine(slozka, stahovaneVideo.NazevNovySoubor + ".mp3"));
                 stahovaneVideo.Stav = "Soubor mp3 přesunut";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
@@ -415,11 +415,11 @@ namespace youtube_renamer
             stahovaneVideo.Stav = "Přesunování souboru opus";
             objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
 
-            cesta = Path.Combine(slozkaProgramuCache, stahovaneVideo.NazevNovy + ".opus");
+            cesta = Path.Combine(slozkaProgramuCache, stahovaneVideo.NazevNovySoubor + ".opus");
             try
             {
                 // složka je ok
-                File.Move(cesta, Path.Combine(stahovaneVideo.Slozka, stahovaneVideo.NazevNovy + ".opus"));
+                File.Move(cesta, Path.Combine(stahovaneVideo.Slozka, stahovaneVideo.NazevNovySoubor + ".opus"));
                 stahovaneVideo.Stav = "Soubor opus přesunut";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
