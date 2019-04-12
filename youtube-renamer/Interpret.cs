@@ -50,11 +50,10 @@ namespace youtube_renamer
             VelkaPismena('-');
 
             // interpreti s tečkou
-            /*
-             PeatyF.
-             M.I.A.
-             B.o.B.
-            */
+            PrejmenujInterpreta("PeatyF", "PeatyF.");
+            PrejmenujInterpreta("M.I.A", "M.I.A.");
+            PrejmenujInterpreta("B.o.B", "B.o.B.");
+            PrejmenujInterpreta("P.A.T", "P.A.T.");
         }
 
         /// <summary>
@@ -81,7 +80,11 @@ namespace youtube_renamer
             }
 
             List<string> slozkyKnihovnaOstatni = new List<string>();
-            string hledanyInterpret = Jmeno.Trim().ToLower();            
+            string hledanyInterpret = Jmeno.Trim().ToLower();
+            while (hledanyInterpret.Last() == '.')
+            {
+                hledanyInterpret = hledanyInterpret.Remove(hledanyInterpret.Length - 2, 1);
+            }
             bool zakladniSlozka = false; // true pokud existuje složka s názvem interpreta bez jiných hostujících interpretů
 
             // projde názvy složek ze souboru "knihovna_slozky.txt"
@@ -177,133 +180,55 @@ namespace youtube_renamer
         {
             Jmeno = Jmeno.Replace("asap", "a$ap")
                          .Replace("a$ap jarda", "asap jarda");
-            switch (Jmeno)
-            {
-                // cz + sk
-                case "smack one":
-                    Jmeno = "smack";
-                    break;
-                case "jickson":
-                    Jmeno = "jimmy dickson";
-                    break;
-                case "jckpt":
-                    Jmeno = "jackpot";
-                    break;
-                case "radikal chef":
-                    Jmeno = "radikal";
-                    break;
-                case "white russian":
-                    Jmeno = "igor";
-                    break;
-                case "white rusian":
-                    Jmeno = "igor";
-                    break;
-                case "bílej rus":
-                    Jmeno = "igor";
-                    break;
-                case "s.barracuda":
-                    Jmeno = "sergei barracuda";
-                    break;
-                case "s. barracuda":
-                    Jmeno = "sergei barracuda";
-                    break;
-                case "ak":
-                    Jmeno = "pastor & sergei barracuda"; // asi problém s velkýma písmenama
-                    break;
-                case "yg moris":
-                    Jmeno = "mladej moris";
-                    break;
-                case "gleb : zoo":
-                    Jmeno = "gleb";
-                    break;
-                case "peatyf":
-                    Jmeno = "peatyf.";
-                    break;
-                case "sheen":
-                    Jmeno = "viktor sheen";
-                    break;
-                case "yzomandias":
-                    Jmeno = "logic";
-                    break;
-                case "hráč roku":
-                    Jmeno = "logic";
-                    break;
-                case "lvcas":
-                    Jmeno = "lvcas dope";
-                    break;
-                case "kanabis":
-                    Jmeno = "lvcas dope";
-                    break;
-                case "mike t":
-                    Jmeno = "dj mike trafik";
-                    break;
-                case "mike trafik":
-                    Jmeno = "dj mike trafik";
-                    break;
-                case "sensey syfu":
-                    Jmeno = "senseysyfu";
-                    break;
-                case "karlo":
-                    Jmeno = "gumbgu";
-                    break;
-                case "dokkey":
-                    Jmeno = "dokkeytino";
-                    break;
-                case "otis":
-                    Jmeno = "otecko";
-                    break;
-                case "samurai pítr":
-                    Jmeno = "samuraj pítr";
-                    break;
-                case "samuray pítr":
-                    Jmeno = "samuraj pítr";
-                    break;
-                // zahraniční
-                case "the black eyed peas":
-                    Jmeno = "black eyed peas";
-                    break;
-                case "tekashi69":
-                    Jmeno = "6ix9ine";
-                    break;
-                case "6ixty9ine":
-                    Jmeno = "6ix9ine";
-                    break;
-                case "slim jxmmi of rae sremmurd":
-                    Jmeno = "slim jxmmi";
-                    break;
-                case "jeezy":
-                    Jmeno = "young jeezy";
-                    break;
-                case "waka flocka":
-                    Jmeno = "waka flocka flame";
-                    break;
-                case "g herbo":
-                    Jmeno = "lil herb";
-                    break;
-                case "v.cha$e":
-                    Jmeno = "vinny cha$e";
-                    break;
-                case "joey bada$$":
-                    Jmeno = "joey badass";
-                    break;
-                case "gab3":
-                    Jmeno = "uzi";
-                    break;
-                case "travis scott":
-                    Jmeno = "travi$ scott";
-                    break;
-                case "ty dolla sign":
-                    Jmeno = "ty dolla $ign";
-                    break;
-                case "mgk":
-                    Jmeno = "machine gun kelly";
-                    break;
-                case "mustard":
-                    Jmeno = "dj mustard";
-                    break;
-                default:
-                    break;
-            }
+            // cz + sk
+            PrejmenujInterpreta("smack one", "smack");
+            PrejmenujInterpreta("jickson", "jimmy dickson");
+            PrejmenujInterpreta("jckpt", "jackpot");
+            PrejmenujInterpreta("radikal chef", "radikal");
+            PrejmenujInterpreta("white russian", "igor");
+            PrejmenujInterpreta("white rusian", "igor");
+            PrejmenujInterpreta("bílej rus", "igor");
+            PrejmenujInterpreta("s.barracuda", "sergei barracuda");
+            PrejmenujInterpreta("s. barracuda", "sergei barracuda");
+            PrejmenujInterpreta("ak", "pastor & sergei barracuda"); // asi problém s velkýma písmenama
+            PrejmenujInterpreta("yg moris", "mladej moris");
+            PrejmenujInterpreta("gleb , zoo", "gleb");
+            PrejmenujInterpreta("peatyf", "peatyf.");
+            PrejmenujInterpreta("sheen", "viktor sheen");
+            PrejmenujInterpreta("yzomandias", "logic");
+            PrejmenujInterpreta("hráč roku", "logic");
+            PrejmenujInterpreta("lvcas", "lvcas dope");
+            PrejmenujInterpreta("kanabis", "lvcas dope");
+            PrejmenujInterpreta("mike t", "dj mike trafik");
+            PrejmenujInterpreta("mike trafik", "dj mike trafik");
+            PrejmenujInterpreta("sensey syfu", "senseysyfu");
+            PrejmenujInterpreta("karlo", "gumbgu");
+            PrejmenujInterpreta("dokkey", "dokkeytino");
+            PrejmenujInterpreta("otis", "otecko");
+            PrejmenujInterpreta("samurai pítr", "samuraj pítr");
+            PrejmenujInterpreta("samuray pítr", "samuraj pítr");
+            PrejmenujInterpreta("sensey", "senseysyfu");
+            PrejmenujInterpreta("†holyvandalboi†", "vandal");
+            PrejmenujInterpreta("barber", "skinny barber");
+            PrejmenujInterpreta("opak dissu", "opak dissu label");
+
+            // zahraniční
+            PrejmenujInterpreta("the black eyed peas", "black eyed peas");
+            PrejmenujInterpreta("tekashi69", "6ix9ine");
+            PrejmenujInterpreta("6ixty9ine", "6ix9ine");
+            PrejmenujInterpreta("slim jxmmi of rae sremmurd", "slim jxmmi");
+            PrejmenujInterpreta("jeezy", "young jeezy");
+            PrejmenujInterpreta("waka flocka", "waka flocka flame");
+            PrejmenujInterpreta("g herbo", "lil herb");
+            PrejmenujInterpreta("v.cha$e", "vinny cha$e");
+            PrejmenujInterpreta("joey bada$$", "joey badass");
+            PrejmenujInterpreta("gab3", "uzi");
+            PrejmenujInterpreta("travis scott", "travi$ scott");
+            PrejmenujInterpreta("joey badass", "joey bada$$");
+            PrejmenujInterpreta("ty dolla sign", "ty dolla $ign");
+            PrejmenujInterpreta("mgk", "machine gun kelly");
+            PrejmenujInterpreta("mustard", "dj mustard");
+            PrejmenujInterpreta("pharell", "pharell williams");
         }
 
         /// <summary>
@@ -342,67 +267,88 @@ namespace youtube_renamer
             }
             // převedení velikosti názvů u interpretů
             Jmeno = Jmeno.Replace("..", ".")
-                         .Replace("Dj", "DJ")
-                         .Replace("A$ap", "A$AP")
-                         .Replace("Asap", "ASAP")
-                         .Replace("Mike Will Made It", "Mike WiLL Made It")
-                         .Replace("Og Maco", "OG Maco")
-                         .Replace("Schoolboy Q", "ScHoolboy Q")
-                         .Replace("114kd", "114KD")
-                         .Replace("B.O.B", "B.o.B")
-                         .Replace("Yg", "YG")
-                         .Replace("Bomfunk Mc", "Bomfunk MC")
-                         .Replace("Travie Mccoy", "Travie McCoy")
-                         .Replace("Ca$h Out", "CA$H OUT")
-                         .Replace("Cl", "CL")
-                         .Replace("DJ Xo", "DJ XO")
-                         .Replace("Ishdarr", "IshDARR")
-                         .Replace("Ost", "OST")
-                         .Replace("Outkast", "OutKast")
-                         .Replace("6lack", "6LACK")
-                         .Replace("Charli Xcx", "Charli XCX")
-                         .Replace("Xxxtentacion", "XXXTentacion")
-                         .Replace("Omenxiii", "OmenXIII")
-                         .Replace("Olaawave", "OlaaWave")
-                         .Replace("Partynextdoor", "PARTYNEXTDOOR")
-                         .Replace("Ilovemakonnen", "ILoveMakonnen")
-                         .Replace("Rj", "RJ")
-                         .Replace("Smoke Dza", "Smoke DZA")
-                         .Replace("Tc Da Loc", "TC Da Loc")
-                         .Replace("Jay Z", "Jay-Z")
-                         .Replace("T Pain", "T-Pain")
-                         .Replace("Flo Rida", "Flo-Rida")
-                         .Replace("T Wayne", "T-Wayne")
-                         .Replace("Ta Ra", "Ta-Ra")
-                         .Replace("Alt J", "Alt-J")
-                         .Replace("Yeezuz2020", "yeezuz2020")
-                         .Replace("4d", "4D")
-                         .Replace("DstfrsS", "DSTFRS")
-                         .Replace("Inny Rap", "INNY rap")
-                         .Replace("Jmy", "JMY")
-                         .Replace("Maat", "MAAT")
-                         .Replace("Nobodylisten", "NobodyListen")
-                         .Replace("Peatyf", "PeatyF")
-                         .Replace("Pnzkjs", "PNZKJS")
-                         .Replace("Psh", "PSH")
-                         .Replace("Senseysyfu", "SenseySyfu")
-                         .Replace("Wip", "WIP")
-                         .Replace("Www", "WWW")
-                         .Replace("Dms", "DMS")
-                         .Replace("Rnz", "RNZ")
-                         .Replace("Mpp", "MPP")
-                         .Replace("Ptk", "PTK")
-                         .Replace("Tkx", "TKX")
-                         .Replace("G Eazy", "G-Eazy")
-                         .Replace("Lordk", "LordK")
-                         .Replace("Idk", "IDK")
-                         .Replace("Jpegmafia", "JPEGmafia")
-                         .Replace("Zillakami", "ZillaKami")
-                         .Replace("Pashapg", "PashaPG")
-                         .Replace("Juice Wrld", "Juice WRLD")
-                         .Replace("Tyler The Creator", "Tyler, The Creator")
-                         .Replace("Iamddb", "IAMDDB")
-                         .Trim();
+                         .Replace("Dj ", "DJ ")
+                         .Replace("A$ap ", "A$AP ")
+                         .Replace("Asap ", "ASAP")
+                         .Replace("Nba ", "NBA ");
+
+            PrejmenujInterpreta("Mike Will Made It", "Mike WiLL Made It");
+            PrejmenujInterpreta("Og Maco", "OG Maco");
+            PrejmenujInterpreta("Schoolboy Q", "ScHoolboy Q");
+            PrejmenujInterpreta("114kd", "114KD");
+            PrejmenujInterpreta("B.O.B", "B.o.B");
+            PrejmenujInterpreta("Yg", "YG");
+            PrejmenujInterpreta("Bomfunk Mc", "Bomfunk MC");
+            PrejmenujInterpreta("Travie Mccoy", "Travie McCoy");
+            PrejmenujInterpreta("Ca$h Out", "CA$H OUT");
+            PrejmenujInterpreta("Cl", "CL");
+            PrejmenujInterpreta("DJ Xo", "DJ XO");
+            PrejmenujInterpreta("Ishdarr", "IshDARR");
+            PrejmenujInterpreta("Ost", "OST");
+            PrejmenujInterpreta("Outkast", "OutKast");
+            PrejmenujInterpreta("6lack", "6LACK");
+            PrejmenujInterpreta("Charli Xcx", "Charli XCX");
+            PrejmenujInterpreta("Xxxtentacion", "XXXTentacion");
+            PrejmenujInterpreta("Omenxiii", "OmenXIII");
+            PrejmenujInterpreta("Olaawave", "OlaaWave");
+            PrejmenujInterpreta("Partynextdoor", "PARTYNEXTDOOR");
+            PrejmenujInterpreta("Ilovemakonnen", "ILoveMakonnen");
+            PrejmenujInterpreta("Rj", "RJ");
+            PrejmenujInterpreta("Smoke Dza", "Smoke DZA");
+            PrejmenujInterpreta("Tc Da Loc", "TC Da Loc");
+            PrejmenujInterpreta("Jay Z", "Jay-Z");
+            PrejmenujInterpreta("T Pain", "T-Pain");
+            PrejmenujInterpreta("Flo Rida", "Flo-Rida");
+            PrejmenujInterpreta("T Wayne", "T-Wayne");
+            PrejmenujInterpreta("Ta Ra", "Ta-Ra");
+            PrejmenujInterpreta("Alt J", "Alt-J");
+            PrejmenujInterpreta("Yeezuz2020", "yeezuz2020");
+            PrejmenujInterpreta("4d", "4D");
+            PrejmenujInterpreta("DstfrsS", "DSTFRS");
+            PrejmenujInterpreta("Inny Rap", "INNY rap");
+            PrejmenujInterpreta("Jmy", "JMY");
+            PrejmenujInterpreta("Maat", "MAAT");
+            PrejmenujInterpreta("Nobodylisten", "NobodyListen");
+            PrejmenujInterpreta("Peatyf", "PeatyF");
+            PrejmenujInterpreta("Pnzkjs", "PNZKJS");
+            PrejmenujInterpreta("Psh", "PSH");
+            PrejmenujInterpreta("Senseysyfu", "SenseySyfu");
+            PrejmenujInterpreta("Wip", "WIP");
+            PrejmenujInterpreta("Www", "WWW");
+            PrejmenujInterpreta("Dms", "DMS");
+            PrejmenujInterpreta("Rnz", "RNZ");
+            PrejmenujInterpreta("Mpp", "MPP");
+            PrejmenujInterpreta("Ptk", "PTK");
+            PrejmenujInterpreta("Tkx", "TKX");
+            PrejmenujInterpreta("G Eazy", "G-Eazy");
+            PrejmenujInterpreta("Lordk", "LordK");
+            PrejmenujInterpreta("Idk", "IDK");
+            PrejmenujInterpreta("Jpegmafia", "JPEGmafia");
+            PrejmenujInterpreta("Zillakami", "ZillaKami");
+            PrejmenujInterpreta("Pashapg", "PashaPG");
+            PrejmenujInterpreta("Juice Wrld", "Juice WRLD");
+            PrejmenujInterpreta("Tyler The Creator", "Tyler, The Creator");
+            PrejmenujInterpreta("Iamddb", "IAMDDB");
+            PrejmenujInterpreta("Vr", "VR");
+            PrejmenujInterpreta("Vr/Nobody", "VR/Nobody");
+            PrejmenujInterpreta("Blockboy Jb", "Blockboy JB");
+            PrejmenujInterpreta("Jl Beats", "JL Beats");
+            PrejmenujInterpreta("Madeintyo", "MadeinTYO");
+            PrejmenujInterpreta("Cbch", "CBCH");
+            PrejmenujInterpreta("Aj tracey", "AJ Tracey");
+            PrejmenujInterpreta("Specialbeatz", "SpecialBeatz");
+            PrejmenujInterpreta("Megam", "MegaM");
+            PrejmenujInterpreta("Warhol.Ss", "Warhol.SS");
+            PrejmenujInterpreta("", "");
+            PrejmenujInterpreta("", "");
+        }
+
+        private void PrejmenujInterpreta(string puvodni, string novy)
+        {
+            if (Jmeno == puvodni)
+            {
+                Jmeno = novy.Trim();
+            }
         }
     }
 }
