@@ -585,7 +585,7 @@ namespace youtube_renamer
                 if (checkBoxNovyNazevAutomaticky.Checked || String.IsNullOrEmpty(ukladaneVideo.Slozka))
                 {
                     // automaticky se mění název
-                    string novyNazev = "";
+                    /*string novyNazev = "";*/
                     if (textBoxSlozka.Text.ToLower().Contains("_ostatní") || String.IsNullOrEmpty(textBoxSlozka.Text))
                     {
                         ukladaneVideo.NazevNovy = ukladaneVideo.NazevInterpretSkladbaFeat;
