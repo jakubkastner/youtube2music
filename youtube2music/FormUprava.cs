@@ -202,7 +202,7 @@ namespace youtube_renamer
         /*
         DOLNÍ TLAČÍTKA 
         */
-
+        
         /// <summary>
         /// Zobrazí předchozí úpravu videa.
         /// </summary>
