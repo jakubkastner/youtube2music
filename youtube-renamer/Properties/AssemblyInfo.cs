@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Youtube Renamer")]
+[assembly: AssemblyTitle("youtube2music")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jakub Kastner")]
-[assembly: AssemblyProduct("Youtube Renamer")]
-[assembly: AssemblyCopyright("Copyright ©  Jakub Kastner 2018")]
+[assembly: AssemblyProduct("youtube2music")]
+[assembly: AssemblyCopyright("Copyright ©  Jakub Kastner 2018-2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
