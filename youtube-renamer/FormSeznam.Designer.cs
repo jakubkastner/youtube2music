@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSeznam));
             this.backgroundWorkerStahniVidea = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorkerNactiProgram = new System.ComponentModel.BackgroundWorker();
             this.statusStripStatus = new System.Windows.Forms.StatusStrip();
@@ -744,11 +745,12 @@
             this.Controls.Add(this.objectListViewSeznamVidei);
             this.Controls.Add(this.statusStripStatus);
             this.Controls.Add(this.menuStripMenu);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripMenu;
             this.MinimumSize = new System.Drawing.Size(1125, 300);
             this.Name = "FormSeznam";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "YouTube Renamer";
+            this.Text = "youtube2music";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSeznam_FormClosing);
             this.Load += new System.EventHandler(this.FormSeznam_Load);

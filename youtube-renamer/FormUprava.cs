@@ -582,6 +582,19 @@ namespace youtube_renamer
             }
             else
             {
+                if (checkBoxNovyNazevAutomaticky.Checked || String.IsNullOrEmpty(ukladaneVideo.Slozka))
+                {
+                    // automaticky se mění název
+                    string novyNazev = "";
+                    if (textBoxSlozka.Text.ToLower().Contains("_ostatní") || String.IsNullOrEmpty(textBoxSlozka.Text))
+                    {
+                        ukladaneVideo.NazevNovy = ukladaneVideo.NazevInterpretSkladbaFeat;
+                    }
+                    else
+                    {
+                        ukladaneVideo.NazevNovy = ukladaneVideo.NazevSkladbaFeat;
+                    }
+                }
                 /*string novyNazev = "";
                 if (ukladanaSlozka.ToLower().Contains("_ostatní"))
                 {

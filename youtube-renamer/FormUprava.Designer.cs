@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormUprava));
             this.textBoxInterpret = new System.Windows.Forms.TextBox();
             this.textBoxSkladba = new System.Windows.Forms.TextBox();
             this.textBoxFeaturing = new System.Windows.Forms.TextBox();
@@ -590,6 +591,7 @@
             this.Controls.Add(this.textBoxInterpret);
             this.Controls.Add(this.labelChyba);
             this.Controls.Add(this.labelSkladba);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(955, 726);
             this.Name = "FormUprava";
             this.ShowIcon = false;
