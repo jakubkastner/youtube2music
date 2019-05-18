@@ -83,7 +83,7 @@ namespace youtube_renamer
             string hledanyInterpret = Jmeno.Trim().ToLower();
             while (hledanyInterpret.Last() == '.')
             {
-                hledanyInterpret = hledanyInterpret.Remove(hledanyInterpret.Length - 2, 1);
+                hledanyInterpret = hledanyInterpret.Remove(hledanyInterpret.Length - 1, 1);
             }
             bool zakladniSlozka = false; // true pokud existuje složka s názvem interpreta bez jiných hostujících interpretů
 

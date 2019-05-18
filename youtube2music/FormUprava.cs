@@ -498,6 +498,35 @@ namespace youtube_renamer
             upravovaneVideo.NazevNovy = textBoxNovyNazev.Text;
 
             // zašktnuto ukládání u jiných videí
+
+            // ukládání interpreta
+            if (checkBoxStejnyInterpretVybrane.Checked)
+            {
+                // je zaškrtnuto použití stejného interpreta u všech upravovaných videí, uložím interpreta i u nich
+                foreach (Video vid in upravovanaVidea)
+                {
+                    // interpret je stejný
+                    vid.OdstranVsechnyInterprety();
+                    vid.PridejInterpreta(textBoxInterpret.Text);
+                    UlozSlozku(vid);
+                }
+            }
+            if (checkBoxStejnyInterpretPlaylist.Checked)
+            {
+                // je zaškrtnuto použití stejného interpreta u všech upravovaných videí ze stejného playlistu, uložím interpreta i u nich
+                foreach (Video vid in upravovanaVidea)
+                {
+                    if (vid.PlaylistVidea.ID == upravovaneVideo.PlaylistVidea.ID)
+                    {
+                        // interpret je stejný
+                        vid.OdstranVsechnyInterprety();
+                        vid.PridejInterpreta(textBoxInterpret.Text);
+                        UlozSlozku(vid);
+                    }
+                }
+            }
+
+            // ukládání složky
             if (checkBoxStejnaSlozkaVybrane.Checked)
             {
                 // je zaškrtnuto použití stejné složky u všech upravovaných videí, uložím složku i u nich
@@ -531,6 +560,7 @@ namespace youtube_renamer
                 }
             }
 
+            // ukládání žánru
             if (checkBoxStejnyZanrVybrane.Checked)
             {
                 // je zaškrtnuto použití stejného žánru u všech upravovaných videí, uložím žánr i u nich

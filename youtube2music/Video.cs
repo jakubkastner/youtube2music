@@ -364,7 +364,7 @@ namespace youtube_renamer
             {
                 // uložím původná název jako skladbu
                 interpret = "";
-                skladba = NazevPuvodni;
+                skladba = NazevPuvodni.ToLower();
                 Chyba = "Nenalezen oddělovač";
             }
             // v názvu je oddělovač
@@ -392,12 +392,12 @@ namespace youtube_renamer
                              .Replace("(ft", " ft");
 
             // v názvu skladby je remix
-            if (skladba.Contains("remix"))
+            if (skladba.ToLower().Contains("remix"))
             {
                 // odstraním ho z názvu a ložím do proměnné remix, že se jedná o remix
                 remix = true;
-                skladba = skladba.Replace("remix", "")
-                                 .Replace("()", "");
+                skladba = Regex.Replace(skladba, "remix", "", RegexOptions.IgnoreCase);
+                skladba = skladba.Replace("()", "");
             }
 
             // odstranění textu v závorce
@@ -414,21 +414,21 @@ namespace youtube_renamer
                              .Replace(")", "");
 
             // v názvu skladby není " ft"
-            if (!skladba.Contains(" ft"))
+            if (!skladba.ToLower().Contains(" ft"))
             {
                 // nahradím " x " za " ft"
-                skladba = skladba.Replace(" x ", " ft");
+                skladba = Regex.Replace(skladba, " x ", " ft", RegexOptions.IgnoreCase);
             }
 
             // v názvu skladby je " ft"
-            if (skladba.Contains(" ft"))
+            if (skladba.ToLower().Contains(" ft"))
             {
                 // získám featuring ze skladby
-                string[] uprava = skladba.Split(new[] { " ft" }, StringSplitOptions.None);
+                string[] uprava = Regex.Split(skladba, " ft", RegexOptions.IgnoreCase);
                 skladba = uprava[0].Trim();
                 uprava[1] = uprava[1].Trim()
-                                     .Replace(" &", ",")
-                                     .Replace(" x ", ",");
+                                     .Replace(" &", ",");
+                uprava[1] = Regex.Replace(uprava[1], " x ", ",", RegexOptions.IgnoreCase);
                 PridejInterpreta(new List<string>(uprava[1].Split(',')));
             }
 
@@ -588,6 +588,15 @@ namespace youtube_renamer
                 }
             }
         }
+
+        /// <summary>
+        /// Odstraní všechny interpety ze seznamu interpretů.
+        /// </summary>
+        public void OdstranVsechnyInterprety()
+        {
+            Interpreti.Clear();
+        }
+
 
         /// <summary>
         /// Zjistí jestli je interpret na seznamu interpretů.
