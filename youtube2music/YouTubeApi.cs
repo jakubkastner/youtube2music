@@ -14,10 +14,11 @@ namespace youtube_renamer
         private static YouTubeService sluzbaYoutube = Auth();
 
         private static YouTubeService Auth()
-        {
+        {            
             UserCredential povereni;
-            // podhodí soubor s client id api mého programu
-            using (var ctecka = new FileStream("youtube_client_secret.json", FileMode.Open, FileAccess.Read))
+            string inicializaceApi = @"{""installed"":{""client_id"":""806982074560-2h1sptig11iq8hrl4ink1jetllv1vlm9.apps.googleusercontent.com"",""project_id"":""youtube-renamer"",""auth_uri"":""https://accounts.google.com/o/oauth2/auth"",""token_uri"":""https://accounts.google.com/o/oauth2/token"",""auth_provider_x509_cert_url"":""https://www.googleapis.com/oauth2/v1/certs"",""client_secret"":""FDJhnbA5J2BLPpSxVD01vz4K"",""redirect_uris"":[""urn:ietf:wg:oauth:2.0:oob"",""http://localhost""]}}";
+            
+            using (var ctecka = new MemoryStream(System.Text.Encoding.ASCII.GetBytes(inicializaceApi)))
             {
                 povereni = GoogleWebAuthorizationBroker.AuthorizeAsync
                 (

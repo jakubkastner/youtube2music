@@ -153,7 +153,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Firefox\omni.ja" />
-    <None Include="youtube_client_secret.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
