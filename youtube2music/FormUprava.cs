@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace youtube_renamer
+namespace youtube2music
 {
     public partial class FormUprava : Form
     {

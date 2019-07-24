@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace youtube_renamer
+namespace youtube2music
 {
     /// <summary>
     /// Seznam interpretů.

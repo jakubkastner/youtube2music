@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace youtube_renamer
+namespace youtube2music
 {
     /// <summary>
     /// Jedno video z YouTube ke stažení.

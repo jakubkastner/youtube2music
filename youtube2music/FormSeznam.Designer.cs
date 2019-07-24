@@ -1,4 +1,4 @@
-﻿namespace youtube_renamer
+﻿namespace youtube2music
 {
     partial class FormSeznam
     {
@@ -103,6 +103,8 @@
             this.olvColumn10 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn11 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn12 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.pŘIDATALBUMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPridatAlbum = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripStatus.SuspendLayout();
             this.menuStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewSeznamVidei)).BeginInit();
@@ -156,6 +158,7 @@
             // textBoxOdkaz
             // 
             this.textBoxOdkaz.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxOdkaz.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.textBoxOdkaz.MaxLength = 1000;
             this.textBoxOdkaz.Name = "textBoxOdkaz";
             this.textBoxOdkaz.Size = new System.Drawing.Size(400, 23);
@@ -166,17 +169,15 @@
             // 
             // menuPridatVideoNeboPlaylist
             // 
-            this.menuPridatVideoNeboPlaylist.AutoSize = false;
             this.menuPridatVideoNeboPlaylist.Enabled = false;
             this.menuPridatVideoNeboPlaylist.Name = "menuPridatVideoNeboPlaylist";
             this.menuPridatVideoNeboPlaylist.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.menuPridatVideoNeboPlaylist.Size = new System.Drawing.Size(200, 23);
+            this.menuPridatVideoNeboPlaylist.Size = new System.Drawing.Size(178, 23);
             this.menuPridatVideoNeboPlaylist.Text = "PŘIDAT VIDEO NEBO PLAYLIST";
             this.menuPridatVideoNeboPlaylist.Click += new System.EventHandler(this.menuPridatVideoNeboPlaylist_Click);
             // 
             // menuVybrat
             // 
-            this.menuVybrat.AutoSize = false;
             this.menuVybrat.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuVybratVse,
             this.toolStripSeparator7,
@@ -189,7 +190,7 @@
             this.menuVybratZrusit});
             this.menuVybrat.Enabled = false;
             this.menuVybrat.Name = "menuVybrat";
-            this.menuVybrat.Size = new System.Drawing.Size(122, 23);
+            this.menuVybrat.Size = new System.Drawing.Size(60, 23);
             this.menuVybrat.Text = "VYBRAT";
             // 
             // menuVybratVse
@@ -260,17 +261,15 @@
             // 
             // menuUpravit
             // 
-            this.menuUpravit.AutoSize = false;
             this.menuUpravit.Enabled = false;
             this.menuUpravit.Name = "menuUpravit";
             this.menuUpravit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.menuUpravit.Size = new System.Drawing.Size(100, 23);
+            this.menuUpravit.Size = new System.Drawing.Size(64, 23);
             this.menuUpravit.Text = "UPRAVIT";
             this.menuUpravit.Click += new System.EventHandler(this.menuUpravit_Click);
             // 
             // menuNastaveni
             // 
-            this.menuNastaveni.AutoSize = false;
             this.menuNastaveni.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuNastaveniKnihovnaSlozkaOpus,
             this.menuNastaveniKnihovnaOpusProhledat,
@@ -282,7 +281,7 @@
             this.menuNastaveniFFmpeg,
             this.menuNastaveniFFmpegStahnout});
             this.menuNastaveni.Name = "menuNastaveni";
-            this.menuNastaveni.Size = new System.Drawing.Size(100, 23);
+            this.menuNastaveni.Size = new System.Drawing.Size(79, 23);
             this.menuNastaveni.Text = "NASTAVENÍ";
             // 
             // menuNastaveniKnihovnaSlozkaOpus
@@ -503,11 +502,10 @@
             // 
             // menuStahnout
             // 
-            this.menuStahnout.AutoSize = false;
             this.menuStahnout.Enabled = false;
             this.menuStahnout.Name = "menuStahnout";
             this.menuStahnout.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.menuStahnout.Size = new System.Drawing.Size(200, 23);
+            this.menuStahnout.Size = new System.Drawing.Size(159, 23);
             this.menuStahnout.Text = "STÁHNOUT A PŘESUNOUT";
             this.menuStahnout.Click += new System.EventHandler(this.menuStahnout_Click);
             // 
@@ -520,6 +518,7 @@
             this.menuStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.textBoxOdkaz,
             this.menuPridatVideoNeboPlaylist,
+            this.menuPridatAlbum,
             this.menuVybrat,
             this.menuUpravit,
             this.menuStahnout,
@@ -535,11 +534,10 @@
             // 
             // menuOdstranit
             // 
-            this.menuOdstranit.AutoSize = false;
             this.menuOdstranit.Enabled = false;
             this.menuOdstranit.Name = "menuOdstranit";
             this.menuOdstranit.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.menuOdstranit.Size = new System.Drawing.Size(100, 23);
+            this.menuOdstranit.Size = new System.Drawing.Size(81, 23);
             this.menuOdstranit.Text = "ODSTRANIT";
             this.menuOdstranit.Click += new System.EventHandler(this.menuOdstranit_Click);
             // 
@@ -560,49 +558,49 @@
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem3.Text = "1";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem4.Text = "2";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem5.Text = "3";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem6.Text = "4";
             this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem7.Text = "5";
             this.toolStripMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem8.Text = "6";
             this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
             // 
             // testToolStripMenuItem
             // 
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.testToolStripMenuItem.Text = "test";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
@@ -661,6 +659,7 @@
             this.objectListViewSeznamVidei.Cursor = System.Windows.Forms.Cursors.Default;
             this.objectListViewSeznamVidei.FullRowSelect = true;
             this.objectListViewSeznamVidei.GridLines = true;
+            this.objectListViewSeznamVidei.HideSelection = false;
             this.objectListViewSeznamVidei.Location = new System.Drawing.Point(0, 30);
             this.objectListViewSeznamVidei.Name = "objectListViewSeznamVidei";
             this.objectListViewSeznamVidei.Size = new System.Drawing.Size(1434, 632);
@@ -735,6 +734,20 @@
             this.olvColumn12.AspectName = "Stav";
             this.olvColumn12.Text = "Stav";
             this.olvColumn12.Width = 124;
+            // 
+            // pŘIDATALBUMToolStripMenuItem
+            // 
+            this.pŘIDATALBUMToolStripMenuItem.Name = "pŘIDATALBUMToolStripMenuItem";
+            this.pŘIDATALBUMToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            this.pŘIDATALBUMToolStripMenuItem.Text = "PŘIDAT ALBUM";
+            // 
+            // menuPridatAlbum
+            // 
+            this.menuPridatAlbum.Enabled = false;
+            this.menuPridatAlbum.Name = "menuPridatAlbum";
+            this.menuPridatAlbum.Size = new System.Drawing.Size(100, 23);
+            this.menuPridatAlbum.Text = "PŘIDAT ALBUM";
+            this.menuPridatAlbum.Click += new System.EventHandler(this.MenuPridatAlbum_Click);
             // 
             // FormSeznam
             // 
@@ -840,6 +853,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaMp3NaposledyVybrane;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaMp3NaposledyVymazat;
+        private System.Windows.Forms.ToolStripMenuItem menuPridatAlbum;
+        private System.Windows.Forms.ToolStripMenuItem pŘIDATALBUMToolStripMenuItem;
     }
 }
 

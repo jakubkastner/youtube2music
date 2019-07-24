@@ -7,7 +7,7 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
 
-namespace youtube_renamer
+namespace youtube2music
 {
     public class YouTubeApi
     {

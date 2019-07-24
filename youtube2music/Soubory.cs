@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace youtube_renamer
+namespace youtube2music
 {
     /// <summary>
     /// Soubor k přečtení nebo zápisu.

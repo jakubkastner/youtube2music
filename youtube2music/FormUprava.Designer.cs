@@ -1,4 +1,4 @@
-﻿namespace youtube_renamer
+﻿namespace youtube2music
 {
     partial class FormUprava
     {
@@ -77,7 +77,7 @@
             // 
             // textBoxInterpret
             // 
-            this.textBoxInterpret.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxInterpret.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxInterpret.Location = new System.Drawing.Point(111, 446);
             this.textBoxInterpret.MaxLength = 160;
@@ -88,7 +88,7 @@
             // 
             // textBoxSkladba
             // 
-            this.textBoxSkladba.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxSkladba.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxSkladba.Location = new System.Drawing.Point(111, 494);
             this.textBoxSkladba.MaxLength = 160;
@@ -99,7 +99,7 @@
             // 
             // textBoxFeaturing
             // 
-            this.textBoxFeaturing.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxFeaturing.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxFeaturing.Location = new System.Drawing.Point(111, 520);
             this.textBoxFeaturing.MaxLength = 160;
@@ -110,7 +110,7 @@
             // 
             // textBoxNovyNazev
             // 
-            this.textBoxNovyNazev.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxNovyNazev.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxNovyNazev.Location = new System.Drawing.Point(111, 546);
             this.textBoxNovyNazev.MaxLength = 200;
@@ -121,7 +121,7 @@
             // 
             // textBoxPuvodniNazev
             // 
-            this.textBoxPuvodniNazev.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxPuvodniNazev.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxPuvodniNazev.Location = new System.Drawing.Point(111, 420);
             this.textBoxPuvodniNazev.Name = "textBoxPuvodniNazev";
@@ -165,7 +165,7 @@
             // 
             // buttonObnovit
             // 
-            this.buttonObnovit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonObnovit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonObnovit.Location = new System.Drawing.Point(412, 736);
             this.buttonObnovit.MaximumSize = new System.Drawing.Size(220, 27);
@@ -289,7 +289,7 @@
             // 
             // buttonSlozkaJina
             // 
-            this.buttonSlozkaJina.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonSlozkaJina.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSlozkaJina.Location = new System.Drawing.Point(412, 621);
             this.buttonSlozkaJina.MaximumSize = new System.Drawing.Size(220, 27);
@@ -302,7 +302,7 @@
             // 
             // textBoxSlozka
             // 
-            this.textBoxSlozka.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxSlozka.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxSlozka.Location = new System.Drawing.Point(111, 572);
             this.textBoxSlozka.MaxLength = 400;
@@ -414,7 +414,7 @@
             // 
             // labelSkladba
             // 
-            this.labelSkladba.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.labelSkladba.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.labelSkladba.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.labelSkladba.Location = new System.Drawing.Point(0, 99);
@@ -440,8 +440,8 @@
             // 
             // geckoWebBrowserVideo
             // 
-            this.geckoWebBrowserVideo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.geckoWebBrowserVideo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.geckoWebBrowserVideo.FrameEventsPropagateToMainWindow = false;
             this.geckoWebBrowserVideo.Location = new System.Drawing.Point(409, 26);
@@ -489,7 +489,7 @@
             // 
             // labelChyba
             // 
-            this.labelChyba.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.labelChyba.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelChyba.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.labelChyba.Location = new System.Drawing.Point(111, 651);
@@ -536,7 +536,7 @@
             // 
             // richTextBoxPopis
             // 
-            this.richTextBoxPopis.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.richTextBoxPopis.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxPopis.Location = new System.Drawing.Point(409, 269);
             this.richTextBoxPopis.Name = "richTextBoxPopis";

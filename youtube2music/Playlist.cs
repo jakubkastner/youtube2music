@@ -1,4 +1,4 @@
-﻿namespace youtube_renamer
+﻿namespace youtube2music
 {
     /// <summary>
     /// YouTube kanál videa.

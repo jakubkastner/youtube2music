@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
 
-namespace youtube_renamer
+namespace youtube2music
 {
     public partial class FormSeznam : Form
     {
@@ -1750,6 +1750,7 @@ namespace youtube_renamer
                 // jedná se o úvodní hlášku, odkaz neexistuje
                 menuPridatVideoNeboPlaylist.Text = "PŘIDAT VIDEO NEBO PLAYLIST";
                 menuPridatVideoNeboPlaylist.Enabled = false;
+                menuPridatAlbum.Enabled = false;
             }
             else
             {
@@ -1777,6 +1778,7 @@ namespace youtube_renamer
                     // jedná se o playlist
                     menuPridatVideoNeboPlaylist.Text = "PŘIDAT PLAYLIST";
                     menuPridatVideoNeboPlaylist.Enabled = true;
+                    menuPridatAlbum.Enabled = true;
                     youtubeID = groupdata.ToString();
                     ZobrazStatusLabel("Vkládání odkazu", "Vložený odkaz je playlist.");
                     return;
@@ -1789,6 +1791,7 @@ namespace youtube_renamer
                     // jedná se o video
                     menuPridatVideoNeboPlaylist.Text = "PŘIDAT VIDEO";
                     menuPridatVideoNeboPlaylist.Enabled = true;
+                    menuPridatAlbum.Enabled = false;
                     youtubeID = groupdata.ToString();
                     ZobrazStatusLabel("Vkládání odkazu", "Vložený odkaz je video.");
                     return;
@@ -1796,6 +1799,7 @@ namespace youtube_renamer
             }
             // nejedná se o správný odkaz
             menuPridatVideoNeboPlaylist.Enabled = false;
+            menuPridatAlbum.Enabled = false;
             menuPridatVideoNeboPlaylist.Text = "ODKAZ NENÍ Z YOUTUBE";
             ZobrazStatusLabel("Vkládání odkazu", "Vložený odkaz není z YouTube.");
         }
@@ -1817,6 +1821,7 @@ namespace youtube_renamer
                 // zastaví přidávání videí
                 menuPridatVideoNeboPlaylist.Text = "ZASTAVUJI PŘIDÁVÁNÍ";
                 menuPridatVideoNeboPlaylist.Enabled = false;
+                menuPridatAlbum.Enabled = false;
                 backgroundWorkerPridejVidea.CancelAsync();
             }
             else if (menuPridatVideoNeboPlaylist.Text == "ZASTAVUJI PŘIDÁVÁNÍ") { }
@@ -2311,6 +2316,16 @@ namespace youtube_renamer
                 }
             }
             return null;
+        }
+
+        // NOVÉ
+
+        private void MenuPridatAlbum_Click(object sender, EventArgs e)
+        {
+
+
+            FormAlbum uprava = new FormAlbum();
+            uprava.ShowDialog();
         }
     }
 }
