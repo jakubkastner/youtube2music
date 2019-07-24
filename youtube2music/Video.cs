@@ -350,22 +350,30 @@ namespace youtube_renamer
                                          .Replace("tyler, the creator", "tyler the creator");
 
             // v názvu není oddělovací znak (pomlčka)
-            if (!upravenyNazev.Contains("-"))
+            if (!upravenyNazev.Contains('-'))
             {
                 // za první "'" nahradí "-" a odstraní ostatní
                 Regex uvozovky = new Regex(Regex.Escape("\""));
                 upravenyNazev = uvozovky.Replace(upravenyNazev, "-", 1);
                 upravenyNazev = upravenyNazev.Replace("\"", "")
-                                     .Replace(" -", "-");
+                                             .Replace(" -", "-");
             }
 
             // v názvu stále není oddělovací znak (pomlčka)
-            if (!upravenyNazev.Contains("-"))
+            if (!upravenyNazev.Contains('-'))
             {
                 // uložím původná název jako skladbu
-                interpret = "";
+                if (Kanal.Nazev.Contains("- Topic"))
+                {
+                    interpret = Kanal.Nazev.Replace("- Topic", "").Trim();
+                    Chyba = "YouTube Music";
+                }
+                else
+                {
+                    interpret = Kanal.Nazev;
+                    Chyba = "Nenalezen oddělovač";
+                }
                 skladba = NazevPuvodni.ToLower();
-                Chyba = "Nenalezen oddělovač";
             }
             // v názvu je oddělovač
             else
@@ -373,23 +381,29 @@ namespace youtube_renamer
                 int oddelovac = upravenyNazev.IndexOf('-');
                 // před oddělovačem je interpret
                 interpret = upravenyNazev.Substring(0, oddelovac)
-                                         .Trim()
-                                         .Replace("(ft", ",")
-                                         .Replace(" x ", ",")
-                                         .Replace(" ft", ",")
-                                         .Replace(" & ", ",")
-                                         .Replace(" + ", ",");
+                                         .Trim();
                 // za oddělovačem je název skladby
-                skladba = upravenyNazev.Substring(oddelovac + 1);
-                // získá featuringy z interpreta
-                PridejInterpreta(new List<string>(interpret.Split(',')));
+                skladba = upravenyNazev.Substring(oddelovac + 1)
+                                       .Trim();
             }
+            // získá featuringy z interpreta
+            interpret = interpret.Replace("featuring", "ft")
+                                 .Replace("feat", "ft")
+                                 .Replace("(ft", ",")
+                                 .Replace(" x ", ",")
+                                 .Replace(" ft", ",")
+                                 .Replace(" & ", ",")
+                                 .Replace(" + ", ",")
+                                 .Trim();
+            PridejInterpreta(new List<string>(interpret.Split(',')));
 
             // úprava skladby
-            skladba = skladba.Trim()
+            skladba = skladba.Replace("featuring", "ft")
+                             .Replace("feat", "ft")
                              .Replace("'", "")
                              .Replace("( ft", " ft")
-                             .Replace("(ft", " ft");
+                             .Replace("(ft", " ft")
+                             .Trim();
 
             // v názvu skladby je remix
             if (skladba.ToLower().Contains("remix"))

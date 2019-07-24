@@ -269,7 +269,7 @@ namespace youtube_renamer
             Jmeno = Jmeno.Replace("..", ".")
                          .Replace("Dj ", "DJ ")
                          .Replace("A$ap ", "A$AP ")
-                         .Replace("Asap ", "ASAP")
+                         .Replace("Asap ", "ASAP ")
                          .Replace("Nba ", "NBA ");
 
             PrejmenujInterpreta("Mike Will Made It", "Mike WiLL Made It");
@@ -335,7 +335,7 @@ namespace youtube_renamer
             PrejmenujInterpreta("Jl Beats", "JL Beats");
             PrejmenujInterpreta("Madeintyo", "MadeinTYO");
             PrejmenujInterpreta("Cbch", "CBCH");
-            PrejmenujInterpreta("Aj tracey", "AJ Tracey");
+            PrejmenujInterpreta("Aj Tracey", "AJ Tracey");
             PrejmenujInterpreta("Specialbeatz", "SpecialBeatz");
             PrejmenujInterpreta("Megam", "MegaM");
             PrejmenujInterpreta("Warhol.Ss", "Warhol.SS");
