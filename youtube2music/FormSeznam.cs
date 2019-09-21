@@ -31,7 +31,7 @@ namespace youtube2music
         public FormSeznam()
         {
             InitializeComponent();
-        }        
+        }
 
         // HOTOVO
         /**
@@ -84,7 +84,8 @@ namespace youtube2music
                 ZobrazStatusLabel("Stahování videí...");
                 if (!backgroundWorkerStahniVidea.IsBusy)
                 {
-                    List<Video> videaKeStazeni = ZiskejVybranaVidea(true);
+                    //List<Video> videaKeStazeni = ZiskejVybranaVidea(true);
+                    List<Video> videaKeStazeni = ZiskejVybranaVidea(false);
                     ZobrazStatusProgressBar(videaKeStazeni.Count * 5 + 1);
                     menuStahnout.Text = "ZASTAVIT STAHOVÁNÍ";
                     backgroundWorkerStahniVidea.RunWorkerAsync(videaKeStazeni);
@@ -137,6 +138,30 @@ namespace youtube2music
                 backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);
 
                 stahovaneVideoVerejne = stahovaneVideo;
+
+                // odstraní soubor
+                if (File.Exists(stahovaneVideo.Chyba))
+                {
+                    // opus
+                    string existujiciSouborOpus = stahovaneVideo.Chyba;
+                    /*DialogResult odpoved = MessageBox.Show(existujiciSouborOpus, "smažu opus", MessageBoxButtons.YesNo);
+                    if (odpoved == DialogResult.Yes)
+                    {*/
+                    File.Delete(existujiciSouborOpus);
+                    //}
+                    // mp3
+                    string existujiciSouborMp3 = stahovaneVideo.Chyba.Replace(hudebniKnihovnaOpus, hudebniKnihovnaMp3).Replace("opus", "mp3"); // UDĚLAT JINAK
+                    if (File.Exists(existujiciSouborMp3))
+                    {
+                        /*odpoved = MessageBox.Show(existujiciSouborMp3, "smažu mp3", MessageBoxButtons.YesNo);
+                        if (odpoved == DialogResult.Yes)
+                        {*/
+                        File.Delete(existujiciSouborMp3);
+                        //}
+                    }
+                    stahovaneVideo.Chyba = "";
+                }
+
                 // nastaví vlastnosti programu na stažení
                 psi.Arguments = "-x -i -w  --audio-quality 0 --audio-format mp3 -o \"" + nazev + ".%(ext)s\" \"" + adresaVidea + "\""; // -U = update
                 psi.CreateNoWindow = true;
@@ -180,6 +205,8 @@ namespace youtube2music
                 }
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
                 backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);
+
+
 
                 // uloží metadata do souboru a přesune soubor
                 ZapisMetadata(stahovaneVideo);
@@ -319,6 +346,13 @@ namespace youtube2music
                 soubor.Tag.Performers = new string[] { stahovaneVideo.Interpret };
                 soubor.Tag.Title = stahovaneVideo.NazevSkladbaFeat;
                 soubor.Tag.Genres = new string[] { stahovaneVideo.Zanr };
+                Album albumSkladby = stahovaneVideo.Album;
+                if (albumSkladby != null)
+                {
+                    soubor.Tag.Track = Convert.ToUInt32(stahovaneVideo.Stopa);
+                    soubor.Tag.Album = albumSkladby.Nazev;
+                    NastavCover(albumSkladby.Cover, soubor);
+                }
                 soubor.Save();
                 stahovaneVideo.Stav = "Metadata zapsány";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
@@ -329,6 +363,26 @@ namespace youtube2music
                 stahovaneVideo.Stav = "";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
+        }
+
+        public void NastavCover(string url, TagLib.File file)
+        {
+            //string path = string.Format(@"{0}temp\{1}.jpg", OutputPath, Guid.NewGuid().ToString());
+            byte[] imageBytes;
+            using (WebClient client = new WebClient())
+            {
+                imageBytes = client.DownloadData(url);
+            }
+
+            TagLib.Id3v2.AttachedPictureFrame cover = new TagLib.Id3v2.AttachedPictureFrame
+            {
+                Type = TagLib.PictureType.FrontCover,
+                Description = "Cover",
+                MimeType = System.Net.Mime.MediaTypeNames.Image.Jpeg,
+                Data = imageBytes,
+                TextEncoding = TagLib.StringType.UTF16
+            };
+            file.Tag.Pictures = new TagLib.IPicture[] { cover };
         }
 
         private void PrevedNaOpus(Video stahovaneVideo)
@@ -382,24 +436,24 @@ namespace youtube2music
             objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
 
             string cesta = Path.Combine(slozkaProgramuCache, stahovaneVideo.NazevNovySoubor + ".mp3");
+            // nahradí opus knihovnu za mp3 knihovnu
+            string slozka = stahovaneVideo.Slozka.Replace(hudebniKnihovnaOpus, hudebniKnihovnaMp3);
+            if (!Directory.Exists(slozka))
+            {
+                try
+                {
+                    Directory.CreateDirectory(slozka);
+                }
+                catch (Exception)
+                {
+                    stahovaneVideo.Chyba = "Soubor mp3 se nezdařilo přesunout";
+                    stahovaneVideo.Stav = "";
+                    objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
+                    return;
+                }
+            }
             try
             {
-                // nahradí složku za mp3 knihovnu
-                string slozka = stahovaneVideo.Slozka.Replace(hudebniKnihovnaOpus, hudebniKnihovnaMp3);
-                if (!Directory.Exists(slozka))
-                {
-                    try
-                    {
-                        Directory.CreateDirectory(slozka);
-                    }
-                    catch (Exception)
-                    {
-                        stahovaneVideo.Chyba = "Soubor mp3 se nezdařilo přesunout";
-                        stahovaneVideo.Stav = "";
-                        objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
-                        return;
-                    }
-                }
                 File.Move(cesta, Path.Combine(slozka, stahovaneVideo.NazevNovySoubor + ".mp3"));
                 stahovaneVideo.Stav = "Soubor mp3 přesunut";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
@@ -410,6 +464,16 @@ namespace youtube2music
                 stahovaneVideo.Stav = "";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
+            string cover = "";
+            if (stahovaneVideo.Album != null && !File.Exists(Path.Combine(slozka, cover)))
+            {
+                cover = "cover.jpg";
+                // cover
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.DownloadFile(stahovaneVideo.Album.Cover, Path.Combine(Path.Combine(slozka, cover)));
+                }
+            }
 
             // přesun souboru opus
             stahovaneVideo.Stav = "Přesunování souboru opus";
@@ -418,8 +482,26 @@ namespace youtube2music
             cesta = Path.Combine(slozkaProgramuCache, stahovaneVideo.NazevNovySoubor + ".opus");
             try
             {
+                if (!Directory.Exists(stahovaneVideo.Slozka))
+                {
+                    Directory.CreateDirectory(stahovaneVideo.Slozka);
+                }
+            }
+            catch (Exception)
+            {
+                stahovaneVideo.Chyba = "Soubor opus se nezdařilo přesunout";
+                stahovaneVideo.Stav = "";
+                objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
+                return;
+            }
+            try
+            {
                 // složka je ok
                 File.Move(cesta, Path.Combine(stahovaneVideo.Slozka, stahovaneVideo.NazevNovySoubor + ".opus"));
+                if (File.Exists(Path.Combine(slozka, cover)) && !File.Exists(Path.Combine(stahovaneVideo.Slozka, cover)))
+                {
+                    File.Copy(Path.Combine(slozka, cover), Path.Combine(stahovaneVideo.Slozka, cover));
+                }
                 stahovaneVideo.Stav = "Soubor opus přesunut";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
@@ -473,7 +555,7 @@ namespace youtube2music
         SPOUŠTĚNÍ PROGRAMU
         **/
 
-        
+
         // HOTOVO
         /// <summary>
         /// Zobrazí MessageBox s chybou.
@@ -484,7 +566,7 @@ namespace youtube2music
         {
             ZobrazStatusLabel("Spouštění programu", "Program se nepodařilo spustit.");
 
-            DialogResult odpoved = MessageBox.Show("Program se nepodařilo spustit." + Environment.NewLine  + chyba + Environment.NewLine + Environment.NewLine
+            DialogResult odpoved = MessageBox.Show("Program se nepodařilo spustit." + Environment.NewLine + chyba + Environment.NewLine + Environment.NewLine
                                                    + "Kliknutím na tlačítko 'Znovu' se program spustí znovu.", "Spoštění programu", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
             if (odpoved == DialogResult.Retry)
             {
@@ -499,10 +581,10 @@ namespace youtube2music
         {
             ZobrazStatusLabel("Spouštění programu...");
             ZobrazStatusProgressBar(10);
-            
+
             this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             menuStripMenu.Visible = false;
-            
+
             if (!backgroundWorkerNactiProgram.IsBusy)
             {
                 backgroundWorkerNactiProgram.RunWorkerAsync();
@@ -589,7 +671,7 @@ namespace youtube2music
                 // c) cesta ffmpeg
                 MenuCestaNactiZeSouboru(3);
                 backgroundWorkerNactiProgram.ReportProgress(9);
-            }));         
+            }));
         }
         // HOTOVO
         private void backgroundWorkerNactiProgram_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -904,7 +986,7 @@ namespace youtube2music
             // načte ze souboru cesty
             Soubor soubor = new Soubor();
             List<string> pridejCesty = soubor.Precti(cestaSouboru);
-            if (pridejCesty == null)    return;
+            if (pridejCesty == null) return;
             if (pridejCesty.Count == 0) return;
 
             // projde cesty a přidá je do menu
@@ -914,7 +996,7 @@ namespace youtube2music
             }
 
             // uloží první řádek ze souboru jako výchozí cestu
-            if ((typ == 0 || typ == 1 ) && Directory.Exists(pridejCesty.First().Trim()))
+            if ((typ == 0 || typ == 1) && Directory.Exists(pridejCesty.First().Trim()))
             {
                 if (typ == 0) hudebniKnihovnaOpus = pridejCesty.First().Trim();
                 else if (typ == 1) hudebniKnihovnaMp3 = pridejCesty.First().Trim();
@@ -1180,7 +1262,7 @@ namespace youtube2music
                 e.Result = "chyba";
                 return;
             }
-            
+
             if (slozkyinterpretu == null)
             {
                 e.Result = "zadne_slozky";
@@ -1291,7 +1373,7 @@ namespace youtube2music
         {
             // true = youtube-dl
             // false = ffmpeg
-            string          typStahovani = "Stahování YouTube-DL";
+            string typStahovani = "Stahování YouTube-DL";
             if (!youtubedl) typStahovani = "Stahování FFmpeg";
             ZobrazStatusLabel(typStahovani + "...");
 
@@ -1299,6 +1381,21 @@ namespace youtube2music
             string cilovaSlozka;
             FolderBrowserDialog vyberSlozky = new FolderBrowserDialog();
             vyberSlozky.Description = "Vyberte cílovou složku pro uložení souboru:";
+            string slozka;
+            if (youtubedl)
+            {
+                slozka = cestaYoutubeDL;
+            }
+            else
+            {
+                slozka = cestaFFmpeg;
+            }
+            slozka = Path.GetDirectoryName(slozka);
+            if (Directory.Exists(slozka))
+            {
+                vyberSlozky.SelectedPath = slozka;
+            }
+
             if (vyberSlozky.ShowDialog() == DialogResult.OK)
             {
                 cilovaSlozka = vyberSlozky.SelectedPath;
@@ -1438,8 +1535,8 @@ namespace youtube2music
                     }
                 }*/
                 string souborCesta = Path.Combine(slozkaFFmpeg, "bin");
-                if (!PresunSoubor(Path.Combine(souborCesta, "ffmpeg.exe"), cilovaSlozka))  e.Result = "presun";
-                if (!PresunSoubor(Path.Combine(souborCesta, "ffplay.exe"), cilovaSlozka))  e.Result = "presun";
+                if (!PresunSoubor(Path.Combine(souborCesta, "ffmpeg.exe"), cilovaSlozka)) e.Result = "presun";
+                if (!PresunSoubor(Path.Combine(souborCesta, "ffplay.exe"), cilovaSlozka)) e.Result = "presun";
                 if (!PresunSoubor(Path.Combine(souborCesta, "ffprobe.exe"), cilovaSlozka)) e.Result = "presun";
                 backgroundWorkerStahniProgram.ReportProgress(5);
 
@@ -1728,7 +1825,7 @@ namespace youtube2music
                 textBoxOdkaz.Focus();
             }
         }
-        
+
         // HOTOVO
         // opuštění TextBoxu
         private void textBoxOdkaz_Leave(object sender, EventArgs e)
@@ -1749,6 +1846,7 @@ namespace youtube2music
             {
                 // jedná se o úvodní hlášku, odkaz neexistuje
                 menuPridatVideoNeboPlaylist.Text = "PŘIDAT VIDEO NEBO PLAYLIST";
+                menuPridatAlbum.Text = "PŘIDAT ALBUM";
                 menuPridatVideoNeboPlaylist.Enabled = false;
                 menuPridatAlbum.Enabled = false;
             }
@@ -1834,12 +1932,14 @@ namespace youtube2music
                     {
                         menuPridatVideoNeboPlaylist.Text = "ZASTAVIT PŘIDÁVÁNÍ";
                         textBoxOdkaz.ReadOnly = true;
+                        menuPridatAlbum.Enabled = false;
                         backgroundWorkerPridejVidea.RunWorkerAsync(true);
                     }
                     else if (menuPridatVideoNeboPlaylist.Text == "PŘIDAT VIDEO")
                     {
                         menuPridatVideoNeboPlaylist.Text = "ZASTAVIT PŘIDÁVÁNÍ";
                         textBoxOdkaz.ReadOnly = true;
+                        menuPridatAlbum.Enabled = false;
                         backgroundWorkerPridejVidea.RunWorkerAsync(false);
                     }
                 }
@@ -1869,7 +1969,6 @@ namespace youtube2music
             bool playlist = (bool)e.Argument;
             // true = playlist
             // false = video
-            string playlistNazev = "";
             // přidávání playlistu
             if (playlist)
             {
@@ -1877,7 +1976,6 @@ namespace youtube2music
                 List<string> videaNovaID = new List<string>();
                 try
                 {
-                    playlistNazev = YouTubeApi.ZiskejNazevPlaylistu(youtubeID);
                     videaNovaID = YouTubeApi.ZiskejIDVidei(youtubeID);
                 }
                 catch (Exception)
@@ -1902,7 +2000,7 @@ namespace youtube2music
                 ZobrazStatusProgressBar(videaNovaID.Count);
 
                 int pridaneDrive = 0;
-                Playlist playlistVidei = new Playlist(youtubeID, playlistNazev);
+                Playlist playlistVidei = new Playlist(youtubeID);
                 // kontrola zdali video už nebylo přidáno
                 foreach (string videoNoveID in videaNovaID)
                 {
@@ -1931,6 +2029,7 @@ namespace youtube2music
                         // video nebylo dříve přidáno - přidá se nové video a získají se informace o něm
                         //VideoStare noveVideo = new VideoStare(videoNoveID, youtubeID);
                         Video noveVideo = new Video(videoNoveID, playlistVidei, hudebniKnihovnaOpus, vsichniInterpreti);
+                        noveVideo.Stopa = videaNovaID.IndexOf(videoNoveID) + 1;
                         videaVsechna.Add(noveVideo);
                         objectListViewSeznamVidei.Invoke(new Action(() =>
                         {
@@ -2135,7 +2234,8 @@ namespace youtube2music
                 try
                 {
                     objectListViewSeznamVidei.CheckAll();
-                } catch (Exception) { }
+                }
+                catch (Exception) { }
             }
             objectListViewSeznamVidei.EndUpdate();
         }
@@ -2165,7 +2265,8 @@ namespace youtube2music
             try
             {
                 objectListViewSeznamVidei.UncheckAll();
-            } catch (Exception) { }
+            }
+            catch (Exception) { }
             objectListViewSeznamVidei.EndUpdate();
         }
 
@@ -2322,10 +2423,74 @@ namespace youtube2music
 
         private void MenuPridatAlbum_Click(object sender, EventArgs e)
         {
+            if (menuPridatAlbum.Text == "ZASTAVIT PŘIDÁVÁNÍ")
+            {
+                // zastaví přidávání videí
+                menuPridatAlbum.Text = "ZASTAVUJI PŘIDÁVÁNÍ";
+                menuPridatVideoNeboPlaylist.Enabled = false;
+                menuPridatAlbum.Enabled = false;
+                backgroundWorkerPridejVidea.CancelAsync();
+            }
+            else if (menuPridatAlbum.Text == "ZASTAVUJI PŘIDÁVÁNÍ") { }
+            else
+            {
+                // spustí přidávání videí
+                if (!backgroundWorkerPridejVidea.IsBusy)
+                {
+                    if (menuPridatAlbum.Text == "PŘIDAT ALBUM")
+                    {
+                        if (DialogResult.Yes == MessageBox.Show("odstraní všechna aktuaální videa", "odstranění", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                        {
+                            objectListViewSeznamVidei.ClearObjects();
+                            videaVsechna.Clear();
+                        }
+                        menuPridatAlbum.Text = "ZASTAVIT PŘIDÁVÁNÍ";
+                        textBoxOdkaz.ReadOnly = true;
+                        menuPridatVideoNeboPlaylist.Enabled = false;
+                        backgroundWorkerPridejVidea.RunWorkerAsync(true);
+                        FormAlbum uprava = new FormAlbum(youtubeID, videaVsechna);
+                        //uprava.ShowDialog();
+                        uprava.Show();
+                    }
+                }
+                else
+                {
+                    Zobrazit.Chybu("přidávání albumu", "Nepodařilo se přidat žádné album.", "Zkuste přidat album znovu.");
+                    ZobrazStatusLabel("Přidávání albumu", "Nepodařilo se přidat žádné album.");
+                }
+            }
+        }
 
+        private void OpusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string cesta = @"C:\Program Files (x86)\Mp3tag\Mp3tag.exe";
+            List<Video> videaMp3tag = ZiskejVybranaVidea(false);
+            foreach (var video in videaMp3tag)
+            {
+                string soubor = Path.Combine(video.Slozka, video.NazevNovySoubor + ".opus");
+                string parametry = "/fn:\"" + soubor + "\"";
+                ProcessStartInfo info = new ProcessStartInfo(cesta, parametry);
+                Process spust = new Process();
+                spust.StartInfo = info;
+                spust.StartInfo.CreateNoWindow = false;
+                spust.Start();
+            }
+        }
 
-            FormAlbum uprava = new FormAlbum();
-            uprava.ShowDialog();
+        private void Mp3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string cesta = @"C:\Program Files (x86)\Mp3tag\Mp3tag.exe";
+            List<Video> videaMp3tag = ZiskejVybranaVidea(false);
+            foreach (var video in videaMp3tag)
+            {
+                string soubor = Path.Combine(video.Slozka.Replace(hudebniKnihovnaOpus, hudebniKnihovnaMp3), video.NazevNovySoubor + ".mp3");
+                string parametry = "/fn:\"" + soubor + "\"";
+                ProcessStartInfo info = new ProcessStartInfo(cesta, parametry);
+                Process spust = new Process();
+                spust.StartInfo = info;
+                spust.StartInfo.CreateNoWindow = false;
+                spust.Start();
+            }
         }
     }
 }

@@ -50,7 +50,7 @@ namespace youtube2music
         /// Spuštění programu.
         /// </summary>
         private void FormUprava_Load(object sender, EventArgs e)
-        {
+        {            
             Nacist(false);
         }
 

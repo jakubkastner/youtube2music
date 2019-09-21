@@ -1,4 +1,6 @@
-﻿namespace youtube2music
+﻿using System;
+
+namespace youtube2music
 {
     /// <summary>
     /// YouTube kanál videa.
@@ -13,6 +15,13 @@
         /// Název YouTube kanálu.
         /// </summary>
         public string Nazev { get; private set; }
+        public string Url
+        {
+            get
+            {
+                return "https://www.youtube.com/playlist?list=" + ID;
+            }
+        }
 
         /// <summary>
         /// Vytvoří nový kanál YouTube.
@@ -23,6 +32,24 @@
         {
             ID = id;
             Nazev = nazev;
+        }
+        public Playlist(string id)
+        {
+            ID = id;
+            ZiskejNazev();
+        }
+
+        private void ZiskejNazev()
+        {
+            try
+            {
+                Nazev = YouTubeApi.ZiskejNazevPlaylistu(ID);
+            }
+            catch (Exception ex)
+            {
+                Zobrazit.Chybu("chyba", ex.Message);
+                return;
+            }
         }
     }
 }

@@ -79,6 +79,7 @@
             this.menuNastaveniFFmpegStahnout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStahnout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMenu = new System.Windows.Forms.MenuStrip();
+            this.menuPridatAlbum = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOdstranit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,7 +105,8 @@
             this.olvColumn11 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn12 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.pŘIDATALBUMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuPridatAlbum = new System.Windows.Forms.ToolStripMenuItem();
+            this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn13 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.statusStripStatus.SuspendLayout();
             this.menuStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewSeznamVidei)).BeginInit();
@@ -532,6 +534,14 @@
             this.menuStripMenu.TabIndex = 2;
             this.menuStripMenu.Text = "Menu";
             // 
+            // menuPridatAlbum
+            // 
+            this.menuPridatAlbum.Enabled = false;
+            this.menuPridatAlbum.Name = "menuPridatAlbum";
+            this.menuPridatAlbum.Size = new System.Drawing.Size(100, 23);
+            this.menuPridatAlbum.Text = "PŘIDAT ALBUM";
+            this.menuPridatAlbum.Click += new System.EventHandler(this.MenuPridatAlbum_Click);
+            // 
             // menuOdstranit
             // 
             this.menuOdstranit.Enabled = false;
@@ -558,49 +568,49 @@
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem3.Text = "1";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem4.Text = "2";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem5.Text = "3";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem6.Text = "4";
             this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem7.Text = "5";
             this.toolStripMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(93, 22);
             this.toolStripMenuItem8.Text = "6";
             this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
             // 
             // testToolStripMenuItem
             // 
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
             this.testToolStripMenuItem.Text = "test";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
@@ -639,6 +649,8 @@
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn10);
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn11);
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn12);
+            this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn2);
+            this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn13);
             this.objectListViewSeznamVidei.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -655,7 +667,9 @@
             this.olvColumn9,
             this.olvColumn10,
             this.olvColumn11,
-            this.olvColumn12});
+            this.olvColumn12,
+            this.olvColumn2,
+            this.olvColumn13});
             this.objectListViewSeznamVidei.Cursor = System.Windows.Forms.Cursors.Default;
             this.objectListViewSeznamVidei.FullRowSelect = true;
             this.objectListViewSeznamVidei.GridLines = true;
@@ -733,7 +747,7 @@
             // 
             this.olvColumn12.AspectName = "Stav";
             this.olvColumn12.Text = "Stav";
-            this.olvColumn12.Width = 124;
+            this.olvColumn12.Width = 112;
             // 
             // pŘIDATALBUMToolStripMenuItem
             // 
@@ -741,13 +755,15 @@
             this.pŘIDATALBUMToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             this.pŘIDATALBUMToolStripMenuItem.Text = "PŘIDAT ALBUM";
             // 
-            // menuPridatAlbum
+            // olvColumn2
             // 
-            this.menuPridatAlbum.Enabled = false;
-            this.menuPridatAlbum.Name = "menuPridatAlbum";
-            this.menuPridatAlbum.Size = new System.Drawing.Size(100, 23);
-            this.menuPridatAlbum.Text = "PŘIDAT ALBUM";
-            this.menuPridatAlbum.Click += new System.EventHandler(this.MenuPridatAlbum_Click);
+            this.olvColumn2.AspectName = "Stopa";
+            this.olvColumn2.Text = "Stopa";
+            // 
+            // olvColumn13
+            // 
+            this.olvColumn13.AspectName = "Album.Nazev";
+            this.olvColumn13.Text = "Album";
             // 
             // FormSeznam
             // 
@@ -855,6 +871,8 @@
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaMp3NaposledyVymazat;
         private System.Windows.Forms.ToolStripMenuItem menuPridatAlbum;
         private System.Windows.Forms.ToolStripMenuItem pŘIDATALBUMToolStripMenuItem;
+        private BrightIdeasSoftware.OLVColumn olvColumn2;
+        private BrightIdeasSoftware.OLVColumn olvColumn13;
     }
 }
 

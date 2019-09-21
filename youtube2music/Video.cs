@@ -25,6 +25,9 @@ namespace youtube2music
         /// </summary>
         private string hudebniKnihovna;
 
+        public int Stopa { get; set; }
+        public Album Album { get; set; }
+
         /// <summary>
         /// ID videa.
         /// </summary>
@@ -206,6 +209,20 @@ namespace youtube2music
             }
         }
 
+        public string NazevStopaSkladbaFeat
+        {
+            get
+            {
+                string stopa = "";
+                if (Stopa < 10)
+                {
+                    stopa += "0";
+                }
+                stopa += Stopa;
+                return stopa + " " + NazevSkladbaFeat;
+            }
+        }
+
         /// <summary>
         /// Název interpreta skladby.
         /// </summary>
@@ -238,6 +255,7 @@ namespace youtube2music
             this.vsichniInterpreti = interpreti;
             this.novyNazevVidea = "";
             this.hudebniKnihovna = knihovnaSlozka;
+            Stopa = 0;
             ID = videoID;
             PlaylistVidea = videoPlaylist;
             Popis = ""; // -> viz YouTubeApi.ZiskejInfoVidea()
@@ -828,6 +846,10 @@ namespace youtube2music
         /// <returns>Soubor skladby ve složce. Pokud neexistuje vrací null.</returns>
         private string NajdiSoubor(string hledanaSkladba, string hledanaSlozka)
         {
+            if (!Directory.Exists(hledanaSlozka))
+            {
+                return null;
+            }
             // odstranění neplatných znaků v názvu souboru
             hledanaSkladba = String.Join("", hledanaSkladba.Split(Path.GetInvalidFileNameChars()));
             // celá cesta hledané skladby

@@ -211,6 +211,7 @@ namespace youtube2music
             PrejmenujInterpreta("†holyvandalboi†", "vandal");
             PrejmenujInterpreta("barber", "skinny barber");
             PrejmenujInterpreta("opak dissu", "opak dissu label");
+            PrejmenujInterpreta("kamil hoffmann", "zmrd");
 
             // zahraniční
             PrejmenujInterpreta("the black eyed peas", "black eyed peas");
@@ -339,13 +340,12 @@ namespace youtube2music
             PrejmenujInterpreta("Specialbeatz", "SpecialBeatz");
             PrejmenujInterpreta("Megam", "MegaM");
             PrejmenujInterpreta("Warhol.Ss", "Warhol.SS");
-            PrejmenujInterpreta("", "");
-            PrejmenujInterpreta("", "");
+            PrejmenujInterpreta("Saint Jhn", "SAINt JHN");
         }
 
         private void PrejmenujInterpreta(string puvodni, string novy)
         {
-            if (Jmeno == puvodni)
+            if (String.Equals(Jmeno, puvodni, StringComparison.OrdinalIgnoreCase))
             {
                 Jmeno = novy.Trim();
             }

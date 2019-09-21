@@ -1,9 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using BrightIdeasSoftware;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -14,15 +17,19 @@ namespace youtube2music
 {
     public partial class FormAlbum : Form
     {
-        public FormAlbum()
+        string playlistID = "";
+        List<Video> videaVsechna = new List<Video>();
+
+        public FormAlbum(string playlist, List<Video> videa)
         {
             InitializeComponent();
+            playlistID = playlist;
+            videaVsechna = videa;
         }
 
         private void ButtonVyhledatDeezer_Click(object sender, EventArgs e)
         {
             // spuštění vyhledávání interpeta / alba
-
             if (buttonVyhledatDeezer.Text == "Zrušit vyhledávání")
             {
                 backgroundWorkerVyhledatDeezer.CancelAsync();
@@ -46,6 +53,59 @@ namespace youtube2music
         private void ButtonPridatAlbum_Click(object sender, EventArgs e)
         {
 
+            var vybrano = treeListViewAlbaDeezer.SelectedObject;
+            if (vybrano == null)
+            {
+                return;
+            }
+            Deezer albumDeezer;
+            if (vybrano is Deezer)
+            {
+                albumDeezer = (Deezer)vybrano;
+            }
+            else if (vybrano is Deezer.SkladbyAlba)
+            {
+                Deezer.SkladbyAlba skladba = (Deezer.SkladbyAlba)vybrano;
+                albumDeezer = skladba.Album;
+            }
+            else
+            {
+                return;
+            }
+
+            Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
+            interpretAlba.NajdiSlozky();
+            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, albumDeezer.CoverNejvetsi);
+
+            foreach (Video vid in videaVsechna)
+            {
+                // procházím videa z youtube
+                vid.Album = novyAlbum;
+                vid.PridejInterpreta(novyAlbum.Interpret.Jmeno);
+                foreach (var interpretDeezer in albumDeezer.Skladby[vid.Stopa - 1].Interpreti)
+                {
+                    vid.PridejInterpreta(interpretDeezer);
+                }
+                vid.Chyba = ""; // SMAZAT
+                vid.Stav = "YouTube Album";
+                if (File.Exists(vid.Slozka))
+                {
+                    vid.Chyba = vid.Slozka;
+                    vid.Stav = "Bude smazáno";
+                }
+                vid.Slozka = novyAlbum.Slozka;
+                string stopa = "";
+                if (vid.Stopa < 10)
+                {
+                    stopa += "0";
+                }
+                stopa += vid.Stopa;
+                string nazev = vid.NazevSkladbaFeat;
+                vid.NazevNovy = stopa + " " + nazev;
+                vid.Zanr = textBoxZanr.Text;
+
+            }
+            this.Close();
         }
 
         private void BackgroundWorkerVyhledatDeezer_DoWork(object sender, DoWorkEventArgs e)
@@ -138,6 +198,7 @@ namespace youtube2music
 
         private void FormAlbum_Load(object sender, EventArgs e)
         {
+            treeListViewAlbaYoutube.AddObjects(videaVsechna);
             // rozbalení položek
             treeListViewAlbaDeezer.CanExpandGetter = delegate (Object x)
             {
@@ -153,7 +214,9 @@ namespace youtube2music
                 }
                 throw new ArgumentException("Musí být album nebo interpret");
             };
-
+            Playlist playlistAlba = new Playlist(playlistID);
+            textBoxAlbum.Text = playlistAlba.Nazev;
+            linkLabelOdkaz.Text = playlistAlba.Url;
         }
 
         private void TreeListViewAlbaDeezer_SelectedIndexChanged(object sender, EventArgs e)
@@ -181,6 +244,23 @@ namespace youtube2music
             textBoxInterpret.Text = album.Interpret;
             numericUpDownRok.Value = Convert.ToInt32(album.Datum.Split('-').First());
             pictureBoxCover.ImageLocation = album.CoverStredni;
+
+            Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
+            interpretAlba.NajdiSlozky();
+            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, pictureBoxCover.ImageLocation);
+
+            textBoxSlozka.Text = novyAlbum.Slozka;
+        }
+
+        private void LinkLabelOdkaz_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(linkLabelOdkaz.Text);
+        }
+
+        private void ButtonAktualizovat_Click(object sender, EventArgs e)
+        {
+            treeListViewAlbaYoutube.RemoveObjects(videaVsechna);
+            treeListViewAlbaYoutube.AddObjects(videaVsechna);
         }
     }
 }
