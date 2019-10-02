@@ -193,6 +193,8 @@ namespace youtube2music
             PrejmenujInterpreta("ak", "pastor & sergei barracuda"); // asi problém s velkýma písmenama
             PrejmenujInterpreta("yg moris", "mladej moris");
             PrejmenujInterpreta("gleb , zoo", "gleb");
+            PrejmenujInterpreta("gleb:zoo", "zmrd");
+            PrejmenujInterpreta("gleb : zoo", "zmrd");
             PrejmenujInterpreta("peatyf", "peatyf.");
             PrejmenujInterpreta("sheen", "viktor sheen");
             PrejmenujInterpreta("yzomandias", "logic");
@@ -209,9 +211,11 @@ namespace youtube2music
             PrejmenujInterpreta("samuray pítr", "samuraj pítr");
             PrejmenujInterpreta("sensey", "senseysyfu");
             PrejmenujInterpreta("†holyvandalboi†", "vandal");
-            PrejmenujInterpreta("barber", "skinny barber");
+            PrejmenujInterpreta("skinny barber", "barber");
             PrejmenujInterpreta("opak dissu", "opak dissu label");
             PrejmenujInterpreta("kamil hoffmann", "zmrd");
+            PrejmenujInterpreta("samuraj pitr", "samuraj pítr");
+            PrejmenujInterpreta("p$ycho rhyme", "psycho rhyme");
 
             // zahraniční
             PrejmenujInterpreta("the black eyed peas", "black eyed peas");
@@ -321,6 +325,7 @@ namespace youtube2music
             PrejmenujInterpreta("Mpp", "MPP");
             PrejmenujInterpreta("Ptk", "PTK");
             PrejmenujInterpreta("Tkx", "TKX");
+            PrejmenujInterpreta("Tm88", "TM88");
             PrejmenujInterpreta("G Eazy", "G-Eazy");
             PrejmenujInterpreta("Lordk", "LordK");
             PrejmenujInterpreta("Idk", "IDK");
@@ -341,6 +346,8 @@ namespace youtube2music
             PrejmenujInterpreta("Megam", "MegaM");
             PrejmenujInterpreta("Warhol.Ss", "Warhol.SS");
             PrejmenujInterpreta("Saint Jhn", "SAINt JHN");
+            PrejmenujInterpreta("Blueraykoranthug", "BlueRayKoranThug");
+            PrejmenujInterpreta("A Boogie With Da Hoodie", "A Boogie with da Hoodie");
         }
 
         private void PrejmenujInterpreta(string puvodni, string novy)
