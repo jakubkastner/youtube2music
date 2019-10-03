@@ -104,9 +104,11 @@
             this.olvColumn10 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn11 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn12 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.pŘIDATALBUMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn13 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.pŘIDATALBUMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.opusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mp3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripStatus.SuspendLayout();
             this.menuStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewSeznamVidei)).BeginInit();
@@ -526,7 +528,9 @@
             this.menuStahnout,
             this.menuOdstranit,
             this.menuNastaveni,
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.opusToolStripMenuItem,
+            this.mp3ToolStripMenuItem});
             this.menuStripMenu.Location = new System.Drawing.Point(0, 0);
             this.menuStripMenu.MinimumSize = new System.Drawing.Size(1432, 27);
             this.menuStripMenu.Name = "menuStripMenu";
@@ -749,12 +753,6 @@
             this.olvColumn12.Text = "Stav";
             this.olvColumn12.Width = 112;
             // 
-            // pŘIDATALBUMToolStripMenuItem
-            // 
-            this.pŘIDATALBUMToolStripMenuItem.Name = "pŘIDATALBUMToolStripMenuItem";
-            this.pŘIDATALBUMToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.pŘIDATALBUMToolStripMenuItem.Text = "PŘIDAT ALBUM";
-            // 
             // olvColumn2
             // 
             this.olvColumn2.AspectName = "Stopa";
@@ -764,6 +762,26 @@
             // 
             this.olvColumn13.AspectName = "Album.Nazev";
             this.olvColumn13.Text = "Album";
+            // 
+            // pŘIDATALBUMToolStripMenuItem
+            // 
+            this.pŘIDATALBUMToolStripMenuItem.Name = "pŘIDATALBUMToolStripMenuItem";
+            this.pŘIDATALBUMToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            this.pŘIDATALBUMToolStripMenuItem.Text = "PŘIDAT ALBUM";
+            // 
+            // opusToolStripMenuItem
+            // 
+            this.opusToolStripMenuItem.Name = "opusToolStripMenuItem";
+            this.opusToolStripMenuItem.Size = new System.Drawing.Size(45, 23);
+            this.opusToolStripMenuItem.Text = "opus";
+            this.opusToolStripMenuItem.Click += new System.EventHandler(this.OpusToolStripMenuItem_Click);
+            // 
+            // mp3ToolStripMenuItem
+            // 
+            this.mp3ToolStripMenuItem.Name = "mp3ToolStripMenuItem";
+            this.mp3ToolStripMenuItem.Size = new System.Drawing.Size(43, 23);
+            this.mp3ToolStripMenuItem.Text = "mp3";
+            this.mp3ToolStripMenuItem.Click += new System.EventHandler(this.Mp3ToolStripMenuItem_Click);
             // 
             // FormSeznam
             // 
@@ -873,6 +891,8 @@
         private System.Windows.Forms.ToolStripMenuItem pŘIDATALBUMToolStripMenuItem;
         private BrightIdeasSoftware.OLVColumn olvColumn2;
         private BrightIdeasSoftware.OLVColumn olvColumn13;
+        private System.Windows.Forms.ToolStripMenuItem opusToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mp3ToolStripMenuItem;
     }
 }
 

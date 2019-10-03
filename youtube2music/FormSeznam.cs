@@ -2439,18 +2439,18 @@ namespace youtube2music
                 {
                     if (menuPridatAlbum.Text == "PŘIDAT ALBUM")
                     {
-                        if (DialogResult.Yes == MessageBox.Show("odstraní všechna aktuaální videa", "odstranění", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                        if (objectListViewSeznamVidei.Items.Count < 1 || DialogResult.Yes == MessageBox.Show("Odstraní všechna aktuální videa", "Odstranění", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
                         {
                             objectListViewSeznamVidei.ClearObjects();
                             videaVsechna.Clear();
+                            menuPridatAlbum.Text = "ZASTAVIT PŘIDÁVÁNÍ";
+                            textBoxOdkaz.ReadOnly = true;
+                            menuPridatVideoNeboPlaylist.Enabled = false;
+                            backgroundWorkerPridejVidea.RunWorkerAsync(true);
+                            FormAlbum uprava = new FormAlbum(youtubeID, videaVsechna);
+                            //uprava.ShowDialog();
+                            uprava.Show();
                         }
-                        menuPridatAlbum.Text = "ZASTAVIT PŘIDÁVÁNÍ";
-                        textBoxOdkaz.ReadOnly = true;
-                        menuPridatVideoNeboPlaylist.Enabled = false;
-                        backgroundWorkerPridejVidea.RunWorkerAsync(true);
-                        FormAlbum uprava = new FormAlbum(youtubeID, videaVsechna);
-                        //uprava.ShowDialog();
-                        uprava.Show();
                     }
                 }
                 else

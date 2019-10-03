@@ -217,6 +217,7 @@ namespace youtube2music
             Playlist playlistAlba = new Playlist(playlistID);
             textBoxAlbum.Text = playlistAlba.Nazev;
             linkLabelOdkaz.Text = playlistAlba.Url;
+            this.Text = playlistAlba.Nazev + " - nové album ~ youtube2music";
         }
 
         private void TreeListViewAlbaDeezer_SelectedIndexChanged(object sender, EventArgs e)
@@ -235,6 +236,23 @@ namespace youtube2music
             {
                 Deezer.SkladbyAlba skladba = (Deezer.SkladbyAlba)vybrano;
                 album = skladba.Album;
+                try
+                {
+                    // vybere stejné video ze seznamu youtube
+                    var seznamYoutube = treeListViewAlbaYoutube.Objects;
+                    foreach (Video youtubeVideo in seznamYoutube)
+                    {
+                        if (youtubeVideo.Stopa == skladba.Cislo)
+                        {
+                            //treeListViewAlbaYoutube.SelectedItem = null;
+                            treeListViewAlbaYoutube.SelectObject(youtubeVideo);
+                            break;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                }
             }
             else
             {
@@ -261,6 +279,84 @@ namespace youtube2music
         {
             treeListViewAlbaYoutube.RemoveObjects(videaVsechna);
             treeListViewAlbaYoutube.AddObjects(videaVsechna);
+            if (videaVsechna.Count > 0)
+            {
+                textBoxInterpret.Text = videaVsechna.First().Interpret;
+            }
+        }
+
+        private void ButtonVyhledatAktualizovat_Click(object sender, EventArgs e)
+        {
+            ButtonAktualizovat_Click(sender, e);
+            ButtonVyhledatDeezer_Click(sender, e);
+        }
+
+        private void buttonSlozkaOtevit_Click(object sender, EventArgs e)
+        {
+            string slozka = textBoxSlozka.Text;
+            if (!Directory.Exists(slozka))
+            {
+                Zobrazit.Chybu("Otevírání složky", "Složka \"" + slozka + "\" neexistuje.");
+                return;
+            }
+
+            // otevře složku
+            try
+            {
+                Process.Start(slozka);
+            }
+            catch (Exception)
+            {
+                Zobrazit.Chybu("Otevírání složky", "Složku se nepodařilo otevřit.");
+            }
+        }
+
+        private void buttonSlozkaZmenit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void treeListViewAlbaYoutube_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // PROVÁDÍ SE ZACYKLENĚ !!!! ŠPATNĚ
+            /*var vybrano = treeListViewAlbaYoutube.SelectedObject;
+            if (vybrano == null)
+            {
+                return;
+            }
+            if (!(vybrano is Video))
+            {
+                return;
+            }
+            Video youtubeVideo = (Video)vybrano;
+            try
+            {
+                var seznamDeezer = treeListViewAlbaDeezer.Objects; // získá jen alba (nikoliv SKLADBY !!!!!) -> chyba
+                foreach (var deezer in seznamDeezer)
+                {
+                    if (deezer == null)
+                    {
+                        return;
+                    }
+                    if (deezer is Deezer)
+                    {
+                        treeListViewAlbaDeezer.SelectedItem = null;
+                    }
+                    else if (deezer is Deezer.SkladbyAlba)
+                    {
+                        Deezer.SkladbyAlba skladba = (Deezer.SkladbyAlba)deezer;
+                        if (youtubeVideo.Stopa == skladba.Cislo)
+                        {
+                            treeListViewAlbaDeezer.SelectedItem = null;
+                            treeListViewAlbaDeezer.SelectObject(skladba);
+                            break;
+                        }
+                    }                        
+                }
+            }
+            catch (Exception)
+            {
+            }*/
         }
     }
 }
