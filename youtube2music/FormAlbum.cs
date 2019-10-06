@@ -107,6 +107,7 @@ namespace youtube2music
                 vid.Zanr = textBoxZanr.Text;
 
             }
+
             this.Close();
         }
 

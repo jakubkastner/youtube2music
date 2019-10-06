@@ -2130,8 +2130,9 @@ namespace youtube2music
             if (album)
             {
                 FormAlbum uprava = new FormAlbum(youtubeID, videaVsechna, hudebniKnihovnaOpus);
-                //uprava.ShowDialog();
-                uprava.Show();
+                uprava.ShowDialog();
+                objectListViewSeznamVidei.UpdateObjects(videaVsechna);
+                //uprava.Show();
             }
             textBoxOdkaz.Text = "VLOŽTE ODKAZ NA VIDEO NEBO PLAYLIST Z YOUTUBE";
             textBoxOdkaz.ReadOnly = false;
