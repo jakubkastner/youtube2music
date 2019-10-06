@@ -77,7 +77,7 @@ namespace youtube2music
 
             Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
             interpretAlba.NajdiSlozky();
-            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, pictureBoxCover.ImageLocation);
+            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, pictureBoxCover.Tag);
             novyAlbum.Slozka = textBoxSlozka.Text;
             foreach (Video vid in videaVsechna)
             {
