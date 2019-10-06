@@ -59,7 +59,6 @@
             this.olvColumn10 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn12 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn13 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.buttonAktualizovat = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.buttonSlozkaZmenit = new System.Windows.Forms.Button();
             this.buttonSlozkaOtevit = new System.Windows.Forms.Button();
@@ -69,7 +68,6 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.buttonVyhledatAktualizovat = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRok)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeListViewAlbaDeezer)).BeginInit();
@@ -170,7 +168,7 @@
             // 
             // buttonPridatAlbum
             // 
-            this.buttonPridatAlbum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPridatAlbum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonPridatAlbum.Location = new System.Drawing.Point(4, 722);
             this.buttonPridatAlbum.Name = "buttonPridatAlbum";
             this.buttonPridatAlbum.Size = new System.Drawing.Size(130, 23);
@@ -372,17 +370,6 @@
             this.olvColumn13.Text = "Složka";
             this.olvColumn13.Width = 135;
             // 
-            // buttonAktualizovat
-            // 
-            this.buttonAktualizovat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonAktualizovat.Location = new System.Drawing.Point(501, 722);
-            this.buttonAktualizovat.Name = "buttonAktualizovat";
-            this.buttonAktualizovat.Size = new System.Drawing.Size(130, 23);
-            this.buttonAktualizovat.TabIndex = 7;
-            this.buttonAktualizovat.Text = "Aktualizovat seznam";
-            this.buttonAktualizovat.UseVisualStyleBackColor = true;
-            this.buttonAktualizovat.Click += new System.EventHandler(this.ButtonAktualizovat_Click);
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -431,6 +418,7 @@
             this.button3.TabIndex = 7;
             this.button3.Text = "Změnit back cover";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label8
             // 
@@ -461,6 +449,7 @@
             this.button4.TabIndex = 7;
             this.button4.Text = "Změnit front cover";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
@@ -471,6 +460,7 @@
             this.button5.TabIndex = 7;
             this.button5.Text = "X";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -481,16 +471,7 @@
             this.button6.TabIndex = 7;
             this.button6.Text = "X";
             this.button6.UseVisualStyleBackColor = true;
-            // 
-            // buttonVyhledatAktualizovat
-            // 
-            this.buttonVyhledatAktualizovat.Location = new System.Drawing.Point(206, 82);
-            this.buttonVyhledatAktualizovat.Name = "buttonVyhledatAktualizovat";
-            this.buttonVyhledatAktualizovat.Size = new System.Drawing.Size(130, 23);
-            this.buttonVyhledatAktualizovat.TabIndex = 7;
-            this.buttonVyhledatAktualizovat.Text = "Aktualizovat a vyhledat";
-            this.buttonVyhledatAktualizovat.UseVisualStyleBackColor = true;
-            this.buttonVyhledatAktualizovat.Click += new System.EventHandler(this.ButtonVyhledatAktualizovat_Click);
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // FormAlbum
             // 
@@ -502,14 +483,12 @@
             this.Controls.Add(this.linkLabelOdkaz);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBoxCover);
-            this.Controls.Add(this.buttonAktualizovat);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.buttonSlozkaOtevit);
             this.Controls.Add(this.buttonSlozkaZmenit);
-            this.Controls.Add(this.buttonVyhledatAktualizovat);
             this.Controls.Add(this.buttonVyhledatDeezer);
             this.Controls.Add(this.buttonPridatAlbum);
             this.Controls.Add(this.label8);
@@ -574,7 +553,6 @@
         private BrightIdeasSoftware.OLVColumn olvColumn11;
         private BrightIdeasSoftware.OLVColumn olvColumn12;
         private BrightIdeasSoftware.OLVColumn olvColumn13;
-        private System.Windows.Forms.Button buttonAktualizovat;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button buttonSlozkaZmenit;
         private System.Windows.Forms.Button buttonSlozkaOtevit;
@@ -584,6 +562,5 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button buttonVyhledatAktualizovat;
     }
 }

@@ -18,13 +18,15 @@ namespace youtube2music
     public partial class FormAlbum : Form
     {
         string playlistID = "";
+        string hudebniKnihovna = "";
         List<Video> videaVsechna = new List<Video>();
 
-        public FormAlbum(string playlist, List<Video> videa)
+        public FormAlbum(string playlist, List<Video> videa, string hudebniKnihovnaOpus)
         {
             InitializeComponent();
             playlistID = playlist;
             videaVsechna = videa;
+            hudebniKnihovna = hudebniKnihovnaOpus;
         }
 
         private void ButtonVyhledatDeezer_Click(object sender, EventArgs e)
@@ -75,8 +77,8 @@ namespace youtube2music
 
             Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
             interpretAlba.NajdiSlozky();
-            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, albumDeezer.CoverNejvetsi);
-
+            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, pictureBoxCover.ImageLocation);
+            novyAlbum.Slozka = textBoxSlozka.Text;
             foreach (Video vid in videaVsechna)
             {
                 // procházím videa z youtube
@@ -122,12 +124,21 @@ namespace youtube2music
             string umelec = OdstranZnaky(textBoxInterpret.Text);
             string album = OdstranZnaky(textBoxAlbum.Text);
 
-            // získá ba umělce
+            // získá alba umělce
             ZiskejAlba("https://api.deezer.com/search/album?q=artist:\"" + umelec + "\" album:\"" + album + "\"?access_token=", true);
         }
 
         private void BackgroundWorkerVyhledatDeezer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            string umelec = OdstranZnaky(textBoxInterpret.Text);
+            string album = OdstranZnaky(textBoxAlbum.Text);
+            foreach (Deezer nalezeneAlbum in treeListViewAlbaDeezer.Objects)
+            {
+                if ((String.Compare(nalezeneAlbum.Nazev, album, true) == 0) && (String.Compare(nalezeneAlbum.Interpret, umelec, true) == 0))
+                {
+                    treeListViewAlbaDeezer.SelectObject(nalezeneAlbum);
+                }
+            }
             buttonVyhledatDeezer.Enabled = true;
             buttonVyhledatDeezer.Text = "Vyhledat na Deezeru";
         }
@@ -166,7 +177,8 @@ namespace youtube2music
                 {
                     return;
                 }
-                if (nalezeneAlbum.record_type.ToLower() == "album")
+                string typAlbumu = nalezeneAlbum.record_type.ToLower();
+                if (typAlbumu == "album" || typAlbumu == "ep")
                 {
                     // jedná se o album (nikoliv o singl)
                     // přidám nalezené album do seznamu
@@ -218,6 +230,11 @@ namespace youtube2music
             textBoxAlbum.Text = playlistAlba.Nazev;
             linkLabelOdkaz.Text = playlistAlba.Url;
             this.Text = playlistAlba.Nazev + " - nové album ~ youtube2music";
+            if (videaVsechna.Count > 0)
+            {
+                textBoxInterpret.Text = videaVsechna.First().Interpret;
+            }
+            ButtonVyhledatDeezer_Click(null, null);
         }
 
         private void TreeListViewAlbaDeezer_SelectedIndexChanged(object sender, EventArgs e)
@@ -262,10 +279,11 @@ namespace youtube2music
             textBoxInterpret.Text = album.Interpret;
             numericUpDownRok.Value = Convert.ToInt32(album.Datum.Split('-').First());
             pictureBoxCover.ImageLocation = album.CoverStredni;
+            pictureBoxCover.Tag = album.CoverNejvetsi;
 
             Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
             interpretAlba.NajdiSlozky();
-            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, pictureBoxCover.ImageLocation);
+            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, pictureBoxCover.Tag.ToString());
 
             textBoxSlozka.Text = novyAlbum.Slozka;
         }
@@ -277,18 +295,14 @@ namespace youtube2music
 
         private void ButtonAktualizovat_Click(object sender, EventArgs e)
         {
-            treeListViewAlbaYoutube.RemoveObjects(videaVsechna);
-            treeListViewAlbaYoutube.AddObjects(videaVsechna);
-            if (videaVsechna.Count > 0)
-            {
-                textBoxInterpret.Text = videaVsechna.First().Interpret;
-            }
+            /*treeListViewAlbaYoutube.RemoveObjects(videaVsechna);
+            treeListViewAlbaYoutube.AddObjects(videaVsechna);*/
         }
 
         private void ButtonVyhledatAktualizovat_Click(object sender, EventArgs e)
         {
-            ButtonAktualizovat_Click(sender, e);
-            ButtonVyhledatDeezer_Click(sender, e);
+            /*ButtonAktualizovat_Click(sender, e);
+            ButtonVyhledatDeezer_Click(sender, e);*/
         }
 
         private void buttonSlozkaOtevit_Click(object sender, EventArgs e)
@@ -313,7 +327,30 @@ namespace youtube2music
 
         private void buttonSlozkaZmenit_Click(object sender, EventArgs e)
         {
+            FolderBrowserDialog vyberSlozky = new FolderBrowserDialog();
+            vyberSlozky.Description = "Vyberte složku do které se stáhne album:";
 
+            // nastaví výchozí cestu
+            if (Directory.Exists(textBoxSlozka.Text))
+            {
+                // jedná se o složku
+                vyberSlozky.SelectedPath = textBoxSlozka.Text;
+            }
+            else if (File.Exists(textBoxSlozka.Text))
+            {
+                // jedná se o soubor
+                vyberSlozky.SelectedPath = Path.GetDirectoryName(textBoxSlozka.Text);
+            }
+            else
+            {
+                // nejedná se o existující složku ani soubor
+                vyberSlozky.SelectedPath = hudebniKnihovna;
+            }
+
+            if (vyberSlozky.ShowDialog() == DialogResult.OK)
+            {
+                textBoxSlozka.Text = vyberSlozky.SelectedPath;
+            }
         }
 
         private void treeListViewAlbaYoutube_SelectedIndexChanged(object sender, EventArgs e)
@@ -357,6 +394,88 @@ namespace youtube2music
             catch (Exception)
             {
             }*/
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            CoverNovy(pictureBoxCover);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            CoverNovy(pictureBox1);
+        }
+
+
+        private void CoverNovy(PictureBox picBox)
+        {
+            string cesta = "";
+            using (var vyberSouboru = new OpenFileDialog())
+            {
+                /// DODĚLAT -> přidat další typy souborů ///
+                vyberSouboru.Filter = "Obrázek | *.jpeg; *.jpg; *.gif; *.png; *.bmp"; //; *.JPEG; *.JPEG; *.GIF; *.PNG; *.BMP;
+                DialogResult odpoved = vyberSouboru.ShowDialog();
+
+                if (odpoved == DialogResult.OK && !String.IsNullOrWhiteSpace(vyberSouboru.FileName))
+                {
+                    cesta = vyberSouboru.FileName;
+                }
+                else
+                {
+                    return;
+                }
+            }
+            // zobrazí nový cover a informace o něm
+            if (!File.Exists(cesta))
+            {
+                return;
+            }
+            // zobrazí cover na pictureBoxu
+            picBox.ImageLocation = cesta;
+            picBox.Tag = cesta;
+
+            // načte informace o coveru
+            /*FileInfo soubor = new FileInfo(cesta);
+            double coverVelikostB = soubor.Length;
+            double coverVelikostMB = Math.Round(coverVelikostB / 1000000, 1);
+            string coverNazev = Path.GetFileNameWithoutExtension(cesta);
+            string coverTyp = Path.GetExtension(cesta).Replace(".", "");
+
+            int coverSirka = 0;
+            int coverVyska = 0;
+            using (Bitmap img = new Bitmap(cesta))
+            {
+                coverSirka = img.Width;
+                coverVyska = img.Height;
+            }
+
+            // zobrazí načtené informace na labelu
+            labelPridaniUpravaArchivu_CoverInfo.Text = "Název:                " + coverNazev + Environment.NewLine
+                                + "Typ souboru:     " + coverTyp + Environment.NewLine
+                                + "Velikost:            " + coverVelikostMB + " MB   (" + coverVelikostB + " bajtů)" + Environment.NewLine
+                                + "Rozměry:           " + coverVyska + " x " + coverSirka + " px   (výška x šířka)";
+        }
+        private void pictureBoxCover_Click(object sender, EventArgs e)
+        {
+            // zobrazení coveru v externím programu
+            /*if (!String.IsNullOrEmpty((PictureBox)sender.ImageLocation))
+            {
+                ZobrazStavNovy("Zobrazuji cover", false);
+                SpustitProgram(pictureBoxPridaniUpravaArchivu_Cover.ImageLocation, "", false);
+            }*/
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            pictureBoxCover.Image = null;
+            pictureBoxCover.Tag = "";
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+            pictureBox1.Image = null;
+            pictureBox1.Tag = "";
         }
     }
 }

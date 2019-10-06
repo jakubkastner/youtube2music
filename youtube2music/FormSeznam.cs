@@ -24,6 +24,7 @@ namespace youtube2music
         string slozkaProgramuData = null;
         string slozkaProgramuCache = null;
 
+        bool album = false;
         string youtubeID = null;
         List<Video> videaVsechna = new List<Video>();
         SeznamInterpretu vsichniInterpreti = new SeznamInterpretu();
@@ -464,14 +465,13 @@ namespace youtube2music
                 stahovaneVideo.Stav = "";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
-            string cover = "";
+            string cover = "cover.jpg";
             if (stahovaneVideo.Album != null && !File.Exists(Path.Combine(slozka, cover)))
             {
-                cover = "cover.jpg";
                 // cover
                 using (WebClient webClient = new WebClient())
                 {
-                    webClient.DownloadFile(stahovaneVideo.Album.Cover, Path.Combine(Path.Combine(slozka, cover)));
+                    webClient.DownloadFile(stahovaneVideo.Album.Cover, Path.Combine(slozka, cover));
                 }
             }
 
@@ -1914,6 +1914,7 @@ namespace youtube2music
         // spustí nebo zastaví přidávání videí
         private void menuPridatVideoNeboPlaylist_Click(object sender, EventArgs e)
         {
+            album = false;
             if (menuPridatVideoNeboPlaylist.Text == "ZASTAVIT PŘIDÁVÁNÍ")
             {
                 // zastaví přidávání videí
@@ -2126,6 +2127,12 @@ namespace youtube2music
             // skryje se ProgressBar
             progressBarStatus.Visible = false;
             // změní text v menu ("přidání videa/playlistu")
+            if (album)
+            {
+                FormAlbum uprava = new FormAlbum(youtubeID, videaVsechna, hudebniKnihovnaOpus);
+                //uprava.ShowDialog();
+                uprava.Show();
+            }
             textBoxOdkaz.Text = "VLOŽTE ODKAZ NA VIDEO NEBO PLAYLIST Z YOUTUBE";
             textBoxOdkaz.ReadOnly = false;
         }
@@ -2423,6 +2430,7 @@ namespace youtube2music
 
         private void MenuPridatAlbum_Click(object sender, EventArgs e)
         {
+            album = false;
             if (menuPridatAlbum.Text == "ZASTAVIT PŘIDÁVÁNÍ")
             {
                 // zastaví přidávání videí
@@ -2441,15 +2449,13 @@ namespace youtube2music
                     {
                         if (objectListViewSeznamVidei.Items.Count < 1 || DialogResult.Yes == MessageBox.Show("Odstraní všechna aktuální videa", "Odstranění", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
                         {
+                            album = true;
                             objectListViewSeznamVidei.ClearObjects();
                             videaVsechna.Clear();
                             menuPridatAlbum.Text = "ZASTAVIT PŘIDÁVÁNÍ";
                             textBoxOdkaz.ReadOnly = true;
                             menuPridatVideoNeboPlaylist.Enabled = false;
                             backgroundWorkerPridejVidea.RunWorkerAsync(true);
-                            FormAlbum uprava = new FormAlbum(youtubeID, videaVsechna);
-                            //uprava.ShowDialog();
-                            uprava.Show();
                         }
                     }
                 }
