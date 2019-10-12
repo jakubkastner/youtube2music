@@ -40,7 +40,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.buttonPridatAlbum = new System.Windows.Forms.Button();
             this.buttonVyhledatDeezer = new System.Windows.Forms.Button();
-            this.pictureBoxCover = new System.Windows.Forms.PictureBox();
+            this.pictureBoxCoverPredni = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.backgroundWorkerVyhledatDeezer = new System.ComponentModel.BackgroundWorker();
             this.treeListViewAlbaDeezer = new BrightIdeasSoftware.TreeListView();
@@ -62,21 +62,23 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.buttonSlozkaZmenit = new System.Windows.Forms.Button();
             this.buttonSlozkaOtevit = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.buttonCoverZadniZmenit = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.pictureBoxCoverZadni = new System.Windows.Forms.PictureBox();
+            this.buttonCoverPredniZmenit = new System.Windows.Forms.Button();
+            this.buttonCoverPredniSmazat = new System.Windows.Forms.Button();
+            this.buttonCoverZadniSmazat = new System.Windows.Forms.Button();
+            this.toolTipInformace = new System.Windows.Forms.ToolTip(this.components);
+            this.checkBoxCoverPredniDeezer = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRok)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverPredni)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeListViewAlbaDeezer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeListViewAlbaYoutube)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverZadni)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxInterpret
@@ -187,25 +189,27 @@
             this.buttonVyhledatDeezer.UseVisualStyleBackColor = true;
             this.buttonVyhledatDeezer.Click += new System.EventHandler(this.ButtonVyhledatDeezer_Click);
             // 
-            // pictureBoxCover
+            // pictureBoxCoverPredni
             // 
-            this.pictureBoxCover.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxCover.Location = new System.Drawing.Point(675, 8);
-            this.pictureBoxCover.Name = "pictureBoxCover";
-            this.pictureBoxCover.Size = new System.Drawing.Size(180, 180);
-            this.pictureBoxCover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxCover.TabIndex = 8;
-            this.pictureBoxCover.TabStop = false;
+            this.pictureBoxCoverPredni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxCoverPredni.Location = new System.Drawing.Point(675, 8);
+            this.pictureBoxCoverPredni.Name = "pictureBoxCoverPredni";
+            this.pictureBoxCoverPredni.Size = new System.Drawing.Size(180, 180);
+            this.pictureBoxCoverPredni.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxCoverPredni.TabIndex = 8;
+            this.pictureBoxCoverPredni.TabStop = false;
+            this.pictureBoxCoverPredni.LocationChanged += new System.EventHandler(this.pictureBoxCoverPredni_LocationChanged);
+            this.pictureBoxCoverPredni.Click += new System.EventHandler(this.PictureBoxCover_Click);
             // 
             // label5
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(608, 8);
+            this.label5.Location = new System.Drawing.Point(599, 9);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(61, 13);
+            this.label5.Size = new System.Drawing.Size(70, 13);
             this.label5.TabIndex = 3;
-            this.label5.Text = "Front cover";
+            this.label5.Text = "Přední cover";
             // 
             // backgroundWorkerVyhledatDeezer
             // 
@@ -333,7 +337,6 @@
             this.treeListViewAlbaYoutube.UseFiltering = true;
             this.treeListViewAlbaYoutube.View = System.Windows.Forms.View.Details;
             this.treeListViewAlbaYoutube.VirtualMode = true;
-            this.treeListViewAlbaYoutube.SelectedIndexChanged += new System.EventHandler(this.treeListViewAlbaYoutube_SelectedIndexChanged);
             // 
             // olvColumn5
             // 
@@ -409,84 +412,99 @@
             this.buttonSlozkaOtevit.UseVisualStyleBackColor = true;
             this.buttonSlozkaOtevit.Click += new System.EventHandler(this.buttonSlozkaOtevit_Click);
             // 
-            // button3
+            // buttonCoverZadniZmenit
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(929, 192);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(130, 23);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "Změnit back cover";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.buttonCoverZadniZmenit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCoverZadniZmenit.Location = new System.Drawing.Point(929, 192);
+            this.buttonCoverZadniZmenit.Name = "buttonCoverZadniZmenit";
+            this.buttonCoverZadniZmenit.Size = new System.Drawing.Size(130, 23);
+            this.buttonCoverZadniZmenit.TabIndex = 7;
+            this.buttonCoverZadniZmenit.Text = "Změnit zadní cover";
+            this.buttonCoverZadniZmenit.UseVisualStyleBackColor = true;
+            this.buttonCoverZadniZmenit.Click += new System.EventHandler(this.ButtonCoverZadniZmenit_Click);
             // 
             // label8
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(861, 8);
+            this.label8.Location = new System.Drawing.Point(857, 9);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(62, 13);
+            this.label8.Size = new System.Drawing.Size(66, 13);
             this.label8.TabIndex = 3;
-            this.label8.Text = "Back cover";
+            this.label8.Text = "Zadní cover";
             // 
-            // pictureBox1
+            // pictureBoxCoverZadni
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Location = new System.Drawing.Point(929, 8);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(180, 180);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 8;
-            this.pictureBox1.TabStop = false;
+            this.pictureBoxCoverZadni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxCoverZadni.Location = new System.Drawing.Point(929, 8);
+            this.pictureBoxCoverZadni.Name = "pictureBoxCoverZadni";
+            this.pictureBoxCoverZadni.Size = new System.Drawing.Size(180, 180);
+            this.pictureBoxCoverZadni.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxCoverZadni.TabIndex = 8;
+            this.pictureBoxCoverZadni.TabStop = false;
+            this.pictureBoxCoverZadni.LocationChanged += new System.EventHandler(this.pictureBoxCoverZadni_LocationChanged);
+            this.pictureBoxCoverZadni.Click += new System.EventHandler(this.PictureBoxCover_Click);
             // 
-            // button4
+            // buttonCoverPredniZmenit
             // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(675, 192);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(130, 23);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "Změnit front cover";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.buttonCoverPredniZmenit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCoverPredniZmenit.Location = new System.Drawing.Point(675, 192);
+            this.buttonCoverPredniZmenit.Name = "buttonCoverPredniZmenit";
+            this.buttonCoverPredniZmenit.Size = new System.Drawing.Size(130, 23);
+            this.buttonCoverPredniZmenit.TabIndex = 7;
+            this.buttonCoverPredniZmenit.Text = "Změnit přední cover";
+            this.buttonCoverPredniZmenit.UseVisualStyleBackColor = true;
+            this.buttonCoverPredniZmenit.Click += new System.EventHandler(this.ButtonCoverPredniZmenit_Click);
             // 
-            // button5
+            // buttonCoverPredniSmazat
             // 
-            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Location = new System.Drawing.Point(811, 192);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(44, 23);
-            this.button5.TabIndex = 7;
-            this.button5.Text = "X";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.buttonCoverPredniSmazat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCoverPredniSmazat.Location = new System.Drawing.Point(811, 192);
+            this.buttonCoverPredniSmazat.Name = "buttonCoverPredniSmazat";
+            this.buttonCoverPredniSmazat.Size = new System.Drawing.Size(44, 23);
+            this.buttonCoverPredniSmazat.TabIndex = 7;
+            this.buttonCoverPredniSmazat.Text = "X";
+            this.buttonCoverPredniSmazat.UseVisualStyleBackColor = true;
+            this.buttonCoverPredniSmazat.Click += new System.EventHandler(this.ButtonCoverPredniSmazat_Click);
             // 
-            // button6
+            // buttonCoverZadniSmazat
             // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.Location = new System.Drawing.Point(1065, 192);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(44, 23);
-            this.button6.TabIndex = 7;
-            this.button6.Text = "X";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.buttonCoverZadniSmazat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCoverZadniSmazat.Location = new System.Drawing.Point(1065, 192);
+            this.buttonCoverZadniSmazat.Name = "buttonCoverZadniSmazat";
+            this.buttonCoverZadniSmazat.Size = new System.Drawing.Size(44, 23);
+            this.buttonCoverZadniSmazat.TabIndex = 7;
+            this.buttonCoverZadniSmazat.Text = "X";
+            this.buttonCoverZadniSmazat.UseVisualStyleBackColor = true;
+            this.buttonCoverZadniSmazat.Click += new System.EventHandler(this.ButtonCoverZadniSmazat_Click);
+            // 
+            // checkBoxCoverPredniDeezer
+            // 
+            this.checkBoxCoverPredniDeezer.AutoSize = true;
+            this.checkBoxCoverPredniDeezer.Checked = true;
+            this.checkBoxCoverPredniDeezer.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxCoverPredniDeezer.Location = new System.Drawing.Point(484, 196);
+            this.checkBoxCoverPredniDeezer.Name = "checkBoxCoverPredniDeezer";
+            this.checkBoxCoverPredniDeezer.Size = new System.Drawing.Size(185, 17);
+            this.checkBoxCoverPredniDeezer.TabIndex = 13;
+            this.checkBoxCoverPredniDeezer.Text = "Získávat přední cover z Deezeru";
+            this.checkBoxCoverPredniDeezer.UseVisualStyleBackColor = true;
             // 
             // FormAlbum
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1111, 751);
+            this.Controls.Add(this.checkBoxCoverPredniDeezer);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.textBoxSlozka);
             this.Controls.Add(this.linkLabelOdkaz);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.pictureBoxCover);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.pictureBoxCoverZadni);
+            this.Controls.Add(this.pictureBoxCoverPredni);
+            this.Controls.Add(this.buttonCoverZadniSmazat);
+            this.Controls.Add(this.buttonCoverPredniSmazat);
+            this.Controls.Add(this.buttonCoverPredniZmenit);
+            this.Controls.Add(this.buttonCoverZadniZmenit);
             this.Controls.Add(this.buttonSlozkaOtevit);
             this.Controls.Add(this.buttonSlozkaZmenit);
             this.Controls.Add(this.buttonVyhledatDeezer);
@@ -509,14 +527,14 @@
             this.Text = "FormAlbum";
             this.Load += new System.EventHandler(this.FormAlbum_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRok)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverPredni)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeListViewAlbaDeezer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeListViewAlbaYoutube)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverZadni)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -534,7 +552,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button buttonPridatAlbum;
         private System.Windows.Forms.Button buttonVyhledatDeezer;
-        private System.Windows.Forms.PictureBox pictureBoxCover;
+        private System.Windows.Forms.PictureBox pictureBoxCoverPredni;
         private System.Windows.Forms.Label label5;
         private System.ComponentModel.BackgroundWorker backgroundWorkerVyhledatDeezer;
         private BrightIdeasSoftware.TreeListView treeListViewAlbaDeezer;
@@ -556,11 +574,13 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button buttonSlozkaZmenit;
         private System.Windows.Forms.Button buttonSlozkaOtevit;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button buttonCoverZadniZmenit;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.PictureBox pictureBoxCoverZadni;
+        private System.Windows.Forms.Button buttonCoverPredniZmenit;
+        private System.Windows.Forms.Button buttonCoverPredniSmazat;
+        private System.Windows.Forms.Button buttonCoverZadniSmazat;
+        private System.Windows.Forms.ToolTip toolTipInformace;
+        private System.Windows.Forms.CheckBox checkBoxCoverPredniDeezer;
     }
 }

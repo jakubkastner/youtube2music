@@ -89,6 +89,8 @@
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.opusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mp3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorkerProhledejSlozky = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorkerPridejVidea = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorkerStahniProgram = new System.ComponentModel.BackgroundWorker();
@@ -107,8 +109,7 @@
             this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn13 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.pŘIDATALBUMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.opusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mp3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.albumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripStatus.SuspendLayout();
             this.menuStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewSeznamVidei)).BeginInit();
@@ -564,7 +565,8 @@
             this.toolStripMenuItem6,
             this.toolStripMenuItem7,
             this.toolStripMenuItem8,
-            this.testToolStripMenuItem});
+            this.testToolStripMenuItem,
+            this.albumToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(38, 23);
             this.toolStripMenuItem1.Text = "test";
@@ -572,51 +574,65 @@
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem3.Text = "1";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem4.Text = "2";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem5.Text = "3";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem6.Text = "4";
             this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem7.Text = "5";
             this.toolStripMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(93, 22);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem8.Text = "6";
             this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
             // 
             // testToolStripMenuItem
             // 
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.testToolStripMenuItem.Text = "test";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
+            // 
+            // opusToolStripMenuItem
+            // 
+            this.opusToolStripMenuItem.Name = "opusToolStripMenuItem";
+            this.opusToolStripMenuItem.Size = new System.Drawing.Size(45, 23);
+            this.opusToolStripMenuItem.Text = "opus";
+            this.opusToolStripMenuItem.Click += new System.EventHandler(this.OpusToolStripMenuItem_Click);
+            // 
+            // mp3ToolStripMenuItem
+            // 
+            this.mp3ToolStripMenuItem.Name = "mp3ToolStripMenuItem";
+            this.mp3ToolStripMenuItem.Size = new System.Drawing.Size(43, 23);
+            this.mp3ToolStripMenuItem.Text = "mp3";
+            this.mp3ToolStripMenuItem.Click += new System.EventHandler(this.Mp3ToolStripMenuItem_Click);
             // 
             // backgroundWorkerProhledejSlozky
             // 
@@ -769,19 +785,12 @@
             this.pŘIDATALBUMToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             this.pŘIDATALBUMToolStripMenuItem.Text = "PŘIDAT ALBUM";
             // 
-            // opusToolStripMenuItem
+            // albumToolStripMenuItem
             // 
-            this.opusToolStripMenuItem.Name = "opusToolStripMenuItem";
-            this.opusToolStripMenuItem.Size = new System.Drawing.Size(45, 23);
-            this.opusToolStripMenuItem.Text = "opus";
-            this.opusToolStripMenuItem.Click += new System.EventHandler(this.OpusToolStripMenuItem_Click);
-            // 
-            // mp3ToolStripMenuItem
-            // 
-            this.mp3ToolStripMenuItem.Name = "mp3ToolStripMenuItem";
-            this.mp3ToolStripMenuItem.Size = new System.Drawing.Size(43, 23);
-            this.mp3ToolStripMenuItem.Text = "mp3";
-            this.mp3ToolStripMenuItem.Click += new System.EventHandler(this.Mp3ToolStripMenuItem_Click);
+            this.albumToolStripMenuItem.Name = "albumToolStripMenuItem";
+            this.albumToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.albumToolStripMenuItem.Text = "album";
+            this.albumToolStripMenuItem.Click += new System.EventHandler(this.albumToolStripMenuItem_Click);
             // 
             // FormSeznam
             // 
@@ -893,6 +902,7 @@
         private BrightIdeasSoftware.OLVColumn olvColumn13;
         private System.Windows.Forms.ToolStripMenuItem opusToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mp3ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem albumToolStripMenuItem;
     }
 }
 

@@ -2132,6 +2132,7 @@ namespace youtube2music
                 FormAlbum uprava = new FormAlbum(youtubeID, videaVsechna, hudebniKnihovnaOpus);
                 uprava.ShowDialog();
                 objectListViewSeznamVidei.UpdateObjects(videaVsechna);
+                objectListViewSeznamVidei.CheckAll();
                 //uprava.Show();
             }
             textBoxOdkaz.Text = "VLOŽTE ODKAZ NA VIDEO NEBO PLAYLIST Z YOUTUBE";
@@ -2498,6 +2499,11 @@ namespace youtube2music
                 spust.StartInfo.CreateNoWindow = false;
                 spust.Start();
             }
+        }
+
+        private void albumToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBoxOdkaz.Text = "https://music.youtube.com/playlist?list=OLAK5uy_nefv5WJefq7o6l9fMnjYmvHN-1HRWqKPQ"; //ALBUM KILLY
         }
     }
 }
