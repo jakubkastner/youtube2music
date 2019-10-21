@@ -452,9 +452,9 @@ namespace youtube2music
             var vybrano = treeListViewAlbaDeezer.SelectedObject;
             if (vybrano == null)
             {
-                return;
+                //return;
             }
-            Deezer albumDeezer;
+            Deezer albumDeezer = null;
             if (vybrano is Deezer)
             {
                 albumDeezer = (Deezer)vybrano;
@@ -466,7 +466,7 @@ namespace youtube2music
             }
             else
             {
-                return;
+                //return;
             }
 
             Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
@@ -478,9 +478,12 @@ namespace youtube2music
                 // procházím videa z youtube
                 vid.Album = novyAlbum;
                 vid.PridejInterpreta(novyAlbum.Interpret.Jmeno);
-                foreach (var interpretDeezer in albumDeezer.Skladby[vid.Stopa - 1].Interpreti)
+                if (albumDeezer != null)
                 {
-                    vid.PridejInterpreta(interpretDeezer);
+                    foreach (var interpretDeezer in albumDeezer.Skladby[vid.Stopa - 1].Interpreti)
+                    {
+                        vid.PridejInterpreta(interpretDeezer);
+                    }
                 }
                 vid.Chyba = ""; // SMAZAT
                 vid.Stav = "YouTube Album";

@@ -33,9 +33,10 @@
             this.backgroundWorkerNactiProgram = new System.ComponentModel.BackgroundWorker();
             this.statusStripStatus = new System.Windows.Forms.StatusStrip();
             this.progressBarStatus = new System.Windows.Forms.ToolStripProgressBar();
-            this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.labelOperace = new System.Windows.Forms.ToolStripStatusLabel();
+            this.labelStav = new System.Windows.Forms.ToolStripStatusLabel();
             this.textBoxOdkaz = new System.Windows.Forms.ToolStripTextBox();
-            this.menuPridatVideoNeboPlaylist = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPridatVideo = new System.Windows.Forms.ToolStripMenuItem();
             this.menuVybrat = new System.Windows.Forms.ToolStripMenuItem();
             this.menuVybratVse = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -79,6 +80,7 @@
             this.menuNastaveniFFmpegStahnout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStahnout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMenu = new System.Windows.Forms.MenuStrip();
+            this.menuPridatPlaylist = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPridatAlbum = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOdstranit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,6 +91,7 @@
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.albumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.opusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mp3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorkerProhledejSlozky = new System.ComponentModel.BackgroundWorker();
@@ -109,7 +112,6 @@
             this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn13 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.pŘIDATALBUMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.albumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripStatus.SuspendLayout();
             this.menuStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewSeznamVidei)).BeginInit();
@@ -134,7 +136,8 @@
             // 
             this.statusStripStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.progressBarStatus,
-            this.labelStatus});
+            this.labelOperace,
+            this.labelStav});
             this.statusStripStatus.Location = new System.Drawing.Point(0, 665);
             this.statusStripStatus.Name = "statusStripStatus";
             this.statusStripStatus.ShowItemToolTips = true;
@@ -152,19 +155,27 @@
             this.progressBarStatus.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBarStatus.Visible = false;
             // 
-            // labelStatus
+            // labelOperace
             // 
-            this.labelStatus.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(263, 20);
-            this.labelStatus.Text = "Připraven                                                ";
-            this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelOperace.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.labelOperace.Name = "labelOperace";
+            this.labelOperace.Size = new System.Drawing.Size(182, 20);
+            this.labelOperace.Text = "Neprobíhá žádná operace";
+            this.labelOperace.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelStav
+            // 
+            this.labelStav.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.labelStav.Name = "labelStav";
+            this.labelStav.Size = new System.Drawing.Size(263, 20);
+            this.labelStav.Text = "Připraven                                                ";
+            this.labelStav.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBoxOdkaz
             // 
             this.textBoxOdkaz.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxOdkaz.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.textBoxOdkaz.MaxLength = 1000;
+            this.textBoxOdkaz.MaxLength = 2000;
             this.textBoxOdkaz.Name = "textBoxOdkaz";
             this.textBoxOdkaz.Size = new System.Drawing.Size(400, 23);
             this.textBoxOdkaz.Text = "VLOŽTE ODKAZ NA VIDEO NEBO PLAYLIST Z YOUTUBE";
@@ -172,14 +183,14 @@
             this.textBoxOdkaz.Click += new System.EventHandler(this.textBoxOdkaz_Click);
             this.textBoxOdkaz.TextChanged += new System.EventHandler(this.textBoxOdkaz_TextChanged);
             // 
-            // menuPridatVideoNeboPlaylist
+            // menuPridatVideo
             // 
-            this.menuPridatVideoNeboPlaylist.Enabled = false;
-            this.menuPridatVideoNeboPlaylist.Name = "menuPridatVideoNeboPlaylist";
-            this.menuPridatVideoNeboPlaylist.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.menuPridatVideoNeboPlaylist.Size = new System.Drawing.Size(178, 23);
-            this.menuPridatVideoNeboPlaylist.Text = "PŘIDAT VIDEO NEBO PLAYLIST";
-            this.menuPridatVideoNeboPlaylist.Click += new System.EventHandler(this.menuPridatVideoNeboPlaylist_Click);
+            this.menuPridatVideo.Enabled = false;
+            this.menuPridatVideo.Name = "menuPridatVideo";
+            this.menuPridatVideo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.menuPridatVideo.Size = new System.Drawing.Size(93, 23);
+            this.menuPridatVideo.Text = "PŘIDAT VIDEO";
+            this.menuPridatVideo.Click += new System.EventHandler(this.menuPridatVideo_Click);
             // 
             // menuVybrat
             // 
@@ -516,13 +527,11 @@
             // 
             // menuStripMenu
             // 
-            this.menuStripMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.menuStripMenu.AutoSize = false;
-            this.menuStripMenu.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.textBoxOdkaz,
-            this.menuPridatVideoNeboPlaylist,
+            this.menuPridatVideo,
+            this.menuPridatPlaylist,
             this.menuPridatAlbum,
             this.menuVybrat,
             this.menuUpravit,
@@ -535,9 +544,17 @@
             this.menuStripMenu.Location = new System.Drawing.Point(0, 0);
             this.menuStripMenu.MinimumSize = new System.Drawing.Size(1432, 27);
             this.menuStripMenu.Name = "menuStripMenu";
-            this.menuStripMenu.Size = new System.Drawing.Size(1432, 27);
+            this.menuStripMenu.Size = new System.Drawing.Size(1434, 27);
             this.menuStripMenu.TabIndex = 2;
             this.menuStripMenu.Text = "Menu";
+            // 
+            // menuPridatPlaylist
+            // 
+            this.menuPridatPlaylist.Enabled = false;
+            this.menuPridatPlaylist.Name = "menuPridatPlaylist";
+            this.menuPridatPlaylist.Size = new System.Drawing.Size(108, 23);
+            this.menuPridatPlaylist.Text = "PŘIDAT PLAYLIST";
+            this.menuPridatPlaylist.Click += new System.EventHandler(this.menuPridatPlaylist_Click);
             // 
             // menuPridatAlbum
             // 
@@ -545,7 +562,7 @@
             this.menuPridatAlbum.Name = "menuPridatAlbum";
             this.menuPridatAlbum.Size = new System.Drawing.Size(100, 23);
             this.menuPridatAlbum.Text = "PŘIDAT ALBUM";
-            this.menuPridatAlbum.Click += new System.EventHandler(this.MenuPridatAlbum_Click);
+            this.menuPridatAlbum.Click += new System.EventHandler(this.menuPridatAlbum_Click);
             // 
             // menuOdstranit
             // 
@@ -574,51 +591,58 @@
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem3.Text = "1";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem4.Text = "2";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem5.Text = "3";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem6.Text = "4";
             this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem7.Text = "5";
             this.toolStripMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem8.Text = "6";
             this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
             // 
             // testToolStripMenuItem
             // 
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.testToolStripMenuItem.Text = "test";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
+            // 
+            // albumToolStripMenuItem
+            // 
+            this.albumToolStripMenuItem.Name = "albumToolStripMenuItem";
+            this.albumToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.albumToolStripMenuItem.Text = "album";
+            this.albumToolStripMenuItem.Click += new System.EventHandler(this.albumToolStripMenuItem_Click);
             // 
             // opusToolStripMenuItem
             // 
@@ -671,9 +695,6 @@
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn12);
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn2);
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn13);
-            this.objectListViewSeznamVidei.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.objectListViewSeznamVidei.CellEditUseWholeCell = false;
             this.objectListViewSeznamVidei.CheckBoxes = true;
             this.objectListViewSeznamVidei.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -691,12 +712,13 @@
             this.olvColumn2,
             this.olvColumn13});
             this.objectListViewSeznamVidei.Cursor = System.Windows.Forms.Cursors.Default;
+            this.objectListViewSeznamVidei.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectListViewSeznamVidei.FullRowSelect = true;
             this.objectListViewSeznamVidei.GridLines = true;
             this.objectListViewSeznamVidei.HideSelection = false;
-            this.objectListViewSeznamVidei.Location = new System.Drawing.Point(0, 30);
+            this.objectListViewSeznamVidei.Location = new System.Drawing.Point(0, 27);
             this.objectListViewSeznamVidei.Name = "objectListViewSeznamVidei";
-            this.objectListViewSeznamVidei.Size = new System.Drawing.Size(1434, 632);
+            this.objectListViewSeznamVidei.Size = new System.Drawing.Size(1434, 638);
             this.objectListViewSeznamVidei.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.objectListViewSeznamVidei.TabIndex = 0;
             this.objectListViewSeznamVidei.UseCompatibleStateImageBehavior = false;
@@ -785,13 +807,6 @@
             this.pŘIDATALBUMToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             this.pŘIDATALBUMToolStripMenuItem.Text = "PŘIDAT ALBUM";
             // 
-            // albumToolStripMenuItem
-            // 
-            this.albumToolStripMenuItem.Name = "albumToolStripMenuItem";
-            this.albumToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.albumToolStripMenuItem.Text = "album";
-            this.albumToolStripMenuItem.Click += new System.EventHandler(this.albumToolStripMenuItem_Click);
-            // 
             // FormSeznam
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -826,9 +841,9 @@
         private System.ComponentModel.BackgroundWorker backgroundWorkerNactiProgram;
         private System.Windows.Forms.StatusStrip statusStripStatus;
         private System.Windows.Forms.ToolStripProgressBar progressBarStatus;
-        private System.Windows.Forms.ToolStripStatusLabel labelStatus;
+        private System.Windows.Forms.ToolStripStatusLabel labelOperace;
         private System.Windows.Forms.ToolStripTextBox textBoxOdkaz;
-        private System.Windows.Forms.ToolStripMenuItem menuPridatVideoNeboPlaylist;
+        private System.Windows.Forms.ToolStripMenuItem menuPridatVideo;
         private System.Windows.Forms.ToolStripMenuItem menuVybrat;
         private System.Windows.Forms.ToolStripMenuItem menuVybratVse;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
@@ -903,6 +918,8 @@
         private System.Windows.Forms.ToolStripMenuItem opusToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mp3ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem albumToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuPridatPlaylist;
+        private System.Windows.Forms.ToolStripStatusLabel labelStav;
     }
 }
 

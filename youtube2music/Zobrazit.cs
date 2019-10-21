@@ -11,6 +11,10 @@ namespace youtube2music
         /**
         ZOBRAZIT CHYBU
         **/
+        private static DialogResult Chybu(string nadpis, string text, MessageBoxButtons tlacitka, MessageBoxIcon ikona)
+        {
+            return MessageBox.Show(text, nadpis, tlacitka, ikona);
+        }
 
         /// <summary>
         /// Zobrazí MessageBox s chybou.
@@ -20,7 +24,7 @@ namespace youtube2music
         public static void Chybu(string nadpis, string text)
         {
             nadpis = "Chyba: " + nadpis.ToLower();
-            MessageBox.Show(text, nadpis, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            Chybu(nadpis, text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         /// <summary>
         /// Zobrazí MessageBox s chybou.
@@ -42,7 +46,14 @@ namespace youtube2music
         public static void Chybu(string nadpis, string text1, string text2, string text3)
         {
             Chybu(nadpis, text1 + Environment.NewLine + text2 + Environment.NewLine + text3);
+            //DialogResult odpoved = MessageBox.Show(MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
         }
+
+        public static DialogResult Otazku(string nadpis, string text1, string text2, string text3, MessageBoxButtons tlacitka)
+        {
+            return Chybu(nadpis, text1 + Environment.NewLine + text2 + Environment.NewLine + text3, tlacitka, MessageBoxIcon.Question);
+        }
+
 
         /**
         ZOBRAZIT UPOZORNĚNÍ
@@ -55,7 +66,7 @@ namespace youtube2music
         /// <param name="text">Text upozornění.</param>
         public static void Upozorneni(string nadpis, string text)
         {
-            MessageBox.Show(text, nadpis, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            Chybu(nadpis, text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         /// <summary>
         /// Zobrazí MessageBox s upozorněním.

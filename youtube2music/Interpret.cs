@@ -348,6 +348,7 @@ namespace youtube2music
             PrejmenujInterpreta("Saint Jhn", "SAINt JHN");
             PrejmenujInterpreta("Blueraykoranthug", "BlueRayKoranThug");
             PrejmenujInterpreta("A Boogie With Da Hoodie", "A Boogie with da Hoodie");
+            PrejmenujInterpreta("Dababy", "DaBaby");
         }
 
         private void PrejmenujInterpreta(string puvodni, string novy)
