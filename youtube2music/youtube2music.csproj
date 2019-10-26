@@ -145,7 +145,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Soubory.cs" />
+    <Compile Include="Soubor.cs" />
     <Compile Include="YouTubeApi.cs" />
     <EmbeddedResource Include="FormAlbum.resx">
       <DependentUpon>FormAlbum.cs</DependentUpon>

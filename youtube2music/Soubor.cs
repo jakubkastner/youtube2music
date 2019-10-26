@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace youtube2music
@@ -6,14 +7,14 @@ namespace youtube2music
     /// <summary>
     /// Soubor k přečtení nebo zápisu.
     /// </summary>
-    class Soubor
+    public class Soubor
     {
         /// <summary>
         /// Získá obsah (přečte a uloží) po řádcích zadaného souboru.
         /// </summary>
         /// <param name="cesta">Cesta souboru k získání obsahu.</param>
         /// <returns>Obsah souboru po jednotlivých řádcích.</returns>
-        public List<string> Precti(string cesta)
+        public static List<string> Precti(string cesta)
         {
             if (!File.Exists(cesta))
             {
@@ -39,7 +40,7 @@ namespace youtube2music
         /// </summary>
         /// <param name="cesta">Cesta souboru k uložení.</param>
         /// <param name="radkyKZapisu">Seznam řádků k zápisu do souboru.</param>
-        public void Zapis(string cesta, List<string> radkyKZapisu)
+        public static void Zapis(string cesta, List<string> radkyKZapisu)
         {
             using (FileStream str = new FileStream(cesta, FileMode.Create, FileAccess.Write))
             {
@@ -52,6 +53,36 @@ namespace youtube2music
                     }
                 }
             }            
+        }
+
+        // OK 2019
+        /// <summary>
+        /// Přesune vybraný soubor.
+        /// </summary>
+        /// <param name="soubor">cesta souboru k přesunutí</param>
+        /// <param name="cilovaSlozka">cílová složka, kam se má soubor přesunout</param>
+        /// <param name="novyNazev">nový název přesunutého souboru (pokud není vyplněno, použije se původní název)</param>
+        /// <returns>
+        ///     true = přesunutí proběhlo v pořádku
+        ///     false = přesunutí se nezdařilo
+        /// </returns>
+        public static bool Presun(string soubor, string cilovaSlozka, string novyNazev = "")
+        {
+            // přesun souboru
+            if (File.Exists(soubor))
+            {
+                try
+                {
+                    if (String.IsNullOrEmpty(novyNazev)) novyNazev = Path.GetFileName(soubor);
+                    File.Copy(soubor, Path.Combine(cilovaSlozka, novyNazev), true);
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
         }
     }
 }

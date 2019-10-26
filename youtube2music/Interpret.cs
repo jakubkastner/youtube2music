@@ -65,9 +65,8 @@ namespace youtube2music
             string slozkaProgramuData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             slozkaProgramuData = Path.Combine(slozkaProgramuData, "youtube-renamer", "data");
 
-            Soubor soubor = new Soubor();
             // složky hudební knihovny načtené ze souboru "knihovna_slozky.txt"
-            List<string> slozkyKnihovna = soubor.Precti(Path.Combine(slozkaProgramuData, "knihovna_slozky.txt"));
+            List<string> slozkyKnihovna = Soubor.Precti(Path.Combine(slozkaProgramuData, "knihovna_slozky.txt"));
 
             // nenalezeny žádné složky knihovny
             if (slozkyKnihovna == null)

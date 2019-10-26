@@ -415,7 +415,7 @@
             this.menuNastaveniYoutubeDLCestaNaposledyVymazat});
             this.menuNastaveniYoutubeDL.Name = "menuNastaveniYoutubeDL";
             this.menuNastaveniYoutubeDL.Size = new System.Drawing.Size(255, 22);
-            this.menuNastaveniYoutubeDL.Text = "Cesta YoutubeDL";
+            this.menuNastaveniYoutubeDL.Text = "Cesta YouTube-DL";
             // 
             // menuNastaveniYoutubeDLCestaVybrana
             // 
@@ -455,7 +455,7 @@
             // 
             this.menuNastaveniYoutubeDLStahnout.Name = "menuNastaveniYoutubeDLStahnout";
             this.menuNastaveniYoutubeDLStahnout.Size = new System.Drawing.Size(255, 22);
-            this.menuNastaveniYoutubeDLStahnout.Text = "Stáhnout YoutubeDL";
+            this.menuNastaveniYoutubeDLStahnout.Text = "Stáhnout YouTube-DL";
             this.menuNastaveniYoutubeDLStahnout.Click += new System.EventHandler(this.menuNastaveniYoutubeDLStahnout_Click);
             // 
             // toolStripSeparator6
@@ -821,7 +821,7 @@
             this.MinimumSize = new System.Drawing.Size(1125, 300);
             this.Name = "FormSeznam";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "youtube2music";
+            this.Text = "YouTube Renamer";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSeznam_FormClosing);
             this.Load += new System.EventHandler(this.FormSeznam_Load);

@@ -49,6 +49,14 @@ namespace youtube2music
             //DialogResult odpoved = MessageBox.Show(MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
         }
 
+        public static DialogResult Otazku(string nadpis, string text1, MessageBoxButtons tlacitka)
+        {
+            return Chybu(nadpis, text1, tlacitka, MessageBoxIcon.Question);
+        }
+        public static DialogResult Otazku(string nadpis, string text1, string text2, MessageBoxButtons tlacitka)
+        {
+            return Chybu(nadpis, text1 + Environment.NewLine + text2, tlacitka, MessageBoxIcon.Question);
+        }
         public static DialogResult Otazku(string nadpis, string text1, string text2, string text3, MessageBoxButtons tlacitka)
         {
             return Chybu(nadpis, text1 + Environment.NewLine + text2 + Environment.NewLine + text3, tlacitka, MessageBoxIcon.Question);
