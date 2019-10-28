@@ -678,5 +678,22 @@ namespace youtube2music
                 ZmenaNazvu();
             }
         }
+
+        private void buttonProhodit_Click(object sender, EventArgs e)
+        {
+            string skladba = textBoxSkladba.Text;
+            textBoxSkladba.Text = textBoxInterpret.Text;
+            textBoxInterpret.Text = skladba;
+            string stav = upravovaneVideo.Stav;
+            // uloží aktuální úpravu
+            checkBoxUlozit.Checked = true;
+            Ulozit();
+            upravovaneVideo.Chyba = "";
+            // najde automaticky složku a upraví některé informace
+            upravovaneVideo.NajdiSlozku();
+            upravovaneVideo.Stav = stav;
+            // načte změny
+            Nacist(true);
+        }
     }
 }
