@@ -70,6 +70,7 @@
             this.buttonCoverZadniSmazat = new System.Windows.Forms.Button();
             this.toolTipInformace = new System.Windows.Forms.ToolTip(this.components);
             this.checkBoxCoverPredniDeezer = new System.Windows.Forms.CheckBox();
+            this.buttonSlozkaNajit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRok)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverPredni)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeListViewAlbaDeezer)).BeginInit();
@@ -394,7 +395,7 @@
             // 
             // buttonSlozkaZmenit
             // 
-            this.buttonSlozkaZmenit.Location = new System.Drawing.Point(206, 192);
+            this.buttonSlozkaZmenit.Location = new System.Drawing.Point(348, 192);
             this.buttonSlozkaZmenit.Name = "buttonSlozkaZmenit";
             this.buttonSlozkaZmenit.Size = new System.Drawing.Size(130, 23);
             this.buttonSlozkaZmenit.TabIndex = 7;
@@ -404,7 +405,7 @@
             // 
             // buttonSlozkaOtevit
             // 
-            this.buttonSlozkaOtevit.Location = new System.Drawing.Point(70, 192);
+            this.buttonSlozkaOtevit.Location = new System.Drawing.Point(212, 192);
             this.buttonSlozkaOtevit.Name = "buttonSlozkaOtevit";
             this.buttonSlozkaOtevit.Size = new System.Drawing.Size(130, 23);
             this.buttonSlozkaOtevit.TabIndex = 7;
@@ -490,11 +491,22 @@
             this.checkBoxCoverPredniDeezer.Text = "Získávat přední cover z Deezeru";
             this.checkBoxCoverPredniDeezer.UseVisualStyleBackColor = true;
             // 
+            // buttonSlozkaNajit
+            // 
+            this.buttonSlozkaNajit.Location = new System.Drawing.Point(70, 192);
+            this.buttonSlozkaNajit.Name = "buttonSlozkaNajit";
+            this.buttonSlozkaNajit.Size = new System.Drawing.Size(136, 23);
+            this.buttonSlozkaNajit.TabIndex = 14;
+            this.buttonSlozkaNajit.Text = "Najít složku automaticky";
+            this.buttonSlozkaNajit.UseVisualStyleBackColor = true;
+            this.buttonSlozkaNajit.Click += new System.EventHandler(this.buttonSlozkaNajit_Click);
+            // 
             // FormAlbum
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1111, 751);
+            this.Controls.Add(this.buttonSlozkaNajit);
             this.Controls.Add(this.checkBoxCoverPredniDeezer);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.textBoxSlozka);
@@ -582,5 +594,6 @@
         private System.Windows.Forms.Button buttonCoverZadniSmazat;
         private System.Windows.Forms.ToolTip toolTipInformace;
         private System.Windows.Forms.CheckBox checkBoxCoverPredniDeezer;
+        private System.Windows.Forms.Button buttonSlozkaNajit;
     }
 }

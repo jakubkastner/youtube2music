@@ -11,11 +11,53 @@ namespace youtube2music
     {
         private string slozkaAlbumu;
 
+        //private string zanrAlbumu;
+
         public string Nazev { get; set; }
+
+        //public string Zanr { get; set; }
 
         public int Rok { get; set; }
 
         public Interpret Interpret { get; set; }
+
+
+        public string Zanr
+        {
+            get
+            {
+                //string zanr = this.zanrAlbumu;
+                string slozka = this.Slozka.ToLower();
+                string zanr = DateTime.Now.ToString("yyyy.MM");
+                if (slozka.Contains("rap & hip-hop"))
+                {
+                    if (slozka.Contains("cz & sk"))
+                    {
+                        zanr += " Rap";
+                    }
+                    else if (slozka.Contains("ostatní země"))
+                    {
+                        zanr += " Hip-Hop";
+                    }
+                }
+                else if (slozka.Contains("ostatní žánry"))
+                {
+                    if (slozka.Contains("cz & sk"))
+                    {
+                        zanr += " Ostatní CZ";
+                    }
+                    else if (slozka.Contains("ostatní země"))
+                    {
+                        zanr += " Ostatní";
+                    }
+                }
+                return zanr;
+            }
+            /*set
+            {
+                this.zanrAlbumu = value;
+            }*/
+        }
 
         public string Slozka
         {
@@ -55,7 +97,7 @@ namespace youtube2music
         
         public string Cover { get; set; }
 
-        public Album(string nazev, int rok, Interpret inter, string cover)
+        public Album(string nazev, int rok, Interpret inter, string cover = "")
         {
             Nazev = nazev;
             Rok = rok;

@@ -37,6 +37,8 @@ namespace youtube2music
         /// </summary>
         private void FormAlbum_Load(object sender, EventArgs e)
         {
+            numericUpDownRok.Maximum = DateTime.Now.Year;
+            numericUpDownRok.Value = numericUpDownRok.Maximum;
             // zobrazí získaná videa z youtube na seznamu
             treeListViewAlbaYoutube.Invoke(new Action(() =>
             {
@@ -82,6 +84,16 @@ namespace youtube2music
             textBoxInterpret.Text = interpret;
             textBoxAlbum.Text = album;
             DeezerVyhledej(interpret, album);
+            if (treeListViewAlbaDeezer.Items.Count < 1)
+            {
+                // nenalezeno žádné album
+                Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
+                interpretAlba.NajdiSlozky();
+
+                Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba);
+                textBoxSlozka.Text = novyAlbum.Slozka;
+                textBoxZanr.Text = novyAlbum.Zanr;
+            }
         }
 
         /// <summary>
@@ -186,7 +198,9 @@ namespace youtube2music
                     return;
                 }
                 string typAlbumu = nalezeneAlbum.record_type.ToLower();
-                if (typAlbumu == "album" || typAlbumu == "ep")
+
+                // pokud nenajde allbum nebo ep, může vrátit i singl
+                if (typAlbumu == "album" || typAlbumu == "ep" || seznamNalezenychAlb.data.Count == 1)
                 {
                     // jedná se o album (nikoliv o singl)
                     // přidám nalezené album do seznamu
@@ -265,9 +279,10 @@ namespace youtube2music
 
             Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
             interpretAlba.NajdiSlozky();
-            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, album.CoverNejvetsi);
 
+            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, album.CoverNejvetsi);
             textBoxSlozka.Text = novyAlbum.Slozka;
+            textBoxZanr.Text = novyAlbum.Zanr;
         }
 
         private void LinkLabelOdkaz_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -275,6 +290,16 @@ namespace youtube2music
             Process.Start(linkLabelOdkaz.Text);
         }
 
+
+        private void buttonSlozkaNajit_Click(object sender, EventArgs e)
+        {
+            Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
+            interpretAlba.NajdiSlozky();
+
+            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba);
+            textBoxSlozka.Text = novyAlbum.Slozka;
+            textBoxZanr.Text = novyAlbum.Zanr;
+        }
 
         private void buttonSlozkaOtevit_Click(object sender, EventArgs e)
         {
@@ -471,8 +496,11 @@ namespace youtube2music
 
             Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
             interpretAlba.NajdiSlozky();
+
             Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, pictureBoxCoverPredni.Tag.ToString());
             novyAlbum.Slozka = textBoxSlozka.Text;
+            textBoxZanr.Text = novyAlbum.Zanr;
+
             foreach (Video vid in videaVsechna)
             {
                 // procházím videa z youtube
