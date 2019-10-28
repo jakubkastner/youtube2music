@@ -2192,6 +2192,8 @@ namespace youtube2music
             }
         }
 
+        bool albumVerejne = false;
+        string youtubeIDverejne;
         // přidávání videí nebo videí z playlistu
         private void backgroundWorkerPridejVidea_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -2217,7 +2219,8 @@ namespace youtube2music
             bool playlist = typ != "0" ? true : false;
             bool album = typ == "2" ? true : false;
             string youtubeID = argumenty.Last();
-
+            youtubeIDverejne = youtubeID;
+            albumVerejne = album;
             // přidávání playlistu
             if (playlist)
             {
@@ -2290,7 +2293,7 @@ namespace youtube2music
                 }
                 string pridaneDriveText =  pridaneDrive > 0 ? " Nepřidaná videa (" + pridaneDrive + ") byla přidána již dříve." : "";
                 ZobrazitOperaci("Přidávání videí z playlistu", "Bylo přidáno " + (videaNovaID.Count() - pridaneDrive) + " videí z " + videaNovaID.Count() + "." + pridaneDriveText);
-                if (album)
+                /*if (album)
                 {
                     FormAlbum uprava = new FormAlbum(youtubeID, videaVsechna, hudebniKnihovnaOpus);
                     uprava.ShowDialog();
@@ -2302,7 +2305,7 @@ namespace youtube2music
                         objectListViewSeznamVidei.CheckAll();
                         objectListViewSeznamVidei.EndUpdate();
                     }));
-                }
+                }*/
             }
             // přidávání jednoho videa
             else
@@ -2385,6 +2388,19 @@ namespace youtube2music
             progressBarStatus.Visible = false;
             // změní text v menu ("přidání videa/playlistu")
             ZobrazitStav();
+            if (albumVerejne)
+            {
+                FormAlbum uprava = new FormAlbum(youtubeIDverejne, videaVsechna, hudebniKnihovnaOpus);
+                uprava.ShowDialog();
+                //uprava.Show();
+                objectListViewSeznamVidei.Invoke(new Action(() =>
+                {
+                    objectListViewSeznamVidei.BeginUpdate();
+                    objectListViewSeznamVidei.UpdateObjects(videaVsechna);
+                    objectListViewSeznamVidei.CheckAll();
+                    objectListViewSeznamVidei.EndUpdate();
+                }));
+            }
             textBoxOdkaz.Text = "VLOŽTE ODKAZ NA VIDEO NEBO PLAYLIST Z YOUTUBE";
             textBoxOdkaz.ReadOnly = false;
         }
