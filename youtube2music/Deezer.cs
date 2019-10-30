@@ -47,6 +47,16 @@ namespace youtube2music
         }
 
         public string Datum { get; set; }
+
+        public string DatumRok
+        {
+            get
+            {
+                return this.Datum.Split('-').First();
+            }
+        }
+
+
         public List<string> Interpreti { get; set; }
         public List<SkladbyAlba> Skladby { get; set; }
 

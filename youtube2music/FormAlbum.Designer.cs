@@ -245,7 +245,7 @@
             this.treeListViewAlbaDeezer.UseFiltering = true;
             this.treeListViewAlbaDeezer.View = System.Windows.Forms.View.Details;
             this.treeListViewAlbaDeezer.VirtualMode = true;
-            this.treeListViewAlbaDeezer.SelectedIndexChanged += new System.EventHandler(this.TreeListViewAlbaDeezer_SelectedIndexChanged);
+            this.treeListViewAlbaDeezer.SelectedIndexChanged += new System.EventHandler(this.treeListViewAlbaDeezer_SelectedIndexChanged);
             // 
             // olvColumn1
             // 

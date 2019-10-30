@@ -78,6 +78,9 @@
             this.menuNastaveniFFmpegCestaNaposledyVybrane = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniFFmpegCestaNaposledyVymazat = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniFFmpegStahnout = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuNastaveniCacheSmazat = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniCacheOtevrit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStahnout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMenu = new System.Windows.Forms.MenuStrip();
             this.menuPridatPlaylist = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,6 +115,7 @@
             this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn13 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.pŘIDATALBUMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backgroundWorkerSmazCache = new System.ComponentModel.BackgroundWorker();
             this.statusStripStatus.SuspendLayout();
             this.menuStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewSeznamVidei)).BeginInit();
@@ -295,7 +299,10 @@
             this.menuNastaveniYoutubeDLStahnout,
             this.toolStripSeparator6,
             this.menuNastaveniFFmpeg,
-            this.menuNastaveniFFmpegStahnout});
+            this.menuNastaveniFFmpegStahnout,
+            this.toolStripSeparator9,
+            this.menuNastaveniCacheSmazat,
+            this.menuNastaveniCacheOtevrit});
             this.menuNastaveni.Name = "menuNastaveni";
             this.menuNastaveni.Size = new System.Drawing.Size(79, 23);
             this.menuNastaveni.Text = "NASTAVENÍ";
@@ -515,6 +522,25 @@
             this.menuNastaveniFFmpegStahnout.Size = new System.Drawing.Size(255, 22);
             this.menuNastaveniFFmpegStahnout.Text = "Stáhnout FFmpeg";
             this.menuNastaveniFFmpegStahnout.Click += new System.EventHandler(this.menuNastaveniFFmpegStahnout_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(252, 6);
+            // 
+            // menuNastaveniCacheSmazat
+            // 
+            this.menuNastaveniCacheSmazat.Name = "menuNastaveniCacheSmazat";
+            this.menuNastaveniCacheSmazat.Size = new System.Drawing.Size(255, 22);
+            this.menuNastaveniCacheSmazat.Text = "Smazat cache programu";
+            this.menuNastaveniCacheSmazat.Click += new System.EventHandler(this.menuNastaveniSmazatCache_Click);
+            // 
+            // menuNastaveniCacheOtevrit
+            // 
+            this.menuNastaveniCacheOtevrit.Name = "menuNastaveniCacheOtevrit";
+            this.menuNastaveniCacheOtevrit.Size = new System.Drawing.Size(255, 22);
+            this.menuNastaveniCacheOtevrit.Text = "Otevřít cache programu";
+            this.menuNastaveniCacheOtevrit.Click += new System.EventHandler(this.menuNastaveniCacheOtevrit_Click);
             // 
             // menuStahnout
             // 
@@ -807,6 +833,14 @@
             this.pŘIDATALBUMToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             this.pŘIDATALBUMToolStripMenuItem.Text = "PŘIDAT ALBUM";
             // 
+            // backgroundWorkerSmazCache
+            // 
+            this.backgroundWorkerSmazCache.WorkerReportsProgress = true;
+            this.backgroundWorkerSmazCache.WorkerSupportsCancellation = true;
+            this.backgroundWorkerSmazCache.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerSmazCache_DoWork);
+            this.backgroundWorkerSmazCache.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerSmazCache_ProgressChanged);
+            this.backgroundWorkerSmazCache.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerSmazCache_RunWorkerCompleted);
+            // 
             // FormSeznam
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -821,7 +855,7 @@
             this.MinimumSize = new System.Drawing.Size(1125, 300);
             this.Name = "FormSeznam";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "YouTube Renamer";
+            this.Text = "youtube2music";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSeznam_FormClosing);
             this.Load += new System.EventHandler(this.FormSeznam_Load);
@@ -920,6 +954,10 @@
         private System.Windows.Forms.ToolStripMenuItem albumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuPridatPlaylist;
         private System.Windows.Forms.ToolStripStatusLabel labelStav;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniCacheSmazat;
+        private System.ComponentModel.BackgroundWorker backgroundWorkerSmazCache;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniCacheOtevrit;
     }
 }
 

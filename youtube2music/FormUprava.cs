@@ -183,7 +183,7 @@ namespace youtube2music
             // nadpis programu
             if (String.IsNullOrEmpty(textBoxNovyNazev.Text))
             {
-                this.Text = textBoxPuvodniNazev.Text + " ~ Youtube Renamer";
+                this.Text = textBoxPuvodniNazev.Text + " ~ youtube2music";
             }
             else
             {
@@ -192,7 +192,7 @@ namespace youtube2music
                 {
                     this.Text += " (ft. " + textBoxFeaturing.Text + ")";
                 }
-                this.Text += " ~ Youtube Renamer";
+                this.Text += " ~ youtube2music";
             }
 
             nacteno = true;

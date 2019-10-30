@@ -2760,5 +2760,106 @@ namespace youtube2music
         {
             textBoxOdkaz.Text = "https://music.youtube.com/playlist?list=OLAK5uy_nefv5WJefq7o6l9fMnjYmvHN-1HRWqKPQ"; //ALBUM KILLY
         }
+
+        private void menuNastaveniSmazatCache_Click(object sender, EventArgs e)
+        {
+            if (DialogResult.OK == Zobrazit.Otazku("Smazání cache programu", "Kliknutím na OK vymažete složky cache programu youtube2music.", "Před potvrzení se ujistěte, zdali neběží jiná instance programu youtube2music.", MessageBoxButtons.OKCancel))
+            {
+                if (!backgroundWorkerSmazCache.IsBusy)
+                {
+                    menuNastaveniCacheSmazat.Enabled = false;
+                    backgroundWorkerSmazCache.RunWorkerAsync();
+                }
+                else
+                {
+                    ZobrazitOperaci("Mazání cache programu", "Chyba.");
+                    Zobrazit.Chybu("Mazání cache programu", "Došlo k chybě, cache programu nemohlo být smazáno.", "Zkuste smazat cache programu znovu.");
+                }
+            }
+        }
+
+        private void backgroundWorkerSmazCache_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (backgroundWorkerSmazCache.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            // získá složku do které se ukládají cache složky spuštěných instancí programu
+            string slozkaCache = Directory.GetParent(slozkaProgramuCache).FullName;
+
+            List<string> slozky = null;
+            try
+            {
+                slozky = Directory.GetDirectories(slozkaCache).ToList();
+            }
+            catch (Exception)
+            {
+                e.Result = "ziskani_slozek";
+                return;
+            }
+            foreach (string slozka in slozky)
+            {
+                if (backgroundWorkerSmazCache.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                // cesty nejsou stejné jako s aktuálně používanou složkou cache
+                if (!Path.GetFullPath(slozka).Equals(Path.GetFullPath(slozkaProgramuCache)))
+                {
+                    try
+                    {
+                        Directory.Delete(slozka, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        e.Result = "mazani_slozky";
+                        Zobrazit.Chybu("Mazání cache programu", "Došlo k chybě při mazání složky cache: '" + slozka + "'", ex.Message);
+                    }
+                }
+            }
+        }
+
+        private void backgroundWorkerSmazCache_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBarStatus.Value = e.ProgressPercentage;
+        }
+
+        private void backgroundWorkerSmazCache_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            progressBarStatus.Value = progressBarStatus.Maximum;
+            string chyba = (string)e.Result;
+            if (e.Cancelled)
+            {
+                ZobrazitOperaci("Mazání cache programu", "Zrušeno uživatelem.");
+            }
+            else if (e.Error != null)
+            {
+                ZobrazitOperaci("Mazání cache programu", "Chyba.");
+                Zobrazit.Chybu("Mazání cache programu", "Došlo k chybě, cache programu nemohlo být smazáno.", "Zkuste smazat cache programu znovu.", e.Error.ToString());
+            }
+            else if (chyba == "ziskani_slozek")
+            {
+                ZobrazitOperaci("Mazání cache programu", "Některé složky cache programu youtube2music nebyly smazány.");
+                Zobrazit.Chybu("Mazání cache programu", "Došlo k chybě, cache programu nemohlo být smazáno.", "Cyhab získávání cache složek.", "Zkuste smazat cache programu znovu.");
+            }
+            else if (chyba == "mazani_slozky")
+            {
+                ZobrazitOperaci("Mazání cache programu", "Některé složky cache programu youtube2music nebyly smazány.");
+            }
+            else
+            {
+                ZobrazitOperaci("Mazání cache programu", "Úspěšně bylo smazáno cache programu youtube2music");
+            }
+            progressBarStatus.Visible = false;
+            menuNastaveniCacheSmazat.Enabled = true;
+        }
+
+        private void menuNastaveniCacheOtevrit_Click(object sender, EventArgs e)
+        {
+            Spustit.Program(slozkaProgramuCache, true);
+        }
     }
 }

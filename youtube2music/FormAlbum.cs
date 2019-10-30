@@ -231,7 +231,7 @@ namespace youtube2music
         }
 
 
-        private void TreeListViewAlbaDeezer_SelectedIndexChanged(object sender, EventArgs e)
+        private void treeListViewAlbaDeezer_SelectedIndexChanged(object sender, EventArgs e)
         {
             var vybrano = treeListViewAlbaDeezer.SelectedObject;
             if (vybrano == null)
@@ -269,18 +269,17 @@ namespace youtube2music
             {
                 return;
             }
-            textBoxAlbum.Text = album.Nazev;
-            textBoxInterpret.Text = album.Interpret;
-            numericUpDownRok.Value = Convert.ToInt32(album.Datum.Split('-').First());
             if (checkBoxCoverPredniDeezer.Checked)
             {
                 CoverNovy(album.CoverNejvetsi, pictureBoxCoverPredni);
             }
-
-            Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
+            Interpret interpretAlba = new Interpret(album.Interpret);
             interpretAlba.NajdiSlozky();
+            Album novyAlbum = new Album(album.Nazev, Convert.ToInt32(album.DatumRok), interpretAlba, album.CoverNejvetsi);
 
-            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, album.CoverNejvetsi);
+            textBoxAlbum.Text = album.Nazev;
+            numericUpDownRok.Value = Convert.ToDecimal(album.DatumRok);
+            textBoxInterpret.Text = interpretAlba.Jmeno;
             textBoxSlozka.Text = novyAlbum.Slozka;
             textBoxZanr.Text = novyAlbum.Zanr;
         }
