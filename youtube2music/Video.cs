@@ -213,13 +213,29 @@ namespace youtube2music
         {
             get
             {
+                return NazevStopa + " " + NazevSkladbaFeat;
+            }
+        }
+
+        public string NazevStopaInterpretSkladbaFeat
+        {
+            get
+            {
+                return NazevStopa + " " + NazevInterpretSkladbaFeat;
+            }
+        }
+
+        public string NazevStopa
+        {
+            get
+            {
                 string stopa = "";
                 if (Stopa < 10)
                 {
                     stopa += "0";
                 }
                 stopa += Stopa;
-                return stopa + " " + NazevSkladbaFeat;
+                return stopa;
             }
         }
 
@@ -560,8 +576,16 @@ namespace youtube2music
             {
                 return;
             }
+
             // odstranění zbytečnosti
             jmenoInterpreta = OdstranZbytecnosti(jmenoInterpreta);
+
+            // nepřidá Various Artists
+            if (jmenoInterpreta.ToLower() == "various artists")
+            {
+                return;
+            }
+
             // převedení na velká písmena
             Interpret novyInterpret = new Interpret(jmenoInterpreta);
 

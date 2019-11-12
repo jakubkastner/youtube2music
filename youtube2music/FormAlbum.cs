@@ -543,14 +543,14 @@ namespace youtube2music
                     videoYoutube.Stav = "Bude smazáno";
                 }
                 videoYoutube.Slozka = novyAlbum.Slozka;
-                string stopa = "";
-                if (videoYoutube.Stopa < 10)
+                videoYoutube.NazevNovy = videoYoutube.NazevStopaSkladbaFeat;
+
+                if (videoYoutube.Slozka.ToLower().Contains("various artists"))
                 {
-                    stopa += "0";
+                    // najdi soubor ve složce _ostatní a zjisti zdali tam již není
+                    videoYoutube.NazevNovy = videoYoutube.NazevStopaInterpretSkladbaFeat;
                 }
-                stopa += videoYoutube.Stopa;
-                string nazev = videoYoutube.NazevSkladbaFeat;
-                videoYoutube.NazevNovy = stopa + " " + nazev;
+
                 videoYoutube.Zanr = textBoxZanr.Text;
 
             }
