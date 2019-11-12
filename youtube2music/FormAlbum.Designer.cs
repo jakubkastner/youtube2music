@@ -71,6 +71,7 @@
             this.toolTipInformace = new System.Windows.Forms.ToolTip(this.components);
             this.checkBoxCoverPredniDeezer = new System.Windows.Forms.CheckBox();
             this.buttonSlozkaNajit = new System.Windows.Forms.Button();
+            this.checkBoxVyhledatDeezerSingly = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRok)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverPredni)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeListViewAlbaDeezer)).BeginInit();
@@ -501,11 +502,22 @@
             this.buttonSlozkaNajit.UseVisualStyleBackColor = true;
             this.buttonSlozkaNajit.Click += new System.EventHandler(this.buttonSlozkaNajit_Click);
             // 
+            // checkBoxVyhledatDeezerSingly
+            // 
+            this.checkBoxVyhledatDeezerSingly.AutoSize = true;
+            this.checkBoxVyhledatDeezerSingly.Location = new System.Drawing.Point(206, 86);
+            this.checkBoxVyhledatDeezerSingly.Name = "checkBoxVyhledatDeezerSingly";
+            this.checkBoxVyhledatDeezerSingly.Size = new System.Drawing.Size(101, 17);
+            this.checkBoxVyhledatDeezerSingly.TabIndex = 15;
+            this.checkBoxVyhledatDeezerSingly.Text = "Vyhledat i singly";
+            this.checkBoxVyhledatDeezerSingly.UseVisualStyleBackColor = true;
+            // 
             // FormAlbum
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1111, 751);
+            this.Controls.Add(this.checkBoxVyhledatDeezerSingly);
             this.Controls.Add(this.buttonSlozkaNajit);
             this.Controls.Add(this.checkBoxCoverPredniDeezer);
             this.Controls.Add(this.splitContainer1);
@@ -595,5 +607,6 @@
         private System.Windows.Forms.ToolTip toolTipInformace;
         private System.Windows.Forms.CheckBox checkBoxCoverPredniDeezer;
         private System.Windows.Forms.Button buttonSlozkaNajit;
+        private System.Windows.Forms.CheckBox checkBoxVyhledatDeezerSingly;
     }
 }

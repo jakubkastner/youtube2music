@@ -101,7 +101,7 @@ namespace youtube2music
         /// </summary>
         private void ButtonVyhledatDeezer_Click(object sender, EventArgs e)
         {
-            DeezerVyhledej(textBoxInterpret.Text, textBoxAlbum.Text);
+            DeezerVyhledej(textBoxInterpret.Text, textBoxAlbum.Text/*, checkBoxVyhledatDeezerSingly.Checked*/);
         }
 
         /// <summary>
@@ -109,7 +109,8 @@ namespace youtube2music
         /// </summary>
         /// <param name="interpret">Interpet k vyhledání</param>
         /// <param name="album">Album v vyhledání</param>
-        private void DeezerVyhledej(string interpret, string album)
+        /// <param name="vyhledatSingly">Vyhledat singly na deezeru true = singly, ep, albumy; false = ep, albumy</param>
+        private void DeezerVyhledej(string interpret, string album/*, bool vyhledatSingly*/)
         {
             if (buttonVyhledatDeezer.Text == "Zrušit vyhledávání")
             {
@@ -144,9 +145,10 @@ namespace youtube2music
 
             string interpet = OdstranZnaky(textBoxInterpret.Text);
             string album = OdstranZnaky(textBoxAlbum.Text);
+            bool vyhledatSingly = checkBoxVyhledatDeezerSingly.Checked;
 
             // získá alba umělce
-            ZiskejAlba("https://api.deezer.com/search/album?q=artist:\"" + interpet + "\" album:\"" + album + "\"?access_token=", true);
+            ZiskejAlba("https://api.deezer.com/search/album?q=artist:\"" + interpet + "\" album:\"" + album + "\"?access_token=", true, vyhledatSingly);
         }
 
         private void BackgroundWorkerVyhledatDeezer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -166,7 +168,7 @@ namespace youtube2music
 
 
 
-        private void ZiskejAlba(string adresa, bool smaz)
+        private void ZiskejAlba(string adresa, bool smaz, bool vyhledatSingly)
         {
             // získá json soubor alba
 
@@ -180,7 +182,7 @@ namespace youtube2music
             {
                 if (chybaJson.Kod == 4)
                 {
-                    ZiskejAlba(adresa, smaz);
+                    ZiskejAlba(adresa, smaz, vyhledatSingly);
                 }
                 return;
             }
@@ -199,8 +201,8 @@ namespace youtube2music
                 }
                 string typAlbumu = nalezeneAlbum.record_type.ToLower();
 
-                // pokud nenajde allbum nebo ep, může vrátit i singl
-                if (typAlbumu == "album" || typAlbumu == "ep" || seznamNalezenychAlb.data.Count == 1)
+                // pokud nenajde album nebo ep, může vrátit i singl
+                if (vyhledatSingly || typAlbumu == "album" || typAlbumu == "ep" || seznamNalezenychAlb.data.Count == 1)
                 {
                     // jedná se o album (nikoliv o singl)
                     // přidám nalezené album do seznamu
@@ -211,7 +213,7 @@ namespace youtube2music
             if (!String.IsNullOrEmpty(seznamNalezenychAlb.next))
             {
                 // pokud existuje další stránka vyhledávání
-                ZiskejAlba(seznamNalezenychAlb.next, false);
+                ZiskejAlba(seznamNalezenychAlb.next, false, vyhledatSingly);
             }
         }
 
