@@ -26,6 +26,10 @@ namespace youtube2music
         {
             get
             {
+                if (String.IsNullOrEmpty(this.Slozka))
+                {
+                    return "";
+                }
                 //string zanr = this.zanrAlbumu;
                 string slozka = this.Slozka.ToLower();
                 string zanr = DateTime.Now.ToString("yyyy.MM");

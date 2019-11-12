@@ -183,7 +183,7 @@
             // 
             // buttonVyhledatDeezer
             // 
-            this.buttonVyhledatDeezer.Location = new System.Drawing.Point(70, 82);
+            this.buttonVyhledatDeezer.Location = new System.Drawing.Point(212, 84);
             this.buttonVyhledatDeezer.Name = "buttonVyhledatDeezer";
             this.buttonVyhledatDeezer.Size = new System.Drawing.Size(130, 23);
             this.buttonVyhledatDeezer.TabIndex = 7;
@@ -505,11 +505,11 @@
             // checkBoxVyhledatDeezerSingly
             // 
             this.checkBoxVyhledatDeezerSingly.AutoSize = true;
-            this.checkBoxVyhledatDeezerSingly.Location = new System.Drawing.Point(206, 86);
+            this.checkBoxVyhledatDeezerSingly.Location = new System.Drawing.Point(70, 88);
             this.checkBoxVyhledatDeezerSingly.Name = "checkBoxVyhledatDeezerSingly";
-            this.checkBoxVyhledatDeezerSingly.Size = new System.Drawing.Size(101, 17);
+            this.checkBoxVyhledatDeezerSingly.Size = new System.Drawing.Size(113, 17);
             this.checkBoxVyhledatDeezerSingly.TabIndex = 15;
-            this.checkBoxVyhledatDeezerSingly.Text = "Vyhledat i singly";
+            this.checkBoxVyhledatDeezerSingly.Text = "Vyhledávat i singly";
             this.checkBoxVyhledatDeezerSingly.UseVisualStyleBackColor = true;
             // 
             // FormAlbum

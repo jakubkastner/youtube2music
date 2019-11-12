@@ -653,6 +653,20 @@ namespace youtube2music
                     // interpret je na seznamu
                     return true;
                 }
+                else if (interpret.Jmeno.ToLower().Contains(" & "))
+                {
+                    // interpreti např. albumů
+                    List<string> spolecniInterpreti = new List<string>();
+                    spolecniInterpreti.AddRange(this.Interpret.Split(new[] { " & ", ", " }, StringSplitOptions.None));
+                    foreach (string spolecnyInterpret in spolecniInterpreti)
+                    {
+                        if (spolecnyInterpret.ToLower().Equals(hledanyInterpret.ToLower()))
+                        {
+                            // interpret je na seznamu
+                            return true;
+                        }
+                    }
+                }
             }
             return false;
         }

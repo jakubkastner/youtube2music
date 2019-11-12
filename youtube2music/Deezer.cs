@@ -115,6 +115,18 @@ namespace youtube2music
             public string Nazev { get; set; }
             public Deezer Album { get; set; }
             public List<string> Interpreti { get; set; }
+            public List<Interpret> InterpretiSeznam
+            {
+                get
+                {
+                    List<Interpret> seznamInterpretu = new List<Interpret>();
+                    foreach (string interpret in this.Interpreti)
+                    {
+                        seznamInterpretu.Add(new Interpret(interpret));
+                    }
+                    return seznamInterpretu;
+                }
+            }
 
             public string Interpret
             {

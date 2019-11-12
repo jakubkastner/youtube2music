@@ -92,7 +92,7 @@ namespace youtube2music
                 // získá název složky z knihovny a seznam interpretů
                 string slozkaKnihovnaNazev = Path.GetFileName(slozkaKnihovnaCesta).Trim().ToLower();                
                 List<string> interpretiSlozky = new List<string>();
-                if (slozkaKnihovnaNazev.Contains(" & "))
+                if (slozkaKnihovnaNazev.Contains(" & ") && !hledanyInterpret.Contains(" & "))
                 {
                     // v názvu složky je více intepretů, rozdělím je
                     interpretiSlozky.AddRange(slozkaKnihovnaNazev.Split(new[] { " & ", ", " }, StringSplitOptions.None));

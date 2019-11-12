@@ -502,35 +502,56 @@ namespace youtube2music
             novyAlbum.Slozka = textBoxSlozka.Text;
             textBoxZanr.Text = novyAlbum.Zanr;
 
-            foreach (Video vid in videaVsechna)
+            // je více interpretů albumu
+            List<string> interpretiAlba = new List<string>();
+            interpretiAlba.AddRange(interpretAlba.Jmeno.Split(new[] { " & ", ", " }, StringSplitOptions.None));
+
+            foreach (Video videoYoutube in videaVsechna)
             {
                 // procházím videa z youtube
-                vid.Album = novyAlbum;
-                vid.PridejInterpreta(novyAlbum.Interpret.Jmeno);
+                videoYoutube.Album = novyAlbum;
+
+                // zamezí duplicitám interpretů
+                List<Interpret> interpretiYoutube = new List<Interpret>();
+                interpretiYoutube.AddRange(videoYoutube.Interpreti);
+
+                videoYoutube.Interpreti.Clear();
+
+                videoYoutube.PridejInterpreta(novyAlbum.Interpret.Jmeno);
+                foreach (var interpretYoutube in interpretiYoutube)
+                {
+                    videoYoutube.PridejInterpreta(interpretYoutube.Jmeno);
+                }
+
                 if (albumDeezer != null)
                 {
-                    foreach (var interpretDeezer in albumDeezer.Skladby[vid.Stopa - 1].Interpreti)
+                    foreach (var interpretDeezer in albumDeezer.Skladby[videoYoutube.Stopa - 1].Interpreti)
                     {
-                        vid.PridejInterpreta(interpretDeezer);
+                        if (!interpretiAlba.Contains(interpretDeezer))
+                        {
+                            // nepřidám jednotlivé interprety albumu k jednotlivým songům (již jsou přidáni)
+                            videoYoutube.PridejInterpreta(interpretDeezer);
+                        }
                     }
                 }
-                vid.Chyba = ""; // SMAZAT
-                vid.Stav = "YouTube Album";
-                if (File.Exists(vid.Slozka))
+
+                videoYoutube.Chyba = ""; // SMAZAT
+                videoYoutube.Stav = "YouTube Album";
+                if (File.Exists(videoYoutube.Slozka))
                 {
-                    vid.Chyba = vid.Slozka;
-                    vid.Stav = "Bude smazáno";
+                    videoYoutube.Chyba = videoYoutube.Slozka;
+                    videoYoutube.Stav = "Bude smazáno";
                 }
-                vid.Slozka = novyAlbum.Slozka;
+                videoYoutube.Slozka = novyAlbum.Slozka;
                 string stopa = "";
-                if (vid.Stopa < 10)
+                if (videoYoutube.Stopa < 10)
                 {
                     stopa += "0";
                 }
-                stopa += vid.Stopa;
-                string nazev = vid.NazevSkladbaFeat;
-                vid.NazevNovy = stopa + " " + nazev;
-                vid.Zanr = textBoxZanr.Text;
+                stopa += videoYoutube.Stopa;
+                string nazev = videoYoutube.NazevSkladbaFeat;
+                videoYoutube.NazevNovy = stopa + " " + nazev;
+                videoYoutube.Zanr = textBoxZanr.Text;
 
             }
 
