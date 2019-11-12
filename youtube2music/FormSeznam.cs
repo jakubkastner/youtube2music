@@ -2390,16 +2390,19 @@ namespace youtube2music
             ZobrazitStav();
             if (albumVerejne)
             {
-                FormAlbum uprava = new FormAlbum(youtubeIDverejne, videaVsechna, hudebniKnihovnaOpus);
-                uprava.ShowDialog();
-                //uprava.Show();
-                objectListViewSeznamVidei.Invoke(new Action(() =>
+                if (objectListViewSeznamVidei.Items.Count > 0)
                 {
-                    objectListViewSeznamVidei.BeginUpdate();
-                    objectListViewSeznamVidei.UpdateObjects(videaVsechna);
-                    objectListViewSeznamVidei.CheckAll();
-                    objectListViewSeznamVidei.EndUpdate();
-                }));
+                    FormAlbum uprava = new FormAlbum(youtubeIDverejne, videaVsechna, hudebniKnihovnaOpus);
+                    uprava.ShowDialog();
+                    //uprava.Show();
+                    objectListViewSeznamVidei.Invoke(new Action(() =>
+                    {
+                        objectListViewSeznamVidei.BeginUpdate();
+                        objectListViewSeznamVidei.UpdateObjects(videaVsechna);
+                        objectListViewSeznamVidei.CheckAll();
+                        objectListViewSeznamVidei.EndUpdate();
+                    }));
+                }
             }
             textBoxOdkaz.Text = "VLOŽTE ODKAZ NA VIDEO NEBO PLAYLIST Z YOUTUBE";
             textBoxOdkaz.ReadOnly = false;
