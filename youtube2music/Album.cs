@@ -33,27 +33,21 @@ namespace youtube2music
                 //string zanr = this.zanrAlbumu;
                 string slozka = this.Slozka.ToLower();
                 string zanr = DateTime.Now.ToString("yyyy.MM");
-                if (slozka.Contains("rap & hip-hop"))
+                if (slozka.Contains("rap"))
                 {
-                    if (slozka.Contains("cz & sk"))
-                    {
-                        zanr += " Rap";
-                    }
-                    else if (slozka.Contains("ostatní země"))
-                    {
-                        zanr += " Hip-Hop";
-                    }
+                    zanr += " Rap";
                 }
-                else if (slozka.Contains("ostatní žánry"))
+                else if (slozka.Contains("hip-hop"))
                 {
-                    if (slozka.Contains("cz & sk"))
-                    {
-                        zanr += " Ostatní CZ";
-                    }
-                    else if (slozka.Contains("ostatní země"))
-                    {
-                        zanr += " Ostatní";
-                    }
+                    zanr += " Hip-Hop";
+                }
+                else if (slozka.Contains("ostatní cz"))
+                {
+                    zanr += " Ostatní CZ";
+                }
+                else if (slozka.Contains("ostatní"))
+                {
+                    zanr += " Ostatní";
                 }
                 return zanr;
             }

@@ -80,6 +80,10 @@ namespace youtube2music
 
             List<string> slozkyKnihovnaOstatni = new List<string>();
             string hledanyInterpret = Jmeno.Trim().ToLower();
+            if (String.IsNullOrEmpty(hledanyInterpret))
+            {
+                return;
+            }
             while (hledanyInterpret.Last() == '.')
             {
                 hledanyInterpret = hledanyInterpret.Remove(hledanyInterpret.Length - 1, 1);
@@ -348,6 +352,7 @@ namespace youtube2music
             PrejmenujInterpreta("Blueraykoranthug", "BlueRayKoranThug");
             PrejmenujInterpreta("A Boogie With Da Hoodie", "A Boogie with da Hoodie");
             PrejmenujInterpreta("Dababy", "DaBaby");
+            PrejmenujInterpreta("Astralkid22", "AstralKid22");
         }
 
         private void PrejmenujInterpreta(string puvodni, string novy)

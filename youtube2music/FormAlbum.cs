@@ -93,6 +93,11 @@ namespace youtube2music
                 Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba);
                 textBoxSlozka.Text = novyAlbum.Slozka;
                 textBoxZanr.Text = novyAlbum.Zanr;
+                if (String.IsNullOrEmpty(textBoxSlozka.Text))
+                {
+                    // nejedná se o existující složku ani soubor
+                    textBoxSlozka.Text = hudebniKnihovna;
+                }
             }
         }
 
@@ -148,29 +153,48 @@ namespace youtube2music
             bool vyhledatSingly = checkBoxVyhledatDeezerSingly.Checked;
 
             // získá alba umělce
-            ZiskejAlba("https://api.deezer.com/search/album?q=artist:\"" + interpet + "\" album:\"" + album + "\"?access_token=", true, vyhledatSingly);
+            if (!ZiskejAlba("https://api.deezer.com/search/album?q=artist:\"" + interpet + "\" album:\"" + album + "\"?access_token=", true, vyhledatSingly))
+            {
+                e.Cancel = true;
+                return;
+            }
         }
 
         private void BackgroundWorkerVyhledatDeezer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            string umelec = OdstranZnaky(textBoxInterpret.Text);
-            string album = OdstranZnaky(textBoxAlbum.Text);
-            foreach (Deezer nalezeneAlbum in treeListViewAlbaDeezer.Objects)
+            if (e.Cancelled)
             {
-                if ((String.Compare(nalezeneAlbum.Nazev, album, true) == 0) && (String.Compare(nalezeneAlbum.Interpret, umelec, true) == 0))
-                {
-                    treeListViewAlbaDeezer.SelectObject(nalezeneAlbum);
-                }
             }
-            buttonVyhledatDeezer.Enabled = true;
-            buttonVyhledatDeezer.Text = "Vyhledat na Deezeru";
+            else if (e.Error != null)
+            {
+                Zobrazit.Chybu("Hledání albumu na Deezeru", "Došlo k chybě, album nemohlo být nalezeno na Deezeru.", e.Error.ToString());
+            }
+            else
+            {
+                string umelec = OdstranZnaky(textBoxInterpret.Text);
+                string album = OdstranZnaky(textBoxAlbum.Text);
+                foreach (Deezer nalezeneAlbum in treeListViewAlbaDeezer.Objects)
+                {
+                    // PADÁ POKUD VYBERU ALBUM MOC RYCHLE
+                    // -> PAK BĚŽÍ BACKGROUNDWORKER STÁLE A VYBERE NĚCO CO UŽ NEEXISTUJE
+                    if ((String.Compare(nalezeneAlbum.Nazev, album, true) == 0) && (String.Compare(nalezeneAlbum.Interpret, umelec, true) == 0))
+                    {
+                        treeListViewAlbaDeezer.SelectObject(nalezeneAlbum);
+                    }
+                }
+                buttonVyhledatDeezer.Enabled = true;
+                buttonVyhledatDeezer.Text = "Vyhledat na Deezeru";
+            }
         }
 
 
-
-        private void ZiskejAlba(string adresa, bool smaz, bool vyhledatSingly)
+        private bool ZiskejAlba(string adresa, bool smaz, bool vyhledatSingly)
         {
             // získá json soubor alba
+            if (backgroundWorkerVyhledatDeezer.CancellationPending)
+            {
+                return false;
+            }
 
             string ziskanyJson;
             using (WebClient klient = new WebClient())
@@ -184,7 +208,7 @@ namespace youtube2music
                 {
                     ZiskejAlba(adresa, smaz, vyhledatSingly);
                 }
-                return;
+                return true;
             }
             // získá seznam nalezených alb
             var seznamNalezenychAlb = JsonConvert.DeserializeObject<AlbumZiskej>(ziskanyJson);
@@ -197,7 +221,7 @@ namespace youtube2music
             {
                 if (backgroundWorkerVyhledatDeezer.CancellationPending)
                 {
-                    return;
+                    return false;
                 }
                 string typAlbumu = nalezeneAlbum.record_type.ToLower();
 
@@ -215,6 +239,7 @@ namespace youtube2music
                 // pokud existuje další stránka vyhledávání
                 ZiskejAlba(seznamNalezenychAlb.next, false, vyhledatSingly);
             }
+            return true;
         }
 
         private string OdstranZnaky(string text)
@@ -284,6 +309,11 @@ namespace youtube2music
             textBoxInterpret.Text = interpretAlba.Jmeno;
             textBoxSlozka.Text = novyAlbum.Slozka;
             textBoxZanr.Text = novyAlbum.Zanr;
+            if (String.IsNullOrEmpty(textBoxSlozka.Text))
+            {
+                // nejedná se o existující složku ani soubor
+                textBoxSlozka.Text = hudebniKnihovna;
+            }
         }
 
         private void LinkLabelOdkaz_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -298,7 +328,15 @@ namespace youtube2music
             interpretAlba.NajdiSlozky();
 
             Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba);
-            textBoxSlozka.Text = novyAlbum.Slozka;
+            if (String.IsNullOrEmpty(novyAlbum.Slozka))
+            {
+                // nejedná se o existující složku ani soubor
+                textBoxSlozka.Text = Path.Combine(textBoxSlozka.Text, interpretAlba.Jmeno, novyAlbum.Rok + " " + novyAlbum.Nazev);
+            }
+            else
+            {
+                textBoxSlozka.Text = novyAlbum.Slozka;
+            }
             textBoxZanr.Text = novyAlbum.Zanr;
         }
 
@@ -554,7 +592,7 @@ namespace youtube2music
                 videoYoutube.Zanr = textBoxZanr.Text;
 
             }
-
+            backgroundWorkerVyhledatDeezer.CancelAsync();
             this.Close();
         }
 

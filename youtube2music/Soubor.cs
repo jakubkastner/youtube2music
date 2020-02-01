@@ -52,7 +52,7 @@ namespace youtube2music
                         zapisovacka.WriteLine(radek);
                     }
                 }
-            }            
+            }
         }
 
         // OK 2019
