@@ -21,6 +21,11 @@ namespace youtube2music
         private string novyNazevVidea;
 
         /// <summary>
+        /// Složka videa.
+        /// </summary>
+        private string slozka;
+
+        /// <summary>
         /// Hudební knihovna uživatele.
         /// </summary>
         private string hudebniKnihovna;
@@ -60,7 +65,29 @@ namespace youtube2music
         /// <summary>
         /// Nalezená cesta složky interpreta. Případně pokud byl nalezen již stažené video, obsahuje cestu nalezeného souboru.
         /// </summary>
-        public string Slozka { get; set; }
+        public string Slozka
+        {
+            get
+            {
+                return this.slozka;
+            }
+            set
+            {
+                string novaSlozka = value;
+                // odstraní mezery z názvu
+                novaSlozka = OdstranVicenasobneMezery(novaSlozka);
+                if (String.IsNullOrEmpty(novaSlozka))
+                {
+                    this.slozka = novaSlozka;
+                    return;
+                }
+
+                // odstraní znaky souboru, které se nemohou použít v názvu souboru
+                novaSlozka = String.Join("", novaSlozka.Split(Path.GetInvalidFileNameChars()));
+                this.slozka = novaSlozka;
+            }
+        }
+
         /// <summary>
         /// Zkrácená cesta složky interpreta o hudební knihovnu. Případně pokud byl nalezen již stažené video, obsahuje zkrácenou cestu nalezeného souboru.
         /// </summary>
