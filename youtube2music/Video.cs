@@ -82,8 +82,8 @@ namespace youtube2music
                     return;
                 }
 
-                // odstraní znaky souboru, které se nemohou použít v názvu souboru
-                novaSlozka = String.Join("", novaSlozka.Split(Path.GetInvalidFileNameChars()));
+                // odstraní znaky složky, které se nemohou použít v názvu složky
+                novaSlozka = String.Join("", novaSlozka.Split(Path.GetInvalidPathChars()));
                 this.slozka = novaSlozka;
             }
         }

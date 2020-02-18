@@ -83,13 +83,24 @@ namespace youtube2music
                 }
                 if (!String.IsNullOrEmpty(album) && !String.IsNullOrEmpty(slozka))
                 {
-                    return Path.Combine(slozka, album);
+                    slozka = Path.Combine(slozka, album);
                 }
                 return slozka;
             }
             set
             {
-                this.slozkaAlbumu = value;
+                string novaSlozka = value;
+                // odstraní mezery z názvu
+                novaSlozka = OdstranVicenasobneMezery(novaSlozka);
+                if (String.IsNullOrEmpty(novaSlozka))
+                {
+                    this.slozkaAlbumu = novaSlozka;
+                    return;
+                }
+
+                // odstraní znaky složky, které se nemohou použít v názvu složky
+                novaSlozka = String.Join("", novaSlozka.Split(Path.GetInvalidPathChars()));
+                this.slozkaAlbumu = novaSlozka;
             }
         }
         
@@ -101,6 +112,23 @@ namespace youtube2music
             Rok = rok;
             Interpret = inter;
             Cover = cover;
+        }
+
+        // TODO PŘESUNOUT DO HROMADNÉ TŘÍDY (STEJNÁ FUNKCE SE POUŽÍVÁ PRO Video.cs)
+        /// <summary>
+        /// Nahradí z textu více mezer za sebou jednou mezerou.
+        /// </summary>
+        /// <param name="vstup">Text k nahrazení více mezer.</param>
+        /// <returns>Text s maximálně jednou mezerou za sebou.</returns>
+        private string OdstranVicenasobneMezery(string vstup)
+        {
+            if (string.IsNullOrEmpty(vstup))
+            {
+                return vstup;
+            }
+            Regex mezery = new Regex("\\s+"); // odstraní více mezer za sebou
+            vstup = mezery.Replace(vstup, " ");
+            return vstup;
         }
     }
 }
