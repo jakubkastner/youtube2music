@@ -640,6 +640,7 @@ namespace youtube2music
 
                 ukladaneVideo.Chyba = "";// ?
             }
+            ukladanaSlozka = ukladanaSlozka.Replace(":", "");
             ukladaneVideo.Slozka = ukladanaSlozka;
         }
 

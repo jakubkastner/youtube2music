@@ -537,7 +537,11 @@ namespace youtube2music
             interpretAlba.NajdiSlozky();
 
             Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, pictureBoxCoverPredni.Tag.ToString());
-            novyAlbum.Slozka = textBoxSlozka.Text;
+
+            string slozka = textBoxSlozka.Text;
+            slozka = slozka.Replace(":", "");
+            novyAlbum.Slozka = slozka;
+
             textBoxZanr.Text = novyAlbum.Zanr;
 
             // je více interpretů albumu

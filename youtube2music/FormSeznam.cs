@@ -445,10 +445,11 @@ namespace youtube2music
                 {
                     Directory.CreateDirectory(slozka);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     stahovaneVideo.Chyba = "Soubor mp3 se nezdařilo přesunout";
                     stahovaneVideo.Stav = "";
+                    MessageBox.Show(ex.Message);
                     objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
                     return;
                 }
@@ -459,10 +460,11 @@ namespace youtube2music
                 stahovaneVideo.Stav = "Soubor mp3 přesunut";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 stahovaneVideo.Chyba = "Soubor mp3 se nezdařilo přesunout";
                 stahovaneVideo.Stav = "";
+                MessageBox.Show(ex.Message);
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             }
             string cover = "cover.jpg";
