@@ -101,6 +101,21 @@ namespace youtube2music
 
                 // odstraní znaky složky, které se nemohou použít v názvu složky
                 novaSlozka = String.Join("", novaSlozka.Split(Path.GetInvalidPathChars()));
+
+                // odstraní ze složky dvojtečku
+                string[] rozdelenaSlozka = novaSlozka.Split(':');
+                if (rozdelenaSlozka.Length > 1)
+                {
+                    // nalezeno více dvojteček
+                    novaSlozka = rozdelenaSlozka[0] + ':';
+                    for (int i = 1; i < rozdelenaSlozka.Length; i++)
+                    {
+                        novaSlozka += rozdelenaSlozka[i];
+                    }
+                }
+                // nalezena jedna dvojtečka = označení disku
+                // nebo nenalezena žádná dvojtečka
+
                 this.slozkaAlbumu = novaSlozka;
             }
         }
