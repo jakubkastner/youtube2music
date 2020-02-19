@@ -91,14 +91,22 @@ namespace youtube2music
             checkBoxNovyNazevAutomaticky.Checked = true;
 
             // naplnění prvků hodnotami
-            textBoxInterpret.Text = upravovaneVideo.Interpret;
             labelInterpret.Text = upravovaneVideo.Interpret;
+            textBoxInterpret.Text = upravovaneVideo.Interpret;
             labelSkladba.Text = upravovaneVideo.NazevSkladbaFeat;
             textBoxSkladba.Text = upravovaneVideo.Skladba;
             textBoxFeaturing.Text = upravovaneVideo.InterpretiFeat;
             textBoxNovyNazev.Text = upravovaneVideo.NazevNovy;
             textBoxSlozka.Text = upravovaneVideo.Slozka;
             textBoxZanr.Text = upravovaneVideo.Zanr;
+            if (upravovaneVideo.Album != null)
+            {
+                textBoxAlbum.Text = upravovaneVideo.Album.Interpret.Jmeno + " - " + upravovaneVideo.Album.Nazev;
+                if (upravovaneVideo.Stopa > 1)
+                {
+                    textBoxStopa.Text = upravovaneVideo.Stopa.ToString("00");
+                }
+            }
             labelChyba.Text = upravovaneVideo.Chyba;
 
             // načtení nového videa
@@ -444,7 +452,11 @@ namespace youtube2music
             {
                 // automaticky se mění název
                 string novyNazev = "";
-                if (textBoxSlozka.Text.ToLower().Contains("_ostatní") || String.IsNullOrEmpty(textBoxSlozka.Text))
+                if (!String.IsNullOrEmpty(textBoxStopa.Text))
+                {
+                    novyNazev = textBoxStopa.Text + " ";
+                }
+                else if (textBoxSlozka.Text.ToLower().Contains("_ostatní") || String.IsNullOrEmpty(textBoxSlozka.Text))
                 {
                     // v názvu bude interpret
                     novyNazev = textBoxInterpret.Text + "-";
