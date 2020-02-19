@@ -102,7 +102,7 @@ namespace youtube2music
             if (upravovaneVideo.Album != null)
             {
                 textBoxAlbum.Text = upravovaneVideo.Album.Interpret.Jmeno + " - " + upravovaneVideo.Album.Nazev;
-                if (upravovaneVideo.Stopa > 1)
+                if (upravovaneVideo.Stopa > 0)
                 {
                     textBoxStopa.Text = upravovaneVideo.Stopa.ToString("00");
                 }
@@ -628,7 +628,11 @@ namespace youtube2music
                 {
                     // automaticky se mění název
                     /*string novyNazev = "";*/
-                    if (textBoxSlozka.Text.ToLower().Contains("_ostatní") || String.IsNullOrEmpty(textBoxSlozka.Text))
+                    if (ukladaneVideo.Album != null && ukladaneVideo.Stopa > 0)
+                    {
+                        ukladaneVideo.NazevNovy = ukladaneVideo.NazevStopaSkladbaFeat;
+                    }
+                    else if (textBoxSlozka.Text.ToLower().Contains("_ostatní") || String.IsNullOrEmpty(textBoxSlozka.Text))
                     {
                         ukladaneVideo.NazevNovy = ukladaneVideo.NazevInterpretSkladbaFeat;
                     }
