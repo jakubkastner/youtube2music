@@ -78,6 +78,7 @@
             this.textBoxStopa = new System.Windows.Forms.TextBox();
             this.textBoxAlbum = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.buttonNeexistujiciVyhledat = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxInterpret
@@ -623,6 +624,19 @@
             this.label14.TabIndex = 26;
             this.label14.Text = "Album";
             // 
+            // buttonNeexistujiciVyhledat
+            // 
+            this.buttonNeexistujiciVyhledat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonNeexistujiciVyhledat.Location = new System.Drawing.Point(412, 341);
+            this.buttonNeexistujiciVyhledat.MaximumSize = new System.Drawing.Size(220, 27);
+            this.buttonNeexistujiciVyhledat.Name = "buttonNeexistujiciVyhledat";
+            this.buttonNeexistujiciVyhledat.Size = new System.Drawing.Size(220, 27);
+            this.buttonNeexistujiciVyhledat.TabIndex = 29;
+            this.buttonNeexistujiciVyhledat.Text = "Vyhledat na Google";
+            this.buttonNeexistujiciVyhledat.UseVisualStyleBackColor = true;
+            this.buttonNeexistujiciVyhledat.Click += new System.EventHandler(this.buttonNeexistujiciVyhledat_Click);
+            // 
             // FormUprava
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -632,7 +646,6 @@
             this.Controls.Add(this.label13);
             this.Controls.Add(this.textBoxStopa);
             this.Controls.Add(this.buttonProhodit);
-            this.Controls.Add(this.richTextBoxPopis);
             this.Controls.Add(this.geckoWebBrowserVideo);
             this.Controls.Add(this.labelInterpret);
             this.Controls.Add(this.checkBoxStejnyZanrPlaylist);
@@ -648,6 +661,7 @@
             this.Controls.Add(this.checkBoxStejnaSlozkaInterpret);
             this.Controls.Add(this.buttonSlozkaNajit);
             this.Controls.Add(this.textBoxSlozka);
+            this.Controls.Add(this.buttonNeexistujiciVyhledat);
             this.Controls.Add(this.buttonSlozkaJina);
             this.Controls.Add(this.linkLabelKanal);
             this.Controls.Add(this.linkLabelPlaylist);
@@ -678,6 +692,7 @@
             this.Controls.Add(this.textBoxInterpret);
             this.Controls.Add(this.labelChyba);
             this.Controls.Add(this.labelSkladba);
+            this.Controls.Add(this.richTextBoxPopis);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(955, 726);
             this.Name = "FormUprava";
@@ -742,5 +757,6 @@
         private System.Windows.Forms.TextBox textBoxStopa;
         private System.Windows.Forms.TextBox textBoxAlbum;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button buttonNeexistujiciVyhledat;
     }
 }

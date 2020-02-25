@@ -153,7 +153,7 @@ namespace youtube2music
                 }
 
                 // nastavení ovládacích prvků
-                if (labelChyba.Text == "Video neexistuje")
+                if (String.IsNullOrEmpty(upravovaneVideo.Kanal.Nazev))
                 {
                     // neexistující video
                     textBoxInterpret.Enabled = false;
@@ -168,6 +168,13 @@ namespace youtube2music
                     checkBoxStejnyZanrInterpret.Enabled = false;
                     checkBoxStejnyZanrVybrane.Enabled = false;
                     checkBoxStejnyZanrPlaylist.Enabled = false;
+                    buttonNeexistujiciVyhledat.Visible = true;
+                    richTextBoxPopis.Visible = false;
+                    checkBoxUlozit.Enabled = false;
+                    checkBoxNovyNazevAutomaticky.Enabled = false;
+                    checkBoxStejnyInterpretPlaylist.Enabled = false;
+                    checkBoxStejnyInterpretVybrane.Enabled = false;
+                    buttonProhodit.Enabled = false;
                 }
                 else
                 {
@@ -184,6 +191,13 @@ namespace youtube2music
                     checkBoxStejnyZanrInterpret.Enabled = true;
                     checkBoxStejnyZanrVybrane.Enabled = true;
                     checkBoxStejnyZanrPlaylist.Enabled = true;
+                    buttonNeexistujiciVyhledat.Visible = false;
+                    richTextBoxPopis.Visible = true;
+                    checkBoxUlozit.Enabled = true;
+                    checkBoxNovyNazevAutomaticky.Enabled = true;
+                    checkBoxStejnyInterpretPlaylist.Enabled = true;
+                    checkBoxStejnyInterpretVybrane.Enabled = true;
+                    buttonProhodit.Enabled = true;
                 }
                 geckoWebBrowserVideo.Navigate("https://www.youtube.com/embed/" + upravovaneVideo.ID);
             }
@@ -710,6 +724,11 @@ namespace youtube2music
             upravovaneVideo.Stav = stav;
             // načte změny
             Nacist(true);
+        }
+
+        private void buttonNeexistujiciVyhledat_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://www.google.com/search?q=" + upravovaneVideo.ID);
         }
     }
 }
