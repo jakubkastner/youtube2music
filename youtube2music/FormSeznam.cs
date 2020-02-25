@@ -119,6 +119,7 @@ namespace youtube2music
             int stahovaneVideoIndex = 1;
             int stahovaniReport = 1;
             int prevedeno = 0;
+            List<string> stazeno = new List<string>();
             // postupně stáhne vybraná videa
             foreach (Video stahovaneVideo in videaKeStazeni)
             {
@@ -241,9 +242,17 @@ namespace youtube2music
                     // došlo k chybě přesunu souboru
                     continue;
                 }
+
+                // uloží ID staženého videa do seznamu
+                stazeno.Add(stahovaneVideo.ID);
+
                 backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);
                 prevedeno++;
             }
+
+            // uloží id stažených videí do souboru
+            Soubor.Zapis(Path.Combine(slozkaProgramuData, "historie.txt"), stazeno);
+
             e.Result = prevedeno;
         }
         // HOTOVO
@@ -2223,6 +2232,10 @@ namespace youtube2music
             string youtubeID = argumenty.Last();
             youtubeIDverejne = youtubeID;
             albumVerejne = album;
+
+            // získá seznam dříve stažených videí ze souboru
+            List<string> stazenaVidea = Soubor.Precti(Path.Combine(slozkaProgramuData, "historie.txt")) ?? new List<string>();
+
             // přidávání playlistu
             if (playlist)
             {
@@ -2284,6 +2297,13 @@ namespace youtube2music
                         //VideoStare noveVideo = new VideoStare(videoNoveID, youtubeID);
                         Video noveVideo = new Video(videoNoveID, playlistVidei, hudebniKnihovnaOpus, vsichniInterpreti);
                         noveVideo.Stopa = videaNovaID.IndexOf(videoNoveID) + 1;
+
+                        // kontrola, zdali video už nebylo stažené dříve (z historie)
+                        if (stazenaVidea.Contains(noveVideo.ID))
+                        {
+                            noveVideo.Chyba = "Video bylo staženo dříve";
+                        }
+
                         videaVsechna.Add(noveVideo);
                         objectListViewSeznamVidei.Invoke(new Action(() =>
                         {
@@ -2339,6 +2359,11 @@ namespace youtube2music
                 {
                     // pokud video nebylo přidáno, přidá se
                     Video noveVideo = new Video(youtubeID, new Playlist(youtubeID, youtubeID), hudebniKnihovnaOpus, vsichniInterpreti);
+                    // kontrola, zdali video už nebylo stažené dříve (z historie)
+                    if (stazenaVidea.Contains(noveVideo.ID))
+                    {
+                        noveVideo.Chyba = "Video bylo staženo dříve";
+                    }
                     videaVsechna.Add(noveVideo);
                     objectListViewSeznamVidei.Invoke(new Action(() =>
                     {
@@ -2768,7 +2793,7 @@ namespace youtube2music
 
         private void menuNastaveniSmazatCache_Click(object sender, EventArgs e)
         {
-            if (DialogResult.OK == Zobrazit.Otazku("Smazání cache programu", "Kliknutím na OK vymažete složky cache programu youtube2music.", "Před potvrzení se ujistěte, zdali neběží jiná instance programu youtube2music.", MessageBoxButtons.OKCancel))
+            if (DialogResult.OK == Zobrazit.Otazku("Smazání cache programu", "Kliknutím na OK vymažete složky cache programu youtube2music.", "Před potvrzením se ujistěte, zdali neběží jiná instance programu youtube2music.", MessageBoxButtons.OKCancel))
             {
                 if (!backgroundWorkerSmazCache.IsBusy)
                 {
@@ -2865,6 +2890,67 @@ namespace youtube2music
         private void menuNastaveniCacheOtevrit_Click(object sender, EventArgs e)
         {
             Spustit.Program(slozkaProgramuCache, true);
+        }
+
+        private void menuNastaveniHistorieSmazat_Click(object sender, EventArgs e)
+        {
+            if (DialogResult.OK == Zobrazit.Otazku("Smazání historie stažených videí", "Kliknutím na OK vymažete veškerou historii stahovaných videí.", "Může pak docházet k duplikátnímu stažení souborů.", MessageBoxButtons.OKCancel))
+            {
+                if (!backgroundWorkerSmazHistorii.IsBusy)
+                {
+                    menuNastaveniHistorieSmazat.Enabled = false;
+                    backgroundWorkerSmazHistorii.RunWorkerAsync();
+                }
+                else
+                {
+                    ZobrazitOperaci("Mazání historie stažených videí", "Chyba.");
+                    Zobrazit.Chybu("Mazání historie stažených videí", "Došlo k chybě, historie stažených videí nemohla být smazána.", "Zkuste smazat historii znovu.");
+                }
+            }
+        }
+
+        private void backgroundWorkerSmazHistorii_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (backgroundWorkerSmazHistorii.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+            if (!Soubor.Smaz(Path.Combine(slozkaProgramuData, "historie.txt")))
+            {
+                e.Result = "mazani_souboru";
+            }
+
+        }
+
+        private void backgroundWorkerSmazHistorii_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBarStatus.Value = e.ProgressPercentage;
+        }
+
+        private void backgroundWorkerSmazHistorii_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            progressBarStatus.Value = progressBarStatus.Maximum;
+            string chyba = (string)e.Result;
+            if (e.Cancelled)
+            {
+                ZobrazitOperaci("Mazání historie stažených videí", "Zrušeno uživatelem.");
+            }
+            else if (e.Error != null)
+            {
+                ZobrazitOperaci("Mazání historie stažených videí", "Chyba.");
+                Zobrazit.Chybu("Mazání historie stažených videí", "Došlo k chybě, historie stažených videí nemohla být smazána.", "Zkuste smazat historii znovu.", e.Error.ToString());
+            }
+            else if (chyba == "mazani_souboru")
+            {
+                ZobrazitOperaci("Mazání historie stažených videí", "Soubor s historií stažených videí se nepodařilo odstranit.");
+            }
+            else
+            {
+                ZobrazitOperaci("Mazání historie stažených videí", "Úspěšně byla smazána historie stažených videí");
+            }
+            progressBarStatus.Visible = false;
+            menuNastaveniHistorieSmazat.Enabled = true;
         }
     }
 }

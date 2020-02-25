@@ -81,6 +81,8 @@
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.menuNastaveniCacheSmazat = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniCacheOtevrit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuNastaveniHistorieSmazat = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStahnout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMenu = new System.Windows.Forms.MenuStrip();
             this.menuPridatPlaylist = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,6 +118,7 @@
             this.olvColumn13 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.pŘIDATALBUMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorkerSmazCache = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorkerSmazHistorii = new System.ComponentModel.BackgroundWorker();
             this.statusStripStatus.SuspendLayout();
             this.menuStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewSeznamVidei)).BeginInit();
@@ -302,7 +305,9 @@
             this.menuNastaveniFFmpegStahnout,
             this.toolStripSeparator9,
             this.menuNastaveniCacheSmazat,
-            this.menuNastaveniCacheOtevrit});
+            this.menuNastaveniCacheOtevrit,
+            this.toolStripSeparator10,
+            this.menuNastaveniHistorieSmazat});
             this.menuNastaveni.Name = "menuNastaveni";
             this.menuNastaveni.Size = new System.Drawing.Size(79, 23);
             this.menuNastaveni.Text = "NASTAVENÍ";
@@ -541,6 +546,18 @@
             this.menuNastaveniCacheOtevrit.Size = new System.Drawing.Size(255, 22);
             this.menuNastaveniCacheOtevrit.Text = "Otevřít cache programu";
             this.menuNastaveniCacheOtevrit.Click += new System.EventHandler(this.menuNastaveniCacheOtevrit_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(252, 6);
+            // 
+            // menuNastaveniHistorieSmazat
+            // 
+            this.menuNastaveniHistorieSmazat.Name = "menuNastaveniHistorieSmazat";
+            this.menuNastaveniHistorieSmazat.Size = new System.Drawing.Size(255, 22);
+            this.menuNastaveniHistorieSmazat.Text = "Smazat historii stažených videí";
+            this.menuNastaveniHistorieSmazat.Click += new System.EventHandler(this.menuNastaveniHistorieSmazat_Click);
             // 
             // menuStahnout
             // 
@@ -841,6 +858,14 @@
             this.backgroundWorkerSmazCache.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerSmazCache_ProgressChanged);
             this.backgroundWorkerSmazCache.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerSmazCache_RunWorkerCompleted);
             // 
+            // backgroundWorkerSmazHistorii
+            // 
+            this.backgroundWorkerSmazHistorii.WorkerReportsProgress = true;
+            this.backgroundWorkerSmazHistorii.WorkerSupportsCancellation = true;
+            this.backgroundWorkerSmazHistorii.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerSmazHistorii_DoWork);
+            this.backgroundWorkerSmazHistorii.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerSmazHistorii_ProgressChanged);
+            this.backgroundWorkerSmazHistorii.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerSmazHistorii_RunWorkerCompleted);
+            // 
             // FormSeznam
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -958,6 +983,9 @@
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniCacheSmazat;
         private System.ComponentModel.BackgroundWorker backgroundWorkerSmazCache;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniCacheOtevrit;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniHistorieSmazat;
+        private System.ComponentModel.BackgroundWorker backgroundWorkerSmazHistorii;
     }
 }
 

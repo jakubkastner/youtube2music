@@ -69,20 +69,37 @@ namespace youtube2music
         public static bool Presun(string soubor, string cilovaSlozka, string novyNazev = "")
         {
             // přesun souboru
-            if (File.Exists(soubor))
+            if (!File.Exists(soubor))
             {
-                try
-                {
-                    if (String.IsNullOrEmpty(novyNazev)) novyNazev = Path.GetFileName(soubor);
-                    File.Copy(soubor, Path.Combine(cilovaSlozka, novyNazev), true);
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
+                return false;
+            }
+            try
+            {
+                if (String.IsNullOrEmpty(novyNazev)) novyNazev = Path.GetFileName(soubor);
+                File.Copy(soubor, Path.Combine(cilovaSlozka, novyNazev), true);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static bool Smaz(string cesta)
+        {
+            if (!File.Exists(cesta))
+            {
                 return true;
             }
-            return false;
+            try
+            {
+                File.Delete(cesta);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
