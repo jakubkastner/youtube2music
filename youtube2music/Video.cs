@@ -367,8 +367,6 @@ namespace youtube2music
                 return;
             }
 
-            string interpret = "";
-            string skladba = "";
             bool remix = false; // pokud je v názvu remix, přidám ho nakonec
             Regex zavorka = new Regex(@"\(([^\}]+)\)"); // odstraní cokoliv v závorce ( )
 
@@ -428,13 +426,23 @@ namespace youtube2music
             // v názvu není oddělovací znak (pomlčka)
             if (!upravenyNazev.Contains('-'))
             {
-                // za první "'" nahradí "-" a odstraní ostatní
+                // za první """ nahradí "-"
                 Regex uvozovky = new Regex(Regex.Escape("\""));
                 upravenyNazev = uvozovky.Replace(upravenyNazev, "-", 1);
-                upravenyNazev = upravenyNazev.Replace("\"", "")
-                                             .Replace(" -", "-");
             }
+            if (!upravenyNazev.Contains('-'))
+            {
+                // za první "“" nahradí "-"
+                Regex uvozovky = new Regex(Regex.Escape("“"));
+                upravenyNazev = uvozovky.Replace(upravenyNazev, "-", 1);
+            }
+            upravenyNazev = upravenyNazev.Replace("\"", "")
+                                         .Replace("“", "")
+                                         .Replace("”", "")
+                                         .Replace(" -", "-");
 
+            string interpret;
+            string skladba;
             // v názvu stále není oddělovací znak (pomlčka)
             if (!upravenyNazev.Contains('-'))
             {
