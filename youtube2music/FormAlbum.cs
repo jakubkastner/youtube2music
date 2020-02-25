@@ -575,9 +575,10 @@ namespace youtube2music
 
                 videoYoutube.Chyba = ""; // SMAZAT
                 videoYoutube.Stav = "YouTube Album";
+                string jizStazenySoubor = "";
                 if (File.Exists(videoYoutube.Slozka))
                 {
-                    videoYoutube.Chyba = videoYoutube.Slozka;
+                    jizStazenySoubor = videoYoutube.Slozka;
                     videoYoutube.Stav = "Bude smazáno";
                 }
                 videoYoutube.Slozka = novyAlbum.Slozka;
@@ -589,6 +590,10 @@ namespace youtube2music
                     videoYoutube.NazevNovy = videoYoutube.NazevStopaInterpretSkladbaFeat;
                 }
 
+                if (!String.IsNullOrEmpty(jizStazenySoubor))
+                {
+                    videoYoutube.Chyba = jizStazenySoubor;
+                }
                 videoYoutube.Zanr = textBoxZanr.Text;
 
             }
