@@ -220,6 +220,7 @@ namespace youtube2music
             PrejmenujInterpreta("samuraj pitr", "samuraj pítr");
             PrejmenujInterpreta("p$ycho rhyme", "psycho rhyme");
             PrejmenujInterpreta("luna 99", "luna");
+            PrejmenujInterpreta("patrik love icy l", "icy l");
 
             // zahraniční
             PrejmenujInterpreta("the black eyed peas", "black eyed peas");

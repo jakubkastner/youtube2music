@@ -279,6 +279,11 @@ namespace youtube2music
             upravovaneVideo.Chyba = "";
             // najde automaticky složku a upraví některé informace
             upravovaneVideo.NajdiSlozku();
+            if (upravovaneVideo.Album != null && upravovaneVideo.Stopa > 0)
+            {
+                upravovaneVideo.Slozka = upravovaneVideo.Album.Slozka;
+                upravovaneVideo.NazevNovy = upravovaneVideo.NazevStopaSkladbaFeat;
+            }
             upravovaneVideo.Stav = stav;
             // načte změny
             Nacist(true);
