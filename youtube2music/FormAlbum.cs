@@ -304,7 +304,7 @@ namespace youtube2music
             interpretAlba.NajdiSlozky();
             Album novyAlbum = new Album(album.Nazev, Convert.ToInt32(album.DatumRok), interpretAlba, album.CoverNejvetsi);
 
-            textBoxAlbum.Text = album.Nazev;
+            textBoxAlbum.Text = novyAlbum.Nazev;
             numericUpDownRok.Value = Convert.ToDecimal(album.DatumRok);
             textBoxInterpret.Text = interpretAlba.Jmeno;
             textBoxSlozka.Text = novyAlbum.Slozka;

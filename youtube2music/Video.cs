@@ -203,7 +203,7 @@ namespace youtube2music
         /// <summary>
         /// Nový název ukládaného souboru (odstraněny špatné znaky z nového názvu)
         /// </summary>
-        public string NazevNovySoubor { get; set; }
+        public string NazevNovySoubor { get; private set; }
 
         /// <summary>
         /// Původní název videa.

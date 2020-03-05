@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace youtube2music
@@ -123,7 +124,8 @@ namespace youtube2music
         public string Cover { get; set; }
 
         public Album(string nazev, int rok, Interpret inter, string cover = "")
-        {
+        {            
+            nazev = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nazev.ToLower()).Replace(" i ", " I ");
             Nazev = nazev;
             Rok = rok;
             Interpret = inter;

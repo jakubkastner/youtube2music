@@ -648,6 +648,28 @@ namespace youtube2music
                 foreach (Video vid in upravovanaVidea)
                 {
                     vid.Skladba = vid.NazevPuvodni;
+                    if (checkBoxNovyNazevAutomaticky.Checked)
+                    {
+                        // automaticky se mění název
+                        string novyNazev = "";
+                        if (vid.Album != null)
+                        {
+                            novyNazev = vid.Stopa.ToString("00") + " ";
+                        }
+                        else if (vid.Slozka.ToLower().Contains("_ostatní") || String.IsNullOrEmpty(vid.Slozka))
+                        {
+                            // v názvu bude interpret
+                            novyNazev = vid.Interpret + "-";
+                        }
+                        novyNazev += vid.Skladba;
+
+                        if (!String.IsNullOrEmpty(vid.InterpretiFeat))
+                        {
+                            // v názvu bude featuring
+                            novyNazev += " (ft. " + vid.InterpretiFeat + ")";
+                        }
+                        vid.NazevNovy = novyNazev;
+                    }
                 }
             }
             if (checkBoxPuvodniNazevInterpret.Checked)
@@ -660,6 +682,28 @@ namespace youtube2music
                         // interpret je stejný
                         vid.Skladba = vid.NazevPuvodni;
                     }
+                    if (checkBoxNovyNazevAutomaticky.Checked)
+                    {
+                        // automaticky se mění název
+                        string novyNazev = "";
+                        if (vid.Album != null)
+                        {
+                            novyNazev = vid.Stopa.ToString("00") + " ";
+                        }
+                        else if (vid.Slozka.ToLower().Contains("_ostatní") || String.IsNullOrEmpty(vid.Slozka))
+                        {
+                            // v názvu bude interpret
+                            novyNazev = vid.Interpret + "-";
+                        }
+                        novyNazev += vid.Skladba;
+
+                        if (!String.IsNullOrEmpty(vid.InterpretiFeat))
+                        {
+                            // v názvu bude featuring
+                            novyNazev += " (ft. " + vid.InterpretiFeat + ")";
+                        }
+                        vid.NazevNovy = novyNazev;
+                    }
                 }
             }
             if (checkBoxPuvodniNazevPlaylist.Checked)
@@ -671,6 +715,28 @@ namespace youtube2music
                     {
                         // žánr je stejný
                         vid.Skladba = vid.NazevPuvodni;
+                    }
+                    if (checkBoxNovyNazevAutomaticky.Checked)
+                    {
+                        // automaticky se mění název
+                        string novyNazev = "";
+                        if (vid.Album != null)
+                        {
+                            novyNazev = vid.Stopa.ToString("00") + " ";
+                        }
+                        else if (vid.Slozka.ToLower().Contains("_ostatní") || String.IsNullOrEmpty(vid.Slozka))
+                        {
+                            // v názvu bude interpret
+                            novyNazev = vid.Interpret + "-";
+                        }
+                        novyNazev += vid.Skladba;
+
+                        if (!String.IsNullOrEmpty(vid.InterpretiFeat))
+                        {
+                            // v názvu bude featuring
+                            novyNazev += " (ft. " + vid.InterpretiFeat + ")";
+                        }
+                        vid.NazevNovy = novyNazev;
                     }
                 }
             }
