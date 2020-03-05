@@ -90,6 +90,13 @@ namespace youtube2music
             checkBoxStejnyZanrPlaylist.Checked = false;
             checkBoxNovyNazevAutomaticky.Checked = true;
 
+            checkBoxPuvodniNazevInterpret.Enabled = false;
+            checkBoxPuvodniNazevInterpret.Checked = false;
+            checkBoxPuvodniNazevVybrane.Enabled = false;
+            checkBoxPuvodniNazevVybrane.Checked = false;
+            checkBoxPuvodniNazevPlaylist.Enabled = false;
+            checkBoxPuvodniNazevPlaylist.Checked = false;
+
             // naplnění prvků hodnotami
             labelInterpret.Text = upravovaneVideo.Interpret;
             textBoxInterpret.Text = upravovaneVideo.Interpret;
@@ -175,6 +182,7 @@ namespace youtube2music
                     checkBoxStejnyInterpretPlaylist.Enabled = false;
                     checkBoxStejnyInterpretVybrane.Enabled = false;
                     buttonProhodit.Enabled = false;
+                    buttonPuvodniNazev.Enabled = false;
                 }
                 else
                 {
@@ -198,6 +206,10 @@ namespace youtube2music
                     checkBoxStejnyInterpretPlaylist.Enabled = true;
                     checkBoxStejnyInterpretVybrane.Enabled = true;
                     buttonProhodit.Enabled = true;
+                    buttonPuvodniNazev.Enabled = true;
+                    checkBoxPuvodniNazevInterpret.Enabled = true;
+                    checkBoxPuvodniNazevVybrane.Enabled = true;
+                    checkBoxPuvodniNazevPlaylist.Enabled = true;
                 }
                 geckoWebBrowserVideo.Navigate("https://www.youtube.com/embed/" + upravovaneVideo.ID);
             }
@@ -446,7 +458,10 @@ namespace youtube2music
                 checkBoxStejnaSlozkaPlaylist.Checked ||
                 checkBoxStejnyZanrInterpret.Checked ||
                 checkBoxStejnyZanrVybrane.Checked ||
-                checkBoxStejnyZanrPlaylist.Checked)
+                checkBoxStejnyZanrPlaylist.Checked ||
+                checkBoxPuvodniNazevVybrane.Checked ||
+                checkBoxPuvodniNazevInterpret.Checked ||
+                checkBoxPuvodniNazevPlaylist.Checked)
             {
                 checkBoxUlozit.Checked = true;
             }
@@ -624,6 +639,41 @@ namespace youtube2music
                     }
                 }
             }
+
+
+            // ukládání původního názvu jako názvu skladby
+            if (checkBoxPuvodniNazevVybrane.Checked)
+            {
+                // je zaškrtnuto použití stejného žánru u všech upravovaných videí, uložím žánr i u nich
+                foreach (Video vid in upravovanaVidea)
+                {
+                    vid.Skladba = vid.NazevPuvodni;
+                }
+            }
+            if (checkBoxPuvodniNazevInterpret.Checked)
+            {
+                // je zaškrtnuto použití stejného žánru u všech upravovaných videí stejného interpreta, uložím žánr i u nich
+                foreach (Video vid in upravovanaVidea)
+                {
+                    if (vid.Interpret == textBoxInterpret.Text)
+                    {
+                        // interpret je stejný
+                        vid.Skladba = vid.NazevPuvodni;
+                    }
+                }
+            }
+            if (checkBoxPuvodniNazevPlaylist.Checked)
+            {
+                // je zaškrtnuto použití stejného žánru u všech upravovaných videí ze stejného playlistu, uložím žánr i u nich
+                foreach (Video vid in upravovanaVidea)
+                {
+                    if (vid.PlaylistVidea.ID == upravovaneVideo.PlaylistVidea.ID)
+                    {
+                        // žánr je stejný
+                        vid.Skladba = vid.NazevPuvodni;
+                    }
+                }
+            }
         }
 
         // DODĚLAT
@@ -734,6 +784,11 @@ namespace youtube2music
         private void buttonNeexistujiciVyhledat_Click(object sender, EventArgs e)
         {
             Process.Start("https://www.google.com/search?q=" + upravovaneVideo.ID);
+        }
+
+        private void buttonPuvodniNazev_Click(object sender, EventArgs e)
+        {
+            textBoxSkladba.Text = textBoxPuvodniNazev.Text;
         }
     }
 }
