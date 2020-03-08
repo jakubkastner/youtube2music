@@ -249,6 +249,7 @@ namespace youtube2music
         {
             // pokud je posledním indexu oddělovač, odstraním ho a na konci zase přidám
             bool oddelovacNaKonci = false;
+            if (String.IsNullOrEmpty(Jmeno)) return;
             if (Jmeno.Last() == oddelovac)
             {
                 Jmeno = Jmeno.TrimEnd(oddelovac);
