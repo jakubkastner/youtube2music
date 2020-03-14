@@ -535,8 +535,15 @@ namespace youtube2music
 
             Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
             interpretAlba.NajdiSlozky();
-
-            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, pictureBoxCoverPredni.Tag.ToString());
+            Album novyAlbum;
+            if (pictureBoxCoverPredni.Tag == null)
+            {
+                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba);
+            }
+            else
+            {
+                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, pictureBoxCoverPredni.Tag.ToString());
+            }
             novyAlbum.Slozka = textBoxSlozka.Text;
             textBoxZanr.Text = novyAlbum.Zanr;
 
