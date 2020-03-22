@@ -1,4 +1,5 @@
 ﻿using Gecko;
+using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -306,7 +307,7 @@ namespace youtube2music
         /// </summary>
         private void buttonSlozkaJina_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog vyberSlozky = new FolderBrowserDialog();
+            VistaFolderBrowserDialog vyberSlozky = new VistaFolderBrowserDialog();
             vyberSlozky.Description = "Vyberte složku do které se stáhne video:";
 
             // nastaví výchozí cestu
@@ -326,7 +327,7 @@ namespace youtube2music
                 vyberSlozky.SelectedPath = hudebniKnihovna;
             }
 
-            if (vyberSlozky.ShowDialog() == DialogResult.OK)
+            if ((bool)vyberSlozky.ShowDialog())
             {
                 textBoxSlozka.Text = vyberSlozky.SelectedPath;
             }

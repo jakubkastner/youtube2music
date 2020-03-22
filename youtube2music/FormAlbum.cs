@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows.Forms;
+using Ookii.Dialogs.Wpf;
 
 namespace youtube2music
 {
@@ -362,7 +363,7 @@ namespace youtube2music
 
         private void buttonSlozkaZmenit_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog vyberSlozky = new FolderBrowserDialog();
+            VistaFolderBrowserDialog vyberSlozky = new VistaFolderBrowserDialog();
             vyberSlozky.Description = "Vyberte složku do které se stáhne album:";
 
             // nastaví výchozí cestu
@@ -381,8 +382,7 @@ namespace youtube2music
                 // nejedná se o existující složku ani soubor
                 vyberSlozky.SelectedPath = hudebniKnihovna;
             }
-
-            if (vyberSlozky.ShowDialog() == DialogResult.OK)
+            if ((bool)vyberSlozky.ShowDialog())
             {
                 textBoxSlozka.Text = vyberSlozky.SelectedPath;
             }

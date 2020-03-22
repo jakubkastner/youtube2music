@@ -10,6 +10,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
+using Ookii.Dialogs.Wpf;
 
 namespace youtube2music
 {
@@ -865,17 +866,23 @@ namespace youtube2music
         /// </param>
         private void HudebniKnihovnaVyber(bool opus)
         {
+            string typ = opus ? "opus" : "mp3";
+            string hudebniKnihovna = opus ? hudebniKnihovnaOpus : hudebniKnihovnaMp3;
+
             // hudební knihovna - uživatel vybere novou cestu složky
-            FolderBrowserDialog vyberSlozky = new FolderBrowserDialog();
-            vyberSlozky.Description = "Vyberte složku s hudební knihovnou:";
-            vyberSlozky.ShowNewFolderButton = false;
-            if (vyberSlozky.ShowDialog() == DialogResult.OK)
+            VistaFolderBrowserDialog vyberSlozky = new VistaFolderBrowserDialog();
+            vyberSlozky.Description = "Vyberte složku s hudební knihovnou " + typ;
+            vyberSlozky.UseDescriptionForTitle = true;
+            if (Directory.Exists(hudebniKnihovna))
             {
-                string typ = opus ? "opus" : "mp3";
-                string hudebniKnihovna;
+                vyberSlozky.SelectedPath = hudebniKnihovna;
+            }
+
+            if ((bool)vyberSlozky.ShowDialog())
+            {
                 if (opus)
                 {
-                    hudebniKnihovnaOpus = vyberSlozky.SelectedPath;
+                    hudebniKnihovnaOpus = vyberSlozky.SelectedPath;                    
                     hudebniKnihovna = hudebniKnihovnaOpus;
                     MenuCestaZobrazit(0);
                 }
@@ -898,6 +905,10 @@ namespace youtube2music
             OpenFileDialog vyberSouboru = new OpenFileDialog();
             vyberSouboru.Title = "Vyberte spustitelný soubor YoutubeDL:";
             vyberSouboru.Filter = "Spustitelné soubory (*.exe)|*.exe|Všechny soubory (*.*)|*.*";
+            if (Directory.Exists(Path.GetDirectoryName(cestaYoutubeDL)))
+            {
+                vyberSouboru.InitialDirectory = Path.GetDirectoryName(cestaYoutubeDL);
+            }
             if (vyberSouboru.ShowDialog() == DialogResult.OK)
             {
                 if (vyberSouboru.FilterIndex == 2)
@@ -920,6 +931,10 @@ namespace youtube2music
             OpenFileDialog vyberSouboru = new OpenFileDialog();
             vyberSouboru.Title = "Vyberte spustitelný soubor FFmpeg:";
             vyberSouboru.Filter = "Spustitelné soubory (*.exe)|*.exe|Všechny soubory (*.*)|*.*";
+            if (Directory.Exists(Path.GetDirectoryName(cestaFFmpeg)))
+            {
+                vyberSouboru.InitialDirectory = Path.GetDirectoryName(cestaFFmpeg);
+            }
             if (vyberSouboru.ShowDialog() == DialogResult.OK)
             {
                 if (vyberSouboru.FilterIndex == 2)
