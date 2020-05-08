@@ -40,9 +40,25 @@ namespace youtube2music
         /// </summary>
         /// <param name="cesta">Cesta souboru k uložení.</param>
         /// <param name="radkyKZapisu">Seznam řádků k zápisu do souboru.</param>
-        public static void Zapis(string cesta, List<string> radkyKZapisu)
+        /// <param name="prepsat">true = přepíše již existující obsah souboru, false = přidá k obsahu souboru nový text</param>
+        public static void Zapis(string cesta, List<string> radkyKZapisu, bool prepsat = true)
         {
-            using (FileStream str = new FileStream(cesta, FileMode.Create, FileAccess.Write))
+            if (prepsat)
+            {
+                using (FileStream str = new FileStream(cesta, FileMode.Create, FileAccess.Write))
+                {
+                    using (StreamWriter zapisovacka = new StreamWriter(str))
+                    {
+                        foreach (string radek in radkyKZapisu)
+                        {
+                            // zapíše jednotlivé řádky do souboru
+                            zapisovacka.WriteLine(radek);
+                        }
+                    }
+                }
+                return;
+            }
+            using (FileStream str = new FileStream(cesta, FileMode.Append, FileAccess.Write))
             {
                 using (StreamWriter zapisovacka = new StreamWriter(str))
                 {

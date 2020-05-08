@@ -15,7 +15,7 @@ using Ookii.Dialogs.Wpf;
 namespace youtube2music
 {
     public partial class FormSeznam : Form
-    {
+    {        
         /**** PROMĚNNÉ ****/
 
         string hudebniKnihovnaOpus = null;
@@ -29,6 +29,7 @@ namespace youtube2music
         //string youtubeID = null;
         List<Video> videaVsechna = new List<Video>();
         SeznamInterpretu vsichniInterpreti = new SeznamInterpretu();
+        Aplikace.Cesty neco = new Aplikace.Cesty();
 
         public FormSeznam()
         {
@@ -48,7 +49,7 @@ namespace youtube2music
         /// <param name="bezChyb">Získání videí bez chyb (true) nebo s chybami (false).</param>
         /// <returns></returns>
         private List<Video> ZiskejVybranaVidea(bool bezChyb)
-        {
+        {            
             List<Video> videaVybrana = new List<Video>();
             foreach (Video videoVybrane in objectListViewSeznamVidei.CheckedObjects)
             {
@@ -252,7 +253,7 @@ namespace youtube2music
             }
 
             // uloží id stažených videí do souboru
-            Soubor.Zapis(Path.Combine(slozkaProgramuData, "historie.txt"), stazeno);
+            Soubor.Zapis(Path.Combine(slozkaProgramuData, "historie.txt"), stazeno, false);
 
             e.Result = prevedeno;
         }
@@ -552,6 +553,7 @@ namespace youtube2music
         }
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            MessageBox.Show(neco.ToString());
         }
 
         /*******************************************************************************************************/

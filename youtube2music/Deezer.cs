@@ -92,7 +92,7 @@ namespace youtube2music
             this.CoverNejvetsi = seznamNalezenychSkladeb.cover_xl;
             if (this.CoverNejvetsi != null)
             {
-                this.CoverNejvetsi = this.CoverNejvetsi.Replace("1000", "2000");
+                this.CoverNejvetsi = this.CoverNejvetsi.Replace("1000", "1500");
             }
             this.CoverStredni = seznamNalezenychSkladeb.cover_medium;
             this.Datum = seznamNalezenychSkladeb.release_date;
