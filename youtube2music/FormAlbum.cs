@@ -73,7 +73,7 @@ namespace youtube2music
             // získání informací o playlistu youtube
             Playlist playlistAlba = new Playlist(playlistID);
             string interpret = "";
-            string album = playlistAlba.Nazev;
+            string album = playlistAlba.Nazev.Replace("Album - ","");
             linkLabelOdkaz.Text = playlistAlba.Url;
             this.Text = album + " - nové album ~ youtube2music";
 
@@ -303,7 +303,7 @@ namespace youtube2music
             }
             Interpret interpretAlba = new Interpret(album.Interpret);
             interpretAlba.NajdiSlozky();
-            Album novyAlbum = new Album(album.Nazev, Convert.ToInt32(album.DatumRok), interpretAlba, album.CoverNejvetsi);
+            Album novyAlbum = new Album(album.Nazev, Convert.ToInt32(album.DatumRok), interpretAlba, "", album.CoverNejvetsi);
 
             textBoxAlbum.Text = novyAlbum.Nazev;
             numericUpDownRok.Value = Convert.ToDecimal(album.DatumRok);
@@ -538,11 +538,11 @@ namespace youtube2music
             Album novyAlbum;
             if (pictureBoxCoverPredni.Tag == null)
             {
-                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba);
+                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, textBoxZanr.Text);
             }
             else
             {
-                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, pictureBoxCoverPredni.Tag.ToString());
+                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, textBoxZanr.Text, pictureBoxCoverPredni.Tag.ToString());
             }
             novyAlbum.Slozka = textBoxSlozka.Text;
             textBoxZanr.Text = novyAlbum.Zanr;
@@ -602,6 +602,11 @@ namespace youtube2music
                     videoYoutube.Chyba = jizStazenySoubor;
                 }
                 videoYoutube.Zanr = textBoxZanr.Text;
+                if (videoYoutube.Publikovano.Year > novyAlbum.Rok)
+                {
+                    // video publikovano pozdeji nez rok vydani alba
+                    videoYoutube.Publikovano = new DateTime(novyAlbum.Rok, videoYoutube.Publikovano.Month, videoYoutube.Publikovano.Day);
+                }
 
             }
             backgroundWorkerVyhledatDeezer.CancelAsync();

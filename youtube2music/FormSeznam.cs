@@ -167,7 +167,10 @@ namespace youtube2music
                 }
 
                 // nastaví vlastnosti programu na stažení
-                psi.Arguments = "-x -i -w  --audio-quality 0 --audio-format mp3 -o \"" + nazev + ".%(ext)s\" \"" + adresaVidea + "\""; // -U = update
+
+                // nové s cookies
+                psi.Arguments = "-x --cookies \"C:\\Programy\\youtube-cookies.txt\" -i -w  --audio-quality 0 --audio-format mp3 -o \"" + nazev + ".%(ext)s\" \"" + adresaVidea + "\""; // -U = update
+                // psi.Arguments = "-x -i -w  --audio-quality 0 --audio-format mp3 -o \"" + nazev + ".%(ext)s\" \"" + adresaVidea + "\""; // -U = update
                 psi.CreateNoWindow = true;
                 psi.ErrorDialog = true;
                 psi.FileName = cestaYoutubeDL;

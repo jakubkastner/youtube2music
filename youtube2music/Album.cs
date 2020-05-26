@@ -13,7 +13,7 @@ namespace youtube2music
     {
         private string slozkaAlbumu;
 
-        //private string zanrAlbumu;
+        private string zanrAlbumu;
 
         public string Nazev { get; set; }
 
@@ -28,6 +28,10 @@ namespace youtube2music
         {
             get
             {
+                if (!String.IsNullOrEmpty(zanrAlbumu))
+                {
+                    return zanrAlbumu;
+                }
                 if (String.IsNullOrEmpty(this.Slozka))
                 {
                     return "";
@@ -53,10 +57,10 @@ namespace youtube2music
                 }
                 return zanr;
             }
-            /*set
+            set
             {
                 this.zanrAlbumu = value;
-            }*/
+            }
         }
 
         public string Slozka
@@ -123,13 +127,17 @@ namespace youtube2music
         
         public string Cover { get; set; }
 
-        public Album(string nazev, int rok, Interpret inter, string cover = "")
+        public Album(string nazev, int rok, Interpret inter, string zanr = "", string cover = "")
         {            
             nazev = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nazev.ToLower()).Replace(" i ", " I ");
             Nazev = nazev;
             Rok = rok;
             Interpret = inter;
             Cover = cover;
+            if (!String.IsNullOrEmpty(zanr))
+            {
+                zanrAlbumu = zanr;
+            }
         }
 
         // TODO PŘESUNOUT DO HROMADNÉ TŘÍDY (STEJNÁ FUNKCE SE POUŽÍVÁ PRO Video.cs)
