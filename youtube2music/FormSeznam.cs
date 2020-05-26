@@ -2015,51 +2015,168 @@ namespace youtube2music
         /// <param name="odkaz">Odkaz ke kontrole a získání ID.</param>
         private void ZkontrolujOdkaz(string odkaz)
         {
+            // https://open.spotify.com/album/6grIHK7vZSucs3CUGqK4IO
             // regexy pro získání id videa nebo playlistu
             Regex video = new Regex("(?:.+?)?(?:\\/v\\/|watch\\/|\\?v=|\\&v=|youtu\\.be\\/|\\/v=|^youtu\\.be\\/)([a-zA-Z0-9_-]{11})+", RegexOptions.Compiled);
             Regex playlist = new Regex(@"(?:http|https|)(?::\/\/|)(?:www.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{12,})[a-z0-9;:@#?&%=+\/\$_.-]*");
 
+            string spotifyUrl = null;
             string videoID = null;
             string playlistID = null;
             bool konec = false;
 
-            // kontrola, zdali se jedná o video
-            foreach (Match kontrola in video.Matches(odkaz))
+            // kontrola, zdali se jedná spotify url
+            if (odkaz.Contains("spotify"))
             {
-                foreach (var groupdata in kontrola.Groups.Cast<Group>().Where(groupdata => !groupdata.ToString().StartsWith("http://") && !groupdata.ToString().StartsWith("https://") && !groupdata.ToString().StartsWith("youtu") && !groupdata.ToString().StartsWith("www.")))
-                {
-                    // jedná se o video
-                    videoID = groupdata.ToString();
-                    konec = true;
-                    break;
-                }
-                if (konec) break;
+                spotifyUrl = odkaz;
             }
-            konec = false;
-
-            // kontrola, zdali se jedná o playlist
-            foreach (Match kontrola in playlist.Matches(odkaz))
+            else
             {
-                foreach (var groupdata in kontrola.Groups.Cast<Group>().Where(groupdata => !groupdata.ToString().StartsWith("http://") && !groupdata.ToString().StartsWith("https://") && !groupdata.ToString().StartsWith("youtu") && !groupdata.ToString().StartsWith("www.")))
+                // kontrola, zdali se jedná o video
+                foreach (Match kontrola in video.Matches(odkaz))
                 {
-                    // jedná se o playlist
-                    playlistID = groupdata.ToString();
-                    konec = true;
-                    break;
+                    foreach (var groupdata in kontrola.Groups.Cast<Group>().Where(groupdata => !groupdata.ToString().StartsWith("http://") && !groupdata.ToString().StartsWith("https://") && !groupdata.ToString().StartsWith("youtu") && !groupdata.ToString().StartsWith("www.")))
+                    {
+                        // jedná se o video
+                        videoID = groupdata.ToString();
+                        konec = true;
+                        break;
+                    }
+                    if (konec) break;
                 }
-                if (konec) break;
+                konec = false;
+
+                // kontrola, zdali se jedná o playlist
+                foreach (Match kontrola in playlist.Matches(odkaz))
+                {
+                    foreach (var groupdata in kontrola.Groups.Cast<Group>().Where(groupdata => !groupdata.ToString().StartsWith("http://") && !groupdata.ToString().StartsWith("https://") && !groupdata.ToString().StartsWith("youtu") && !groupdata.ToString().StartsWith("www.")))
+                    {
+                        // jedná se o playlist
+                        playlistID = groupdata.ToString();
+                        konec = true;
+                        break;
+                    }
+                    if (konec) break;
+                }
+                konec = false;
             }
 
             // konečná kontrola a zobrazení výsledků
-            if (String.IsNullOrEmpty(playlistID) && String.IsNullOrEmpty(videoID))
+            if (String.IsNullOrEmpty(playlistID) && String.IsNullOrEmpty(videoID) && String.IsNullOrEmpty(spotifyUrl))
             {
                 // nejedná se o správný odkaz
                 menuPridatVideo.Enabled = false;
                 menuPridatPlaylist.Enabled = false;
                 menuPridatAlbum.Enabled = false;
+                menuPridatSpotify.Enabled = false;
                 menuPridatVideo.Tag = "";
                 menuPridatPlaylist.Tag = "";
+                menuPridatSpotify.Tag = "";
                 ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz není z YouTube.");
+            }
+            else if (!String.IsNullOrEmpty(spotifyUrl))
+            {
+                // získá typ url
+                string spotifyTyp = null;
+                if (spotifyUrl.Contains("album"))
+                {
+                    spotifyTyp = "album";
+                }
+                else if (spotifyUrl.Contains("track"))
+                {
+                    spotifyTyp = "track";
+                }
+                else if (spotifyUrl.Contains("playlist"))
+                {
+                    spotifyTyp = "playlist";
+                }
+                else if (spotifyUrl.Contains("artist"))
+                {
+                    spotifyTyp = "artist";
+                }
+                else
+                {
+                    // nejedná se o správný odkaz
+                    menuPridatVideo.Enabled = false;
+                    menuPridatPlaylist.Enabled = false;
+                    menuPridatAlbum.Enabled = false;
+                    menuPridatSpotify.Enabled = false;
+                    menuPridatVideo.Tag = "";
+                    menuPridatPlaylist.Tag = "";
+                    menuPridatSpotify.Tag = "";
+                    ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je ze Spotify, ale je poškozený.");
+                    return;
+                }
+
+                // získá id položky
+                // spotify:album:6grIHK7vZSucs3CUGqK4IO
+                // https://open.spotify.com/artist/4YQK33NdyLe6prjmIjHBcM?si=a036zbQvQW6RY59HVX3dOQ
+
+
+                // odstraní https://
+                if (spotifyUrl.Contains("open"))
+                {
+                    spotifyUrl = spotifyUrl.Replace("https://", "http://").Replace("http://", "").Replace("open.spotify.com/", "");
+                    if (spotifyUrl.Contains("/"))
+                    {
+                        string spotifyId = spotifyUrl.Replace("/", ":");
+                        if (spotifyId.Contains("?"))
+                        {
+                            spotifyId = spotifyId.Split('?').First();
+                        }
+                        if (!String.IsNullOrEmpty(spotifyId.Trim()))
+                        {
+                            spotifyTyp = "spotify:" + spotifyId;
+                        }
+                        else
+                        {
+                            spotifyTyp = null;
+                        }
+                    }
+                    else
+                    {
+                        spotifyTyp = null;
+                    }
+                    if (String.IsNullOrEmpty(spotifyTyp))
+                    {
+                        // nejedná se o správný odkaz
+                        menuPridatVideo.Enabled = false;
+                        menuPridatPlaylist.Enabled = false;
+                        menuPridatAlbum.Enabled = false;
+                        menuPridatSpotify.Enabled = false;
+                        menuPridatVideo.Tag = "";
+                        menuPridatPlaylist.Tag = "";
+                        menuPridatSpotify.Tag = "";
+                        ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je ze Spotify, ale je poškozený.");
+                        return;
+                    }
+                }
+                else if (spotifyUrl.Contains("spotify:"))
+                {
+                    spotifyTyp = spotifyUrl;
+                }
+                else
+                {
+                    // nejedná se o správný odkaz
+                    menuPridatVideo.Enabled = false;
+                    menuPridatPlaylist.Enabled = false;
+                    menuPridatAlbum.Enabled = false;
+                    menuPridatSpotify.Enabled = false;
+                    menuPridatVideo.Tag = "";
+                    menuPridatPlaylist.Tag = "";
+                    menuPridatSpotify.Tag = "";
+                    ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je ze Spotify, ale je poškozený.");
+                    return;
+                }
+                // jedná se o platnou spotify url
+                menuPridatVideo.Enabled = false;
+                menuPridatPlaylist.Enabled = false;
+                menuPridatAlbum.Enabled = false;
+                menuPridatSpotify.Enabled = true;
+                menuPridatVideo.Tag = "";
+                menuPridatPlaylist.Tag = "";
+                menuPridatSpotify.Tag = spotifyTyp;
+                ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je Spotify " + spotifyTyp + ".");
             }
             else if (String.IsNullOrEmpty(videoID))
             {
@@ -2067,8 +2184,10 @@ namespace youtube2music
                 menuPridatVideo.Enabled = false;
                 menuPridatPlaylist.Enabled = true;
                 menuPridatAlbum.Enabled = true;
+                menuPridatSpotify.Enabled = false;
                 menuPridatVideo.Tag = "";
                 menuPridatPlaylist.Tag = playlistID;
+                menuPridatSpotify.Tag = "";
                 ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je playlist.");
             }
             else if (String.IsNullOrEmpty(playlistID))
@@ -2077,8 +2196,10 @@ namespace youtube2music
                 menuPridatVideo.Enabled = true;
                 menuPridatPlaylist.Enabled = false;
                 menuPridatAlbum.Enabled = false;
+                menuPridatSpotify.Enabled = false;
                 menuPridatVideo.Tag = videoID;
                 menuPridatPlaylist.Tag = "";
+                menuPridatSpotify.Tag = "";
                 ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je video.");
             }
             else
@@ -2087,8 +2208,10 @@ namespace youtube2music
                 menuPridatVideo.Enabled = true;
                 menuPridatPlaylist.Enabled = true;
                 menuPridatAlbum.Enabled = true;
+                menuPridatSpotify.Enabled = false;
                 menuPridatVideo.Tag = videoID;
                 menuPridatPlaylist.Tag = playlistID;
+                menuPridatSpotify.Tag = "";
                 ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je video i playlist.");
             }
         }
@@ -2968,6 +3091,11 @@ namespace youtube2music
             }
             progressBarStatus.Visible = false;
             menuNastaveniHistorieSmazat.Enabled = true;
+        }
+
+        private void menuPridatSpotify_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
