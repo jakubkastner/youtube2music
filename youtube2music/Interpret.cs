@@ -221,6 +221,8 @@ namespace youtube2music
             PrejmenujInterpreta("p$ycho rhyme", "psycho rhyme");
             PrejmenujInterpreta("luna 99", "luna");
             PrejmenujInterpreta("patrik love icy l", "icy l");
+            PrejmenujInterpreta("frayer", "frayer flexking");
+            PrejmenujInterpreta("robis hood", "robis");
 
             // zahraniční
             PrejmenujInterpreta("the black eyed peas", "black eyed peas");
