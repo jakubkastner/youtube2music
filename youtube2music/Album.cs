@@ -89,6 +89,8 @@ namespace youtube2music
                 }
                 if (!String.IsNullOrEmpty(album) && !String.IsNullOrEmpty(slozka))
                 {
+                    slozka = String.Join("", slozka.Split(Path.GetInvalidPathChars()));
+                    album = String.Join("", album.Split(Path.GetInvalidPathChars()));
                     slozka = Path.Combine(slozka, album);
                 }
                 return slozka;

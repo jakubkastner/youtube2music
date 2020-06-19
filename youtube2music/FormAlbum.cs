@@ -572,6 +572,7 @@ namespace youtube2music
                 {
                     foreach (var interpretDeezer in albumDeezer.Skladby[videoYoutube.Stopa - 1].Interpreti)
                     {
+                        // procházím interprety deezeru
                         if (!interpretiAlba.Contains(interpretDeezer))
                         {
                             // nepřidám jednotlivé interprety albumu k jednotlivým songům (již jsou přidáni)

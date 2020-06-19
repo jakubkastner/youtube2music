@@ -241,6 +241,7 @@ namespace youtube2music
             PrejmenujInterpreta("mgk", "machine gun kelly");
             PrejmenujInterpreta("mustard", "dj mustard");
             PrejmenujInterpreta("pharell", "pharell williams");
+            PrejmenujInterpreta("bill saber", "bill $aber");
         }
 
         /// <summary>

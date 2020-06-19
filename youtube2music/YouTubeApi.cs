@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Xml;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
@@ -58,7 +59,8 @@ namespace youtube2music
                     noveVideo.NazevPuvodni = snippet.Title;
                     noveVideo.Kanal = new Kanal(snippet.ChannelId, snippet.ChannelTitle);
                     noveVideo.Popis = snippet.Description;
-                    noveVideo.Publikovano = snippet.PublishedAt.Value;
+                    noveVideo.Publikovano = DateTime.ParseExact(snippet.PublishedAt, "yyyy-MM-ddTHH:mm:ssZ", null);
+                    // noveVideo.Publikovano = new DateTime( snippet.PublishedAt;
                     return;
                 }
             }
