@@ -10,6 +10,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
+using Microsoft.WindowsAPICodePack.Taskbar;
 using Ookii.Dialogs.Wpf;
 
 namespace youtube2music
@@ -265,11 +266,13 @@ namespace youtube2music
         private void backgroundWorkerStahniVideo_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBarStatus.Value = e.ProgressPercentage;
+            TaskbarManager.Instance.SetProgressValue(e.ProgressPercentage, progressBarStatus.Maximum);
         }
         // HOTOVO
         private void backgroundWorkerStahniVideo_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             progressBarStatus.Value = progressBarStatus.Maximum;
+            TaskbarManager.Instance.SetProgressValue(progressBarStatus.Maximum, progressBarStatus.Maximum);
             if (e.Cancelled)
             {
                 ZobrazitOperaci("Stahování videí", "Zrušeno uživatelem.");
@@ -284,6 +287,7 @@ namespace youtube2music
                 ZobrazitOperaci("Stahování videí", "Úspěšně bylo staženo " + e.Result.ToString() + " videí z(e) " + objectListViewSeznamVidei.CheckedObjects.Count.ToString());
             }
             progressBarStatus.Visible = false;
+            TaskbarManager.Instance.SetProgressValue(0, 0);
             menuStahnout.Text = "STÁHNOUT A PŘESUNOUT";
             menuStahnout.Enabled = true;
         }
@@ -556,7 +560,8 @@ namespace youtube2music
         }
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(neco.ToString());
+            TaskbarManager.Instance.SetProgressValue(0, 0);
+            //MessageBox.Show(neco.ToString());
         }
 
         /*******************************************************************************************************/
@@ -706,6 +711,7 @@ namespace youtube2music
         {
             // nastaví hodnotu ProgressBaru
             progressBarStatus.Value = e.ProgressPercentage;
+            TaskbarManager.Instance.SetProgressValue(e.ProgressPercentage, progressBarStatus.Maximum);
         }
 
         // HOTOVO 2019
@@ -716,6 +722,7 @@ namespace youtube2music
         {
             // nastaví maximální hodnotu ProgressBaru
             progressBarStatus.Value = progressBarStatus.Maximum;
+            TaskbarManager.Instance.SetProgressValue(progressBarStatus.Maximum, progressBarStatus.Maximum);
 
             // zobrazení výsledků
             if (e.Error != null)
@@ -736,6 +743,7 @@ namespace youtube2music
 
             // skryje se ProgressBar
             progressBarStatus.Visible = false;
+            TaskbarManager.Instance.SetProgressValue(0, 0);
         }
 
 
@@ -1415,6 +1423,7 @@ namespace youtube2music
         {
             // nastaví hodnotu ProgressBaru
             progressBarStatus.Value = e.ProgressPercentage;
+            TaskbarManager.Instance.SetProgressValue(e.ProgressPercentage, progressBarStatus.Maximum);
         }
 
         // HOTOVO 2019
@@ -1425,6 +1434,7 @@ namespace youtube2music
         {
             // nastaví maximální hodnotu ProgressBaru
             progressBarStatus.Value = progressBarStatus.Maximum;
+            TaskbarManager.Instance.SetProgressValue(progressBarStatus.Maximum, progressBarStatus.Maximum);
 
             // zobrazení výsledků
             if (e.Error != null)
@@ -1455,6 +1465,7 @@ namespace youtube2music
 
             // skryje se ProgressBar
             progressBarStatus.Visible = false;
+            TaskbarManager.Instance.SetProgressValue(0, 0);
         }
 
 
@@ -1692,6 +1703,7 @@ namespace youtube2music
         {
             // nastaví hodnotu ProgressBaru
             progressBarStatus.Value = e.ProgressPercentage;
+            TaskbarManager.Instance.SetProgressValue(e.ProgressPercentage, progressBarStatus.Maximum);
         }
 
         // HOTOVO 2019
@@ -1702,6 +1714,7 @@ namespace youtube2music
         {
             // nastaví maximální hodnotu ProgressBaru
             progressBarStatus.Value = progressBarStatus.Maximum;
+            TaskbarManager.Instance.SetProgressValue(progressBarStatus.Maximum, progressBarStatus.Maximum);
             string vysledek = (string)e.Result;
 
             // zobrazení výsledků
@@ -1742,6 +1755,7 @@ namespace youtube2music
 
             // skryje se ProgressBar
             progressBarStatus.Visible = false;
+            TaskbarManager.Instance.SetProgressValue(0, 0);
             ZobrazitStav();
         }
 
@@ -2523,12 +2537,14 @@ namespace youtube2music
         {
             // nastaví hodnotu ProgressBaru
             progressBarStatus.Value = e.ProgressPercentage;
+            TaskbarManager.Instance.SetProgressValue(e.ProgressPercentage, progressBarStatus.Maximum);
         }
         // HOTOVO 19
         private void backgroundWorkerPridejVidea_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             // nastaví maximální hodnotu ProgressBaru
             progressBarStatus.Value = progressBarStatus.Maximum;
+            TaskbarManager.Instance.SetProgressValue(progressBarStatus.Maximum, progressBarStatus.Maximum);
 
             if (e.Cancelled)
             {
@@ -2556,6 +2572,7 @@ namespace youtube2music
             }
             // skryje se ProgressBar
             progressBarStatus.Visible = false;
+            TaskbarManager.Instance.SetProgressValue(0, 0);
             // změní text v menu ("přidání videa/playlistu")
             ZobrazitStav();
             if (albumVerejne)
@@ -2818,6 +2835,7 @@ namespace youtube2music
                 progressBarStatus.Maximum = maximum;
                 progressBarStatus.Visible = true;
             }));
+            TaskbarManager.Instance.SetProgressValue(progressBarStatus.Minimum, maximum);
         }
         #endregion
 
@@ -2998,11 +3016,13 @@ namespace youtube2music
         private void backgroundWorkerSmazCache_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBarStatus.Value = e.ProgressPercentage;
+            TaskbarManager.Instance.SetProgressValue(e.ProgressPercentage, progressBarStatus.Maximum);
         }
 
         private void backgroundWorkerSmazCache_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             progressBarStatus.Value = progressBarStatus.Maximum;
+            TaskbarManager.Instance.SetProgressValue(progressBarStatus.Maximum, progressBarStatus.Maximum);
             string chyba = (string)e.Result;
             if (e.Cancelled)
             {
@@ -3027,6 +3047,7 @@ namespace youtube2music
                 ZobrazitOperaci("Mazání cache programu", "Úspěšně bylo smazáno cache programu youtube2music");
             }
             progressBarStatus.Visible = false;
+            TaskbarManager.Instance.SetProgressValue(0, 0);
             menuNastaveniCacheSmazat.Enabled = true;
         }
 
@@ -3069,11 +3090,13 @@ namespace youtube2music
         private void backgroundWorkerSmazHistorii_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBarStatus.Value = e.ProgressPercentage;
+            TaskbarManager.Instance.SetProgressValue(e.ProgressPercentage, progressBarStatus.Maximum);
         }
 
         private void backgroundWorkerSmazHistorii_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             progressBarStatus.Value = progressBarStatus.Maximum;
+            TaskbarManager.Instance.SetProgressValue(progressBarStatus.Maximum, progressBarStatus.Maximum);
             string chyba = (string)e.Result;
             if (e.Cancelled)
             {
@@ -3093,6 +3116,7 @@ namespace youtube2music
                 ZobrazitOperaci("Mazání historie stažených videí", "Úspěšně byla smazána historie stažených videí");
             }
             progressBarStatus.Visible = false;
+            TaskbarManager.Instance.SetProgressValue(0, 0);
             menuNastaveniHistorieSmazat.Enabled = true;
         }
 
