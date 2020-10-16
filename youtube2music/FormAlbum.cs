@@ -91,7 +91,7 @@ namespace youtube2music
                 Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
                 interpretAlba.NajdiSlozky();
 
-                Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba);
+                Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovna);
                 textBoxSlozka.Text = novyAlbum.Slozka;
                 textBoxZanr.Text = novyAlbum.Zanr;
                 if (String.IsNullOrEmpty(textBoxSlozka.Text))
@@ -303,7 +303,7 @@ namespace youtube2music
             }
             Interpret interpretAlba = new Interpret(album.Interpret);
             interpretAlba.NajdiSlozky();
-            Album novyAlbum = new Album(album.Nazev, Convert.ToInt32(album.DatumRok), interpretAlba, "", album.CoverNejvetsi);
+            Album novyAlbum = new Album(album.Nazev, Convert.ToInt32(album.DatumRok), interpretAlba, hudebniKnihovna, "", album.CoverNejvetsi);
 
             textBoxAlbum.Text = novyAlbum.Nazev;
             numericUpDownRok.Value = Convert.ToDecimal(album.DatumRok);
@@ -328,7 +328,7 @@ namespace youtube2music
             Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
             interpretAlba.NajdiSlozky();
 
-            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba);
+            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovna);
             if (String.IsNullOrEmpty(novyAlbum.Slozka))
             {
                 // nejedná se o existující složku ani soubor
@@ -538,11 +538,11 @@ namespace youtube2music
             Album novyAlbum;
             if (pictureBoxCoverPredni.Tag == null)
             {
-                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, textBoxZanr.Text);
+                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovna, textBoxZanr.Text);
             }
             else
             {
-                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, textBoxZanr.Text, pictureBoxCoverPredni.Tag.ToString());
+                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovna, textBoxZanr.Text, pictureBoxCoverPredni.Tag.ToString());
             }
             novyAlbum.Slozka = textBoxSlozka.Text;
             textBoxZanr.Text = novyAlbum.Zanr;

@@ -536,7 +536,7 @@ namespace youtube2music
             upravovaneVideo.Interpreti.RemoveRange(0, upravovaneVideo.Interpreti.Count());
             // přidá interpreta a interprety na featuringu
             upravovaneVideo.PridejInterpreta(textBoxInterpret.Text);
-            upravovaneVideo.PridejInterpreta(textBoxFeaturing.Text.Split(new[] { " & ", ", " }, StringSplitOptions.None).ToList());
+            upravovaneVideo.PridejInterpreta(textBoxFeaturing.Text.Split(new[] { " & ", ", ", " · " }, StringSplitOptions.None).ToList());
             // uloží skladbu a žánr
             upravovaneVideo.Skladba = textBoxSkladba.Text;
             upravovaneVideo.Zanr = textBoxZanr.Text;
