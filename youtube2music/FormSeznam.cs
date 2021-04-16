@@ -2938,6 +2938,10 @@ namespace youtube2music
             foreach (var video in videaMp3tag)
             {
                 string soubor = Path.Combine(video.Slozka, video.NazevNovySoubor + ".opus");
+                if (video.Chyba == "Video bylo staženo dříve" || video.Chyba == "Video bylo nejspíš staženo dříve")
+                {
+                    soubor = video.Slozka;
+                }
                 string parametry = "/fn:\"" + soubor + "\"";
                 ProcessStartInfo info = new ProcessStartInfo(cesta, parametry);
                 Process spust = new Process();
@@ -2954,6 +2958,14 @@ namespace youtube2music
             foreach (var video in videaMp3tag)
             {
                 string soubor = Path.Combine(video.Slozka.Replace(hudebniKnihovnaOpus, hudebniKnihovnaMp3), video.NazevNovySoubor + ".mp3");
+                if ((video.Chyba == "Video bylo staženo dříve" || video.Chyba == "Video bylo nejspíš staženo dříve") && soubor.Contains(".opus"))
+                {
+                    soubor = Path.Combine(video.Slozka.Replace(hudebniKnihovnaOpus, hudebniKnihovnaMp3), video.NazevNovySoubor).Replace(".opus", ".mp3");
+                }
+                else
+                {
+                    soubor += ".mp3";
+                }
                 string parametry = "/fn:\"" + soubor + "\"";
                 ProcessStartInfo info = new ProcessStartInfo(cesta, parametry);
                 Process spust = new Process();
