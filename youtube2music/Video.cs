@@ -55,6 +55,16 @@ namespace youtube2music
         /// </summary>
         public DateTime Publikovano { get; set; }
         /// <summary>
+        /// Datum publikování videa ve stringu.
+        /// </summary>
+        public string Datum
+        {
+            get
+            {
+                return this.Publikovano.ToString("d");
+            }
+        }
+        /// <summary>
         /// Žánr videa.
         /// </summary>
         public string Zanr { get; set; }

@@ -87,6 +87,7 @@
             this.menuStripMenu = new System.Windows.Forms.MenuStrip();
             this.menuPridatPlaylist = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPridatAlbum = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPridatSpotify = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOdstranit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -119,7 +120,7 @@
             this.pŘIDATALBUMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorkerSmazCache = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorkerSmazHistorii = new System.ComponentModel.BackgroundWorker();
-            this.menuPridatSpotify = new System.Windows.Forms.ToolStripMenuItem();
+            this.olvColumn14 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.statusStripStatus.SuspendLayout();
             this.menuStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewSeznamVidei)).BeginInit();
@@ -609,6 +610,14 @@
             this.menuPridatAlbum.Text = "PŘIDAT ALBUM";
             this.menuPridatAlbum.Click += new System.EventHandler(this.menuPridatAlbum_Click);
             // 
+            // menuPridatSpotify
+            // 
+            this.menuPridatSpotify.Enabled = false;
+            this.menuPridatSpotify.Name = "menuPridatSpotify";
+            this.menuPridatSpotify.Size = new System.Drawing.Size(119, 23);
+            this.menuPridatSpotify.Text = "PŘIDAT ZE SPOTIFY";
+            this.menuPridatSpotify.Click += new System.EventHandler(this.menuPridatSpotify_Click);
+            // 
             // menuOdstranit
             // 
             this.menuOdstranit.Enabled = false;
@@ -740,6 +749,7 @@
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn12);
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn2);
             this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn13);
+            this.objectListViewSeznamVidei.AllColumns.Add(this.olvColumn14);
             this.objectListViewSeznamVidei.CellEditUseWholeCell = false;
             this.objectListViewSeznamVidei.CheckBoxes = true;
             this.objectListViewSeznamVidei.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -755,7 +765,8 @@
             this.olvColumn11,
             this.olvColumn12,
             this.olvColumn2,
-            this.olvColumn13});
+            this.olvColumn13,
+            this.olvColumn14});
             this.objectListViewSeznamVidei.Cursor = System.Windows.Forms.Cursors.Default;
             this.objectListViewSeznamVidei.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectListViewSeznamVidei.FullRowSelect = true;
@@ -816,7 +827,7 @@
             // 
             this.olvColumn9.AspectName = "SlozkaZkracena";
             this.olvColumn9.Text = "Složka";
-            this.olvColumn9.Width = 195;
+            this.olvColumn9.Width = 138;
             // 
             // olvColumn10
             // 
@@ -828,23 +839,25 @@
             // 
             this.olvColumn11.AspectName = "Chyba";
             this.olvColumn11.Text = "Chyba";
-            this.olvColumn11.Width = 132;
+            this.olvColumn11.Width = 97;
             // 
             // olvColumn12
             // 
             this.olvColumn12.AspectName = "Stav";
             this.olvColumn12.Text = "Stav";
-            this.olvColumn12.Width = 112;
+            this.olvColumn12.Width = 85;
             // 
             // olvColumn2
             // 
             this.olvColumn2.AspectName = "Stopa";
             this.olvColumn2.Text = "Stopa";
+            this.olvColumn2.Width = 56;
             // 
             // olvColumn13
             // 
             this.olvColumn13.AspectName = "Album.Nazev";
             this.olvColumn13.Text = "Album";
+            this.olvColumn13.Width = 53;
             // 
             // pŘIDATALBUMToolStripMenuItem
             // 
@@ -868,13 +881,11 @@
             this.backgroundWorkerSmazHistorii.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerSmazHistorii_ProgressChanged);
             this.backgroundWorkerSmazHistorii.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerSmazHistorii_RunWorkerCompleted);
             // 
-            // menuPridatSpotify
+            // olvColumn14
             // 
-            this.menuPridatSpotify.Enabled = false;
-            this.menuPridatSpotify.Name = "menuPridatSpotify";
-            this.menuPridatSpotify.Size = new System.Drawing.Size(119, 23);
-            this.menuPridatSpotify.Text = "PŘIDAT ZE SPOTIFY";
-            this.menuPridatSpotify.Click += new System.EventHandler(this.menuPridatSpotify_Click);
+            this.olvColumn14.AspectName = "Datum";
+            this.olvColumn14.Text = "Datum zveřejnění";
+            this.olvColumn14.Width = 80;
             // 
             // FormSeznam
             // 
@@ -997,6 +1008,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniHistorieSmazat;
         private System.ComponentModel.BackgroundWorker backgroundWorkerSmazHistorii;
         private System.Windows.Forms.ToolStripMenuItem menuPridatSpotify;
+        private BrightIdeasSoftware.OLVColumn olvColumn14;
     }
 }
 
