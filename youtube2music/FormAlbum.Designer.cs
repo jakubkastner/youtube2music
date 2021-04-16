@@ -72,6 +72,8 @@
             this.checkBoxCoverPredniDeezer = new System.Windows.Forms.CheckBox();
             this.buttonSlozkaNajit = new System.Windows.Forms.Button();
             this.checkBoxVyhledatDeezerSingly = new System.Windows.Forms.CheckBox();
+            this.checkBoxSlozkaMenitAuto = new System.Windows.Forms.CheckBox();
+            this.comboBoxZanr = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRok)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverPredni)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeListViewAlbaDeezer)).BeginInit();
@@ -494,9 +496,9 @@
             // 
             // buttonSlozkaNajit
             // 
-            this.buttonSlozkaNajit.Location = new System.Drawing.Point(70, 192);
+            this.buttonSlozkaNajit.Location = new System.Drawing.Point(484, 138);
             this.buttonSlozkaNajit.Name = "buttonSlozkaNajit";
-            this.buttonSlozkaNajit.Size = new System.Drawing.Size(136, 23);
+            this.buttonSlozkaNajit.Size = new System.Drawing.Size(185, 23);
             this.buttonSlozkaNajit.TabIndex = 14;
             this.buttonSlozkaNajit.Text = "Najít složku automaticky";
             this.buttonSlozkaNajit.UseVisualStyleBackColor = true;
@@ -512,11 +514,34 @@
             this.checkBoxVyhledatDeezerSingly.Text = "Vyhledávat i singly";
             this.checkBoxVyhledatDeezerSingly.UseVisualStyleBackColor = true;
             // 
+            // checkBoxSlozkaMenitAuto
+            // 
+            this.checkBoxSlozkaMenitAuto.AutoSize = true;
+            this.checkBoxSlozkaMenitAuto.Checked = true;
+            this.checkBoxSlozkaMenitAuto.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSlozkaMenitAuto.Location = new System.Drawing.Point(61, 196);
+            this.checkBoxSlozkaMenitAuto.Name = "checkBoxSlozkaMenitAuto";
+            this.checkBoxSlozkaMenitAuto.Size = new System.Drawing.Size(145, 17);
+            this.checkBoxSlozkaMenitAuto.TabIndex = 16;
+            this.checkBoxSlozkaMenitAuto.Text = "Měnit složku automaticky";
+            this.checkBoxSlozkaMenitAuto.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxZanr
+            // 
+            this.comboBoxZanr.FormattingEnabled = true;
+            this.comboBoxZanr.Location = new System.Drawing.Point(483, 113);
+            this.comboBoxZanr.Name = "comboBoxZanr";
+            this.comboBoxZanr.Size = new System.Drawing.Size(186, 21);
+            this.comboBoxZanr.TabIndex = 10;
+            this.comboBoxZanr.SelectedIndexChanged += new System.EventHandler(this.comboBoxZanr_SelectedIndexChanged);
+            // 
             // FormAlbum
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1111, 751);
+            this.Controls.Add(this.comboBoxZanr);
+            this.Controls.Add(this.checkBoxSlozkaMenitAuto);
             this.Controls.Add(this.checkBoxVyhledatDeezerSingly);
             this.Controls.Add(this.buttonSlozkaNajit);
             this.Controls.Add(this.checkBoxCoverPredniDeezer);
@@ -608,5 +633,7 @@
         private System.Windows.Forms.CheckBox checkBoxCoverPredniDeezer;
         private System.Windows.Forms.Button buttonSlozkaNajit;
         private System.Windows.Forms.CheckBox checkBoxVyhledatDeezerSingly;
+        private System.Windows.Forms.CheckBox checkBoxSlozkaMenitAuto;
+        private System.Windows.Forms.ComboBox comboBoxZanr;
     }
 }

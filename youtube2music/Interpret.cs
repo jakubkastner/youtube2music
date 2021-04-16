@@ -359,6 +359,15 @@ namespace youtube2music
             PrejmenujInterpreta("A Boogie With Da Hoodie", "A Boogie with da Hoodie");
             PrejmenujInterpreta("Dababy", "DaBaby");
             PrejmenujInterpreta("Astralkid22", "AstralKid22");
+            PrejmenujInterpreta("Ua Kid", "UA Kid");
+            PrejmenujInterpreta("Og Buda", "OG Buda");
+            PrejmenujInterpreta("Bmb", "BMB");
+            PrejmenujInterpreta("Jc Dizzy", "JC Dizzy");
+            PrejmenujInterpreta("58g", "58G");
+            PrejmenujInterpreta("Jamie Xx", "Jamie XX");
+            PrejmenujInterpreta("Gspd", "GSPD");
+            PrejmenujInterpreta("Opus Iii", "Opus III");
+            PrejmenujInterpreta("Rmr", "RMR");
         }
 
         private void PrejmenujInterpreta(string puvodni, string novy)

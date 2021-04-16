@@ -15,7 +15,8 @@ namespace youtube2music
     public partial class FormAlbum : Form
     {
         string playlistID = "";
-        string hudebniKnihovna = "";
+        string hudebniKnihovnaOpus = "";
+        string hudebniKnihovnaMp3 = "";
         List<Video> videaVsechna = new List<Video>();
         List<Deezer> nalezenaAlba = new List<Deezer>();
 
@@ -24,13 +25,15 @@ namespace youtube2music
         /// </summary>
         /// <param name="playlist">Přidávaný playlist z youtube</param>
         /// <param name="videa">Seznam všech videí</param>
-        /// <param name="hudebniKnihovnaOpus">Cesta k hudební knihovně opus</param>
-        public FormAlbum(string playlist, List<Video> videa, string hudebniKnihovnaOpus)
+        /// <param name="hudebniKnihOpus">Cesta k hudební knihovně opus</param>
+        /// <param name="hudebniKnihMp3">Cesta k hudební knihovně mp3</param>
+        public FormAlbum(string playlist, List<Video> videa, string hudebniKnihOpus, string hudebniKnihMp3)
         {
             InitializeComponent();
             playlistID = playlist;
             videaVsechna = videa;
-            hudebniKnihovna = hudebniKnihovnaOpus;
+            hudebniKnihovnaOpus = hudebniKnihOpus;
+            hudebniKnihovnaMp3 = hudebniKnihMp3;
         }
 
         /// <summary>
@@ -73,7 +76,7 @@ namespace youtube2music
             // získání informací o playlistu youtube
             Playlist playlistAlba = new Playlist(playlistID);
             string interpret = "";
-            string album = playlistAlba.Nazev.Replace("Album - ","");
+            string album = playlistAlba.Nazev.Replace("Album - ", "");
             linkLabelOdkaz.Text = playlistAlba.Url;
             this.Text = album + " - nové album ~ youtube2music";
 
@@ -91,15 +94,70 @@ namespace youtube2music
                 Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
                 interpretAlba.NajdiSlozky();
 
-                Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovna);
+                Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovnaOpus);
                 textBoxSlozka.Text = novyAlbum.Slozka;
                 textBoxZanr.Text = novyAlbum.Zanr;
                 if (String.IsNullOrEmpty(textBoxSlozka.Text))
                 {
                     // nejedná se o existující složku ani soubor
-                    textBoxSlozka.Text = hudebniKnihovna;
+                    textBoxSlozka.Text = hudebniKnihovnaOpus;
                 }
             }
+
+
+            // získej žánry hudebních složek
+            List<string> zanrySlozky = new List<string>();
+            List<string> zanrySlozkyMp3 = ZiskejNazvySlozek(hudebniKnihovnaOpus);
+            List<string> zanrySlozkyOpus = ZiskejNazvySlozek(hudebniKnihovnaMp3);
+            if (zanrySlozkyMp3 != null)
+            {
+                zanrySlozky = zanrySlozkyMp3;
+            }
+            if (zanrySlozkyOpus != null)
+            {
+                foreach (string slozkaOpus in zanrySlozkyOpus)
+                {
+                    if (!zanrySlozkyMp3.Contains(slozkaOpus))
+                    {
+                        zanrySlozky.Add(slozkaOpus);
+                    }
+                }
+            }
+            if (zanrySlozky.Count > 0)
+            {
+                foreach (string slozka in zanrySlozky)
+                {
+                    comboBoxZanr.Items.Add(slozka);
+
+                }
+                if (comboBoxZanr.Items.Count > 0)
+                {
+                    comboBoxZanr.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private List<String> ZiskejNazvySlozek(string slozka)
+        {
+            // získám soubory ze složky
+            List<string> seznamSlozek = null;
+            try
+            {
+                seznamSlozek = Directory.GetDirectories(slozka).ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Načítání složek hudební knihovny");
+                return null;
+            }
+            // získám názvy složek
+            List<string> seznamSlozekNazvy = new List<string>();
+            foreach (string slozkaSeznam in seznamSlozek)
+            {
+                string nazevSlozky = new DirectoryInfo(slozkaSeznam).Name;
+                seznamSlozekNazvy.Add(nazevSlozky);
+            }
+            return seznamSlozekNazvy;
         }
 
         /// <summary>
@@ -303,17 +361,26 @@ namespace youtube2music
             }
             Interpret interpretAlba = new Interpret(album.Interpret);
             interpretAlba.NajdiSlozky();
-            Album novyAlbum = new Album(album.Nazev, Convert.ToInt32(album.DatumRok), interpretAlba, hudebniKnihovna, "", album.CoverNejvetsi);
+            Album novyAlbum = new Album(album.Nazev, Convert.ToInt32(album.DatumRok), interpretAlba, hudebniKnihovnaOpus, "", album.CoverNejvetsi);
 
             textBoxAlbum.Text = novyAlbum.Nazev;
             numericUpDownRok.Value = Convert.ToDecimal(album.DatumRok);
             textBoxInterpret.Text = interpretAlba.Jmeno;
-            textBoxSlozka.Text = novyAlbum.Slozka;
+            comboBoxZanr.Text = novyAlbum.ZanrNazev;
+
+            if (checkBoxSlozkaMenitAuto.Checked)
+            {
+                textBoxSlozka.Text = novyAlbum.Slozka;
+            }
             textBoxZanr.Text = novyAlbum.Zanr;
             if (String.IsNullOrEmpty(textBoxSlozka.Text))
             {
                 // nejedná se o existující složku ani soubor
-                textBoxSlozka.Text = hudebniKnihovna;
+                textBoxSlozka.Text = hudebniKnihovnaOpus;
+                if (checkBoxSlozkaMenitAuto.Checked)
+                {
+                    NajitSlozku();
+                }
             }
         }
 
@@ -325,19 +392,26 @@ namespace youtube2music
 
         private void buttonSlozkaNajit_Click(object sender, EventArgs e)
         {
+            NajitSlozku();
+        }
+
+        private void NajitSlozku()
+        {
             Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
             interpretAlba.NajdiSlozky();
-
-            Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovna);
+            Album novyAlbum;
+            string zanr = comboBoxZanr.Text;
+            novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovnaOpus, zanr);
             if (String.IsNullOrEmpty(novyAlbum.Slozka))
             {
                 // nejedná se o existující složku ani soubor
-                textBoxSlozka.Text = Path.Combine(textBoxSlozka.Text, interpretAlba.Jmeno, novyAlbum.Rok + " " + novyAlbum.Nazev);
+                textBoxSlozka.Text = Path.Combine(hudebniKnihovnaOpus, zanr, interpretAlba.Jmeno, novyAlbum.Rok + " " + novyAlbum.Nazev);
             }
             else
             {
                 textBoxSlozka.Text = novyAlbum.Slozka;
             }
+            novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovnaOpus, "", "", textBoxSlozka.Text);
             textBoxZanr.Text = novyAlbum.Zanr;
         }
 
@@ -370,21 +444,25 @@ namespace youtube2music
             if (Directory.Exists(textBoxSlozka.Text))
             {
                 // jedná se o složku
-                vyberSlozky.SelectedPath = textBoxSlozka.Text;
+                vyberSlozky.SelectedPath = textBoxSlozka.Text + "\\";
             }
             else if (File.Exists(textBoxSlozka.Text))
             {
                 // jedná se o soubor
-                vyberSlozky.SelectedPath = Path.GetDirectoryName(textBoxSlozka.Text);
+                vyberSlozky.SelectedPath = Path.GetDirectoryName(textBoxSlozka.Text) + "\\";
             }
             else
             {
                 // nejedná se o existující složku ani soubor
-                vyberSlozky.SelectedPath = hudebniKnihovna;
+                vyberSlozky.SelectedPath = hudebniKnihovnaOpus + "\\";
             }
             if ((bool)vyberSlozky.ShowDialog())
             {
                 textBoxSlozka.Text = vyberSlozky.SelectedPath;
+            }
+            if (checkBoxSlozkaMenitAuto.Checked)
+            {
+                NajitSlozku();
             }
         }
 
@@ -538,11 +616,11 @@ namespace youtube2music
             Album novyAlbum;
             if (pictureBoxCoverPredni.Tag == null)
             {
-                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovna, textBoxZanr.Text);
+                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovnaOpus, textBoxZanr.Text);
             }
             else
             {
-                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovna, textBoxZanr.Text, pictureBoxCoverPredni.Tag.ToString());
+                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovnaOpus, textBoxZanr.Text, pictureBoxCoverPredni.Tag.ToString());
             }
             novyAlbum.Slozka = textBoxSlozka.Text;
             textBoxZanr.Text = novyAlbum.Zanr;
@@ -633,6 +711,14 @@ namespace youtube2music
         private void pictureBoxCoverZadni_LocationChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void comboBoxZanr_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (checkBoxSlozkaMenitAuto.Checked)
+            {
+                NajitSlozku();
+            }
         }
     }
 }

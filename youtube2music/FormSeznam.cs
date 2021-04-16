@@ -35,6 +35,7 @@ namespace youtube2music
         public FormSeznam()
         {
             InitializeComponent();
+            menuPridatSpotify.Visible = false;
         }
 
         // HOTOVO
@@ -171,8 +172,20 @@ namespace youtube2music
 
                 // nové s cookies
                 psi.Arguments = "-x --cookies \"C:\\Programy\\youtube-cookies.txt\" -i -w  --audio-quality 0 --audio-format mp3 -o \"" + nazev + ".%(ext)s\" \"" + adresaVidea + "\""; // -U = update
-                // psi.Arguments = "-x -i -w  --audio-quality 0 --audio-format mp3 -o \"" + nazev + ".%(ext)s\" \"" + adresaVidea + "\""; // -U = update
+                //psi.Arguments = "-x -i -w  --audio-quality 0 --audio-format mp3 -o \"" + nazev + ".%(ext)s\" \"" + adresaVidea + "\""; // -U = update
+
+                /*
+                -x = extrahuje audio (musí být pro --audio-format)
+                -w = nepřepíše soubor
+                -i = ignoruje chyby (např v playlistech)
+                -o "vystup.%(ext)" = název vsýstupního soboru
+                --cookies = soubor s cookies
+                --audio-format mp3 = výstupní audio formát
+                --audio-quality 0 = výstupní kvalita audia (0 nejlepší, 9 nejhorší)
+                */
+
                 psi.CreateNoWindow = true;
+                //psi.CreateNoWindow = false;
                 psi.ErrorDialog = true;
                 psi.FileName = cestaYoutubeDL;
                 psi.RedirectStandardInput = true;
@@ -426,7 +439,7 @@ namespace youtube2music
             // spustí program na převod
             /*cmd.OutputDataReceived += new DataReceivedEventHandler(CteckaVystupu);
             cmd.ErrorDataReceived += new DataReceivedEventHandler(CteckaVystupuChyby);*/
-            cmd.StartInfo = psi;
+                cmd.StartInfo = psi;
             cmd.SynchronizingObject = objectListViewSeznamVidei;
             try
             {
@@ -2036,6 +2049,9 @@ namespace youtube2music
             // regexy pro získání id videa nebo playlistu
             Regex video = new Regex("(?:.+?)?(?:\\/v\\/|watch\\/|\\?v=|\\&v=|youtu\\.be\\/|\\/v=|^youtu\\.be\\/)([a-zA-Z0-9_-]{11})+", RegexOptions.Compiled);
             Regex playlist = new Regex(@"(?:http|https|)(?::\/\/|)(?:www.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{12,})[a-z0-9;:@#?&%=+\/\$_.-]*");
+            
+            // bohužel youtube music album má jiné id než výsledný youtube playlist, takže takto to nejde
+            //Regex playlist = new Regex(@"(?:http|https|)(?::\/\/|)(?:www.|)(?:music.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=||\/browse\/|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{12,})[a-z0-9;:@#?&%=+\/\$_.-]*");
 
             string spotifyUrl = null;
             string videoID = null;
@@ -2579,7 +2595,7 @@ namespace youtube2music
             {
                 if (objectListViewSeznamVidei.Items.Count > 0)
                 {
-                    FormAlbum uprava = new FormAlbum(youtubeIDverejne, videaVsechna, hudebniKnihovnaOpus);
+                    FormAlbum uprava = new FormAlbum(youtubeIDverejne, videaVsechna, hudebniKnihovnaOpus, hudebniKnihovnaMp3);
                     uprava.ShowDialog();
                     //uprava.Show();
                     objectListViewSeznamVidei.Invoke(new Action(() =>
