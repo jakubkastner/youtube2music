@@ -78,6 +78,14 @@
             this.menuNastaveniFFmpegCestaNaposledyVybrane = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniFFmpegCestaNaposledyVymazat = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniFFmpegStahnout = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuNastaveniMp3tag = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniMp3tagCestaVybrana = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniMp3tagCestaZmenit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuNastaveniMp3tagCestaNaposledyVybrane = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniMp3tagCestaNaposledyVymazat = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniMp3tagStahnout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.menuNastaveniCacheSmazat = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniCacheOtevrit = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,6 +97,9 @@
             this.menuPridatAlbum = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPridatSpotify = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOdstranit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMp3tag = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMp3tagMp3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMp3tagOpus = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,8 +109,6 @@
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.albumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.opusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mp3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorkerProhledejSlozky = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorkerPridejVidea = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorkerStahniProgram = new System.ComponentModel.BackgroundWorker();
@@ -117,10 +126,10 @@
             this.olvColumn12 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn13 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn14 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.pŘIDATALBUMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorkerSmazCache = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorkerSmazHistorii = new System.ComponentModel.BackgroundWorker();
-            this.olvColumn14 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.statusStripStatus.SuspendLayout();
             this.menuStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectListViewSeznamVidei)).BeginInit();
@@ -305,6 +314,9 @@
             this.toolStripSeparator6,
             this.menuNastaveniFFmpeg,
             this.menuNastaveniFFmpegStahnout,
+            this.toolStripSeparator11,
+            this.menuNastaveniMp3tag,
+            this.menuNastaveniMp3tagStahnout,
             this.toolStripSeparator9,
             this.menuNastaveniCacheSmazat,
             this.menuNastaveniCacheOtevrit,
@@ -437,14 +449,14 @@
             this.menuNastaveniYoutubeDLCestaVybrana.Name = "menuNastaveniYoutubeDLCestaVybrana";
             this.menuNastaveniYoutubeDLCestaVybrana.Size = new System.Drawing.Size(326, 22);
             this.menuNastaveniYoutubeDLCestaVybrana.Text = "Není vybraná žádná cesta";
-            this.menuNastaveniYoutubeDLCestaVybrana.Click += new System.EventHandler(this.menuNastaveniCestaYoutubeDLVybrana_Click);
+            this.menuNastaveniYoutubeDLCestaVybrana.Click += new System.EventHandler(this.menuNastaveniYoutubeDLCestaVybrana_Click);
             // 
             // menuNastaveniYoutubeDLCestaZmenit
             // 
             this.menuNastaveniYoutubeDLCestaZmenit.Name = "menuNastaveniYoutubeDLCestaZmenit";
             this.menuNastaveniYoutubeDLCestaZmenit.Size = new System.Drawing.Size(326, 22);
             this.menuNastaveniYoutubeDLCestaZmenit.Text = "Změnit cestu programu";
-            this.menuNastaveniYoutubeDLCestaZmenit.Click += new System.EventHandler(this.menuNastaveniCestaYoutubeDLZmenit_Click);
+            this.menuNastaveniYoutubeDLCestaZmenit.Click += new System.EventHandler(this.menuNastaveniYoutubeDLCestaZmenit_Click);
             // 
             // toolStripSeparator3
             // 
@@ -495,14 +507,14 @@
             this.menuNastaveniFFmpegCestaVybrana.Name = "menuNastaveniFFmpegCestaVybrana";
             this.menuNastaveniFFmpegCestaVybrana.Size = new System.Drawing.Size(326, 22);
             this.menuNastaveniFFmpegCestaVybrana.Text = "Není vybrána žádná cesta";
-            this.menuNastaveniFFmpegCestaVybrana.Click += new System.EventHandler(this.menuNastaveniCestaFFmpegVybrana_Click);
+            this.menuNastaveniFFmpegCestaVybrana.Click += new System.EventHandler(this.menuNastaveniFFmpegCestaVybrana_Click);
             // 
             // menuNastaveniFFmpegCestaZmenit
             // 
             this.menuNastaveniFFmpegCestaZmenit.Name = "menuNastaveniFFmpegCestaZmenit";
             this.menuNastaveniFFmpegCestaZmenit.Size = new System.Drawing.Size(326, 22);
             this.menuNastaveniFFmpegCestaZmenit.Text = "Změnit cestu programu";
-            this.menuNastaveniFFmpegCestaZmenit.Click += new System.EventHandler(this.menuNastaveniCestaFFmpegZmenit_Click);
+            this.menuNastaveniFFmpegCestaZmenit.Click += new System.EventHandler(this.menuNastaveniFFmpegCestaZmenit_Click);
             // 
             // toolStripSeparator4
             // 
@@ -529,6 +541,64 @@
             this.menuNastaveniFFmpegStahnout.Size = new System.Drawing.Size(255, 22);
             this.menuNastaveniFFmpegStahnout.Text = "Stáhnout FFmpeg";
             this.menuNastaveniFFmpegStahnout.Click += new System.EventHandler(this.menuNastaveniFFmpegStahnout_Click);
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(252, 6);
+            // 
+            // menuNastaveniMp3tag
+            // 
+            this.menuNastaveniMp3tag.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuNastaveniMp3tagCestaVybrana,
+            this.menuNastaveniMp3tagCestaZmenit,
+            this.toolStripSeparator12,
+            this.menuNastaveniMp3tagCestaNaposledyVybrane,
+            this.menuNastaveniMp3tagCestaNaposledyVymazat});
+            this.menuNastaveniMp3tag.Name = "menuNastaveniMp3tag";
+            this.menuNastaveniMp3tag.Size = new System.Drawing.Size(255, 22);
+            this.menuNastaveniMp3tag.Text = "Cesta mp3tag";
+            // 
+            // menuNastaveniMp3tagCestaVybrana
+            // 
+            this.menuNastaveniMp3tagCestaVybrana.Enabled = false;
+            this.menuNastaveniMp3tagCestaVybrana.Name = "menuNastaveniMp3tagCestaVybrana";
+            this.menuNastaveniMp3tagCestaVybrana.Size = new System.Drawing.Size(326, 22);
+            this.menuNastaveniMp3tagCestaVybrana.Text = "Není vybrána žádná cesta";
+            this.menuNastaveniMp3tagCestaVybrana.Click += new System.EventHandler(this.menuNastaveniMp3tagCestaVybrana_Click);
+            // 
+            // menuNastaveniMp3tagCestaZmenit
+            // 
+            this.menuNastaveniMp3tagCestaZmenit.Name = "menuNastaveniMp3tagCestaZmenit";
+            this.menuNastaveniMp3tagCestaZmenit.Size = new System.Drawing.Size(326, 22);
+            this.menuNastaveniMp3tagCestaZmenit.Text = "Změnit cestu programu";
+            this.menuNastaveniMp3tagCestaZmenit.Click += new System.EventHandler(this.menuNastaveniMp3tagCestaZmenit_Click);
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(323, 6);
+            // 
+            // menuNastaveniMp3tagCestaNaposledyVybrane
+            // 
+            this.menuNastaveniMp3tagCestaNaposledyVybrane.Enabled = false;
+            this.menuNastaveniMp3tagCestaNaposledyVybrane.Name = "menuNastaveniMp3tagCestaNaposledyVybrane";
+            this.menuNastaveniMp3tagCestaNaposledyVybrane.Size = new System.Drawing.Size(326, 22);
+            this.menuNastaveniMp3tagCestaNaposledyVybrane.Text = "Nebyly nalezeny žádné naposledy vybrané cesty";
+            // 
+            // menuNastaveniMp3tagCestaNaposledyVymazat
+            // 
+            this.menuNastaveniMp3tagCestaNaposledyVymazat.Name = "menuNastaveniMp3tagCestaNaposledyVymazat";
+            this.menuNastaveniMp3tagCestaNaposledyVymazat.Size = new System.Drawing.Size(326, 22);
+            this.menuNastaveniMp3tagCestaNaposledyVymazat.Text = "Vymazat historii";
+            this.menuNastaveniMp3tagCestaNaposledyVymazat.Click += new System.EventHandler(this.menuNastaveniMp3tagCestaNaposledyVymazat_Click);
+            // 
+            // menuNastaveniMp3tagStahnout
+            // 
+            this.menuNastaveniMp3tagStahnout.Name = "menuNastaveniMp3tagStahnout";
+            this.menuNastaveniMp3tagStahnout.Size = new System.Drawing.Size(255, 22);
+            this.menuNastaveniMp3tagStahnout.Text = "Stáhnout mp3tag";
+            this.menuNastaveniMp3tagStahnout.Click += new System.EventHandler(this.menuNastaveniMp3tagStahnout_Click);
             // 
             // toolStripSeparator9
             // 
@@ -583,10 +653,9 @@
             this.menuUpravit,
             this.menuStahnout,
             this.menuOdstranit,
+            this.menuMp3tag,
             this.menuNastaveni,
-            this.toolStripMenuItem1,
-            this.opusToolStripMenuItem,
-            this.mp3ToolStripMenuItem});
+            this.toolStripMenuItem1});
             this.menuStripMenu.Location = new System.Drawing.Point(0, 0);
             this.menuStripMenu.MinimumSize = new System.Drawing.Size(1432, 27);
             this.menuStripMenu.Name = "menuStripMenu";
@@ -626,6 +695,30 @@
             this.menuOdstranit.Size = new System.Drawing.Size(81, 23);
             this.menuOdstranit.Text = "ODSTRANIT";
             this.menuOdstranit.Click += new System.EventHandler(this.menuOdstranit_Click);
+            // 
+            // menuMp3tag
+            // 
+            this.menuMp3tag.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuMp3tagMp3,
+            this.menuMp3tagOpus});
+            this.menuMp3tag.Enabled = false;
+            this.menuMp3tag.Name = "menuMp3tag";
+            this.menuMp3tag.Size = new System.Drawing.Size(60, 23);
+            this.menuMp3tag.Text = "mp3tag";
+            // 
+            // menuMp3tagMp3
+            // 
+            this.menuMp3tagMp3.Name = "menuMp3tagMp3";
+            this.menuMp3tagMp3.Size = new System.Drawing.Size(180, 22);
+            this.menuMp3tagMp3.Text = "Mp3";
+            this.menuMp3tagMp3.Click += new System.EventHandler(this.menuMp3tagMp3_Click);
+            // 
+            // menuMp3tagOpus
+            // 
+            this.menuMp3tagOpus.Name = "menuMp3tagOpus";
+            this.menuMp3tagOpus.Size = new System.Drawing.Size(180, 22);
+            this.menuMp3tagOpus.Text = "Opus";
+            this.menuMp3tagOpus.Click += new System.EventHandler(this.menuMp3tagOpus_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -697,20 +790,6 @@
             this.albumToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.albumToolStripMenuItem.Text = "album";
             this.albumToolStripMenuItem.Click += new System.EventHandler(this.albumToolStripMenuItem_Click);
-            // 
-            // opusToolStripMenuItem
-            // 
-            this.opusToolStripMenuItem.Name = "opusToolStripMenuItem";
-            this.opusToolStripMenuItem.Size = new System.Drawing.Size(45, 23);
-            this.opusToolStripMenuItem.Text = "opus";
-            this.opusToolStripMenuItem.Click += new System.EventHandler(this.OpusToolStripMenuItem_Click);
-            // 
-            // mp3ToolStripMenuItem
-            // 
-            this.mp3ToolStripMenuItem.Name = "mp3ToolStripMenuItem";
-            this.mp3ToolStripMenuItem.Size = new System.Drawing.Size(43, 23);
-            this.mp3ToolStripMenuItem.Text = "mp3";
-            this.mp3ToolStripMenuItem.Click += new System.EventHandler(this.Mp3ToolStripMenuItem_Click);
             // 
             // backgroundWorkerProhledejSlozky
             // 
@@ -859,6 +938,12 @@
             this.olvColumn13.Text = "Album";
             this.olvColumn13.Width = 53;
             // 
+            // olvColumn14
+            // 
+            this.olvColumn14.AspectName = "Datum";
+            this.olvColumn14.Text = "Datum zveřejnění";
+            this.olvColumn14.Width = 80;
+            // 
             // pŘIDATALBUMToolStripMenuItem
             // 
             this.pŘIDATALBUMToolStripMenuItem.Name = "pŘIDATALBUMToolStripMenuItem";
@@ -880,12 +965,6 @@
             this.backgroundWorkerSmazHistorii.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerSmazHistorii_DoWork);
             this.backgroundWorkerSmazHistorii.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerSmazHistorii_ProgressChanged);
             this.backgroundWorkerSmazHistorii.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerSmazHistorii_RunWorkerCompleted);
-            // 
-            // olvColumn14
-            // 
-            this.olvColumn14.AspectName = "Datum";
-            this.olvColumn14.Text = "Datum zveřejnění";
-            this.olvColumn14.Width = 80;
             // 
             // FormSeznam
             // 
@@ -995,8 +1074,6 @@
         private System.Windows.Forms.ToolStripMenuItem pŘIDATALBUMToolStripMenuItem;
         private BrightIdeasSoftware.OLVColumn olvColumn2;
         private BrightIdeasSoftware.OLVColumn olvColumn13;
-        private System.Windows.Forms.ToolStripMenuItem opusToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mp3ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem albumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuPridatPlaylist;
         private System.Windows.Forms.ToolStripStatusLabel labelStav;
@@ -1009,6 +1086,17 @@
         private System.ComponentModel.BackgroundWorker backgroundWorkerSmazHistorii;
         private System.Windows.Forms.ToolStripMenuItem menuPridatSpotify;
         private BrightIdeasSoftware.OLVColumn olvColumn14;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniMp3tag;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniMp3tagCestaVybrana;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniMp3tagCestaZmenit;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniMp3tagCestaNaposledyVybrane;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniMp3tagCestaNaposledyVymazat;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniMp3tagStahnout;
+        private System.Windows.Forms.ToolStripMenuItem menuMp3tag;
+        private System.Windows.Forms.ToolStripMenuItem menuMp3tagMp3;
+        private System.Windows.Forms.ToolStripMenuItem menuMp3tagOpus;
     }
 }
 
