@@ -95,7 +95,6 @@
             this.menuStripMenu = new System.Windows.Forms.MenuStrip();
             this.menuPridatPlaylist = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPridatAlbum = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuPridatSpotify = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOdstranit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMp3tag = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMp3tagMp3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -648,7 +647,6 @@
             this.menuPridatVideo,
             this.menuPridatPlaylist,
             this.menuPridatAlbum,
-            this.menuPridatSpotify,
             this.menuVybrat,
             this.menuUpravit,
             this.menuStahnout,
@@ -678,14 +676,6 @@
             this.menuPridatAlbum.Size = new System.Drawing.Size(100, 23);
             this.menuPridatAlbum.Text = "PŘIDAT ALBUM";
             this.menuPridatAlbum.Click += new System.EventHandler(this.menuPridatAlbum_Click);
-            // 
-            // menuPridatSpotify
-            // 
-            this.menuPridatSpotify.Enabled = false;
-            this.menuPridatSpotify.Name = "menuPridatSpotify";
-            this.menuPridatSpotify.Size = new System.Drawing.Size(119, 23);
-            this.menuPridatSpotify.Text = "PŘIDAT ZE SPOTIFY";
-            this.menuPridatSpotify.Click += new System.EventHandler(this.menuPridatSpotify_Click);
             // 
             // menuOdstranit
             // 
@@ -1084,7 +1074,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniHistorieSmazat;
         private System.ComponentModel.BackgroundWorker backgroundWorkerSmazHistorii;
-        private System.Windows.Forms.ToolStripMenuItem menuPridatSpotify;
         private BrightIdeasSoftware.OLVColumn olvColumn14;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniMp3tag;

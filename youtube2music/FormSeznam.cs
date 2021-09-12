@@ -3250,10 +3250,6 @@ namespace youtube2music
             menuNastaveniHistorieSmazat.Enabled = true;
         }
 
-        private void menuPridatSpotify_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void menuMp3tagOpus_Click(object sender, EventArgs e)
         {
@@ -3286,11 +3282,6 @@ namespace youtube2music
                 }
                 string parametry = "/fn:\"" + soubor + "\"";
                 Spustit.Program(cestaMp3tag, parametry);
-                /*ProcessStartInfo info = new ProcessStartInfo(cesta, parametry);
-                Process spust = new Process();
-                spust.StartInfo = info;
-                spust.StartInfo.CreateNoWindow = false;
-                spust.Start();*/
             }
         }
 
@@ -3334,11 +3325,6 @@ namespace youtube2music
                 }
                 string parametry = "/fn:\"" + soubor + "\"";
                 Spustit.Program(cestaMp3tag, parametry);
-                /*ProcessStartInfo info = new ProcessStartInfo(cesta, parametry);
-                Process spust = new Process();
-                spust.StartInfo = info;
-                spust.StartInfo.CreateNoWindow = false;
-                spust.Start();*/
             }
         }
     }
