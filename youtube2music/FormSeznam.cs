@@ -36,7 +36,6 @@ namespace youtube2music
         public FormSeznam()
         {
             InitializeComponent();
-            menuPridatSpotify.Visible = false;
         }
 
         // HOTOVO
@@ -2244,10 +2243,8 @@ namespace youtube2music
                 menuPridatVideo.Enabled = false;
                 menuPridatPlaylist.Enabled = false;
                 menuPridatAlbum.Enabled = false;
-                menuPridatSpotify.Enabled = false;
                 menuPridatVideo.Tag = "";
                 menuPridatPlaylist.Tag = "";
-                menuPridatSpotify.Tag = "";
                 ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz není z YouTube.");
             }
             else if (!String.IsNullOrEmpty(spotifyUrl))
@@ -2276,10 +2273,8 @@ namespace youtube2music
                     menuPridatVideo.Enabled = false;
                     menuPridatPlaylist.Enabled = false;
                     menuPridatAlbum.Enabled = false;
-                    menuPridatSpotify.Enabled = false;
                     menuPridatVideo.Tag = "";
                     menuPridatPlaylist.Tag = "";
-                    menuPridatSpotify.Tag = "";
                     ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je ze Spotify, ale je poškozený.");
                     return;
                 }
@@ -2319,10 +2314,8 @@ namespace youtube2music
                         menuPridatVideo.Enabled = false;
                         menuPridatPlaylist.Enabled = false;
                         menuPridatAlbum.Enabled = false;
-                        menuPridatSpotify.Enabled = false;
                         menuPridatVideo.Tag = "";
                         menuPridatPlaylist.Tag = "";
-                        menuPridatSpotify.Tag = "";
                         ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je ze Spotify, ale je poškozený.");
                         return;
                     }
@@ -2337,10 +2330,8 @@ namespace youtube2music
                     menuPridatVideo.Enabled = false;
                     menuPridatPlaylist.Enabled = false;
                     menuPridatAlbum.Enabled = false;
-                    menuPridatSpotify.Enabled = false;
                     menuPridatVideo.Tag = "";
                     menuPridatPlaylist.Tag = "";
-                    menuPridatSpotify.Tag = "";
                     ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je ze Spotify, ale je poškozený.");
                     return;
                 }
@@ -2348,10 +2339,8 @@ namespace youtube2music
                 menuPridatVideo.Enabled = false;
                 menuPridatPlaylist.Enabled = false;
                 menuPridatAlbum.Enabled = false;
-                menuPridatSpotify.Enabled = true;
                 menuPridatVideo.Tag = "";
                 menuPridatPlaylist.Tag = "";
-                menuPridatSpotify.Tag = spotifyTyp;
                 ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je Spotify " + spotifyTyp + ".");
             }
             else if (String.IsNullOrEmpty(videoID))
@@ -2360,10 +2349,8 @@ namespace youtube2music
                 menuPridatVideo.Enabled = false;
                 menuPridatPlaylist.Enabled = true;
                 menuPridatAlbum.Enabled = true;
-                menuPridatSpotify.Enabled = false;
                 menuPridatVideo.Tag = "";
                 menuPridatPlaylist.Tag = playlistID;
-                menuPridatSpotify.Tag = "";
                 ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je playlist.");
             }
             else if (String.IsNullOrEmpty(playlistID))
@@ -2372,10 +2359,8 @@ namespace youtube2music
                 menuPridatVideo.Enabled = true;
                 menuPridatPlaylist.Enabled = false;
                 menuPridatAlbum.Enabled = false;
-                menuPridatSpotify.Enabled = false;
                 menuPridatVideo.Tag = videoID;
                 menuPridatPlaylist.Tag = "";
-                menuPridatSpotify.Tag = "";
                 ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je video.");
             }
             else
@@ -2384,10 +2369,8 @@ namespace youtube2music
                 menuPridatVideo.Enabled = true;
                 menuPridatPlaylist.Enabled = true;
                 menuPridatAlbum.Enabled = true;
-                menuPridatSpotify.Enabled = false;
                 menuPridatVideo.Tag = videoID;
                 menuPridatPlaylist.Tag = playlistID;
-                menuPridatSpotify.Tag = "";
                 ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je video i playlist.");
             }
         }
