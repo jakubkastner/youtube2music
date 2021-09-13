@@ -28,7 +28,7 @@ namespace youtube2music
                     new[] { YouTubeService.Scope.YoutubeReadonly },
                     "user",
                     CancellationToken.None,
-                    new FileDataStore(Path.Combine(Aplikace.Cesty.SlozkaData))
+                    new FileDataStore(Path.Combine(App.Paths.Directories.Data))
                 ).Result;
             }
 
@@ -113,8 +113,8 @@ namespace youtube2music
             {
                 return;
             }
-            Aplikace.YouTube.Uzivatel.ID = kanal.Id;
-            Aplikace.YouTube.Uzivatel.Nazev = kanal.BrandingSettings.Channel.Title;
+            App.YouTube.User.ID = kanal.Id;
+            App.YouTube.User.ChannelName = kanal.BrandingSettings.Channel.Title;
         }
 
         /// <summary>

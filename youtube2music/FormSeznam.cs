@@ -12,6 +12,8 @@ using System.Windows.Forms;
 using BrightIdeasSoftware;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using Ookii.Dialogs.Wpf;
+using youtube2music.App;
+using youtube2music.App.Paths;
 
 namespace youtube2music
 {
@@ -24,11 +26,7 @@ namespace youtube2music
         string cestaYoutubeDL = null;
         string cestaFFmpeg = null;
         string cestaMp3tag = null;
-        string slozkaProgramuData = null;
-        string slozkaProgramuCache = null;
 
-        //bool album = false;
-        //string youtubeID = null;
         List<Video> videaVsechna = new List<Video>();
         SeznamInterpretu vsichniInterpreti = new SeznamInterpretu();
 
@@ -190,7 +188,8 @@ namespace youtube2music
                 psi.RedirectStandardInput = true;
                 psi.RedirectStandardOutput = true;
                 psi.UseShellExecute = false;
-                psi.WorkingDirectory = slozkaProgramuCache;// Path.Combine(, "stazene");
+                psi.WorkingDirectory = Directories.CurrentCache;
+
 
                 // spustí program na stažení
                 cmd.OutputDataReceived += new DataReceivedEventHandler(CteckaVystupu);
@@ -269,7 +268,7 @@ namespace youtube2music
             }
 
             // uloží id stažených videí do souboru
-            Soubor.Zapis(Path.Combine(slozkaProgramuData, "historie.txt"), stazeno, false);
+            Soubor.Zapis(Files.History, stazeno, false);
 
             e.Result = prevedeno;
         }
@@ -364,7 +363,7 @@ namespace youtube2music
             objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
             try
             {
-                string cesta = Path.Combine(slozkaProgramuCache, stahovaneVideo.NazevNovySoubor + ".mp3");
+                string cesta = Path.Combine(Directories.CurrentCache, stahovaneVideo.NazevNovySoubor + ".mp3");
                 if (!File.Exists(cesta))
                 {
                     stahovaneVideo.Chyba = "Stažený soubor nenalezen";
@@ -434,7 +433,7 @@ namespace youtube2music
             psi.RedirectStandardInput = true;
             psi.RedirectStandardOutput = true;
             psi.UseShellExecute = false;
-            psi.WorkingDirectory = slozkaProgramuCache;// Path.Combine(, "stazene");
+            psi.WorkingDirectory = Directories.CurrentCache;
             // spustí program na převod
             /*cmd.OutputDataReceived += new DataReceivedEventHandler(CteckaVystupu);
             cmd.ErrorDataReceived += new DataReceivedEventHandler(CteckaVystupuChyby);*/
@@ -466,7 +465,7 @@ namespace youtube2music
             stahovaneVideo.Stav = "Přesunování souboru mp3";
             objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
 
-            string cesta = Path.Combine(slozkaProgramuCache, stahovaneVideo.NazevNovySoubor + ".mp3");
+            string cesta = Path.Combine(Directories.CurrentCache, stahovaneVideo.NazevNovySoubor + ".mp3");
             // nahradí opus knihovnu za mp3 knihovnu
             string slozka = stahovaneVideo.Slozka.Replace(hudebniKnihovnaOpus, hudebniKnihovnaMp3);
             if (!Directory.Exists(slozka))
@@ -511,7 +510,7 @@ namespace youtube2music
             stahovaneVideo.Stav = "Přesunování souboru opus";
             objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
 
-            cesta = Path.Combine(slozkaProgramuCache, stahovaneVideo.NazevNovySoubor + ".opus");
+            cesta = Path.Combine(Directories.CurrentCache, stahovaneVideo.NazevNovySoubor + ".opus");
             try
             {
                 if (!Directory.Exists(stahovaneVideo.Slozka))
@@ -640,67 +639,22 @@ namespace youtube2music
         private void backgroundWorkerNactiProgram_DoWork(object sender, DoWorkEventArgs e)
         {
             backgroundWorkerNactiProgram.ReportProgress(1);
-            // 1. složka programu v AppData
 
-            // získání složky programu
-            Aplikace.Cesty.SlozkaData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            slozkaProgramuData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            if (!Directory.Exists(slozkaProgramuData))
+            // 1.) create and get app directories
+            if (!FilesDirectories.Directories.Create(Directories.Data))
             {
-                // neexistuje získaná složka AppData
                 e.Result = "slozka_programu";
                 return;
             }
-            slozkaProgramuData = Path.Combine(slozkaProgramuData, "youtube2music");
-            Aplikace.Cesty.SlozkaData = Path.Combine(Aplikace.Cesty.SlozkaData, "youtube2music");
-            slozkaProgramuCache = Path.Combine(slozkaProgramuData, "cache", Process.GetCurrentProcess().Id.ToString());
-            slozkaProgramuData = Path.Combine(slozkaProgramuData, "data");
-            Aplikace.Cesty.SlozkaData = Path.Combine(Aplikace.Cesty.SlozkaData, "data");
             backgroundWorkerNactiProgram.ReportProgress(2);
-
-            // 2. složka data = nastavení
-            if (!Directory.Exists(slozkaProgramuData))
+            if (!FilesDirectories.Directories.Create(Directories.CurrentCache, true))
             {
-                // vytvoří složku programu (youtube2music/data)
-                try
-                {
-                    Directory.CreateDirectory(slozkaProgramuData);
-                }
-                catch (Exception)
-                {
-                    e.Result = "slozka_programu";
-                    return;
-                }
+                e.Result = "slozka_programu";
+                return;
             }
             backgroundWorkerNactiProgram.ReportProgress(3);
 
-            // 3. složka cache = dočasné stažené soubory
-            if (Directory.Exists(slozkaProgramuCache))
-            {
-                // smaže složku programu (youtube2music/aktuální id procesu)
-                try
-                {
-                    Directory.Delete(slozkaProgramuCache, true);
-                }
-                catch (Exception)
-                {
-                    e.Result = "slozka_programu";
-                    return;
-                }
-            }
-            backgroundWorkerNactiProgram.ReportProgress(4);
-            try
-            {
-                // vytvoří složku programu (youtube2music/aktuální id procesu)
-                Directory.CreateDirectory(slozkaProgramuCache);
-            }
-            catch (Exception)
-            {
-                e.Result = "slozka_programu";
-                return;
-            }
-            backgroundWorkerNactiProgram.ReportProgress(5);
-            // 3. načtení nastavení
+            // 2.) load settings
             menuStripMenu.Invoke(new Action(() =>
             {
                 // přihlášení uživatele
@@ -728,11 +682,11 @@ namespace youtube2music
         private void PrihlasitUzivatele()
         {
             YouTubeApi.ZiskejNazevUzivatele();
-            if (Aplikace.YouTube.Uzivatel.Nazev == null)
+            if (App.YouTube.User.ChannelName == null)
             {
                 return;
             }
-            menuNastaveniUzivatel.Text = "Přihlášený uživatel '" + Aplikace.YouTube.Uzivatel.Nazev + "'";
+            menuNastaveniUzivatel.Text = "Přihlášený uživatel '" + YouTube.User.ChannelName + "'";
             menuNastaveniUzivatel.ToolTipText = "Zobrazit YouTube kanál";
             menuNastaveniUzivatel.Enabled = true;
             menuNastaveniUzivatelOdhlasit.Text = "Odhlásit se z YouTube";
@@ -1190,11 +1144,12 @@ namespace youtube2music
         {
             // získá cestu souboru
             string cestaSouboru = null;
-            if (typ == 0) cestaSouboru = Path.Combine(slozkaProgramuData, "knihovna_opus.txt");
-            else if (typ == 1) cestaSouboru = Path.Combine(slozkaProgramuData, "knihovna_mp3.txt");
-            else if (typ == 2) cestaSouboru = Path.Combine(slozkaProgramuData, "youtubedl.txt");
-            else if (typ == 3) cestaSouboru = Path.Combine(slozkaProgramuData, "ffmpeg.txt");
-            else if (typ == 4) cestaSouboru = Path.Combine(slozkaProgramuData, "mp3tag.txt");
+            if (typ == 0) cestaSouboru = Path.Combine(Directories.Data, "knihovna_opus.txt");
+            else if (typ == 1) cestaSouboru = Path.Combine(Directories.Data, "knihovna_mp3.txt");
+            else if (typ == 2) cestaSouboru = Files.ProgramYouTubeDl;
+            else if (typ == 3) cestaSouboru = Files.ProgramFfmpeg;
+            else if (typ == 4) cestaSouboru = Files.ProgramMp3tag;
+            else { return; }
 
             // načte ze souboru cesty
             List<string> pridejCesty = Soubor.Precti(cestaSouboru);
@@ -1544,7 +1499,7 @@ namespace youtube2music
             // na 1. pozici vloží aktuální hudební knihovnu
             slozkyinterpretu.Insert(0, hudebniKnihovnaOpus);
             // zapíše složky do souboru
-            Soubor.Zapis(Path.Combine(slozkaProgramuData, "knihovna_slozky.txt"), slozkyinterpretu);
+            Soubor.Zapis(Path.Combine(Directories.Data, "knihovna_slozky.txt"), slozkyinterpretu);
         }
 
         // HOTOVO 2019
@@ -1945,7 +1900,7 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            Soubor.Zapis(Path.Combine(slozkaProgramuData, "knihovna_opus.txt"), zapisDoSouboru);
+            Soubor.Zapis(Path.Combine(Directories.Data, "knihovna_opus.txt"), zapisDoSouboru);
             zapisDoSouboru.Clear();
 
             // cesty hudební knihovny mp3
@@ -1961,7 +1916,7 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            Soubor.Zapis(Path.Combine(slozkaProgramuData, "knihovna_mp3.txt"), zapisDoSouboru);
+            Soubor.Zapis(Path.Combine(Directories.Data, "knihovna_mp3.txt"), zapisDoSouboru);
             zapisDoSouboru.Clear();
 
             // cesty youtube-dl
@@ -1977,7 +1932,7 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            Soubor.Zapis(Path.Combine(slozkaProgramuData, "youtubedl.txt"), zapisDoSouboru);
+            Soubor.Zapis(Files.ProgramYouTubeDl, zapisDoSouboru);
             zapisDoSouboru.Clear();
 
             // cesty ffmpeg
@@ -1993,7 +1948,7 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            Soubor.Zapis(Path.Combine(slozkaProgramuData, "ffmpeg.txt"), zapisDoSouboru);
+            Soubor.Zapis(Files.ProgramFfmpeg, zapisDoSouboru);
             zapisDoSouboru.Clear();
 
             // cesty mp3tag
@@ -2009,20 +1964,13 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            Soubor.Zapis(Path.Combine(slozkaProgramuData, "mp3tag.txt"), zapisDoSouboru);
+            Soubor.Zapis(Files.ProgramMp3tag, zapisDoSouboru);
             zapisDoSouboru.Clear();
 
-            // smaže aktualní cache složku
-            if (Directory.Exists(slozkaProgramuCache))
+            // delete cache
+            if (!FilesDirectories.Directories.Delete(Directories.CurrentCache))
             {
-                try
-                {
-                    Directory.Delete(slozkaProgramuCache, true);
-                }
-                catch (Exception ex)
-                {
-                    Zobrazit.Chybu("Čištění souborů", "Nepodařilo se smazat cache programu.", ex.Message);
-                }
+                Zobrazit.Chybu("Deleting cache", "Couldn't delete cache directory '" + Directories.CurrentCache + "'.");
             }
         }
 
@@ -2552,7 +2500,7 @@ namespace youtube2music
             albumVerejne = album;
 
             // získá seznam dříve stažených videí ze souboru
-            List<string> stazenaVidea = Soubor.Precti(Path.Combine(slozkaProgramuData, "historie.txt")) ?? new List<string>();
+            List<string> stazenaVidea = Soubor.Precti(Files.History) ?? new List<string>();
 
             // přidávání playlistu
             if (playlist)
@@ -3110,12 +3058,10 @@ namespace youtube2music
             }
 
             // získá složku do které se ukládají cache složky spuštěných instancí programu
-            string slozkaCache = Directory.GetParent(slozkaProgramuCache).FullName;
-
             List<string> slozky = null;
             try
             {
-                slozky = Directory.GetDirectories(slozkaCache).ToList();
+                slozky = Directory.GetDirectories(Directories.Cache).ToList();
             }
             catch (Exception)
             {
@@ -3130,7 +3076,7 @@ namespace youtube2music
                     return;
                 }
                 // cesty nejsou stejné jako s aktuálně používanou složkou cache
-                if (!Path.GetFullPath(slozka).Equals(Path.GetFullPath(slozkaProgramuCache)))
+                if (!Path.GetFullPath(slozka).Equals(Path.GetFullPath(Directories.CurrentCache)))
                 {
                     try
                     {
@@ -3185,7 +3131,7 @@ namespace youtube2music
 
         private void menuNastaveniCacheOtevrit_Click(object sender, EventArgs e)
         {
-            Spustit.Program(slozkaProgramuCache, true);
+            Spustit.Program(Directories.Cache, true);
         }
 
         private void menuNastaveniHistorieSmazat_Click(object sender, EventArgs e)
@@ -3212,7 +3158,7 @@ namespace youtube2music
                 e.Cancel = true;
                 return;
             }
-            if (!Soubor.Smaz(Path.Combine(slozkaProgramuData, "historie.txt")))
+            if (!Soubor.Smaz(Files.History))
             {
                 e.Result = "mazani_souboru";
             }
@@ -3332,19 +3278,19 @@ namespace youtube2music
 
         private void menuNastaveniHistorieOtevrit_Click(object sender, EventArgs e)
         {
-            Spustit.Program(Path.Combine(slozkaProgramuData, "historie.txt"), true);
+            Spustit.Program(Files.History, true);
         }
 
         private void menuNastaveniUzivatel_Click(object sender, EventArgs e)
         {
-            Spustit.Program("https://youtube.com/channel/" + Aplikace.YouTube.Uzivatel.ID, false);
+            Spustit.Program("https://youtube.com/channel/" + App.YouTube.User.ID, false);
         }
 
         private void menuNastaveniUzivatelOdhlasit_Click(object sender, EventArgs e)
         {
             try
             {
-                File.Delete(Aplikace.Cesty.SouborYoutubeUzivatel);
+                File.Delete(Files.YouTubeUser);
             }
             catch (Exception ex)
             {

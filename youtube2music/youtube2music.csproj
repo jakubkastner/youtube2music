@@ -132,9 +132,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Album.cs" />
-    <Compile Include="Aplikace.cs" />
+    <Compile Include="App\App.cs" />
+    <Compile Include="App\Paths\Directories.cs" />
+    <Compile Include="App\Paths\Files.cs" />
+    <Compile Include="App\YouTube.cs" />
     <Compile Include="Chyba.cs" />
     <Compile Include="Deezer.cs" />
+    <Compile Include="FilesDirectories\Directories.cs" />
+    <Compile Include="FilesDirectories\Files.cs" />
     <Compile Include="FormAlbum.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -242,6 +247,7 @@
     <Content Include="Firefox\softokn3.dll" />
     <Content Include="Firefox\xul.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Geckofx45.45.0.34\build\Geckofx45.targets" Condition="Exists('..\packages\Geckofx45.45.0.34\build\Geckofx45.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

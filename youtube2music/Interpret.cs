@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using youtube2music.App.Paths;
 
 namespace youtube2music
 {
@@ -61,12 +62,8 @@ namespace youtube2music
         /// </summary>
         public void NajdiSlozky()
         {
-            // získá umístění složky programu
-            string slozkaProgramuData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            slozkaProgramuData = Path.Combine(slozkaProgramuData, "youtube2music", "data");
-
             // složky hudební knihovny načtené ze souboru "knihovna_slozky.txt"
-            List<string> slozkyKnihovna = Soubor.Precti(Path.Combine(slozkaProgramuData, "knihovna_slozky.txt"));
+            List<string> slozkyKnihovna = Soubor.Precti(Path.Combine(Directories.Data, "knihovna_slozky.txt"));
 
             // nenalezeny žádné složky knihovny
             if (slozkyKnihovna == null)
