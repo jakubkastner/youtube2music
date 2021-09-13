@@ -347,7 +347,7 @@ namespace youtube2music
                 }
                 catch (Exception)
                 {
-                    App.Show.Error("Otevírání složky", "Složku se nepodařilo otevřit.");
+                    Actions.Show.Error("Otevírání složky", "Složku se nepodařilo otevřit.");
                 }
                 return;
             }
@@ -360,11 +360,11 @@ namespace youtube2music
                 }
                 catch (Exception)
                 {
-                    App.Show.Error("Otevírání složky", "Složku se nepodařilo otevřit.");
+                    Actions.Show.Error("Otevírání složky", "Složku se nepodařilo otevřit.");
                 }
                 return;
             }
-            App.Show.Error("Otevírání složky", "Složka neexistuje.");
+            Actions.Show.Error("Otevírání složky", "Složka neexistuje.");
         }
 
 

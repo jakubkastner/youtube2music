@@ -48,7 +48,7 @@ namespace youtube2music
             catch (Exception ex)
             {
 
-                App.Show.Error("chyba", ex.Message);
+                Actions.Show.Error("chyba", ex.Message);
                 return;
             }
         }

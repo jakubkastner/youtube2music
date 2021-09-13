@@ -131,6 +131,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\Run.cs" />
     <Compile Include="Album.cs" />
     <Compile Include="App\App.cs" />
     <Compile Include="App\Paths\Directories.cs" />
@@ -150,9 +151,8 @@
     <Compile Include="SeznamInterpretu.cs" />
     <Compile Include="Interpret.cs" />
     <Compile Include="Kanal.cs" />
-    <Compile Include="Spustit.cs" />
     <Compile Include="Video.cs" />
-    <Compile Include="App\Show.cs" />
+    <Compile Include="Actions\Show.cs" />
     <Compile Include="FormSeznam.cs">
       <SubType>Form</SubType>
     </Compile>

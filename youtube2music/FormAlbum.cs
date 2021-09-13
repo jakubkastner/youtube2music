@@ -227,7 +227,7 @@ namespace youtube2music
             }
             else if (e.Error != null)
             {
-                App.Show.Error("Hledání albumu na Deezeru", "Došlo k chybě, album nemohlo být nalezeno na Deezeru.", e.Error.ToString());
+                Action.Show.Error("Hledání albumu na Deezeru", "Došlo k chybě, album nemohlo být nalezeno na Deezeru.", e.Error.ToString());
             }
             else
             {
@@ -421,7 +421,7 @@ namespace youtube2music
             string slozka = textBoxSlozka.Text;
             if (!Directory.Exists(slozka))
             {
-                App.Show.Error("Otevírání složky", "Složka \"" + slozka + "\" neexistuje.");
+                Action.Show.Error("Otevírání složky", "Složka \"" + slozka + "\" neexistuje.");
                 return;
             }
 
@@ -432,7 +432,7 @@ namespace youtube2music
             }
             catch (Exception)
             {
-                App.Show.Error("Otevírání složky", "Složku se nepodařilo otevřit.");
+                Action.Show.Error("Otevírání složky", "Složku se nepodařilo otevřit.");
             }
         }
 
@@ -698,11 +698,10 @@ namespace youtube2music
             PictureBox pictureBoxCover = (PictureBox)sender;
             string cesta = pictureBoxCover.Tag.ToString();
             // zobrazení coveru v externím programu
-            if (!String.IsNullOrEmpty(cesta))
+            if (!Actions.Run.Program(cesta))
             {
-                Spustit.Program(cesta, false);
+                // TODO show error
             }
-
         }
 
         private void pictureBoxCoverPredni_LocationChanged(object sender, EventArgs e)

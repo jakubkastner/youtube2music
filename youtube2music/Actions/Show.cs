@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace youtube2music.App
+namespace youtube2music.Actions
 {
     /// <summary>
     /// Show notice, question or error as MessageBox.
