@@ -3310,5 +3310,10 @@ namespace youtube2music
                 Spustit.Program(cestaMp3tag, parametry);
             }
         }
+
+        private void menuNastaveniHistorieOtevrit_Click(object sender, EventArgs e)
+        {
+            Spustit.Program(Path.Combine(slozkaProgramuData, "historie.txt"), true);
+        }
     }
 }

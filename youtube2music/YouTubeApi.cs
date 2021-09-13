@@ -59,8 +59,8 @@ namespace youtube2music
                     noveVideo.NazevPuvodni = snippet.Title;
                     noveVideo.Kanal = new Kanal(snippet.ChannelId, snippet.ChannelTitle);
                     noveVideo.Popis = snippet.Description;
-                    noveVideo.Publikovano = DateTime.ParseExact(snippet.PublishedAt, "yyyy-MM-ddTHH:mm:ssZ", null);
-                    // noveVideo.Publikovano = new DateTime( snippet.PublishedAt;
+                    //noveVideo.Publikovano = DateTime.ParseExact(snippet.PublishedAt, "yyyy-MM-ddTHH:mm:ssZ", null);
+                    noveVideo.Publikovano = (DateTime)snippet.PublishedAt;
                     return;
                 }
             }

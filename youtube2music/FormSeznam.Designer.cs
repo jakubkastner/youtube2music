@@ -87,9 +87,10 @@
             this.menuNastaveniMp3tagCestaNaposledyVymazat = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniMp3tagStahnout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuNastaveniCacheSmazat = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniCacheOtevrit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniCacheSmazat = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuNastaveniHistorieOtevrit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniHistorieSmazat = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStahnout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMenu = new System.Windows.Forms.MenuStrip();
@@ -305,8 +306,8 @@
             // 
             this.menuNastaveni.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuNastaveniKnihovnaSlozkaOpus,
-            this.menuNastaveniKnihovnaOpusProhledat,
             this.menuNastaveniKnihovnaSlozkaMp3,
+            this.menuNastaveniKnihovnaOpusProhledat,
             this.toolStripSeparator2,
             this.menuNastaveniYoutubeDL,
             this.menuNastaveniYoutubeDLStahnout,
@@ -317,9 +318,10 @@
             this.menuNastaveniMp3tag,
             this.menuNastaveniMp3tagStahnout,
             this.toolStripSeparator9,
-            this.menuNastaveniCacheSmazat,
             this.menuNastaveniCacheOtevrit,
+            this.menuNastaveniCacheSmazat,
             this.toolStripSeparator10,
+            this.menuNastaveniHistorieOtevrit,
             this.menuNastaveniHistorieSmazat});
             this.menuNastaveni.Name = "menuNastaveni";
             this.menuNastaveni.Size = new System.Drawing.Size(79, 23);
@@ -604,13 +606,6 @@
             this.toolStripSeparator9.Name = "toolStripSeparator9";
             this.toolStripSeparator9.Size = new System.Drawing.Size(252, 6);
             // 
-            // menuNastaveniCacheSmazat
-            // 
-            this.menuNastaveniCacheSmazat.Name = "menuNastaveniCacheSmazat";
-            this.menuNastaveniCacheSmazat.Size = new System.Drawing.Size(255, 22);
-            this.menuNastaveniCacheSmazat.Text = "Smazat cache programu";
-            this.menuNastaveniCacheSmazat.Click += new System.EventHandler(this.menuNastaveniSmazatCache_Click);
-            // 
             // menuNastaveniCacheOtevrit
             // 
             this.menuNastaveniCacheOtevrit.Name = "menuNastaveniCacheOtevrit";
@@ -618,10 +613,24 @@
             this.menuNastaveniCacheOtevrit.Text = "Otevřít cache programu";
             this.menuNastaveniCacheOtevrit.Click += new System.EventHandler(this.menuNastaveniCacheOtevrit_Click);
             // 
+            // menuNastaveniCacheSmazat
+            // 
+            this.menuNastaveniCacheSmazat.Name = "menuNastaveniCacheSmazat";
+            this.menuNastaveniCacheSmazat.Size = new System.Drawing.Size(255, 22);
+            this.menuNastaveniCacheSmazat.Text = "Smazat cache programu";
+            this.menuNastaveniCacheSmazat.Click += new System.EventHandler(this.menuNastaveniSmazatCache_Click);
+            // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
             this.toolStripSeparator10.Size = new System.Drawing.Size(252, 6);
+            // 
+            // menuNastaveniHistorieOtevrit
+            // 
+            this.menuNastaveniHistorieOtevrit.Name = "menuNastaveniHistorieOtevrit";
+            this.menuNastaveniHistorieOtevrit.Size = new System.Drawing.Size(255, 22);
+            this.menuNastaveniHistorieOtevrit.Text = "Otevřít historii stažených videí";
+            this.menuNastaveniHistorieOtevrit.Click += new System.EventHandler(this.menuNastaveniHistorieOtevrit_Click);
             // 
             // menuNastaveniHistorieSmazat
             // 
@@ -1086,6 +1095,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuMp3tag;
         private System.Windows.Forms.ToolStripMenuItem menuMp3tagMp3;
         private System.Windows.Forms.ToolStripMenuItem menuMp3tagOpus;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniHistorieOtevrit;
     }
 }
 
