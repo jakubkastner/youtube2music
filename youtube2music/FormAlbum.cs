@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Windows.Forms;
 using Ookii.Dialogs.Wpf;
+using youtube2music.App;
 
 namespace youtube2music
 {
@@ -226,7 +227,7 @@ namespace youtube2music
             }
             else if (e.Error != null)
             {
-                Zobrazit.Chybu("Hledání albumu na Deezeru", "Došlo k chybě, album nemohlo být nalezeno na Deezeru.", e.Error.ToString());
+                App.Show.Error("Hledání albumu na Deezeru", "Došlo k chybě, album nemohlo být nalezeno na Deezeru.", e.Error.ToString());
             }
             else
             {
@@ -420,7 +421,7 @@ namespace youtube2music
             string slozka = textBoxSlozka.Text;
             if (!Directory.Exists(slozka))
             {
-                Zobrazit.Chybu("Otevírání složky", "Složka \"" + slozka + "\" neexistuje.");
+                App.Show.Error("Otevírání složky", "Složka \"" + slozka + "\" neexistuje.");
                 return;
             }
 
@@ -431,7 +432,7 @@ namespace youtube2music
             }
             catch (Exception)
             {
-                Zobrazit.Chybu("Otevírání složky", "Složku se nepodařilo otevřit.");
+                App.Show.Error("Otevírání složky", "Složku se nepodařilo otevřit.");
             }
         }
 

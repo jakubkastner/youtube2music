@@ -82,7 +82,7 @@ namespace youtube2music.App.Paths
         /// (0 = opus, 1 = mp3)
         /// </summary>
         private List<string> slozkyKnihovny = new List<string>();
-        
+
         /// <summary>
         /// Získá složku hudební knihovny na vybraném indexu ze seznamu.
         /// (0 = opus, 1 = mp3)

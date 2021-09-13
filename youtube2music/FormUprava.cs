@@ -51,7 +51,7 @@ namespace youtube2music
         /// Spuštění programu.
         /// </summary>
         private void FormUprava_Load(object sender, EventArgs e)
-        {            
+        {
             Nacist(false);
         }
 
@@ -237,7 +237,7 @@ namespace youtube2music
         /*
         DOLNÍ TLAČÍTKA 
         */
-        
+
         /// <summary>
         /// Zobrazí předchozí úpravu videa.
         /// </summary>
@@ -347,7 +347,7 @@ namespace youtube2music
                 }
                 catch (Exception)
                 {
-                    Zobrazit.Chybu("Otevírání složky", "Složku se nepodařilo otevřit.");
+                    App.Show.Error("Otevírání složky", "Složku se nepodařilo otevřit.");
                 }
                 return;
             }
@@ -360,11 +360,11 @@ namespace youtube2music
                 }
                 catch (Exception)
                 {
-                    Zobrazit.Chybu("Otevírání složky", "Složku se nepodařilo otevřit.");
+                    App.Show.Error("Otevírání složky", "Složku se nepodařilo otevřit.");
                 }
                 return;
             }
-            Zobrazit.Chybu("Otevírání složky", "Složka neexistuje.");
+            App.Show.Error("Otevírání složky", "Složka neexistuje.");
         }
 
 

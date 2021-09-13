@@ -91,7 +91,7 @@ namespace youtube2music
             foreach (string slozkaKnihovnaCesta in slozkyKnihovna)
             {
                 // získá název složky z knihovny a seznam interpretů
-                string slozkaKnihovnaNazev = Path.GetFileName(slozkaKnihovnaCesta).Trim().ToLower();                
+                string slozkaKnihovnaNazev = Path.GetFileName(slozkaKnihovnaCesta).Trim().ToLower();
                 List<string> interpretiSlozky = new List<string>();
                 if (slozkaKnihovnaNazev.Contains(" & ") && !hledanyInterpret.Contains(" & "))
                 {

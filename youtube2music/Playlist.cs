@@ -47,7 +47,8 @@ namespace youtube2music
             }
             catch (Exception ex)
             {
-                Zobrazit.Chybu("chyba", ex.Message);
+
+                App.Show.Error("chyba", ex.Message);
                 return;
             }
         }

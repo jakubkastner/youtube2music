@@ -152,7 +152,7 @@
     <Compile Include="Kanal.cs" />
     <Compile Include="Spustit.cs" />
     <Compile Include="Video.cs" />
-    <Compile Include="Zobrazit.cs" />
+    <Compile Include="App\Show.cs" />
     <Compile Include="FormSeznam.cs">
       <SubType>Form</SubType>
     </Compile>
