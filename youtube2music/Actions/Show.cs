@@ -68,5 +68,16 @@ namespace youtube2music.Actions
             if (!String.IsNullOrEmpty(text3)) text += Environment.NewLine + text3;
             MBox(title, text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
+
+        // TODO show operation
+        /*public static void Operation(StatusStrip status,string text, string title = null)
+        {
+            if (!String.IsNullOrEmpty(title)) text = title.ToUpper() + ": " + text;
+
+            StatusStrip.Invoke(new Action(() =>
+            {
+                labelOperace.Text = text;
+            }));
+        }*/
     }
 }

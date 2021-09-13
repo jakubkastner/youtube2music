@@ -1024,7 +1024,6 @@
 
         private System.ComponentModel.BackgroundWorker backgroundWorkerStahniVidea;
         private System.ComponentModel.BackgroundWorker backgroundWorkerNactiProgram;
-        private System.Windows.Forms.StatusStrip statusStripStatus;
         private System.Windows.Forms.ToolStripProgressBar progressBarStatus;
         private System.Windows.Forms.ToolStripStatusLabel labelOperace;
         private System.Windows.Forms.ToolStripTextBox textBoxOdkaz;
@@ -1126,6 +1125,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniUzivatel;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniUzivatelOdhlasit;
+        public  System.Windows.Forms.StatusStrip statusStripStatus;
     }
 }
-

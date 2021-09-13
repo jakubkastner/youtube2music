@@ -3015,18 +3015,12 @@ namespace youtube2music
         {
             ZobrazitOperaci(nadpis.ToUpper() + ": " + text);
         }
-        /// <summary>
-        /// Zobrazí vybraný text na StatusStripLabelu.
-        /// </summary>
-        private void ZobrazitStav()
-        {
-            ZobrazitStav("Připraven");
-        }
+
         /// <summary>
         /// Zobrazí vybraný text na StatusStripLabelu.
         /// </summary>
         /// <param name="text">Text k zobrazení.</param>
-        private void ZobrazitStav(string text)
+        private void ZobrazitStav(string text = "Ready")
         {
             statusStripStatus.Invoke(new Action(() =>
             {
