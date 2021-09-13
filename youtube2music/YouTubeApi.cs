@@ -95,6 +95,28 @@ namespace youtube2music
             return playlistID;
         }
 
+        internal static void ZiskejNazevUzivatele()
+        {
+            var pozadavek = sluzbaYoutube.Channels.List("brandingSettings");
+            pozadavek.Mine = true;
+            var odpoved = pozadavek.Execute();
+            if (odpoved.Items == null)
+            {
+                return;
+            }
+            if (odpoved.Items.Count == 0)
+            {
+                return;
+            }
+            var kanal = odpoved.Items[0];
+            if (kanal.BrandingSettings.Channel.Title == null)
+            {
+                return;
+            }
+            Aplikace.YouTube.Uzivatel.ID = kanal.Id;
+            Aplikace.YouTube.Uzivatel.Nazev = kanal.BrandingSettings.Channel.Title;
+        }
+
         /// <summary>
         /// Získá seznam ID videí z playlistu.
         /// </summary>

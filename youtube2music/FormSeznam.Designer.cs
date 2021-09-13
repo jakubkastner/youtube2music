@@ -62,6 +62,9 @@
             this.menuNastaveniKnihovnaMp3NaposledyVybrane = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniKnihovnaMp3NaposledyVymazat = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniKnihovnaOpusProhledat = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuNastaveniUzivatel = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNastaveniUzivatelOdhlasit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.menuNastaveniYoutubeDL = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniYoutubeDLCestaVybrana = new System.Windows.Forms.ToolStripMenuItem();
@@ -166,7 +169,7 @@
             // 
             this.progressBarStatus.AutoSize = false;
             this.progressBarStatus.MarqueeAnimationSpeed = 500;
-            this.progressBarStatus.Maximum = 10;
+            this.progressBarStatus.Maximum = 12;
             this.progressBarStatus.Name = "progressBarStatus";
             this.progressBarStatus.Size = new System.Drawing.Size(200, 19);
             this.progressBarStatus.Step = 1;
@@ -308,6 +311,9 @@
             this.menuNastaveniKnihovnaSlozkaOpus,
             this.menuNastaveniKnihovnaSlozkaMp3,
             this.menuNastaveniKnihovnaOpusProhledat,
+            this.toolStripSeparator13,
+            this.menuNastaveniUzivatel,
+            this.menuNastaveniUzivatelOdhlasit,
             this.toolStripSeparator2,
             this.menuNastaveniYoutubeDL,
             this.menuNastaveniYoutubeDLStahnout,
@@ -426,6 +432,27 @@
             this.menuNastaveniKnihovnaOpusProhledat.Size = new System.Drawing.Size(255, 22);
             this.menuNastaveniKnihovnaOpusProhledat.Text = "Nebyla vybrána hudební knihovna";
             this.menuNastaveniKnihovnaOpusProhledat.Click += new System.EventHandler(this.menuNastaveniKnihovnaOpusProhledat_Click);
+            // 
+            // toolStripSeparator13
+            // 
+            this.toolStripSeparator13.Name = "toolStripSeparator13";
+            this.toolStripSeparator13.Size = new System.Drawing.Size(252, 6);
+            // 
+            // menuNastaveniUzivatel
+            // 
+            this.menuNastaveniUzivatel.Enabled = false;
+            this.menuNastaveniUzivatel.Name = "menuNastaveniUzivatel";
+            this.menuNastaveniUzivatel.Size = new System.Drawing.Size(255, 22);
+            this.menuNastaveniUzivatel.Text = "Přihlášený uživatel z YouTube:";
+            this.menuNastaveniUzivatel.Click += new System.EventHandler(this.menuNastaveniUzivatel_Click);
+            // 
+            // menuNastaveniUzivatelOdhlasit
+            // 
+            this.menuNastaveniUzivatelOdhlasit.Enabled = false;
+            this.menuNastaveniUzivatelOdhlasit.Name = "menuNastaveniUzivatelOdhlasit";
+            this.menuNastaveniUzivatelOdhlasit.Size = new System.Drawing.Size(255, 22);
+            this.menuNastaveniUzivatelOdhlasit.Text = "Není přihlášen žádný uživatel";
+            this.menuNastaveniUzivatelOdhlasit.Click += new System.EventHandler(this.menuNastaveniUzivatelOdhlasit_Click);
             // 
             // toolStripSeparator2
             // 
@@ -737,56 +764,56 @@
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem3.Text = "1";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem4.Text = "2";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem5.Text = "3";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem6.Text = "4";
             this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem7.Text = "5";
             this.toolStripMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem8.Text = "6";
             this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
             // 
             // testToolStripMenuItem
             // 
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.testToolStripMenuItem.Text = "test";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
             // albumToolStripMenuItem
             // 
             this.albumToolStripMenuItem.Name = "albumToolStripMenuItem";
-            this.albumToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.albumToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.albumToolStripMenuItem.Text = "album";
             this.albumToolStripMenuItem.Click += new System.EventHandler(this.albumToolStripMenuItem_Click);
             // 
@@ -1096,6 +1123,9 @@
         private System.Windows.Forms.ToolStripMenuItem menuMp3tagMp3;
         private System.Windows.Forms.ToolStripMenuItem menuMp3tagOpus;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniHistorieOtevrit;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniUzivatel;
+        private System.Windows.Forms.ToolStripMenuItem menuNastaveniUzivatelOdhlasit;
     }
 }
 

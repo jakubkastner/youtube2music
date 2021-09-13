@@ -574,7 +574,6 @@ namespace youtube2music
         {
             //TaskbarManager.Instance.SetProgressValue(0, 0);
             //MessageBox.Show(neco.ToString());
-            MessageBox.Show(Aplikace.Cesty.ZiskejSlozkuData());
         }
 
         /*******************************************************************************************************/
@@ -618,7 +617,7 @@ namespace youtube2music
         private void FormSeznam_Load(object sender, EventArgs e)
         {
             ZobrazitStav("Spouštění programu...");
-            ZobrazStatusProgressBar(11);
+            ZobrazStatusProgressBar(13);
 
             this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             menuStripMenu.Visible = false;
@@ -704,23 +703,40 @@ namespace youtube2music
             // 3. načtení nastavení
             menuStripMenu.Invoke(new Action(() =>
             {
-                //toolStripMenuItem1.Visible = false;
+                // přihlášení uživatele
+                PrihlasitUzivatele();
+                backgroundWorkerNactiProgram.ReportProgress(6);
+                toolStripMenuItem1.Visible = false;
                 // a) cesta hudebních složek opus
                 MenuCestaNactiZeSouboru(0);
-                backgroundWorkerNactiProgram.ReportProgress(6);
+                backgroundWorkerNactiProgram.ReportProgress(7);
                 // a) cesta hudebních složek mp3
                 MenuCestaNactiZeSouboru(1);
-                backgroundWorkerNactiProgram.ReportProgress(7);
+                backgroundWorkerNactiProgram.ReportProgress(8);
                 // b) cesta youtube-dl
                 MenuCestaNactiZeSouboru(2);
-                backgroundWorkerNactiProgram.ReportProgress(8);
+                backgroundWorkerNactiProgram.ReportProgress(9);
                 // c) cesta ffmpeg
                 MenuCestaNactiZeSouboru(3);
-                backgroundWorkerNactiProgram.ReportProgress(9);
+                backgroundWorkerNactiProgram.ReportProgress(10);
                 // d) cesta ffmpeg
                 MenuCestaNactiZeSouboru(4);
-                backgroundWorkerNactiProgram.ReportProgress(10);
+                backgroundWorkerNactiProgram.ReportProgress(11);
             }));
+        }
+
+        private void PrihlasitUzivatele()
+        {
+            YouTubeApi.ZiskejNazevUzivatele();
+            if (Aplikace.YouTube.Uzivatel.Nazev == null)
+            {
+                return;
+            }
+            menuNastaveniUzivatel.Text = "Přihlášený uživatel '" + Aplikace.YouTube.Uzivatel.Nazev + "'";
+            menuNastaveniUzivatel.ToolTipText = "Zobrazit YouTube kanál";
+            menuNastaveniUzivatel.Enabled = true;
+            menuNastaveniUzivatelOdhlasit.Text = "Odhlásit se z YouTube";
+            menuNastaveniUzivatelOdhlasit.Enabled = true;
         }
 
         // HOTOVO 2019
@@ -3317,6 +3333,31 @@ namespace youtube2music
         private void menuNastaveniHistorieOtevrit_Click(object sender, EventArgs e)
         {
             Spustit.Program(Path.Combine(slozkaProgramuData, "historie.txt"), true);
+        }
+
+        private void menuNastaveniUzivatel_Click(object sender, EventArgs e)
+        {
+            Spustit.Program("https://youtube.com/channel/" + Aplikace.YouTube.Uzivatel.ID, false);
+        }
+
+        private void menuNastaveniUzivatelOdhlasit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                File.Delete(Aplikace.Cesty.SouborYoutubeUzivatel);
+            }
+            catch (Exception ex)
+            {
+                Zobrazit.Chybu("Odhlášení uživatele", "Odhlášení uživatele se nezdařilo", ex.Message);
+                ZobrazitOperaci("Odhlášení z YouTube se nezdařilo.");
+                return;
+            }
+            menuNastaveniUzivatel.Enabled = false;
+            menuNastaveniUzivatelOdhlasit.Enabled = false;
+            menuNastaveniUzivatel.Text = "Přihlášený uživatel z YouTube:";
+            menuNastaveniUzivatel.ToolTipText = "";
+            menuNastaveniUzivatelOdhlasit.Text = "Není přihlášen žádný uživatel";
+            ZobrazitOperaci("Odhlášení z YouTube proběhlo úspěšně.");
         }
     }
 }

@@ -10,6 +10,14 @@ namespace youtube2music
     public class Aplikace
     {
         public Aplikace() { }
+        public class YouTube
+        {
+            public class Uzivatel
+            {
+                public static string ID { get; set; }
+                public static string Nazev { get; set; }
+            }
+        }
         public class Cesty
         {
             /// <summary>
@@ -24,6 +32,14 @@ namespace youtube2music
             private string souborFfmpeg = null;
 
             public static string SlozkaData { get; set; }
+            public static string SouborYoutubeUzivatel
+            {
+                get
+                {
+                    if (SlozkaData == null) return "";
+                    return Path.Combine(SlozkaData, "Google.Apis.Auth.OAuth2.Responses.TokenResponse-user");
+                }
+            }
 
             public static string ZiskejSlozkuData()
             {
