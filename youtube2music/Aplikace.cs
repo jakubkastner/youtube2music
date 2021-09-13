@@ -18,10 +18,17 @@ namespace youtube2music
             /// </summary>
             private List<string> slozkyKnihovny = new List<string>();
 
-            private string slozkaData = null;
+            //private static string slozkaData = null;
             private string slozkaCache = null;
             private string souborYoutubedl = null;
             private string souborFfmpeg = null;
+
+            public static string SlozkaData { get; set; }
+
+            public static string ZiskejSlozkuData()
+            {
+                return SlozkaData;
+            }
 
             /// <summary>
             /// Získá složku hudební knihovny na vybraném indexu ze seznamu.
@@ -29,7 +36,7 @@ namespace youtube2music
             /// </summary>
             /// <param name="index">Index ze seznamu</param>
             /// <returns>existuje = cesta složky, neexistuje = null</returns>
-            public string ZískejHudebniKnihovnu(int index)
+            public string ZiskejHudebniKnihovnu(int index)
             {
                 // index je mimo hranice seznamu
                 if (slozkyKnihovny.Count() <= index) return null;

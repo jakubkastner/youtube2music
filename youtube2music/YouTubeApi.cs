@@ -18,23 +18,24 @@ namespace youtube2music
         {            
             UserCredential povereni;
             string inicializaceApi = @"{""installed"":{""client_id"":""806982074560-2h1sptig11iq8hrl4ink1jetllv1vlm9.apps.googleusercontent.com"",""project_id"":""youtube-renamer"",""auth_uri"":""https://accounts.google.com/o/oauth2/auth"",""token_uri"":""https://accounts.google.com/o/oauth2/token"",""auth_provider_x509_cert_url"":""https://www.googleapis.com/oauth2/v1/certs"",""client_secret"":""FDJhnbA5J2BLPpSxVD01vz4K"",""redirect_uris"":[""urn:ietf:wg:oauth:2.0:oob"",""http://localhost""]}}";
-            
+
+            // using (var ctecka = new FileStream("youtube_client_secret.json", FileMode.Open, FileAccess.Read))
             using (var ctecka = new MemoryStream(System.Text.Encoding.ASCII.GetBytes(inicializaceApi)))
             {
                 povereni = GoogleWebAuthorizationBroker.AuthorizeAsync
                 (
-                    GoogleClientSecrets.Load(ctecka).Secrets,
+                    GoogleClientSecrets.FromStream(ctecka).Secrets,
                     new[] { YouTubeService.Scope.YoutubeReadonly },
                     "user",
                     CancellationToken.None,
-                    new FileDataStore("YouTubeAPI")
+                    new FileDataStore(Path.Combine(Aplikace.Cesty.SlozkaData))
                 ).Result;
             }
 
             var sluzba = new YouTubeService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = povereni,
-                ApplicationName = "YouTubeAPI"
+                ApplicationName = "youtube2music"
             });
             return sluzba;
         }

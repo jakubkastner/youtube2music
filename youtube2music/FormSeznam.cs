@@ -16,7 +16,7 @@ using Ookii.Dialogs.Wpf;
 namespace youtube2music
 {
     public partial class FormSeznam : Form
-    {        
+    {
         /**** PROMĚNNÉ ****/
 
         string hudebniKnihovnaOpus = null;
@@ -31,7 +31,6 @@ namespace youtube2music
         //string youtubeID = null;
         List<Video> videaVsechna = new List<Video>();
         SeznamInterpretu vsichniInterpreti = new SeznamInterpretu();
-        Aplikace.Cesty neco = new Aplikace.Cesty();
 
         public FormSeznam()
         {
@@ -573,8 +572,9 @@ namespace youtube2music
         }
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TaskbarManager.Instance.SetProgressValue(0, 0);
+            //TaskbarManager.Instance.SetProgressValue(0, 0);
             //MessageBox.Show(neco.ToString());
+            MessageBox.Show(Aplikace.Cesty.ZiskejSlozkuData());
         }
 
         /*******************************************************************************************************/
@@ -644,6 +644,7 @@ namespace youtube2music
             // 1. složka programu v AppData
 
             // získání složky programu
+            Aplikace.Cesty.SlozkaData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             slozkaProgramuData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             if (!Directory.Exists(slozkaProgramuData))
             {
@@ -652,8 +653,10 @@ namespace youtube2music
                 return;
             }
             slozkaProgramuData = Path.Combine(slozkaProgramuData, "youtube2music");
+            Aplikace.Cesty.SlozkaData = Path.Combine(Aplikace.Cesty.SlozkaData, "youtube2music");
             slozkaProgramuCache = Path.Combine(slozkaProgramuData, "cache", Process.GetCurrentProcess().Id.ToString());
             slozkaProgramuData = Path.Combine(slozkaProgramuData, "data");
+            Aplikace.Cesty.SlozkaData = Path.Combine(Aplikace.Cesty.SlozkaData, "data");
             backgroundWorkerNactiProgram.ReportProgress(2);
 
             // 2. složka data = nastavení
@@ -701,7 +704,7 @@ namespace youtube2music
             // 3. načtení nastavení
             menuStripMenu.Invoke(new Action(() =>
             {
-                toolStripMenuItem1.Visible = false;
+                //toolStripMenuItem1.Visible = false;
                 // a) cesta hudebních složek opus
                 MenuCestaNactiZeSouboru(0);
                 backgroundWorkerNactiProgram.ReportProgress(6);
