@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace youtube2music.App.Paths
 {
@@ -10,51 +11,119 @@ namespace youtube2music.App.Paths
         private static readonly string nameProgramYouTubeDl = "youtubedl.txt";
         private static readonly string nameProgramFfmpeg = "ffmpeg.txt";
         private static readonly string nameProgramMp3tag = "mp3tag.txt";
-        private static readonly string nameHistory = "history.txt";
+        private static readonly string nameLibraryOpus = "library_opus.txt";
+        private static readonly string nameLibraryMp3 = "library_mp3.txt";
+        private static readonly string nameDownloadedVideos = "videos.txt";
         private static readonly string nameYouTubeUser = "Google.Apis.Auth.OAuth2.Responses.TokenResponse-user";
+        private static string libraryOpusHistory;
+        private static string libraryMp3History;
+        private static string programYouTubeDlHistory;
+        private static string programFfmpegHistory;
+        private static string programMp3tagHistory;
+        private static string downloadedVideosHistory;
+        private static string youTubeUser;
 
         /// <summary>
-        /// Get file path for program youtube-dl.
+        /// File path for program youtube-dl.
         /// </summary>
-        public static string ProgramYouTubeDl
+        public static string ProgramYouTubeDl { get; set; }
+        /// <summary>
+        /// File path for program FFmpeg.
+        /// </summary>
+        public static string ProgramFfmpeg { get; set; }
+        /// <summary>
+        /// File path for program mp3tag.
+        /// </summary>
+        public static string ProgramMp3tag { get; set; }
+
+        /// <summary>
+        /// Get file path for history of opus music library.
+        /// </summary>
+        public static string LibraryOpusHistory
         {
             get
             {
-                if (Directories.Data == null) return null;
-                return Path.Combine(Directories.Data, nameProgramYouTubeDl);
+                if (String.IsNullOrEmpty(libraryOpusHistory))
+                {
+                    if (Directories.Data == null) return null;
+                    return Path.Combine(Directories.Data, nameLibraryOpus);
+                }
+                return libraryOpusHistory;
             }
         }
         /// <summary>
-        /// Get file path for program FFmpeg.
+        /// Get file path for history of mp3 music library.
         /// </summary>
-        public static string ProgramFfmpeg
+        public static string LibraryMp3History
         {
             get
             {
-                if (Directories.Data == null) return null;
-                return Path.Combine(Directories.Data, nameProgramFfmpeg);
+                if (String.IsNullOrEmpty(libraryMp3History))
+                {
+                    if (Directories.Data == null) return null;
+                    return Path.Combine(Directories.Data, nameLibraryMp3);
+                }
+                return libraryMp3History;
             }
         }
         /// <summary>
-        /// Get file path for program mp3tag.
+        /// Get file path for history of program youtube-dl.
         /// </summary>
-        public static string ProgramMp3tag
+        public static string ProgramYouTubeDlHistory
         {
             get
             {
-                if (Directories.Data == null) return null;
-                return Path.Combine(Directories.Data, nameProgramMp3tag);
+                if (String.IsNullOrEmpty(programYouTubeDlHistory))
+                {
+                    if (Directories.Data == null) return null;
+                    return Path.Combine(Directories.Data, nameProgramYouTubeDl);
+                }
+                return programYouTubeDlHistory;
             }
         }
         /// <summary>
-        /// Get file path for downloaded history.
+        /// Get file path for history of program FFmpeg.
         /// </summary>
-        public static string History
+        public static string ProgramFfmpegHistory
         {
             get
             {
-                if (Directories.Data == null) return null;
-                return Path.Combine(Directories.Data, nameHistory);
+                if (String.IsNullOrEmpty(programFfmpegHistory))
+                {
+                    if (Directories.Data == null) return null;
+                    return Path.Combine(Directories.Data, nameProgramFfmpeg);
+                }
+                return programFfmpegHistory;
+            }
+        }
+        /// <summary>
+        /// Get file path for history of program mp3tag.
+        /// </summary>
+        public static string ProgramMp3tagHistory
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(programMp3tagHistory))
+                {
+                    if (Directories.Data == null) return null;
+                    return Path.Combine(Directories.Data, nameProgramMp3tag);
+                }
+                return programMp3tagHistory;
+            }
+        }
+        /// <summary>
+        /// Get file path for downloaded videos history.
+        /// </summary>
+        public static string DownloadedVideosHistory
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(downloadedVideosHistory))
+                {
+                    if (Directories.Data == null) return null;
+                    return Path.Combine(Directories.Data, nameDownloadedVideos);
+                }
+                return downloadedVideosHistory;
             }
         }
         /// <summary>
@@ -64,8 +133,12 @@ namespace youtube2music.App.Paths
         {
             get
             {
-                if (Directories.Data == null) return null;
-                return Path.Combine(Directories.Data, nameYouTubeUser);
+                if (String.IsNullOrEmpty(youTubeUser))
+                {
+                    if (Directories.Data == null) return null;
+                    return Path.Combine(Directories.Data, nameYouTubeUser);
+                }
+                return youTubeUser;
             }
         }
     }

@@ -227,7 +227,7 @@ namespace youtube2music
             }
             else if (e.Error != null)
             {
-                Action.Show.Error("Hledání albumu na Deezeru", "Došlo k chybě, album nemohlo být nalezeno na Deezeru.", e.Error.ToString());
+                Actions.Show.Error("Hledání albumu na Deezeru", "Došlo k chybě, album nemohlo být nalezeno na Deezeru.", e.Error.ToString());
             }
             else
             {
@@ -421,7 +421,7 @@ namespace youtube2music
             string slozka = textBoxSlozka.Text;
             if (!Directory.Exists(slozka))
             {
-                Action.Show.Error("Otevírání složky", "Složka \"" + slozka + "\" neexistuje.");
+                Actions.Show.Error("Otevírání složky", "Složka \"" + slozka + "\" neexistuje.");
                 return;
             }
 
@@ -432,7 +432,7 @@ namespace youtube2music
             }
             catch (Exception)
             {
-                Action.Show.Error("Otevírání složky", "Složku se nepodařilo otevřit.");
+                Actions.Show.Error("Otevírání složky", "Složku se nepodařilo otevřit.");
             }
         }
 

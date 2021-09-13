@@ -19,6 +19,16 @@ namespace youtube2music.App.Paths
         private static readonly string nameCache = "cache";
 
         /// <summary>
+        /// Directory path for opus music library.
+        /// </summary>
+        public static string LibraryOpus { get; set; }
+        /// <summary>
+        /// Directory path for mp3 music library.
+        /// </summary>
+        public static string LibraryMp3 { get; set; }
+
+
+        /// <summary>
         /// Application data directory.
         /// </summary>
         public static string AppData
@@ -77,6 +87,7 @@ namespace youtube2music.App.Paths
         }
 
 
+        // TODO !!!!!!! music library - change
         /// <summary>
         /// Seznam složek hudební knihovny.
         /// (0 = opus, 1 = mp3)
