@@ -267,7 +267,7 @@ namespace youtube2music
             }
 
             // uloží id stažených videí do souboru
-            Soubor.Zapis(Files.History, stazeno, false);
+            FilesDirectories.Files.Write(Files.History, stazeno, false);
 
             e.Result = prevedeno;
         }
@@ -1151,8 +1151,7 @@ namespace youtube2music
             else { return; }
 
             // načte ze souboru cesty
-            List<string> pridejCesty = Soubor.Precti(cestaSouboru);
-            if (pridejCesty == null) return;
+            List<string> pridejCesty = FilesDirectories.Files.Read(cestaSouboru) ?? new List<string>();
             if (pridejCesty.Count == 0) return;
 
             // projde cesty a přidá je do menu
@@ -1498,7 +1497,7 @@ namespace youtube2music
             // na 1. pozici vloží aktuální hudební knihovnu
             slozkyinterpretu.Insert(0, hudebniKnihovnaOpus);
             // zapíše složky do souboru
-            Soubor.Zapis(Path.Combine(Directories.Data, "knihovna_slozky.txt"), slozkyinterpretu);
+            FilesDirectories.Files.Write(Path.Combine(Directories.Data, "knihovna_slozky.txt"), slozkyinterpretu);
         }
 
         // HOTOVO 2019
@@ -1762,9 +1761,9 @@ namespace youtube2music
 
                 // přesun souboru ffmpeg.exe
                 string souborCesta = Path.Combine(slozkaFFmpeg, "bin");
-                if (!Soubor.Presun(Path.Combine(souborCesta, "ffmpeg.exe"), cilovaSlozka, nazevSouboru + ".exe")) e.Result = "presun";
-                if (!Soubor.Presun(Path.Combine(souborCesta, "ffplay.exe"), cilovaSlozka)) e.Result = "presun";
-                if (!Soubor.Presun(Path.Combine(souborCesta, "ffprobe.exe"), cilovaSlozka)) e.Result = "presun";
+                if (!FilesDirectories.Files.Move(Path.Combine(souborCesta, "ffmpeg.exe"), cilovaSlozka, nazevSouboru + ".exe")) e.Result = "presun";
+                if (!FilesDirectories.Files.Move(Path.Combine(souborCesta, "ffplay.exe"), cilovaSlozka)) e.Result = "presun";
+                if (!FilesDirectories.Files.Move(Path.Combine(souborCesta, "ffprobe.exe"), cilovaSlozka)) e.Result = "presun";
                 backgroundWorkerStahniProgram.ReportProgress(5);
 
                 // odstranění složky ffpmeg a zip souboru
@@ -1899,7 +1898,7 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            Soubor.Zapis(Path.Combine(Directories.Data, "knihovna_opus.txt"), zapisDoSouboru);
+            FilesDirectories.Files.Write(Path.Combine(Directories.Data, "knihovna_opus.txt"), zapisDoSouboru);
             zapisDoSouboru.Clear();
 
             // cesty hudební knihovny mp3
@@ -1915,7 +1914,7 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            Soubor.Zapis(Path.Combine(Directories.Data, "knihovna_mp3.txt"), zapisDoSouboru);
+            FilesDirectories.Files.Write(Path.Combine(Directories.Data, "knihovna_mp3.txt"), zapisDoSouboru);
             zapisDoSouboru.Clear();
 
             // cesty youtube-dl
@@ -1931,7 +1930,7 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            Soubor.Zapis(Files.ProgramYouTubeDl, zapisDoSouboru);
+            FilesDirectories.Files.Write(Files.ProgramYouTubeDl, zapisDoSouboru);
             zapisDoSouboru.Clear();
 
             // cesty ffmpeg
@@ -1947,7 +1946,7 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            Soubor.Zapis(Files.ProgramFfmpeg, zapisDoSouboru);
+            FilesDirectories.Files.Write(Files.ProgramFfmpeg, zapisDoSouboru);
             zapisDoSouboru.Clear();
 
             // cesty mp3tag
@@ -1963,7 +1962,7 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            Soubor.Zapis(Files.ProgramMp3tag, zapisDoSouboru);
+            FilesDirectories.Files.Write(Files.ProgramMp3tag, zapisDoSouboru);
             zapisDoSouboru.Clear();
 
             // delete cache
@@ -2499,7 +2498,7 @@ namespace youtube2music
             albumVerejne = album;
 
             // získá seznam dříve stažených videí ze souboru
-            List<string> stazenaVidea = Soubor.Precti(Files.History) ?? new List<string>();
+            List<string> stazenaVidea = FilesDirectories.Files.Read(Files.History) ?? new List<string>();
 
             // přidávání playlistu
             if (playlist)
@@ -3157,7 +3156,7 @@ namespace youtube2music
                 e.Cancel = true;
                 return;
             }
-            if (!Soubor.Smaz(Files.History))
+            if (!FilesDirectories.Files.Delete(Files.History))
             {
                 e.Result = "mazani_souboru";
             }
