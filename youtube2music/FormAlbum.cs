@@ -16,8 +16,6 @@ namespace youtube2music
     public partial class FormAlbum : Form
     {
         string playlistID = "";
-        string hudebniKnihovnaOpus = "";
-        string hudebniKnihovnaMp3 = "";
         List<Video> videaVsechna = new List<Video>();
         List<Deezer> nalezenaAlba = new List<Deezer>();
 
@@ -26,15 +24,11 @@ namespace youtube2music
         /// </summary>
         /// <param name="playlist">Přidávaný playlist z youtube</param>
         /// <param name="videa">Seznam všech videí</param>
-        /// <param name="hudebniKnihOpus">Cesta k hudební knihovně opus</param>
-        /// <param name="hudebniKnihMp3">Cesta k hudební knihovně mp3</param>
-        public FormAlbum(string playlist, List<Video> videa, string hudebniKnihOpus, string hudebniKnihMp3)
+        public FormAlbum(string playlist, List<Video> videa)
         {
             InitializeComponent();
             playlistID = playlist;
             videaVsechna = videa;
-            hudebniKnihovnaOpus = hudebniKnihOpus;
-            hudebniKnihovnaMp3 = hudebniKnihMp3;
         }
 
         /// <summary>
@@ -95,21 +89,21 @@ namespace youtube2music
                 Interpret interpretAlba = new Interpret(textBoxInterpret.Text);
                 interpretAlba.NajdiSlozky();
 
-                Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovnaOpus);
+                Album novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba);
                 textBoxSlozka.Text = novyAlbum.Slozka;
                 textBoxZanr.Text = novyAlbum.Zanr;
                 if (String.IsNullOrEmpty(textBoxSlozka.Text))
                 {
                     // nejedná se o existující složku ani soubor
-                    textBoxSlozka.Text = hudebniKnihovnaOpus;
+                    textBoxSlozka.Text = App.Paths.Directories.LibraryOpus;
                 }
             }
 
 
             // získej žánry hudebních složek
             List<string> zanrySlozky = new List<string>();
-            List<string> zanrySlozkyMp3 = ZiskejNazvySlozek(hudebniKnihovnaOpus);
-            List<string> zanrySlozkyOpus = ZiskejNazvySlozek(hudebniKnihovnaMp3);
+            List<string> zanrySlozkyMp3 = ZiskejNazvySlozek(App.Paths.Directories.LibraryOpus);
+            List<string> zanrySlozkyOpus = ZiskejNazvySlozek(App.Paths.Directories.LibraryMp3);
             if (zanrySlozkyMp3 != null)
             {
                 zanrySlozky = zanrySlozkyMp3;
@@ -362,7 +356,7 @@ namespace youtube2music
             }
             Interpret interpretAlba = new Interpret(album.Interpret);
             interpretAlba.NajdiSlozky();
-            Album novyAlbum = new Album(album.Nazev, Convert.ToInt32(album.DatumRok), interpretAlba, hudebniKnihovnaOpus, "", album.CoverNejvetsi);
+            Album novyAlbum = new Album(album.Nazev, Convert.ToInt32(album.DatumRok), interpretAlba, "", album.CoverNejvetsi);
 
             textBoxAlbum.Text = novyAlbum.Nazev;
             numericUpDownRok.Value = Convert.ToDecimal(album.DatumRok);
@@ -377,7 +371,7 @@ namespace youtube2music
             if (String.IsNullOrEmpty(textBoxSlozka.Text))
             {
                 // nejedná se o existující složku ani soubor
-                textBoxSlozka.Text = hudebniKnihovnaOpus;
+                textBoxSlozka.Text = App.Paths.Directories.LibraryOpus;
                 if (checkBoxSlozkaMenitAuto.Checked)
                 {
                     NajitSlozku();
@@ -402,17 +396,17 @@ namespace youtube2music
             interpretAlba.NajdiSlozky();
             Album novyAlbum;
             string zanr = comboBoxZanr.Text;
-            novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovnaOpus, zanr);
+            novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, zanr);
             if (String.IsNullOrEmpty(novyAlbum.Slozka))
             {
                 // nejedná se o existující složku ani soubor
-                textBoxSlozka.Text = Path.Combine(hudebniKnihovnaOpus, zanr, interpretAlba.Jmeno, novyAlbum.Rok + " " + novyAlbum.Nazev);
+                textBoxSlozka.Text = Path.Combine(App.Paths.Directories.LibraryOpus, zanr, interpretAlba.Jmeno, novyAlbum.Rok + " " + novyAlbum.Nazev);
             }
             else
             {
                 textBoxSlozka.Text = novyAlbum.Slozka;
             }
-            novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovnaOpus, "", "", textBoxSlozka.Text);
+            novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, "", "", textBoxSlozka.Text);
             textBoxZanr.Text = novyAlbum.Zanr;
         }
 
@@ -455,7 +449,7 @@ namespace youtube2music
             else
             {
                 // nejedná se o existující složku ani soubor
-                vyberSlozky.SelectedPath = hudebniKnihovnaOpus + "\\";
+                vyberSlozky.SelectedPath = App.Paths.Directories.LibraryOpus + "\\";
             }
             if ((bool)vyberSlozky.ShowDialog())
             {
@@ -617,11 +611,11 @@ namespace youtube2music
             Album novyAlbum;
             if (pictureBoxCoverPredni.Tag == null)
             {
-                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovnaOpus, textBoxZanr.Text);
+                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, textBoxZanr.Text);
             }
             else
             {
-                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, hudebniKnihovnaOpus, textBoxZanr.Text, pictureBoxCoverPredni.Tag.ToString());
+                novyAlbum = new Album(textBoxAlbum.Text, Convert.ToInt32(numericUpDownRok.Value), interpretAlba, textBoxZanr.Text, pictureBoxCoverPredni.Tag.ToString());
             }
             novyAlbum.Slozka = textBoxSlozka.Text;
             textBoxZanr.Text = novyAlbum.Zanr;

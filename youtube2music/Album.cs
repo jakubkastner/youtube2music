@@ -15,8 +15,6 @@ namespace youtube2music
 
         private string zanrAlbumu;
 
-        private string hudebniKnihovna;
-
         public string Nazev { get; set; }
 
         //public string Zanr { get; set; }
@@ -45,7 +43,7 @@ namespace youtube2music
 
                 // žánr dle složky
                 string slozka = this.Slozka;
-                slozka = slozka.Replace(this.hudebniKnihovna, "");
+                slozka = slozka.Replace(App.Paths.Directories.LibraryOpus, "");
                 
                 List<String> rozdelenaSlozka = slozka.Split('\\').ToList();
                 zanr += rozdelenaSlozka[1];
@@ -83,7 +81,7 @@ namespace youtube2music
                 {
                     return "";
                 }
-                slozka = slozka.Replace(this.hudebniKnihovna, "");
+                slozka = slozka.Replace(App.Paths.Directories.LibraryOpus, "");
 
                 List<String> rozdelenaSlozka = slozka.Split('\\').ToList();
                 return rozdelenaSlozka[1];                
@@ -156,14 +154,13 @@ namespace youtube2music
         
         public string Cover { get; set; }
 
-        public Album(string nazev, int rok, Interpret inter, string hudebniKnihovnaP, string zanr = "", string cover = "", string slozka = "")
+        public Album(string nazev, int rok, Interpret inter, string zanr = "", string cover = "", string slozka = "")
         {            
             nazev = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nazev.ToLower()).Replace(" i ", " I ");
             Nazev = nazev;
             Rok = rok;
             Interpret = inter;
             Cover = cover;
-            hudebniKnihovna = hudebniKnihovnaP;
             if (!String.IsNullOrEmpty(zanr))
             {
                 zanrAlbumu = zanr;

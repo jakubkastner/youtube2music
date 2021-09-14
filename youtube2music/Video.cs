@@ -318,8 +318,9 @@ namespace youtube2music
         /// <param name="videoID">ID přidávaného videa.</param>
         /// <param name="videoPlaylist">ID playlistu ze kterého je video přidáváno. Pokud se nejedná o playlist, použiji ID videa.</param>
         /// <param name="interpreti">Seznam nalezených interpretů ze všech dosud přidaných videí.</param>
-        public Video(string videoID, Playlist videoPlaylist, string knihovnaSlozka, SeznamInterpretu interpreti)
+        public Video(string videoID, Playlist videoPlaylist, SeznamInterpretu interpreti)
         {
+            string knihovnaSlozka = App.Paths.Directories.LibraryOpus;
             this.vsichniInterpreti = interpreti;
             this.novyNazevVidea = "";
             this.hudebniKnihovna = knihovnaSlozka;

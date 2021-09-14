@@ -36,7 +36,7 @@ namespace youtube2music
         /// </summary>
         /// <param name="upravovanaVideaForm">Upravovaná videa.</param>
         /// <param name="hudebniKnihovnaForm">Složka hudební knihovny.</param>
-        public FormUprava(List<Video> upravovanaVideaForm, string hudebniKnihovnaForm)
+        public FormUprava(List<Video> upravovanaVideaForm)
         {
             InitializeComponent();
             // prohlížeč
@@ -44,7 +44,7 @@ namespace youtube2music
             Gecko.GeckoPreferences.User["general.useragent.override"] = "User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0";
 
             upravovanaVidea = upravovanaVideaForm;
-            hudebniKnihovna = hudebniKnihovnaForm;
+            hudebniKnihovna = App.Paths.Directories.LibraryOpus;
         }
 
         /// <summary>
