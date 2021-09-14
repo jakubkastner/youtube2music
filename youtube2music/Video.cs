@@ -25,11 +25,6 @@ namespace youtube2music
         /// </summary>
         private string slozka;
 
-        /// <summary>
-        /// Hudební knihovna uživatele.
-        /// </summary>
-        private string hudebniKnihovna;
-
         public int Stopa { get; set; }
         public Album Album { get; set; }
 
@@ -123,7 +118,7 @@ namespace youtube2music
                 string vrat = Slozka;
                 if (!String.IsNullOrEmpty(vrat))
                 {
-                    vrat = Slozka.Replace(hudebniKnihovna, "");
+                    vrat = Slozka.Replace(App.Paths.Directories.LibraryOpus, "");
                 }
                 return vrat;
             }
@@ -320,10 +315,8 @@ namespace youtube2music
         /// <param name="interpreti">Seznam nalezených interpretů ze všech dosud přidaných videí.</param>
         public Video(string videoID, Playlist videoPlaylist, SeznamInterpretu interpreti)
         {
-            string knihovnaSlozka = App.Paths.Directories.LibraryOpus;
             this.vsichniInterpreti = interpreti;
             this.novyNazevVidea = "";
-            this.hudebniKnihovna = knihovnaSlozka;
             Stopa = 0;
             ID = videoID;
             PlaylistVidea = videoPlaylist;
@@ -341,7 +334,7 @@ namespace youtube2music
             // získá informace z youtube api
             try
             {
-                YouTubeApi.ZiskejInfoVidea(this);
+                YouTube.Api.ZiskejInfoVidea(this);
                 // -> získá původní název, kanál, popis, datum publikování
             }
             catch (Exception)

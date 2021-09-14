@@ -95,7 +95,7 @@ namespace youtube2music.Actions
         /// </summary>
         /// <param name="text">Status text</param>
         /// <param name="title">Status title</param>
-        public static void Status(string text = "Ready", string title = null)
+        public static void Status(string text = "", string title = null)
         {
             if (!String.IsNullOrEmpty(title)) text = title.ToUpper() + ": " + text;
             formList.statusStripStatus.Invoke(new Action(() =>
@@ -136,7 +136,7 @@ namespace youtube2music.Actions
             if (result == DialogResult.Retry)
             {
                 // run new instance of the program
-                Run.Program(Application.ExecutablePath);
+                Run.Program(Application.ExecutablePath, true);
             }
 
             // exit current instance

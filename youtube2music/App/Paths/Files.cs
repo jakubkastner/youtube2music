@@ -46,7 +46,7 @@ namespace youtube2music.App.Paths
                 if (String.IsNullOrEmpty(libraryOpusHistory))
                 {
                     if (Directories.Data == null) return null;
-                    return Path.Combine(Directories.Data, nameLibraryOpus);
+                    libraryOpusHistory = Path.Combine(Directories.Data, nameLibraryOpus);
                 }
                 return libraryOpusHistory;
             }
@@ -61,7 +61,7 @@ namespace youtube2music.App.Paths
                 if (String.IsNullOrEmpty(libraryMp3History))
                 {
                     if (Directories.Data == null) return null;
-                    return Path.Combine(Directories.Data, nameLibraryMp3);
+                    libraryMp3History = Path.Combine(Directories.Data, nameLibraryMp3);
                 }
                 return libraryMp3History;
             }
@@ -76,7 +76,7 @@ namespace youtube2music.App.Paths
                 if (String.IsNullOrEmpty(programYouTubeDlHistory))
                 {
                     if (Directories.Data == null) return null;
-                    return Path.Combine(Directories.Data, nameProgramYouTubeDl);
+                    programYouTubeDlHistory = Path.Combine(Directories.Data, nameProgramYouTubeDl);
                 }
                 return programYouTubeDlHistory;
             }
@@ -91,7 +91,7 @@ namespace youtube2music.App.Paths
                 if (String.IsNullOrEmpty(programFfmpegHistory))
                 {
                     if (Directories.Data == null) return null;
-                    return Path.Combine(Directories.Data, nameProgramFfmpeg);
+                    programFfmpegHistory = Path.Combine(Directories.Data, nameProgramFfmpeg);
                 }
                 return programFfmpegHistory;
             }
@@ -106,7 +106,7 @@ namespace youtube2music.App.Paths
                 if (String.IsNullOrEmpty(programMp3tagHistory))
                 {
                     if (Directories.Data == null) return null;
-                    return Path.Combine(Directories.Data, nameProgramMp3tag);
+                    programMp3tagHistory = Path.Combine(Directories.Data, nameProgramMp3tag);
                 }
                 return programMp3tagHistory;
             }
@@ -121,7 +121,7 @@ namespace youtube2music.App.Paths
                 if (String.IsNullOrEmpty(downloadedVideosHistory))
                 {
                     if (Directories.Data == null) return null;
-                    return Path.Combine(Directories.Data, nameDownloadedVideos);
+                    downloadedVideosHistory = Path.Combine(Directories.Data, nameDownloadedVideos);
                 }
                 return downloadedVideosHistory;
             }
@@ -136,7 +136,7 @@ namespace youtube2music.App.Paths
                 if (String.IsNullOrEmpty(youTubeUser))
                 {
                     if (Directories.Data == null) return null;
-                    return Path.Combine(Directories.Data, nameYouTubeUser);
+                    youTubeUser = Path.Combine(Directories.Data, nameYouTubeUser);
                 }
                 return youTubeUser;
             }

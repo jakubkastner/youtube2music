@@ -17,15 +17,39 @@ namespace youtube2music.App.Paths
         private static string cache;
         private static string currentCache;
         private static readonly string nameCache = "cache";
+        private static string libraryOpus;
+        private static string libraryMp3;
 
         /// <summary>
         /// Directory path for opus music library.
         /// </summary>
-        public static string LibraryOpus { get; set; }
+        public static string LibraryOpus
+        {
+            get
+            {
+                if (!FilesDirectories.Directories.Exists(libraryOpus)) libraryOpus = null;
+                return libraryOpus;
+            }
+            set
+            {
+                libraryOpus = value;
+            }
+        }
         /// <summary>
         /// Directory path for mp3 music library.
         /// </summary>
-        public static string LibraryMp3 { get; set; }
+        public static string LibraryMp3
+        {
+            get
+            {
+                if (!FilesDirectories.Directories.Exists(libraryMp3)) libraryMp3 = null;
+                return libraryMp3;
+            }
+            set
+            {
+                libraryMp3 = value;
+            }
+        }
 
 
         /// <summary>

@@ -2,29 +2,39 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using System.Xml;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
 
-namespace youtube2music
+namespace youtube2music.YouTube
 {
-    public class YouTubeApi
+    /// <summary>
+    /// YouTube API
+    /// </summary>
+    public class Api
     {
-        private static YouTubeService sluzbaYoutube = Auth();
+        /// <summary>
+        /// YouTube service.
+        /// </summary>
+        private static YouTubeService serviceYT = Auth();
 
+        /// <summary>
+        /// Authorize YouTube user.
+        /// </summary>
+        /// <returns>YouTubeService</returns>
         private static YouTubeService Auth()
-        {            
-            UserCredential povereni;
-            string inicializaceApi = @"{""installed"":{""client_id"":""806982074560-2h1sptig11iq8hrl4ink1jetllv1vlm9.apps.googleusercontent.com"",""project_id"":""youtube-renamer"",""auth_uri"":""https://accounts.google.com/o/oauth2/auth"",""token_uri"":""https://accounts.google.com/o/oauth2/token"",""auth_provider_x509_cert_url"":""https://www.googleapis.com/oauth2/v1/certs"",""client_secret"":""FDJhnbA5J2BLPpSxVD01vz4K"",""redirect_uris"":[""urn:ietf:wg:oauth:2.0:oob"",""http://localhost""]}}";
+        {
+            UserCredential credential;
+            // init json for api
+            string apiInit = @"{""installed"":{""client_id"":""806982074560-2h1sptig11iq8hrl4ink1jetllv1vlm9.apps.googleusercontent.com"",""project_id"":""youtube-renamer"",""auth_uri"":""https://accounts.google.com/o/oauth2/auth"",""token_uri"":""https://accounts.google.com/o/oauth2/token"",""auth_provider_x509_cert_url"":""https://www.googleapis.com/oauth2/v1/certs"",""client_secret"":""FDJhnbA5J2BLPpSxVD01vz4K"",""redirect_uris"":[""urn:ietf:wg:oauth:2.0:oob"",""http://localhost""]}}";
 
-            // using (var ctecka = new FileStream("youtube_client_secret.json", FileMode.Open, FileAccess.Read))
-            using (var ctecka = new MemoryStream(System.Text.Encoding.ASCII.GetBytes(inicializaceApi)))
+            // read anit api json
+            using (var reader = new MemoryStream(System.Text.Encoding.ASCII.GetBytes(apiInit)))
             {
-                povereni = GoogleWebAuthorizationBroker.AuthorizeAsync
+                credential = GoogleWebAuthorizationBroker.AuthorizeAsync
                 (
-                    GoogleClientSecrets.FromStream(ctecka).Secrets,
+                    GoogleClientSecrets.FromStream(reader).Secrets,
                     new[] { YouTubeService.Scope.YoutubeReadonly },
                     "user",
                     CancellationToken.None,
@@ -32,13 +42,36 @@ namespace youtube2music
                 ).Result;
             }
 
-            var sluzba = new YouTubeService(new BaseClientService.Initializer()
+            var service = new YouTubeService(new BaseClientService.Initializer()
             {
-                HttpClientInitializer = povereni,
+                HttpClientInitializer = credential,
                 ApplicationName = "youtube2music"
             });
-            return sluzba;
+            return service;
         }
+
+        /// <summary>
+        /// Get currently logged in user id and name of he channel.
+        /// </summary>
+        internal static void GetUser()
+        {
+            // YouTube API request
+            var request = serviceYT.Channels.List("brandingSettings");
+            request.Mine = true;
+
+            // YouTube API result
+            var result = request.Execute();
+            if (result.Items == null) return;
+            if (result.Items.Count == 0) return;
+
+            var channel = result.Items[0];
+            if (String.IsNullOrEmpty(channel.BrandingSettings.Channel.Title)) return;
+
+            User.Id = channel.Id;
+            User.ChannelName = channel.BrandingSettings.Channel.Title;
+        }
+
+
 
         /// <summary>
         /// Získá z YouTube API informace o videu (název, kanál, popis, publikováno).
@@ -46,7 +79,7 @@ namespace youtube2music
         /// <param name="noveVideo">Nové video k získání informací z YouTube API.</param>
         public static void ZiskejInfoVidea(Video noveVideo)
         {
-            var pozadavek = sluzbaYoutube.Videos.List("snippet");
+            var pozadavek = serviceYT.Videos.List("snippet");
             pozadavek.Id = noveVideo.ID;
 
             var response = pozadavek.Execute();
@@ -72,7 +105,7 @@ namespace youtube2music
         // získá seznam uživatelovo playlistů
         internal static void ZiskejPlaylistyUzivatele(string uzivatelovoID)
         {
-            var channelsListRequest = sluzbaYoutube.Playlists.List("snippet,contentDetails");
+            var channelsListRequest = serviceYT.Playlists.List("snippet,contentDetails");
             channelsListRequest.ChannelId = uzivatelovoID;
             channelsListRequest.MaxResults = 50;
             var channelsListResponse = channelsListRequest.Execute();
@@ -85,7 +118,7 @@ namespace youtube2music
 
         internal static string ZiskejNazevPlaylistu(string playlistID)
         {
-            var pozadavek = sluzbaYoutube.Playlists.List("snippet");
+            var pozadavek = serviceYT.Playlists.List("snippet");
             pozadavek.Id = playlistID;
             var channelsListResponse = pozadavek.Execute();
             foreach (var list in channelsListResponse.Items)
@@ -97,7 +130,7 @@ namespace youtube2music
 
         internal static void ZiskejNazevUzivatele()
         {
-            var pozadavek = sluzbaYoutube.Channels.List("brandingSettings");
+            var pozadavek = serviceYT.Channels.List("brandingSettings");
             pozadavek.Mine = true;
             var odpoved = pozadavek.Execute();
             if (odpoved.Items == null)
@@ -113,8 +146,8 @@ namespace youtube2music
             {
                 return;
             }
-            App.YouTube.User.ID = kanal.Id;
-            App.YouTube.User.ChannelName = kanal.BrandingSettings.Channel.Title;
+            YouTube.User.Id = kanal.Id;
+            YouTube.User.ChannelName = kanal.BrandingSettings.Channel.Title;
         }
 
         /// <summary>
@@ -124,7 +157,7 @@ namespace youtube2music
         /// <returns>Vrátí seznam ID videí z playlistu.</returns>
         internal static List<string> ZiskejIDVidei(string playlistID)
         {
-            var pozadavek = sluzbaYoutube.PlaylistItems.List("contentDetails");
+            var pozadavek = serviceYT.PlaylistItems.List("contentDetails");
             pozadavek.PlaylistId = playlistID;
 
             List<string> videaID = new List<string>();

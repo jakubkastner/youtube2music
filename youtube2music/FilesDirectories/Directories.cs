@@ -17,7 +17,7 @@ namespace youtube2music.FilesDirectories
         /// <returns>true = success, false = error</returns>
         public static bool Create(string path, bool delete = false, bool deleteRecoursive = true)
         {
-            if (Directory.Exists(path))
+            if (Exists(path))
             {
                 // directory exists
                 if (!delete)
@@ -52,9 +52,9 @@ namespace youtube2music.FilesDirectories
         /// <returns>true = success, false = error</returns>
         public static bool Delete(string path, bool recursive = true)
         {
-            if (Directory.Exists(path))
+            if (!Exists(path))
             {
-                // directory doesnt exists
+                // directory doesn't exists
                 return true;
             }
             // delete directory
@@ -67,6 +67,20 @@ namespace youtube2music.FilesDirectories
                 // failed
                 return false;
             }
+            return true;
+        }
+        /// <summary>
+        /// Check if directory exists.
+        /// </summary>
+        /// <param name="path">Path to directory.</param>
+        /// <returns>true = exists, false = doesn't exist</returns>
+        public static bool Exists(string path)
+        {
+            // directory doesn't exists
+            if (String.IsNullOrEmpty(path)) return false;
+            if (!Directory.Exists(path.Trim())) return false;
+
+            // exists
             return true;
         }
     }

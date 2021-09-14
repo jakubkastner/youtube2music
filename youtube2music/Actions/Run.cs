@@ -14,17 +14,25 @@ namespace youtube2music.Actions
         /// Runs the program or opens web browser, windows explorer.
         /// </summary>
         /// <param name="path">Path to the program, directory, file or web adress</param>
-        /// <param name="fileOrDirectory">True, if it's file or directory</param>
+        /// <param name="check">true = check path for files or directories, false = doesn't check the path</param>
+        /// <param name="fileOrDirectory">true = file, false = directory</param>
         /// <param name="arguments">Program startup arguments</param>
-        /// <param name="wait">True, if you want to wait for the program exit</param>
+        /// <param name="wait">true = wait for the program exit, false = doesn't wait for exit</param>
         /// <returns>true = success, false = error</returns>
-        public static bool Program(string path, bool fileOrDirectory = true, string arguments = null, bool wait = false)
+        public static bool Program(string path, bool check = false, bool fileOrDirectory = true, string arguments = null, bool wait = false)
         {
-            if (fileOrDirectory && (!File.Exists(path) || !Directory.Exists(path)))
+            if (String.IsNullOrEmpty(path)) return false;
+            path = path.Trim();
+
+            // check path
+            if (check)
             {
-                // file or directory doesn't exist
-                return false;
+                // file
+                if (fileOrDirectory && !FilesDirectories.Files.Exists(path)) return false;
+                // directory
+                if (!fileOrDirectory && !FilesDirectories.Directories.Exists(path)) return false;
             }
+
             try
             {
                 // start new program

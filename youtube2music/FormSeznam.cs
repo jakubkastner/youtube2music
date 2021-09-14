@@ -566,7 +566,7 @@ namespace youtube2music
         }
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show(App.Paths.Directories.LibraryMp3);
         }
 
 
@@ -638,7 +638,10 @@ namespace youtube2music
             menuStripMenu.Invoke(new Action(() =>
             {
                 // login user from YouTube
-                YouTube.User.Login();
+                if (!YouTube.User.Login())
+                {
+                    // TODO show error
+                }
 
                 backgroundWorkerNactiProgram.ReportProgress(6);
                 // toolStripMenuItem1.Visible = false;
@@ -654,7 +657,7 @@ namespace youtube2music
                 // c) cesta ffmpeg
                 MenuCestaNactiZeSouboru(3);
                 backgroundWorkerNactiProgram.ReportProgress(10);
-                // d) cesta ffmpeg
+                // d) cesta mp3tag
                 MenuCestaNactiZeSouboru(4);
                 backgroundWorkerNactiProgram.ReportProgress(11);
             }));
@@ -685,18 +688,17 @@ namespace youtube2music
             if (e.Error != null)
             {
                 Actions.Show.StartupError();
+                return;
             }
-            else if ((string)e.Result == "slozka_programu")
+            if ((string)e.Result == "slozka_programu")
             {
                 Actions.Show.StartupError("Problém se složkou programu");
+                return;
             }
-            else
-            {
-                Actions.Show.Operation("Program byl úspěšně spuštěn.");
-                Actions.Show.Status();
-                menuStripMenu.Visible = true;
-                this.FormBorderStyle = FormBorderStyle.Sizable;
-            }
+            Actions.Show.Operation("Program byl úspěšně spuštěn.");
+            Actions.Show.Status("Ready");
+            menuStripMenu.Visible = true;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
 
             // skryje se ProgressBar
             progressBarStatus.Visible = false;
@@ -710,24 +712,34 @@ namespace youtube2music
          *
         **/
 
-        // HOTOVO 2019
         /// <summary>
-        /// Otevře hudební knihovnu opus ve správci souborů.
+        /// Open opus music library in the windows explorer.
         /// </summary>
         private void menuNastaveniKnihovnaOpusVybrana_Click(object sender, EventArgs e)
         {
-            var menu = sender as ToolStripMenuItem;
-            OtevritKnihovnu(Directories.LibraryOpus, menu.Text);
+            if (!Actions.Run.Program(Directories.LibraryOpus, true, false))
+            {
+                menuNastaveniKnihovnaOpusVybrana.Text = "No music library folder selected";
+                menuNastaveniKnihovnaOpusVybrana.Enabled = false;
+                menuNastaveniKnihovnaOpusVybrana.ToolTipText = "";
+                // TODO delete history
+                Actions.Show.Error("Start File Explorer ", "The mp3 music library folder doesn't exist.");
+            }
         }
 
-        // HOTOVO 2019
         /// <summary>
-        /// Otevře hudební knihovnu mp3 ve správci souborů.
+        /// Open mp3 music library in the windows explorer.
         /// </summary>
         private void menuNastaveniKnihovnaMp3Vybrana_Click(object sender, EventArgs e)
         {
-            var menu = sender as ToolStripMenuItem;
-            OtevritKnihovnu(Directories.LibraryMp3, menu.Text);
+            if (!Actions.Run.Program(Directories.LibraryMp3, true, false))
+            {
+                menuNastaveniKnihovnaMp3Vybrana.Text = "No music library folder selected";
+                menuNastaveniKnihovnaMp3Vybrana.Enabled = false;
+                menuNastaveniKnihovnaMp3Vybrana.ToolTipText = "";
+                // TODO delete history
+                Actions.Show.Error("Start File Explorer ", "The mp3 music library folder doesn't exist.");
+            }
         }
 
         // HOTOVO 2019
@@ -738,23 +750,6 @@ namespace youtube2music
         /// <param name="textMenu">Text menu, na které se klikne</param>
         private void OtevritKnihovnu(string hudebniKnihovna, string textMenu)
         {
-            if (String.IsNullOrEmpty(hudebniKnihovna))
-            {
-                hudebniKnihovna = textMenu;
-            }
-            if (!Directory.Exists(hudebniKnihovna))
-            {
-                menuNastaveniYoutubeDLCestaVybrana.Text = "Nebyla vybrána žádná složka";
-                menuNastaveniYoutubeDLCestaVybrana.Enabled = false;
-                hudebniKnihovna = null;
-                Actions.Show.Error("Spuštění průzkumníku souborů", "Složka hudební knihovny neexistuje.");
-                return;
-            }
-            // TODO kontrola - původně bylo false - Spustit.Program(hudebniKnihovna, false);
-            if (!Actions.Run.Program(hudebniKnihovna, true))
-            {
-                // TODO show error
-            }
         }
 
         // HOTOVO 2019
@@ -776,7 +771,7 @@ namespace youtube2music
                 Actions.Show.Error("Spuštění průzkumníku souborů", "Složka programu YouTube-DL neexistuje.");
                 return;
             }
-            if (!Actions.Run.Program("explorer", false, "/select, \"" + Files.ProgramYouTubeDl + "\""))
+            if (!Actions.Run.Program("explorer", false, false, "/select, \"" + Files.ProgramYouTubeDl + "\""))
             {
                 // TODO show error
             }
@@ -804,7 +799,7 @@ namespace youtube2music
                 Actions.Show.Error("Spuštění průzkumníku souborů", "Složka programu FFMmpeg neexistuje.");
                 return;
             }
-            if (!Actions.Run.Program("explorer", false, "/select, \"" + Files.ProgramFfmpeg + "\""))
+            if (!Actions.Run.Program("explorer", false, false, "/select, \"" + Files.ProgramFfmpeg + "\""))
             {
                 // TODO show error
             }            
@@ -828,7 +823,7 @@ namespace youtube2music
                 Actions.Show.Error("Spuštění průzkumníku souborů", "Složka programu mp3tag neexistuje.");
                 return;
             }
-            if (!Actions.Run.Program("explorer", false, "/select, \"" + Files.ProgramMp3tag + "\""))
+            if (!Actions.Run.Program("explorer", false, false, "/select, \"" + Files.ProgramMp3tag + "\""))
             {
                 // TODO show error
             }
@@ -1564,7 +1559,7 @@ namespace youtube2music
             // stažení ffmpeg
             //StahniProgram(false);
             // původní link nefunguje
-            if (!Actions.Run.Program("https://ffmpeg.org/download.html", false))
+            if (!Actions.Run.Program("https://ffmpeg.org/download.html"))
             {
                 // TODO show error
             }
@@ -1577,7 +1572,7 @@ namespace youtube2music
         private void menuNastaveniMp3tagStahnout_Click(object sender, EventArgs e)
         {
             // otevření stránky se stažením
-            if (!Actions.Run.Program("https://www.mp3tag.de/en/dodownload.html", false))
+            if (!Actions.Run.Program("https://www.mp3tag.de/en/dodownload.html"))
             {
                 // TODO show error
             }
@@ -2512,7 +2507,7 @@ namespace youtube2music
                 List<string> videaNovaID = new List<string>();
                 try
                 {
-                    videaNovaID = YouTubeApi.ZiskejIDVidei(youtubeID);
+                    videaNovaID = YouTube.Api.ZiskejIDVidei(youtubeID);
                 }
                 catch (Exception)
                 {
@@ -3055,7 +3050,7 @@ namespace youtube2music
 
         private void menuNastaveniCacheOtevrit_Click(object sender, EventArgs e)
         {
-            if (!Actions.Run.Program(Directories.Cache))
+            if (!Actions.Run.Program(Directories.Cache, true, false))
             {
                 // TODO show error
             }
@@ -3155,7 +3150,7 @@ namespace youtube2music
                 {
                     continue;
                 }
-                if (!Actions.Run.Program(Files.ProgramMp3tag, true, "/fn:\"" + soubor + "\""))
+                if (!Actions.Run.Program(Files.ProgramMp3tag, true, true, "/fn:\"" + soubor + "\""))
                 {
                     // TODO show error
                 }            
@@ -3200,7 +3195,7 @@ namespace youtube2music
                 {
                     soubor += ".mp3";
                 }
-                if (!Actions.Run.Program(Files.ProgramMp3tag, true, "/fn:\"" + soubor + "\""))
+                if (!Actions.Run.Program(Files.ProgramMp3tag, true, true, "/fn:\"" + soubor + "\""))
                 {
                     // TODO show error
                 }
@@ -3209,7 +3204,7 @@ namespace youtube2music
 
         private void menuNastaveniHistorieOtevrit_Click(object sender, EventArgs e)
         {
-            if (!Actions.Run.Program(Files.DownloadedVideosHistory))
+            if (!Actions.Run.Program(Files.DownloadedVideosHistory, true))
             {
                 // TODO show error
             }
@@ -3217,7 +3212,7 @@ namespace youtube2music
 
         private void menuNastaveniUzivatel_Click(object sender, EventArgs e)
         {
-            if (!Actions.Run.Program(YouTube.User.ChannelUrl, false))
+            if (!Actions.Run.Program(YouTube.User.ChannelUrl))
             {
                 // TODO show error
             }

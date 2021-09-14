@@ -13,11 +13,8 @@ namespace youtube2music.FilesDirectories
         /// <returns>The contents of the file line by line as list</returns>
         public static List<string> Read(string path)
         {
-            if (!File.Exists(path))
-            {
-                // file doesn't exist
-                return null;
-            }
+            // file doesn't exists
+            if (!Exists(path)) return null;
 
             List<string> lines = new List<string>();
             try
@@ -49,6 +46,9 @@ namespace youtube2music.FilesDirectories
         /// <returns>true = success, false = error</returns>
         public static bool Write(string path, List<string> content, bool rewrite = true)
         {
+            // file doesn't exists
+            if (!Exists(path)) return false;
+
             FileMode writeMode = FileMode.Append;
             if (rewrite)
             {
@@ -85,11 +85,9 @@ namespace youtube2music.FilesDirectories
         /// <returns>true = success, false = error</returns>
         public static bool Move(string filePath, string destinationDirectory, string newFileName = null)
         {
-            if (!File.Exists(filePath))
-            {
-                // file doesn't exist
-                return false;
-            }
+            // file doesn't exists
+            if (!Exists(filePath)) return false;
+
             try
             {
                 if (String.IsNullOrEmpty(newFileName)) newFileName = Path.GetFileName(filePath);
@@ -109,11 +107,9 @@ namespace youtube2music.FilesDirectories
         /// <returns>true = success, false = error</returns>
         public static bool Delete(string path)
         {
-            if (!File.Exists(path))
-            {
-                // file doesn't exist
-                return true;
-            }
+            // file doesn't exists
+            if (!Exists(path)) return true;
+
             try
             {
                 // file deleted
@@ -123,6 +119,21 @@ namespace youtube2music.FilesDirectories
             {
                 return false;
             }
+            return true;
+        }
+
+        /// <summary>
+        /// Check if the file exists.
+        /// </summary>
+        /// <param name="path">File path</param>
+        /// <returns>true = exist, false = doesn't exists</returns>
+        public static bool Exists(string path)
+        {
+            // file doesn't exists
+            if (String.IsNullOrEmpty(path)) return false;
+            if (!File.Exists(path.Trim())) return false;
+
+            // file exists
             return true;
         }
     }

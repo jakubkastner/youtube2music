@@ -43,7 +43,7 @@ namespace youtube2music
         {
             try
             {
-                Nazev = YouTubeApi.ZiskejNazevPlaylistu(ID);
+                Nazev = YouTube.Api.ZiskejNazevPlaylistu(ID);
             }
             catch (Exception ex)
             {

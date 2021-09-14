@@ -18,7 +18,7 @@ namespace youtube2music.YouTube
         /// <summary>
         /// User ID.
         /// </summary>
-        public static string ID { get; set; }
+        public static string Id { get; set; }
 
         /// <summary>
         /// User channel name.
@@ -32,8 +32,8 @@ namespace youtube2music.YouTube
         {
             get
             {
-                if (String.IsNullOrEmpty(ID)) return null;
-                return "https://youtube.com/channel/" + ID;
+                if (String.IsNullOrEmpty(Id)) return null;
+                return "https://youtube.com/channel/" + Id;
             }
         }
         
@@ -42,16 +42,21 @@ namespace youtube2music.YouTube
         /// </summary>
         public static bool Login()
         {
-            YouTubeApi.ZiskejNazevUzivatele();
-            if (ChannelName == null)
-            {
-                return false;
-            }
+            Id = null;
+            ChannelName = null;
+
+            // call YouTube API
+            Api.GetUser();
+
+            if (String.IsNullOrEmpty(ChannelName)) return false;
+            if (String.IsNullOrEmpty(Id)) return false;
+
             formList.menuNastaveniUzivatel.Text = "Logged in user '" + ChannelName + "'";
             formList.menuNastaveniUzivatel.ToolTipText = "View YouTube channel";
             formList.menuNastaveniUzivatel.Enabled = true;
             formList.menuNastaveniUzivatelOdhlasit.Text = "Logout from YouTube";
             formList.menuNastaveniUzivatelOdhlasit.Enabled = true;
+
             return true;
         }
     }

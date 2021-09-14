@@ -167,7 +167,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="YouTubeApi.cs" />
+    <Compile Include="YouTube\Api.cs" />
     <EmbeddedResource Include="FormAlbum.resx">
       <DependentUpon>FormAlbum.cs</DependentUpon>
     </EmbeddedResource>
