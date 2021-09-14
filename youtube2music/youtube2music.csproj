@@ -136,7 +136,7 @@
     <Compile Include="App\App.cs" />
     <Compile Include="App\Paths\Directories.cs" />
     <Compile Include="App\Paths\Files.cs" />
-    <Compile Include="App\YouTube.cs" />
+    <Compile Include="YouTube\User.cs" />
     <Compile Include="Chyba.cs" />
     <Compile Include="Deezer.cs" />
     <Compile Include="FilesDirectories\Directories.cs" />

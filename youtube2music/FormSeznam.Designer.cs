@@ -1024,8 +1024,6 @@
 
         private System.ComponentModel.BackgroundWorker backgroundWorkerStahniVidea;
         private System.ComponentModel.BackgroundWorker backgroundWorkerNactiProgram;
-        private System.Windows.Forms.ToolStripProgressBar progressBarStatus;
-        private System.Windows.Forms.ToolStripStatusLabel labelOperace;
         private System.Windows.Forms.ToolStripTextBox textBoxOdkaz;
         private System.Windows.Forms.ToolStripMenuItem menuPridatVideo;
         private System.Windows.Forms.ToolStripMenuItem menuVybrat;
@@ -1101,7 +1099,6 @@
         private BrightIdeasSoftware.OLVColumn olvColumn13;
         private System.Windows.Forms.ToolStripMenuItem albumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuPridatPlaylist;
-        private System.Windows.Forms.ToolStripStatusLabel labelStav;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniCacheSmazat;
         private System.ComponentModel.BackgroundWorker backgroundWorkerSmazCache;
@@ -1123,8 +1120,11 @@
         private System.Windows.Forms.ToolStripMenuItem menuMp3tagOpus;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniHistorieOtevrit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniUzivatel;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniUzivatelOdhlasit;
         public  System.Windows.Forms.StatusStrip statusStripStatus;
+        public System.Windows.Forms.ToolStripStatusLabel labelOperace;
+        public System.Windows.Forms.ToolStripStatusLabel labelStav;
+        public System.Windows.Forms.ToolStripProgressBar progressBarStatus;
+        public System.Windows.Forms.ToolStripMenuItem menuNastaveniUzivatel;
+        public System.Windows.Forms.ToolStripMenuItem menuNastaveniUzivatelOdhlasit;
     }
 }

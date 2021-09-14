@@ -75,18 +75,18 @@ namespace youtube2music
             if (menuStahnout.Text == "STÁHNOUT A PŘESUNOUT")
             {
                 // spustí backGroundWorker se stáhnutím videí
-                ZobrazitOperaci("Stahování videí...");
+                Actions.Show.Operation("Stahování videí...");
                 if (!backgroundWorkerStahniVidea.IsBusy)
                 {
                     //List<Video> videaKeStazeni = ZiskejVybranaVidea(true);
-                    List<Video> videaKeStazeni = ZiskejVybranaVidea(false);
-                    ZobrazStatusProgressBar(videaKeStazeni.Count * 5 + 1);
+                    List<Video> videaKeStazeni = ZiskejVybranaVidea(false);                    
+                    Actions.Show.Progress(videaKeStazeni.Count * 5 + 1);
                     menuStahnout.Text = "ZASTAVIT STAHOVÁNÍ";
                     backgroundWorkerStahniVidea.RunWorkerAsync(videaKeStazeni);
                 }
                 else
                 {
-                    ZobrazitOperaci("Stahování videí", "Chyba stahování videí.");
+                    Actions.Show.Operation("Chyba stahování videí.", "Stahování videí");
                     Actions.Show.Error("Stahování videí", "Videa se nepodařilo stáhnout.", "Zkuzte stáhnout videa znovu.");
                 }
             }
@@ -127,7 +127,7 @@ namespace youtube2music
                 Process cmd = new Process();
                 ProcessStartInfo psi = new ProcessStartInfo();
 
-                ZobrazitOperaci("Stahování videí", "Stahuji " + stahovaneVideo.ID + " (" + stahovaneVideoIndex++ + " z " + videaKeStazeni.Count + ")");
+                Actions.Show.Operation("Stahuji " + stahovaneVideo.ID + " (" + stahovaneVideoIndex++ + " z " + videaKeStazeni.Count + ")", "Stahování videí");
                 stahovaneVideo.Stav = "Stahování";
                 objectListViewSeznamVidei.RefreshObject(stahovaneVideo);
                 backgroundWorkerStahniVidea.ReportProgress(stahovaniReport++);
@@ -281,16 +281,16 @@ namespace youtube2music
             TaskbarManager.Instance.SetProgressValue(progressBarStatus.Maximum, progressBarStatus.Maximum);
             if (e.Cancelled)
             {
-                ZobrazitOperaci("Stahování videí", "Zrušeno uživatelem.");
+                Actions.Show.Operation("Zrušeno uživatelem.", "Stahování videí");
             }
             else if (e.Error != null)
             {
-                ZobrazitOperaci("Stahování videí", "Chyba.");
+                Actions.Show.Operation("Chyba.", "Stahování videí");
                 Actions.Show.Error("Stahování videí", "Došlo k chybě, videa nemohla být stažena.", "Zkuste stáhnout videa znovu.", e.Error.ToString());
             }
             else
             {
-                ZobrazitOperaci("Stahování videí", "Úspěšně bylo staženo " + e.Result.ToString() + " videí z(e) " + objectListViewSeznamVidei.CheckedObjects.Count.ToString());
+                Actions.Show.Operation("Úspěšně bylo staženo " + e.Result.ToString() + " videí z(e) " + objectListViewSeznamVidei.CheckedObjects.Count.ToString(), "Stahování videí");
             }
             progressBarStatus.Visible = false;
             TaskbarManager.Instance.SetProgressValue(0, 0);
@@ -587,31 +587,12 @@ namespace youtube2music
 
         // HOTOVO 2019
         /// <summary>
-        /// Zobrazí MessageBox s chybou.
-        /// Následně restartuje nebo ukončí program.
-        /// </summary>
-        /// <param name="chyba">Zobrazovaný text chyby.</param>
-        private void ZobrazChybuSpousteni(string chyba)
-        {
-            ZobrazitOperaci("Program se nepodařilo spustit.");
-
-            DialogResult odpoved = Actions.Show.Question("Spuštění programu", MessageBoxButtons.RetryCancel, "Program se nepodařilo spustit.", chyba, "Kliknutím na tlačítko 'Znovu' se program spustí znovu.");
-            if (odpoved == DialogResult.Retry)
-            {
-                // restatuje program
-                Process.Start(Application.ExecutablePath);
-            }
-            this.Close();
-        }
-
-        // HOTOVO 2019
-        /// <summary>
         // start programu - spuštění BackgroundWorkeru s nastavením.
         /// </summary>
         private void FormSeznam_Load(object sender, EventArgs e)
         {
-            ZobrazitStav("Spouštění programu...");
-            ZobrazStatusProgressBar(13);
+            Actions.Show.Status("Spouštění programu...");
+            Actions.Show.Progress(13);
 
             this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             menuStripMenu.Visible = false;
@@ -622,7 +603,7 @@ namespace youtube2music
             }
             else
             {
-                ZobrazChybuSpousteni("");
+                Actions.Show.StartupError();
             }
         }
 
@@ -636,12 +617,16 @@ namespace youtube2music
             backgroundWorkerNactiProgram.ReportProgress(1);
 
             // 1.) create and get app directories
+
+            // date directory
             if (!FilesDirectories.Directories.Create(Directories.Data))
             {
                 e.Result = "slozka_programu";
                 return;
             }
             backgroundWorkerNactiProgram.ReportProgress(2);
+
+            // cache directory
             if (!FilesDirectories.Directories.Create(Directories.CurrentCache, true))
             {
                 e.Result = "slozka_programu";
@@ -652,10 +637,11 @@ namespace youtube2music
             // 2.) load settings
             menuStripMenu.Invoke(new Action(() =>
             {
-                // přihlášení uživatele
-                PrihlasitUzivatele();
+                // login user from YouTube
+                YouTube.User.Login();
+
                 backgroundWorkerNactiProgram.ReportProgress(6);
-                toolStripMenuItem1.Visible = false;
+                // toolStripMenuItem1.Visible = false;
                 // a) cesta hudebních složek opus
                 MenuCestaNactiZeSouboru(0);
                 backgroundWorkerNactiProgram.ReportProgress(7);
@@ -672,20 +658,6 @@ namespace youtube2music
                 MenuCestaNactiZeSouboru(4);
                 backgroundWorkerNactiProgram.ReportProgress(11);
             }));
-        }
-
-        private void PrihlasitUzivatele()
-        {
-            YouTubeApi.ZiskejNazevUzivatele();
-            if (App.YouTube.User.ChannelName == null)
-            {
-                return;
-            }
-            menuNastaveniUzivatel.Text = "Přihlášený uživatel '" + App.YouTube.User.ChannelName + "'";
-            menuNastaveniUzivatel.ToolTipText = "Zobrazit YouTube kanál";
-            menuNastaveniUzivatel.Enabled = true;
-            menuNastaveniUzivatelOdhlasit.Text = "Odhlásit se z YouTube";
-            menuNastaveniUzivatelOdhlasit.Enabled = true;
         }
 
         // HOTOVO 2019
@@ -712,16 +684,16 @@ namespace youtube2music
             // zobrazení výsledků
             if (e.Error != null)
             {
-                ZobrazChybuSpousteni("");
+                Actions.Show.StartupError();
             }
             else if ((string)e.Result == "slozka_programu")
             {
-                ZobrazChybuSpousteni("Problém se složkou programu");
+                Actions.Show.StartupError("Problém se složkou programu");
             }
             else
             {
-                ZobrazitOperaci("Program byl úspěšně spuštěn.");
-                ZobrazitStav();
+                Actions.Show.Operation("Program byl úspěšně spuštěn.");
+                Actions.Show.Status();
                 menuStripMenu.Visible = true;
                 this.FormBorderStyle = FormBorderStyle.Sizable;
             }
@@ -923,7 +895,7 @@ namespace youtube2music
                     hudebniKnihovna = Directories.LibraryMp3;
                     MenuCestaZobrazit(1);
                 }
-                ZobrazitOperaci("Hudební knihovna " + typ + " úspěšně změněna: '" + hudebniKnihovna + "'");
+                Actions.Show.Operation("Hudební knihovna " + typ + " úspěšně změněna: '" + hudebniKnihovna + "'");
             }
         }
 
@@ -949,7 +921,7 @@ namespace youtube2music
                 }
                 Files.ProgramYouTubeDl = vyberSouboru.FileName;
                 MenuCestaZobrazit(2);
-                ZobrazitOperaci("Cesta programu YouTube-DL úspěšně změněna: '" + Files.ProgramYouTubeDl + "'");
+                Actions.Show.Operation("Cesta programu YouTube-DL úspěšně změněna: '" + Files.ProgramYouTubeDl + "'");
             }
         }
 
@@ -975,7 +947,7 @@ namespace youtube2music
                 }
                 Files.ProgramFfmpeg = vyberSouboru.FileName;
                 MenuCestaZobrazit(3);
-                ZobrazitOperaci("Cesta programu FFmpeg úspěšně změněna: '" + Files.ProgramFfmpeg + "'");
+                Actions.Show.Operation("Cesta programu FFmpeg úspěšně změněna: '" + Files.ProgramFfmpeg + "'");
             }
         }
 
@@ -1001,7 +973,7 @@ namespace youtube2music
                 }
                 Files.ProgramMp3tag = vyberSouboru.FileName;
                 MenuCestaZobrazit(4);
-                ZobrazitOperaci("Cesta programu mp3tag úspěšně změněna: '" + Files.ProgramMp3tag + "'");
+                Actions.Show.Operation("Cesta programu mp3tag úspěšně změněna: '" + Files.ProgramMp3tag + "'");
             }
         }
 
@@ -1054,11 +1026,11 @@ namespace youtube2music
                     Directories.LibraryMp3 = hudebniKnihovna;
                     MenuCestaZobrazit(1);
                 }
-                ZobrazitOperaci("Hudební knihovna " + typ + " úspěšně změněna: '" + hudebniKnihovna + "'");
+                Actions.Show.Operation("Hudební knihovna " + typ + " úspěšně změněna: '" + hudebniKnihovna + "'");
             }
             else
             {
-                ZobrazitOperaci("Hudební knihovna " + typ + " nemohla být změněna. Složka '" + hudebniKnihovna + "' neexistuje.");
+                Actions.Show.Operation("Hudební knihovna " + typ + " nemohla být změněna. Složka '" + hudebniKnihovna + "' neexistuje.");
                 Actions.Show.Error("Změna hudební knihovny " + typ, "Hudební knihovna " + typ + " nemohla být změněna.", "Složka '" + hudebniKnihovna + "' neexistuje.", "Zkuste to prosím znovu");
             }
         }
@@ -1075,11 +1047,11 @@ namespace youtube2music
             {
                 Files.ProgramYouTubeDl = novaCesta;
                 MenuCestaZobrazit(2);
-                ZobrazitOperaci("Cesta programu YouTube-DL úspěšně změněna: '" + novaCesta + "'");
+                Actions.Show.Operation("Cesta programu YouTube-DL úspěšně změněna: '" + novaCesta + "'");
             }
             else
             {
-                ZobrazitOperaci("Cesta programu YouTube-DL nemohla být změněna. Soubor '" + novaCesta + "' neexistuje.");
+                Actions.Show.Operation("Cesta programu YouTube-DL nemohla být změněna. Soubor '" + novaCesta + "' neexistuje.");
                 Actions.Show.Error("Změna cesty programu YouTube-DL", "Cesta nemohla být změněna.", "Soubor '" + novaCesta + "' neexistuje.", "Zkuste to prosím znovu");
             }
         }
@@ -1097,11 +1069,11 @@ namespace youtube2music
             {
                 Files.ProgramFfmpeg = novaCesta;
                 MenuCestaZobrazit(3);
-                ZobrazitOperaci("Cesta programu FFmpeg úspěšně změněna: '" + novaCesta + "'");
+                Actions.Show.Operation("Cesta programu FFmpeg úspěšně změněna: '" + novaCesta + "'");
             }
             else
             {
-                ZobrazitOperaci("Cesta programu FFmpeg nemohla být změněna. Soubor '" + novaCesta + "' neexistuje.");
+                Actions.Show.Operation("Cesta programu FFmpeg nemohla být změněna. Soubor '" + novaCesta + "' neexistuje.");
                 Actions.Show.Error("Změna cesty programu FFmpeg", "Cesta nemohla být změněna.", "Soubor '" + novaCesta + "' neexistuje.", "Zkuste to prosím znovu");
             }
         }
@@ -1118,11 +1090,11 @@ namespace youtube2music
             {
                 Files.ProgramMp3tag = novaCesta;
                 MenuCestaZobrazit(4);
-                ZobrazitOperaci("Cesta programu mp3tag úspěšně změněna: '" + novaCesta + "'");
+                Actions.Show.Operation("Cesta programu mp3tag úspěšně změněna: '" + novaCesta + "'");
             }
             else
             {
-                ZobrazitOperaci("Cesta programu mp3tag nemohla být změněna. Soubor '" + novaCesta + "' neexistuje.");
+                Actions.Show.Operation("Cesta programu mp3tag nemohla být změněna. Soubor '" + novaCesta + "' neexistuje.");
                 Actions.Show.Error("Změna cesty programu mp3tag", "Cesta nemohla být změněna.", "Soubor '" + novaCesta + "' neexistuje.", "Zkuste to prosím znovu");
             }
         }
@@ -1418,7 +1390,7 @@ namespace youtube2music
         /// </summary>
         private void HudebniKnihovnaNajdiSlozky()
         {
-            ZobrazitStav("Prohledávání hudební knihovny...");
+            Actions.Show.Status("Prohledávání hudební knihovny...");
             if (!backgroundWorkerProhledejSlozky.IsBusy)
             {
                 backgroundWorkerProhledejSlozky.RunWorkerAsync();
@@ -1436,8 +1408,8 @@ namespace youtube2music
         private void backgroundWorkerProhledejSlozky_DoWork(object sender, DoWorkEventArgs e)
         {
             // prohledá složky a zapíše je do souboru
-            ZobrazitOperaci("Probíhá prohledávání složek hudební knihovny.");
-            ZobrazStatusProgressBar(1);
+            Actions.Show.Operation("Probíhá prohledávání složek hudební knihovny.");
+            Actions.Show.Progress(1);
 
             if (Directories.LibraryOpus == null)
             {
@@ -1483,7 +1455,7 @@ namespace youtube2music
             }*/
 
             // seřadí složky
-            ZobrazStatusProgressBar(slozkyinterpretu.Count() + 1);
+            Actions.Show.Progress(slozkyinterpretu.Count() + 1);
             slozkyinterpretu.Sort();
 
             // odstraní nepotřebné složky
@@ -1536,28 +1508,28 @@ namespace youtube2music
             // zobrazení výsledků
             if (e.Error != null)
             {
-                ZobrazitOperaci("Chyba prohledávání.");
+                Actions.Show.Operation("Chyba prohledávání.");
                 Actions.Show.Error("Prohledávání hudební knihovny", "Došlo k chybě, složka s hudební knihovnou nebyla prohledána.", "Zkuste změnit hudební složku.", e.Error.ToString());
             }
             else if ((string)e.Result == "chyba")
             {
-                ZobrazitOperaci("Chyba prohledávání.");
+                Actions.Show.Operation("Chyba prohledávání.");
                 Actions.Show.Error("Prohledávání hudební knihovny", "Došlo k chybě, složka s hudební knihovnou nebyla prohledána.", "Zkuste změnit hudební složku.");
             }
             else if ((string)e.Result == "neexistuje")
             {
-                ZobrazitOperaci("Neexistující hudební knihovna.");
+                Actions.Show.Operation("Neexistující hudební knihovna.");
                 Actions.Show.Error("Prohledávání hudební knihovny", "Složka s hudební knihovnou neexistuje.", "Změňte prosím hudební složku.");
             }
             else if ((string)e.Result == "zadne_slozky")
             {
-                ZobrazitOperaci("Nenalezeny žádné složky.");
+                Actions.Show.Operation("Nenalezeny žádné složky.");
                 Actions.Show.Error("Prohledávání hudební knihovny", "Ve složce s hudební knihovnou nebyly nalezeny žádné složky.", "Změňte prosím hudební složku.");
             }
             else
             {
-                ZobrazitOperaci("Hudební knihovna '" + Directories.LibraryOpus + "' byla úspěšně prohledána.");
-                ZobrazitStav();
+                Actions.Show.Operation("Hudební knihovna '" + Directories.LibraryOpus + "' byla úspěšně prohledána.");
+                Actions.Show.Status();
             }
 
             // skryje se ProgressBar
@@ -1624,8 +1596,8 @@ namespace youtube2music
         private void StahniProgram(bool youtubedl)
         {
             string typ = youtubedl ? "YouTube-DL" : "FFmpeg";
-            ZobrazitStav("Probíhá stahování...");
-            ZobrazitOperaci("Stahování programu " + typ + ".");
+            Actions.Show.Status("Probíhá stahování...");
+            Actions.Show.Operation("Stahování programu " + typ + ".");
 
             // získání aktuální cesty
             string aktualniCesta = youtubedl ? Files.ProgramYouTubeDl : Files.ProgramFfmpeg;
@@ -1656,8 +1628,8 @@ namespace youtube2music
             }
             else
             {
-                ZobrazitStav();
-                ZobrazitOperaci("Program " + typ + " nebyl stažen.");
+                Actions.Show.Status();
+                Actions.Show.Operation("Program " + typ + " nebyl stažen.");
                 Actions.Show.Error("Stahování " + typ, "Program nebyl stažen.", "Nebyla vybrána cílová složka stahování.");
                 return;
             }
@@ -1671,7 +1643,7 @@ namespace youtube2music
             }
             else
             {
-                ZobrazitOperaci("Program " + typ + " nebyl stažen.");
+                Actions.Show.Operation("Program " + typ + " nebyl stažen.");
                 Actions.Show.Error("Stahování " + typ, "Program nebyl stažen.", "Nelze spustit stahování.", "Zkuste to prosím znovu.");
             }
         }
@@ -1687,7 +1659,7 @@ namespace youtube2music
             // 2. typ:
             //    a) true = youtube-dl
             //    b) false = ffmpeg
-            ZobrazStatusProgressBar(7);
+            Actions.Show.Progress(7);
 
             // získání argumentů
             List<string> argumenty = (List<string>)e.Argument;
@@ -1835,43 +1807,43 @@ namespace youtube2music
             // zobrazení výsledků
             if (e.Error != null)
             {
-                ZobrazitOperaci("Program se nepodařilo stáhnout.");
+                Actions.Show.Operation("Program se nepodařilo stáhnout.");
                 Actions.Show.Error("Stahování programu", "Došlo k chybě, program nemohl být stažen.", "Zkuste stáhnout program znovu.", e.Error.ToString());
             }
             else if (vysledek == "cilova_slozka")
             {
-                ZobrazitOperaci("Program nebyl stažen. Problém při vytváření cílové složky.");
+                Actions.Show.Operation("Program nebyl stažen. Problém při vytváření cílové složky.");
                 Actions.Show.Error("Stahování programu", "Program nebyl stažen.", "Problém při vytváření cílové složky.", "Stáhněte program znovu.");
             }
             else if (vysledek == "stahovani")
             {
-                ZobrazitOperaci("Program nebyl stažen. Problém při stahování souboru.");
+                Actions.Show.Operation("Program nebyl stažen. Problém při stahování souboru.");
                 Actions.Show.Error("Stahování programu", "Program nebyl stažen.", "Problém při stahování souboru.", "Stáhněte program znovu.");
             }
             else if (vysledek == "rozbaleni")
             {
-                ZobrazitOperaci("Program nebyl stažen. Problém při rozbalování archivu.");
+                Actions.Show.Operation("Program nebyl stažen. Problém při rozbalování archivu.");
                 Actions.Show.Error("Stahování programu", "Program nebyl stažen.", "Problém při rozbalování archivu.", "Stáhněte program znovu.");
             }
             else if (vysledek == "presun")
             {
-                ZobrazitOperaci("Program nebyl stažen. Problém při přesunování souborů.");
+                Actions.Show.Operation("Program nebyl stažen. Problém při přesunování souborů.");
                 Actions.Show.Error("Stahování programu", "Program nebyl stažen.", "Problém při přesunování souborů.", "Stáhněte program znovu.");
             }
             else if (vysledek == "presun")
             {
-                ZobrazitOperaci("Program nebyl stažen. Program byl úspěšně stažen, ale nedošlo k odstranění přebytečných souborů.");
+                Actions.Show.Operation("Program nebyl stažen. Program byl úspěšně stažen, ale nedošlo k odstranění přebytečných souborů.");
                 Actions.Show.Error("Stahování programu", "Program úspěšně stažen.", "Chyba odstranění přebytečných souborů. Soubory nebyly odstraněny.");
             }
             else
             {
-                ZobrazitOperaci("Program byl úspěšně stažen.");
+                Actions.Show.Operation("Program byl úspěšně stažen.");
             }
 
             // skryje se ProgressBar
             progressBarStatus.Visible = false;
             TaskbarManager.Instance.SetProgressValue(0, 0);
-            ZobrazitStav();
+            Actions.Show.Status();
         }
 
 
@@ -2243,7 +2215,7 @@ namespace youtube2music
                 menuPridatAlbum.Enabled = false;
                 menuPridatVideo.Tag = "";
                 menuPridatPlaylist.Tag = "";
-                ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz není z YouTube.");
+                Actions.Show.Operation("Vkládání odkazu", "Vložený odkaz není z YouTube.");
             }
             else if (!String.IsNullOrEmpty(spotifyUrl))
             {
@@ -2273,7 +2245,7 @@ namespace youtube2music
                     menuPridatAlbum.Enabled = false;
                     menuPridatVideo.Tag = "";
                     menuPridatPlaylist.Tag = "";
-                    ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je ze Spotify, ale je poškozený.");
+                    Actions.Show.Operation("Vložený odkaz je ze Spotify, ale je poškozený.", "Vkládání odkazu");
                     return;
                 }
 
@@ -2314,7 +2286,7 @@ namespace youtube2music
                         menuPridatAlbum.Enabled = false;
                         menuPridatVideo.Tag = "";
                         menuPridatPlaylist.Tag = "";
-                        ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je ze Spotify, ale je poškozený.");
+                        Actions.Show.Operation("Vložený odkaz je ze Spotify, ale je poškozený.", "Vkládání odkazu");
                         return;
                     }
                 }
@@ -2330,7 +2302,7 @@ namespace youtube2music
                     menuPridatAlbum.Enabled = false;
                     menuPridatVideo.Tag = "";
                     menuPridatPlaylist.Tag = "";
-                    ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je ze Spotify, ale je poškozený.");
+                    Actions.Show.Operation("Vložený odkaz je ze Spotify, ale je poškozený.", "Vkládání odkazu");
                     return;
                 }
                 // jedná se o platnou spotify url
@@ -2339,7 +2311,7 @@ namespace youtube2music
                 menuPridatAlbum.Enabled = false;
                 menuPridatVideo.Tag = "";
                 menuPridatPlaylist.Tag = "";
-                ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je Spotify " + spotifyTyp + ".");
+                Actions.Show.Operation("Vložený odkaz je Spotify " + spotifyTyp + ".", "Vkládání odkazu");
             }
             else if (String.IsNullOrEmpty(videoID))
             {
@@ -2349,7 +2321,7 @@ namespace youtube2music
                 menuPridatAlbum.Enabled = true;
                 menuPridatVideo.Tag = "";
                 menuPridatPlaylist.Tag = playlistID;
-                ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je playlist.");
+                Actions.Show.Operation("Vložený odkaz je playlist.", "Vkládání odkazu");
             }
             else if (String.IsNullOrEmpty(playlistID))
             {
@@ -2359,7 +2331,7 @@ namespace youtube2music
                 menuPridatAlbum.Enabled = false;
                 menuPridatVideo.Tag = videoID;
                 menuPridatPlaylist.Tag = "";
-                ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je video.");
+                Actions.Show.Operation("Vložený odkaz je video.", "Vkládání odkazu");
             }
             else
             {
@@ -2369,7 +2341,7 @@ namespace youtube2music
                 menuPridatAlbum.Enabled = true;
                 menuPridatVideo.Tag = videoID;
                 menuPridatPlaylist.Tag = playlistID;
-                ZobrazitOperaci("Vkládání odkazu", "Vložený odkaz je video i playlist.");
+                Actions.Show.Operation("Vložený odkaz je video i playlist.", "Vkládání odkazu");
             }
         }
 
@@ -2417,7 +2389,7 @@ namespace youtube2music
                 else
                 {
                     Actions.Show.Error("Přidávání videa", "Video se nepodařilo přidat.", "Zkuste přidat video znovu.");
-                    ZobrazitOperaci("Video se nepodařilo přidat.");
+                    Actions.Show.Operation("Video se nepodařilo přidat.");
                 }
             }
         }
@@ -2453,7 +2425,7 @@ namespace youtube2music
                 else
                 {
                     Actions.Show.Error("Přidávání videí z playlistu", "Nepodařilo se přidat žádné videa z playlistu.", "Zkuste přidat playlist znovu.");
-                    ZobrazitOperaci("Videa z playlistu se nepodařilo přidat.");
+                    Actions.Show.Operation("Videa z playlistu se nepodařilo přidat.");
                 }
             }
         }
@@ -2495,7 +2467,7 @@ namespace youtube2music
                 else
                 {
                     Actions.Show.Error("Přidávání videí z albumu", "Nepodařilo se přidat žádné videa z albumu.", "Zkuste přidat album znovu.");
-                    ZobrazitOperaci("Videa z albumu se nepodařilo přidat.");
+                    Actions.Show.Operation("Videa z albumu se nepodařilo přidat.");
                 }
             }
         }
@@ -2509,8 +2481,8 @@ namespace youtube2music
             // 2. získá informace o jednotlivých videích
             // 3. zobrazí videa a ListView
 
-            ZobrazitOperaci("Přidávání videa...");
-            ZobrazStatusProgressBar(1);
+            Actions.Show.Operation("Přidávání videa...");
+            Actions.Show.Progress(1);
             if (backgroundWorkerPridejVidea.CancellationPending)
             {
                 e.Cancel = true;
@@ -2561,7 +2533,7 @@ namespace youtube2music
                 }
 
                 // nastaví maximum ProgressBaru na počet videí z playlistu
-                ZobrazStatusProgressBar(videaNovaID.Count);
+                Actions.Show.Progress(videaNovaID.Count);
 
                 int pridaneDrive = 0;
                 Playlist playlistVidei = new Playlist(youtubeID);
@@ -2576,7 +2548,7 @@ namespace youtube2music
                     bool pridano = false;
 
                     backgroundWorkerPridejVidea.ReportProgress(videaNovaID.IndexOf(videoNoveID) + 1);
-                    ZobrazitOperaci("Přidávání videí z playlistu", videoNoveID + " (" + (videaNovaID.IndexOf(videoNoveID) + 1) + " z " + videaNovaID.Count + ")");
+                    Actions.Show.Operation(videoNoveID + " (" + (videaNovaID.IndexOf(videoNoveID) + 1) + " z " + videaNovaID.Count + ")", "Přidávání videí z playlistu");
 
                     foreach (Video videoDrivePridane in videaVsechna)
                     {
@@ -2611,7 +2583,7 @@ namespace youtube2music
                     }
                 }
                 string pridaneDriveText = pridaneDrive > 0 ? " Nepřidaná videa (" + pridaneDrive + ") byla přidána již dříve." : "";
-                ZobrazitOperaci("Přidávání videí z playlistu", "Bylo přidáno " + (videaNovaID.Count() - pridaneDrive) + " videí z " + videaNovaID.Count() + "." + pridaneDriveText);
+                Actions.Show.Operation("Bylo přidáno " + (videaNovaID.Count() - pridaneDrive) + " videí z " + videaNovaID.Count() + "." + pridaneDriveText, "Přidávání videí z playlistu");
                 /*if (album)
                 {
                     FormAlbum uprava = new FormAlbum(youtubeID, videaVsechna, Directories.LibraryOpus);
@@ -2632,7 +2604,7 @@ namespace youtube2music
                 bool pridano = false;
 
                 backgroundWorkerPridejVidea.ReportProgress(1);
-                ZobrazitOperaci("Přidávání videí", youtubeID + " (1 z 1)");
+                Actions.Show.Operation(youtubeID + " (1 z 1)", "Přidávání videí");
 
                 foreach (Video videoDrivePridane in videaVsechna)
                 {
@@ -2650,7 +2622,7 @@ namespace youtube2music
                 }
                 if (pridano)
                 {
-                    ZobrazitOperaci("Přidávání videí", "Video nebylo přidáno, protože už bylo přidané dříve.");
+                    Actions.Show.Operation("Video nebylo přidáno, protože už bylo přidané dříve.", "Přidávání videí");
                 }
                 else
                 {
@@ -2668,7 +2640,7 @@ namespace youtube2music
                         objectListViewSeznamVidei.AddObject(noveVideo);
                         objectListViewSeznamVidei.EndUpdate();
                     }));
-                    ZobrazitOperaci("Přidávání videí", "Video bylo úspěšně přidáno.");
+                    Actions.Show.Operation("Video bylo úspěšně přidáno.", "Přidávání videí");
                 }
             }
         }
@@ -2688,33 +2660,33 @@ namespace youtube2music
 
             if (e.Cancelled)
             {
-                ZobrazitOperaci("Přidávání videí zrušeno uživatelem.");
+                Actions.Show.Operation("Přidávání videí zrušeno uživatelem.");
             }
             else if (e.Error != null)
             {
-                ZobrazitOperaci("Chyba přidávání videí");
+                Actions.Show.Operation("Chyba přidávání videí");
                 Actions.Show.Error("Přidávání videí", "Došlo k chybě, videa nebyla přidána.", "Zkuste přidat videa znovu.", e.Error.ToString());
             }
             else if ((string)e.Result == "chyba")
             {
-                ZobrazitOperaci("Chyba přidávání videí");
+                Actions.Show.Operation("Chyba přidávání videí");
                 Actions.Show.Error("Přidávání videí", "Nepodařilo se získat videa z Youtube API. Videa nebyla přidána.", "Zkuste přidat videa znovu.");
             }
             else if ((string)e.Result == "neexistuje")
             {
-                ZobrazitOperaci("Přidávaný playlist neexistuje.");
+                Actions.Show.Operation("Přidávaný playlist neexistuje.");
                 Actions.Show.Error("Přidávání videí z playlistu", "Tento playlist neexistuje.", "Zkuste přidat jiný playlist.");
             }
             else if ((string)e.Result == "zadne_videa")
             {
-                ZobrazitOperaci("V přidávaném playlistu nejsou žádná videa.");
+                Actions.Show.Operation("V přidávaném playlistu nejsou žádná videa.");
                 Actions.Show.Error("Přidávání videí z playlistu", "V playlistu nejsou žádná videa.", "Zkuste přidat jiný playlist.");
             }
             // skryje se ProgressBar
             progressBarStatus.Visible = false;
             TaskbarManager.Instance.SetProgressValue(0, 0);
             // změní text v menu ("přidání videa/playlistu")
-            ZobrazitStav();
+            Actions.Show.Status();
             if (albumVerejne)
             {
                 if (objectListViewSeznamVidei.Items.Count > 0)
@@ -2899,7 +2871,7 @@ namespace youtube2music
             }
             objectListViewSeznamVidei.EndUpdate();
 
-            ZobrazitOperaci("Odstranění videí", "Úspěšně odstraněno " + odstraneno.ToString() + " vide(o/a/í) ze seznamu.");
+            Actions.Show.Operation("Úspěšně odstraněno " + odstraneno.ToString() + " vide(o/a/í) ze seznamu.", "Odstranění videí");
         }
 
         // HOTOVO
@@ -2939,7 +2911,7 @@ namespace youtube2music
         {
             // zobrazí počet vybraných videí ke stažení 
             // povoluje nebo zakazuje odstranění, úpravu a stažení
-            ZobrazitOperaci("Vybráno", objectListViewSeznamVidei.CheckedItems.Count.ToString() + " vide(o/a/í) z(e) " + objectListViewSeznamVidei.Items.Count.ToString());
+            Actions.Show.Operation(objectListViewSeznamVidei.CheckedItems.Count.ToString() + " vide(o/a/í) z(e) " + objectListViewSeznamVidei.Items.Count.ToString(), "Vybráno");
             ZmenaVybranychVidei();
         }
         // HOTOVO
@@ -2958,79 +2930,6 @@ namespace youtube2music
             }
             ZmenaVybranychVidei();
         }
-
-
-        // HOTOVO
-        /**
-        ZOBRAZENÍ INFORMACÍ - StatusProgressBar
-        **/
-        #region ZobrazStatusProgressBar
-        /// <summary>
-        /// Zobrazí ProgressBar a nastaví mu minimální a maximální hodnotu.
-        /// </summary>
-        /// <param name="maximum">Maximální hodnota ProgressBaru.</param>
-        private void ZobrazStatusProgressBar(int maximum)
-        {
-            statusStripStatus.Invoke(new Action(() =>
-            {
-                progressBarStatus.Value = progressBarStatus.Minimum;
-                progressBarStatus.Maximum = maximum;
-                progressBarStatus.Visible = true;
-            }));
-            TaskbarManager.Instance.SetProgressValue(progressBarStatus.Minimum, maximum);
-        }
-        #endregion
-
-
-        // HOTOVO
-        /**
-        ZOBRAZENÍ INFORMACÍ - StatusLabel
-        - operace = to co se aktuálně provádí podrobněji
-        - stav = stav programu (co dělá - pracuje, je připraven atd., více obecně)
-        **/
-        #region ZobrazStatusLabel
-        /// <summary>
-        /// Zobrazí vybraný text na StatusStripLabelu.
-        /// </summary>
-        /// <param name="text">Text k zobrazení.</param>
-        private void ZobrazitOperaci(string text)
-        {
-            statusStripStatus.Invoke(new Action(() =>
-            {
-                labelOperace.Text = text;
-            }));
-        }
-        /// <summary>
-        /// Zobrazí vybraný nadpis a text na StatusStripLabelu.
-        /// </summary>
-        /// <param name="nadpis">Nadpis k zobrazení před textem.</param>
-        /// <param name="text">Text k zobrazení.</param>
-        private void ZobrazitOperaci(string nadpis, string text)
-        {
-            ZobrazitOperaci(nadpis.ToUpper() + ": " + text);
-        }
-
-        /// <summary>
-        /// Zobrazí vybraný text na StatusStripLabelu.
-        /// </summary>
-        /// <param name="text">Text k zobrazení.</param>
-        private void ZobrazitStav(string text = "Ready")
-        {
-            statusStripStatus.Invoke(new Action(() =>
-            {
-                labelStav.Text = text;
-            }));
-        }
-        /// <summary>
-        /// Zobrazí vybraný nadpis a text na StatusStripLabelu.
-        /// </summary>
-        /// <param name="nadpis">Nadpis k zobrazení před textem.</param>
-        /// <param name="text">Text k zobrazení.</param>
-        private void ZobrazitStav(string nadpis, string text)
-        {
-            ZobrazitStav(nadpis.ToUpper() + ": " + text);
-        }
-        #endregion
 
         /// <summary>
         /// Získá instanci videa pomocí zadaného ID videa.
@@ -3068,7 +2967,7 @@ namespace youtube2music
                 }
                 else
                 {
-                    ZobrazitOperaci("Mazání cache programu", "Chyba.");
+                    Actions.Show.Operation("Chyba.", "Mazání cache programu");
                     Actions.Show.Error("Mazání cache programu", "Došlo k chybě, cache programu nemohlo být smazáno.", "Zkuste smazat cache programu znovu.");
                 }
             }
@@ -3129,25 +3028,25 @@ namespace youtube2music
             string chyba = (string)e.Result;
             if (e.Cancelled)
             {
-                ZobrazitOperaci("Mazání cache programu", "Zrušeno uživatelem.");
+                Actions.Show.Operation("Zrušeno uživatelem.", "Mazání cache programu");
             }
             else if (e.Error != null)
             {
-                ZobrazitOperaci("Mazání cache programu", "Chyba.");
+                Actions.Show.Operation("Chyba.", "Mazání cache programu");
                 Actions.Show.Error("Mazání cache programu", "Došlo k chybě, cache programu nemohlo být smazáno.", "Zkuste smazat cache programu znovu.", e.Error.ToString());
             }
             else if (chyba == "ziskani_slozek")
             {
-                ZobrazitOperaci("Mazání cache programu", "Některé složky cache programu youtube2music nebyly smazány.");
+                Actions.Show.Operation("Některé složky cache programu youtube2music nebyly smazány.", "Mazání cache programu");
                 Actions.Show.Error("Mazání cache programu", "Došlo k chybě, cache programu nemohlo být smazáno.", "Cyhab získávání cache složek.", "Zkuste smazat cache programu znovu.");
             }
             else if (chyba == "mazani_slozky")
             {
-                ZobrazitOperaci("Mazání cache programu", "Některé složky cache programu youtube2music nebyly smazány.");
+                Actions.Show.Operation("Některé složky cache programu youtube2music nebyly smazány.", "Mazání cache programu");
             }
             else
             {
-                ZobrazitOperaci("Mazání cache programu", "Úspěšně bylo smazáno cache programu youtube2music");
+                Actions.Show.Operation("Úspěšně bylo smazáno cache programu youtube2music", "Mazání cache programu");
             }
             progressBarStatus.Visible = false;
             TaskbarManager.Instance.SetProgressValue(0, 0);
@@ -3173,7 +3072,7 @@ namespace youtube2music
                 }
                 else
                 {
-                    ZobrazitOperaci("Mazání historie stažených videí", "Chyba.");
+                    Actions.Show.Operation("Chyba.", "Mazání historie stažených videí");
                     Actions.Show.Error("Mazání historie stažených videí", "Došlo k chybě, historie stažených videí nemohla být smazána.", "Zkuste smazat historii znovu.");
                 }
             }
@@ -3206,20 +3105,20 @@ namespace youtube2music
             string chyba = (string)e.Result;
             if (e.Cancelled)
             {
-                ZobrazitOperaci("Mazání historie stažených videí", "Zrušeno uživatelem.");
+                Actions.Show.Operation("Zrušeno uživatelem.", "Mazání historie stažených videí");
             }
             else if (e.Error != null)
             {
-                ZobrazitOperaci("Mazání historie stažených videí", "Chyba.");
+                Actions.Show.Operation("Chyba.", "Mazání historie stažených videí");
                 Actions.Show.Error("Mazání historie stažených videí", "Došlo k chybě, historie stažených videí nemohla být smazána.", "Zkuste smazat historii znovu.", e.Error.ToString());
             }
             else if (chyba == "mazani_souboru")
             {
-                ZobrazitOperaci("Mazání historie stažených videí", "Soubor s historií stažených videí se nepodařilo odstranit.");
+                Actions.Show.Operation("Soubor s historií stažených videí se nepodařilo odstranit.", "Mazání historie stažených videí");
             }
             else
             {
-                ZobrazitOperaci("Mazání historie stažených videí", "Úspěšně byla smazána historie stažených videí");
+                Actions.Show.Operation("Úspěšně byla smazána historie stažených videí", "Mazání historie stažených videí");
             }
             progressBarStatus.Visible = false;
             TaskbarManager.Instance.SetProgressValue(0, 0);
@@ -3318,7 +3217,7 @@ namespace youtube2music
 
         private void menuNastaveniUzivatel_Click(object sender, EventArgs e)
         {
-            if (!Actions.Run.Program("https://youtube.com/channel/" + App.YouTube.User.ID, false))
+            if (!Actions.Run.Program(YouTube.User.ChannelUrl, false))
             {
                 // TODO show error
             }
@@ -3333,7 +3232,7 @@ namespace youtube2music
             catch (Exception ex)
             {
                 Actions.Show.Error("Odhlášení uživatele", "Odhlášení uživatele se nezdařilo", ex.Message);
-                ZobrazitOperaci("Odhlášení z YouTube se nezdařilo.");
+                Actions.Show.Operation("Odhlášení z YouTube se nezdařilo.");
                 return;
             }
             menuNastaveniUzivatel.Enabled = false;
@@ -3341,7 +3240,7 @@ namespace youtube2music
             menuNastaveniUzivatel.Text = "Přihlášený uživatel z YouTube:";
             menuNastaveniUzivatel.ToolTipText = "";
             menuNastaveniUzivatelOdhlasit.Text = "Není přihlášen žádný uživatel";
-            ZobrazitOperaci("Odhlášení z YouTube proběhlo úspěšně.");
+            Actions.Show.Operation("Odhlášení z YouTube proběhlo úspěšně.");
         }
     }
 }

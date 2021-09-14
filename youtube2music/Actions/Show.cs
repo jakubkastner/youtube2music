@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.Taskbar;
+using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace youtube2music.Actions
@@ -8,6 +10,11 @@ namespace youtube2music.Actions
     /// </summary>
     public static class Show
     {
+        /// <summary>
+        /// Main FormList with list of videos.
+        /// </summary>
+        static readonly FormSeznam formList = Application.OpenForms.OfType<FormSeznam>().FirstOrDefault();
+
         /// <summary>
         /// Show MessageBox
         /// </summary>
@@ -69,15 +76,71 @@ namespace youtube2music.Actions
             MBox(title, text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        // TODO show operation
-        /*public static void Operation(StatusStrip status,string text, string title = null)
+        /// <summary>
+        /// Show operation on labelOperation in FormList.
+        /// </summary>
+        /// <param name="text">Operation text</param>
+        /// <param name="title">Operation title</param>
+        public static void Operation(string text, string title = null)
         {
             if (!String.IsNullOrEmpty(title)) text = title.ToUpper() + ": " + text;
-
-            StatusStrip.Invoke(new Action(() =>
+            formList.statusStripStatus.Invoke(new Action(() =>
             {
-                labelOperace.Text = text;
+                formList.labelOperace.Text = text;
             }));
-        }*/
+        }
+
+        /// <summary>
+        /// Show status on labelStatus in FormList.
+        /// </summary>
+        /// <param name="text">Status text</param>
+        /// <param name="title">Status title</param>
+        public static void Status(string text = "Ready", string title = null)
+        {
+            if (!String.IsNullOrEmpty(title)) text = title.ToUpper() + ": " + text;
+            formList.statusStripStatus.Invoke(new Action(() =>
+            {
+                formList.labelStav.Text = text;
+            }));
+        }
+
+        /// <summary>
+        /// Show progressBarStatus and set max and min value.
+        /// </summary>
+        /// <param name="maximum">Maximum progressBar value</param>
+        public static void Progress(int maximum = 0)
+        {
+            formList.statusStripStatus.Invoke(new Action(() =>
+            {
+                formList.progressBarStatus.Value = formList.progressBarStatus.Minimum;
+                formList.progressBarStatus.Maximum = maximum;
+                formList.progressBarStatus.Visible = true;
+            }));
+            TaskbarManager.Instance.SetProgressValue(formList.progressBarStatus.Minimum, maximum);
+        }
+
+        /// <summary>
+        /// Show error when starting the program.
+        /// </summary>
+        /// <param name="error">Error text</param>
+        public static void StartupError(string error = null)
+        {
+            string title = "Starting the program";
+            string text1 = "The program failed to start";
+            string text2 = "Clicking the 'Retry' button will restart the program.";
+
+            // show error
+            Operation(text1, title);
+            DialogResult result = Question(title, MessageBoxButtons.RetryCancel, text1, error, text2);
+
+            if (result == DialogResult.Retry)
+            {
+                // run new instance of the program
+                Run.Program(Application.ExecutablePath);
+            }
+
+            // exit current instance
+            formList.Close();
+        }
     }
 }
