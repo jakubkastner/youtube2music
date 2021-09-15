@@ -12,8 +12,8 @@ using System.Windows.Forms;
 using BrightIdeasSoftware;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using Ookii.Dialogs.Wpf;
-using youtube2music.App.Paths;
 using youtube2music.App;
+using youtube2music.App.Paths;
 
 namespace youtube2music
 {
@@ -261,7 +261,7 @@ namespace youtube2music
             }
 
             // uloží id stažených videí do souboru
-            if (!FilesDirectories.Files.Write(Files.DownloadedVideosHistory, stazeno, false))
+            if (!FD.Files.Write(Files.DownloadedVideosHistory, stazeno, false))
             {
                 // TODO show error
             }
@@ -567,7 +567,7 @@ namespace youtube2music
         }
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(App.Paths.Directories.LibraryMp3);
+            MessageBox.Show(Directories.LibraryMp3);
         }
 
 
@@ -620,7 +620,7 @@ namespace youtube2music
             // 1.) create and get app directories
 
             // date directory
-            if (!FilesDirectories.Directories.Create(Directories.Data))
+            if (!FD.Directories.Create(Directories.Data))
             {
                 e.Result = "slozka_programu";
                 return;
@@ -628,7 +628,7 @@ namespace youtube2music
             backgroundWorkerNactiProgram.ReportProgress(2);
 
             // cache directory
-            if (!FilesDirectories.Directories.Create(Directories.CurrentCache, true))
+            if (!FD.Directories.Create(Directories.CurrentCache, true))
             {
                 e.Result = "slozka_programu";
                 return;
@@ -647,19 +647,19 @@ namespace youtube2music
 
                 // TODO delete toolStripMenuItem1.Visible = false;
 
-                MenuCestaNactiZeSouboru(App.Init.FileOrDirectory.LibraryOpus);
+                MenuCestaNactiZeSouboru(Init.FileOrDirectory.LibraryOpus);
                 backgroundWorkerNactiProgram.ReportProgress(7);
 
-                MenuCestaNactiZeSouboru(App.Init.FileOrDirectory.LibraryMp3);
+                MenuCestaNactiZeSouboru(Init.FileOrDirectory.LibraryMp3);
                 backgroundWorkerNactiProgram.ReportProgress(8);
 
-                MenuCestaNactiZeSouboru(App.Init.FileOrDirectory.ProgramYoutubeDl);
+                MenuCestaNactiZeSouboru(Init.FileOrDirectory.ProgramYoutubeDl);
                 backgroundWorkerNactiProgram.ReportProgress(9);
 
-                MenuCestaNactiZeSouboru(App.Init.FileOrDirectory.ProgramFfmpeg);
+                MenuCestaNactiZeSouboru(Init.FileOrDirectory.ProgramFfmpeg);
                 backgroundWorkerNactiProgram.ReportProgress(10);
 
-                MenuCestaNactiZeSouboru(App.Init.FileOrDirectory.ProgramMp3tag);
+                MenuCestaNactiZeSouboru(Init.FileOrDirectory.ProgramMp3tag);
                 backgroundWorkerNactiProgram.ReportProgress(11);
             }));
         }
@@ -883,13 +883,13 @@ namespace youtube2music
                 {
                     Directories.LibraryOpus = vyberSlozky.SelectedPath;
                     hudebniKnihovna = Directories.LibraryOpus;
-                    MenuCestaZobrazit(App.Init.FileOrDirectory.LibraryOpus);
+                    MenuCestaZobrazit(Init.FileOrDirectory.LibraryOpus);
                 }
                 else
                 {
                     Directories.LibraryMp3 = vyberSlozky.SelectedPath;
                     hudebniKnihovna = Directories.LibraryMp3;
-                    MenuCestaZobrazit(App.Init.FileOrDirectory.LibraryMp3);
+                    MenuCestaZobrazit(Init.FileOrDirectory.LibraryMp3);
                 }
                 Actions.Show.Operation("Hudební knihovna " + typ + " úspěšně změněna: '" + hudebniKnihovna + "'");
             }
@@ -916,7 +916,7 @@ namespace youtube2music
                     Actions.Show.Notice("Změna cesty YouTube-DL", "Nejedná se o spustitelý soubor (*.exe)!", "Program nemusí fungovat správně.");
                 }
                 Files.ProgramYouTubeDl = vyberSouboru.FileName;
-                MenuCestaZobrazit(App.Init.FileOrDirectory.ProgramYoutubeDl);
+                MenuCestaZobrazit(Init.FileOrDirectory.ProgramYoutubeDl);
                 Actions.Show.Operation("Cesta programu YouTube-DL úspěšně změněna: '" + Files.ProgramYouTubeDl + "'");
             }
         }
@@ -942,7 +942,7 @@ namespace youtube2music
                     Actions.Show.Notice("Změna cesty FFmpeg", "Nejedná se o spustitelý soubor (*.exe)!", "Program nemusí fungovat správně.");
                 }
                 Files.ProgramFfmpeg = vyberSouboru.FileName;
-                MenuCestaZobrazit(App.Init.FileOrDirectory.ProgramFfmpeg);
+                MenuCestaZobrazit(Init.FileOrDirectory.ProgramFfmpeg);
                 Actions.Show.Operation("Cesta programu FFmpeg úspěšně změněna: '" + Files.ProgramFfmpeg + "'");
             }
         }
@@ -968,7 +968,7 @@ namespace youtube2music
                     Actions.Show.Notice("Změna cesty mp3tag", "Nejedná se o spustitelý soubor (*.exe)!", "Program nemusí fungovat správně.");
                 }
                 Files.ProgramMp3tag = vyberSouboru.FileName;
-                MenuCestaZobrazit(App.Init.FileOrDirectory.ProgramMp3tag);
+                MenuCestaZobrazit(Init.FileOrDirectory.ProgramMp3tag);
                 Actions.Show.Operation("Cesta programu mp3tag úspěšně změněna: '" + Files.ProgramMp3tag + "'");
             }
         }
@@ -1015,12 +1015,12 @@ namespace youtube2music
                 if (opus)
                 {
                     Directories.LibraryOpus = hudebniKnihovna;
-                    MenuCestaZobrazit(App.Init.FileOrDirectory.LibraryOpus);
+                    MenuCestaZobrazit(Init.FileOrDirectory.LibraryOpus);
                 }
                 else
                 {
                     Directories.LibraryMp3 = hudebniKnihovna;
-                    MenuCestaZobrazit(App.Init.FileOrDirectory.LibraryMp3);
+                    MenuCestaZobrazit(Init.FileOrDirectory.LibraryMp3);
                 }
                 Actions.Show.Operation("Hudební knihovna " + typ + " úspěšně změněna: '" + hudebniKnihovna + "'");
             }
@@ -1042,7 +1042,7 @@ namespace youtube2music
             if (File.Exists(novaCesta))
             {
                 Files.ProgramYouTubeDl = novaCesta;
-                MenuCestaZobrazit(App.Init.FileOrDirectory.ProgramYoutubeDl);
+                MenuCestaZobrazit(Init.FileOrDirectory.ProgramYoutubeDl);
                 Actions.Show.Operation("Cesta programu YouTube-DL úspěšně změněna: '" + novaCesta + "'");
             }
             else
@@ -1064,7 +1064,7 @@ namespace youtube2music
             if (File.Exists(novaCesta))
             {
                 Files.ProgramFfmpeg = novaCesta;
-                MenuCestaZobrazit(App.Init.FileOrDirectory.ProgramFfmpeg);
+                MenuCestaZobrazit(Init.FileOrDirectory.ProgramFfmpeg);
                 Actions.Show.Operation("Cesta programu FFmpeg úspěšně změněna: '" + novaCesta + "'");
             }
             else
@@ -1085,7 +1085,7 @@ namespace youtube2music
             if (File.Exists(novaCesta))
             {
                 Files.ProgramMp3tag = novaCesta;
-                MenuCestaZobrazit(App.Init.FileOrDirectory.ProgramMp3tag);
+                MenuCestaZobrazit(Init.FileOrDirectory.ProgramMp3tag);
                 Actions.Show.Operation("Cesta programu mp3tag úspěšně změněna: '" + novaCesta + "'");
             }
             else
@@ -1109,19 +1109,19 @@ namespace youtube2music
         /// A přidá cesty do menu.
         /// </summary>
         /// <param name="type"></param>
-        private void MenuCestaNactiZeSouboru(App.Init.FileOrDirectory type)
+        private void MenuCestaNactiZeSouboru(Init.FileOrDirectory type)
         {
             // získá cestu souboru
             string cestaSouboru;
-            if (type == App.Init.FileOrDirectory.LibraryOpus) cestaSouboru = Files.LibraryOpusHistory;
-            else if (type == App.Init.FileOrDirectory.LibraryMp3) cestaSouboru = Files.LibraryMp3History;
-            else if (type == App.Init.FileOrDirectory.ProgramYoutubeDl) cestaSouboru = Files.ProgramYouTubeDlHistory;
-            else if (type == App.Init.FileOrDirectory.ProgramFfmpeg) cestaSouboru = Files.ProgramFfmpegHistory;
-            else if (type == App.Init.FileOrDirectory.ProgramMp3tag) cestaSouboru = Files.ProgramMp3tagHistory;
+            if (type == Init.FileOrDirectory.LibraryOpus) cestaSouboru = Files.LibraryOpusHistory;
+            else if (type == Init.FileOrDirectory.LibraryMp3) cestaSouboru = Files.LibraryMp3History;
+            else if (type == Init.FileOrDirectory.ProgramYoutubeDl) cestaSouboru = Files.ProgramYouTubeDlHistory;
+            else if (type == Init.FileOrDirectory.ProgramFfmpeg) cestaSouboru = Files.ProgramFfmpegHistory;
+            else if (type == Init.FileOrDirectory.ProgramMp3tag) cestaSouboru = Files.ProgramMp3tagHistory;
             else { return; }
 
             // načte ze souboru cesty
-            List<string> pridejCesty = FilesDirectories.Files.Read(cestaSouboru) ?? new List<string>();
+            List<string> pridejCesty = FD.Files.Read(cestaSouboru) ?? new List<string>();
             if (pridejCesty.Count == 0) return;
 
             // projde cesty a přidá je do menu
@@ -1131,17 +1131,17 @@ namespace youtube2music
             }
 
             // uloží první řádek ze souboru jako výchozí cestu
-            if ((type == App.Init.FileOrDirectory.LibraryOpus || type == App.Init.FileOrDirectory.LibraryMp3) && Directory.Exists(pridejCesty.First().Trim()))
+            if ((type == Init.FileOrDirectory.LibraryOpus || type == Init.FileOrDirectory.LibraryMp3) && Directory.Exists(pridejCesty.First().Trim()))
             {
-                if (type == App.Init.FileOrDirectory.LibraryOpus) Directories.LibraryOpus = pridejCesty.First().Trim();
-                else if (type == App.Init.FileOrDirectory.LibraryMp3) Directories.LibraryMp3 = pridejCesty.First().Trim();
+                if (type == Init.FileOrDirectory.LibraryOpus) Directories.LibraryOpus = pridejCesty.First().Trim();
+                else if (type == Init.FileOrDirectory.LibraryMp3) Directories.LibraryMp3 = pridejCesty.First().Trim();
                 MenuCestaZobrazit(type);
             }
             else if (File.Exists(pridejCesty.First().Trim()))
             {
-                if (type == App.Init.FileOrDirectory.ProgramYoutubeDl) Files.ProgramYouTubeDl = pridejCesty.First().Trim();
-                else if (type == App.Init.FileOrDirectory.ProgramFfmpeg) Files.ProgramFfmpeg = pridejCesty.First().Trim();
-                else if (type == App.Init.FileOrDirectory.ProgramMp3tag) Files.ProgramMp3tag = pridejCesty.First().Trim();
+                if (type == Init.FileOrDirectory.ProgramYoutubeDl) Files.ProgramYouTubeDl = pridejCesty.First().Trim();
+                else if (type == Init.FileOrDirectory.ProgramFfmpeg) Files.ProgramFfmpeg = pridejCesty.First().Trim();
+                else if (type == Init.FileOrDirectory.ProgramMp3tag) Files.ProgramMp3tag = pridejCesty.First().Trim();
                 MenuCestaZobrazit(type);
             }
         }
@@ -1152,18 +1152,18 @@ namespace youtube2music
         /// </summary>
         /// <param name="path">Cesta, kterou chceme přidat do menu.</param>
         /// <param name="type"></param>
-        private void MenuCestaPridat(string path, App.Init.FileOrDirectory type)
+        private void MenuCestaPridat(string path, Init.FileOrDirectory type)
         {
             // pokud se nejdená o existující složku / soubor, neuloží se do menu
-            if ((type == App.Init.FileOrDirectory.LibraryOpus || type == App.Init.FileOrDirectory.LibraryMp3) && !Directory.Exists(path)) return;
-            else if ((type == App.Init.FileOrDirectory.ProgramYoutubeDl || type == App.Init.FileOrDirectory.ProgramFfmpeg || type == App.Init.FileOrDirectory.ProgramMp3tag) && !File.Exists(path)) return;
+            if ((type == Init.FileOrDirectory.LibraryOpus || type == Init.FileOrDirectory.LibraryMp3) && !Directory.Exists(path)) return;
+            else if ((type == Init.FileOrDirectory.ProgramYoutubeDl || type == Init.FileOrDirectory.ProgramFfmpeg || type == Init.FileOrDirectory.ProgramMp3tag) && !File.Exists(path)) return;
             // nastavení počátečních proměnných
             ToolStripMenuItem menuPridavane = new ToolStripMenuItem(path);
             menuPridavane.Text = path;
 
             // přidá dle typů cestu do menu
             // složky knihovny opus
-            if (type == App.Init.FileOrDirectory.LibraryOpus)
+            if (type == Init.FileOrDirectory.LibraryOpus)
             {
                 if (menuPridavane.Text == Directories.LibraryOpus)
                 {
@@ -1181,7 +1181,7 @@ namespace youtube2music
                 return;
             }
             // složky knihovny mp3
-            if (type == App.Init.FileOrDirectory.LibraryMp3)
+            if (type == Init.FileOrDirectory.LibraryMp3)
             {
                 if (menuPridavane.Text == Directories.LibraryMp3)
                 {
@@ -1201,7 +1201,7 @@ namespace youtube2music
 
             menuPridavane.ToolTipText = "Vybrat soubor '" + path + "'";
             // cesty youtube-dl
-            if (type == App.Init.FileOrDirectory.ProgramYoutubeDl)
+            if (type == Init.FileOrDirectory.ProgramYoutubeDl)
             {
                 if (menuPridavane.Text == Files.ProgramYouTubeDl)
                 {
@@ -1218,7 +1218,7 @@ namespace youtube2music
                 return;
             }
             // cesty ffmpeg
-            if (type == App.Init.FileOrDirectory.ProgramFfmpeg)
+            if (type == Init.FileOrDirectory.ProgramFfmpeg)
             {
                 if (menuPridavane.Text == Files.ProgramFfmpeg)
                 {
@@ -1235,7 +1235,7 @@ namespace youtube2music
                 return;
             }
             // cesty mp3tag
-            if (type == App.Init.FileOrDirectory.ProgramMp3tag)
+            if (type == Init.FileOrDirectory.ProgramMp3tag)
             {
                 if (menuPridavane.Text == Files.ProgramMp3tag)
                 {
@@ -1258,35 +1258,35 @@ namespace youtube2music
         /// Zaškrtne nebo odškrtne cestu v menu. Pokud tam není, tak jí přidá a zobrazí cestu v menu.
         /// </summary>
         /// <param name="type"></param>
-        private void MenuCestaZobrazit(App.Init.FileOrDirectory type)
+        private void MenuCestaZobrazit(Init.FileOrDirectory type)
         {
             // nastavení počátečních proměnných
             string cestaVychozi = null;
             ToolStripMenuItem menuNaposledyVybraneCesty = null;
             ToolStripMenuItem menuVybranaCesta = null;
             // složky knihovny opus
-            if (type == App.Init.FileOrDirectory.LibraryOpus)
+            if (type == Init.FileOrDirectory.LibraryOpus)
             {
                 cestaVychozi = Directories.LibraryOpus;
                 menuNaposledyVybraneCesty = menuNastaveniKnihovnaOpusNaposledyVybrane;
                 menuVybranaCesta = menuNastaveniKnihovnaOpusVybrana;
             }
             // složky knihovny mp3
-            else if (type == App.Init.FileOrDirectory.LibraryMp3)
+            else if (type == Init.FileOrDirectory.LibraryMp3)
             {
                 cestaVychozi = Directories.LibraryMp3;
                 menuNaposledyVybraneCesty = menuNastaveniKnihovnaMp3NaposledyVybrane;
                 menuVybranaCesta = menuNastaveniKnihovnaMp3Vybrana;
             }
             // cesty youtube-dl
-            else if (type == App.Init.FileOrDirectory.ProgramYoutubeDl)
+            else if (type == Init.FileOrDirectory.ProgramYoutubeDl)
             {
                 cestaVychozi = Files.ProgramYouTubeDl;
                 menuNaposledyVybraneCesty = menuNastaveniYoutubeDLCestaNaposledyVybrane;
                 menuVybranaCesta = menuNastaveniYoutubeDLCestaVybrana;
             }
             // cesty ffmpeg
-            else if (type == App.Init.FileOrDirectory.ProgramFfmpeg)
+            else if (type == Init.FileOrDirectory.ProgramFfmpeg)
             {
                 cestaVychozi = Files.ProgramFfmpeg;
                 menuNaposledyVybraneCesty = menuNastaveniFFmpegCestaNaposledyVybrane;
@@ -1294,7 +1294,7 @@ namespace youtube2music
             }
 
             // cesty mp3tag
-            else if (type == App.Init.FileOrDirectory.ProgramMp3tag)
+            else if (type == Init.FileOrDirectory.ProgramMp3tag)
             {
                 cestaVychozi = Files.ProgramMp3tag;
                 menuNaposledyVybraneCesty = menuNastaveniMp3tagCestaNaposledyVybrane;
@@ -1325,12 +1325,12 @@ namespace youtube2music
             // nastavení menu s cestou
             menuVybranaCesta.Text = cestaVychozi;
             menuVybranaCesta.Enabled = true;
-            if (type == App.Init.FileOrDirectory.LibraryOpus || type == App.Init.FileOrDirectory.LibraryMp3)
+            if (type == Init.FileOrDirectory.LibraryOpus || type == Init.FileOrDirectory.LibraryMp3)
             {
                 menuVybranaCesta.ToolTipText = "Otevřít složku '" + cestaVychozi + "' v průzkumníku souborů";
                 menuNastaveniKnihovnaOpusProhledat.Text = "Prohledat hudební knihovnu";
                 menuNastaveniKnihovnaOpusProhledat.Enabled = true;
-                if (type == App.Init.FileOrDirectory.LibraryOpus)
+                if (type == Init.FileOrDirectory.LibraryOpus)
                 {
                     HudebniKnihovnaNajdiSlozky(); // !!!
                 }
@@ -1452,7 +1452,7 @@ namespace youtube2music
             // na 1. pozici vloží aktuální hudební knihovnu
             slozkyinterpretu.Insert(0, Directories.LibraryOpus);
             // zapíše složky do souboru
-            if (!FilesDirectories.Files.Write(Path.Combine(Directories.Data, "knihovna_slozky.txt"), slozkyinterpretu))
+            if (!FD.Files.Write(Path.Combine(Directories.Data, "knihovna_slozky.txt"), slozkyinterpretu))
             {
                 // TODO show error
             }
@@ -1610,9 +1610,11 @@ namespace youtube2music
             // stažení programu
             if (!backgroundWorkerStahniProgram.IsBusy)
             {
-                List<string> argumenty = new List<string>();
-                argumenty.Add(cilovaCesta);
-                argumenty.Add(youtubedl.ToString().ToLower());
+                List<string> argumenty = new List<string>
+                {
+                    cilovaCesta,
+                    youtubedl.ToString().ToLower()
+                };
                 backgroundWorkerStahniProgram.RunWorkerAsync(argumenty);
             }
             else
@@ -1640,7 +1642,7 @@ namespace youtube2music
             string cilovaCesta = argumenty.First();
             string nazevSouboru = Path.GetFileNameWithoutExtension(cilovaCesta);
             string cilovaSlozka = Path.GetDirectoryName(cilovaCesta);
-            bool youtubedl = argumenty.Last() == "true" ? true : false;
+            bool youtubedl = argumenty.Last() == "true";
             string adresaStahovani;
 
             if (youtubedl)
@@ -1699,7 +1701,7 @@ namespace youtube2music
                 Files.ProgramYouTubeDl = cilovaCesta;
                 menuStripMenu.Invoke(new Action(() =>
                 {
-                    MenuCestaZobrazit(App.Init.FileOrDirectory.ProgramYoutubeDl);
+                    MenuCestaZobrazit(Init.FileOrDirectory.ProgramYoutubeDl);
                 }));
             }
             else
@@ -1725,9 +1727,9 @@ namespace youtube2music
 
                 // přesun souboru ffmpeg.exe
                 string souborCesta = Path.Combine(slozkaFFmpeg, "bin");
-                if (!FilesDirectories.Files.Move(Path.Combine(souborCesta, "ffmpeg.exe"), cilovaSlozka, nazevSouboru + ".exe")) e.Result = "presun";
-                if (!FilesDirectories.Files.Move(Path.Combine(souborCesta, "ffplay.exe"), cilovaSlozka)) e.Result = "presun";
-                if (!FilesDirectories.Files.Move(Path.Combine(souborCesta, "ffprobe.exe"), cilovaSlozka)) e.Result = "presun";
+                if (!FD.Files.Move(Path.Combine(souborCesta, "ffmpeg.exe"), cilovaSlozka, nazevSouboru + ".exe")) e.Result = "presun";
+                if (!FD.Files.Move(Path.Combine(souborCesta, "ffplay.exe"), cilovaSlozka)) e.Result = "presun";
+                if (!FD.Files.Move(Path.Combine(souborCesta, "ffprobe.exe"), cilovaSlozka)) e.Result = "presun";
                 backgroundWorkerStahniProgram.ReportProgress(5);
 
                 // odstranění složky ffpmeg a zip souboru
@@ -1752,7 +1754,7 @@ namespace youtube2music
                 Files.ProgramFfmpeg = Path.Combine(cilovaSlozka, nazevSouboru + ".exe");
                 menuStripMenu.Invoke(new Action(() =>
                 {
-                    MenuCestaZobrazit(App.Init.FileOrDirectory.ProgramFfmpeg);
+                    MenuCestaZobrazit(Init.FileOrDirectory.ProgramFfmpeg);
                 }));
             }
         }
@@ -1862,7 +1864,7 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            if (!FilesDirectories.Files.Write(Files.LibraryOpusHistory, zapisDoSouboru))
+            if (!FD.Files.Write(Files.LibraryOpusHistory, zapisDoSouboru))
             {
                 // TODO show error
             }
@@ -1881,7 +1883,7 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            if (!FilesDirectories.Files.Write(Files.LibraryMp3History, zapisDoSouboru))
+            if (!FD.Files.Write(Files.LibraryMp3History, zapisDoSouboru))
             {
                 // TODO show error
             }
@@ -1900,7 +1902,7 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            if (!FilesDirectories.Files.Write(Files.ProgramYouTubeDlHistory, zapisDoSouboru))
+            if (!FD.Files.Write(Files.ProgramYouTubeDlHistory, zapisDoSouboru))
             {
                 // TODO show error
             }
@@ -1919,7 +1921,7 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            if (!FilesDirectories.Files.Write(Files.ProgramFfmpegHistory, zapisDoSouboru))
+            if (!FD.Files.Write(Files.ProgramFfmpegHistory, zapisDoSouboru))
             {
                 // TODO show error 
             }
@@ -1938,14 +1940,14 @@ namespace youtube2music
                     zapisDoSouboru.Add(menuCesta.Text);
                 }
             }
-            if (!FilesDirectories.Files.Write(Files.ProgramMp3tagHistory, zapisDoSouboru))
+            if (!FD.Files.Write(Files.ProgramMp3tagHistory, zapisDoSouboru))
             {
                 // TODO show error
             }
             zapisDoSouboru.Clear();
 
             // delete cache
-            if (!FilesDirectories.Directories.Delete(Directories.CurrentCache))
+            if (!FD.Directories.Delete(Directories.CurrentCache))
             {
                 Actions.Show.Error("Deleting cache", "Couldn't delete cache directory '" + Directories.CurrentCache + "'.");
             }
@@ -2432,9 +2434,11 @@ namespace youtube2music
                         menuPridatPlaylist.Enabled = false;
                         menuPridatAlbum.Enabled = true;
 
-                        List<string> argumenty = new List<string>();
-                        argumenty.Add("2"); // typ 0 = video, 1 = playlist, 2 = album
-                        argumenty.Add(menuPridatPlaylist.Tag.ToString()); // id videa / playlistu / albumu
+                        List<string> argumenty = new List<string>
+                        {
+                            "2", // typ 0 = video, 1 = playlist, 2 = album
+                            menuPridatPlaylist.Tag.ToString() // id videa / playlistu / albumu
+                        };
                         backgroundWorkerPridejVidea.RunWorkerAsync(argumenty);
                     }
                 }
@@ -2470,14 +2474,14 @@ namespace youtube2music
             // 2.) id videa / playlistu / albumu
             List<string> argumenty = (List<string>)e.Argument;
             string typ = argumenty.First();
-            bool playlist = typ != "0" ? true : false;
-            bool album = typ == "2" ? true : false;
+            bool playlist = typ != "0";
+            bool album = typ == "2";
             string youtubeID = argumenty.Last();
             youtubeIDverejne = youtubeID;
             albumVerejne = album;
 
             // získá seznam dříve stažených videí ze souboru
-            List<string> stazenaVidea = FilesDirectories.Files.Read(Files.DownloadedVideosHistory) ?? new List<string>();
+            List<string> stazenaVidea = FD.Files.Read(Files.DownloadedVideosHistory) ?? new List<string>();
 
             // přidávání playlistu
             if (playlist)
@@ -2956,7 +2960,7 @@ namespace youtube2music
             }
 
             // získá složku do které se ukládají cache složky spuštěných instancí programu
-            List<string> slozky = null;
+            List<string> slozky;
             try
             {
                 slozky = Directory.GetDirectories(Directories.Cache).ToList();
@@ -3059,7 +3063,7 @@ namespace youtube2music
                 e.Cancel = true;
                 return;
             }
-            if (!FilesDirectories.Files.Delete(Files.DownloadedVideosHistory))
+            if (!FD.Files.Delete(Files.DownloadedVideosHistory))
             {
                 e.Result = "mazani_souboru";
             }

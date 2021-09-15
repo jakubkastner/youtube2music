@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace youtube2music.FilesDirectories
+namespace youtube2music.FD
 {
     /// <summary>
     /// Create or delete directories.

@@ -17,7 +17,7 @@ namespace youtube2music.YouTube
         /// <summary>
         /// YouTube service.
         /// </summary>
-        private static YouTubeService serviceYT = Auth();
+        private static readonly YouTubeService serviceYT = Auth();
 
         /// <summary>
         /// Authorize YouTube user.

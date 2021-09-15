@@ -27,7 +27,7 @@ namespace youtube2music.App.Paths
         {
             get
             {
-                if (!FilesDirectories.Directories.Exists(libraryOpus)) libraryOpus = null;
+                if (!FD.Directories.Exists(libraryOpus)) libraryOpus = null;
                 return libraryOpus;
             }
             set
@@ -42,7 +42,7 @@ namespace youtube2music.App.Paths
         {
             get
             {
-                if (!FilesDirectories.Directories.Exists(libraryMp3)) libraryMp3 = null;
+                if (!FD.Directories.Exists(libraryMp3)) libraryMp3 = null;
                 return libraryMp3;
             }
             set

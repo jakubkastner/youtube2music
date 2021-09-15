@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace youtube2music.FilesDirectories
+namespace youtube2music.FD
 {
     public static class Files
     {

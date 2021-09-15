@@ -541,7 +541,7 @@ namespace youtube2music
             if (remix)
             {
                 // přidám uto informaci na konec názvu
-                skladba = skladba + " remix";
+                skladba += " remix";
             }
 
             // skladba je prázdná

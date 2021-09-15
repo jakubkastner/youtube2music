@@ -63,7 +63,7 @@ namespace youtube2music
         public void NajdiSlozky()
         {
             // složky hudební knihovny načtené ze souboru "knihovna_slozky.txt"
-            List<string> slozkyKnihovna = FilesDirectories.Files.Read(Path.Combine(Directories.Data, "knihovna_slozky.txt")) ?? new List<string>();
+            List<string> slozkyKnihovna = FD.Files.Read(Path.Combine(Directories.Data, "knihovna_slozky.txt")) ?? new List<string>();
             // nenalezeny žádné složky knihovny
             if (slozkyKnihovna.Count == 0) return;
 

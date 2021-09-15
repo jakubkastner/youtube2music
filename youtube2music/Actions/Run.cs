@@ -28,20 +28,21 @@ namespace youtube2music.Actions
             if (check)
             {
                 // file
-                if (fileOrDirectory && !FilesDirectories.Files.Exists(path)) return false;
+                if (fileOrDirectory && !FD.Files.Exists(path)) return false;
                 // directory
-                if (!fileOrDirectory && !FilesDirectories.Directories.Exists(path)) return false;
+                if (!fileOrDirectory && !FD.Directories.Exists(path)) return false;
             }
 
             try
             {
-                // start new program
+                // setup arguments
                 ProcessStartInfo info = new ProcessStartInfo(path);
+                info.CreateNoWindow = false;
                 if (!String.IsNullOrEmpty(arguments)) info.Arguments = arguments;
 
+                // start new program
                 Process program = new Process();
                 program.StartInfo = info;
-                program.StartInfo.CreateNoWindow = false;
                 program.Start();
 
                 if (wait)
