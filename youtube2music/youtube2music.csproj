@@ -133,7 +133,7 @@
   <ItemGroup>
     <Compile Include="Actions\Run.cs" />
     <Compile Include="Album.cs" />
-    <Compile Include="App\App.cs" />
+    <Compile Include="App\Init.cs" />
     <Compile Include="App\Paths\Directories.cs" />
     <Compile Include="App\Paths\Files.cs" />
     <Compile Include="YouTube\User.cs" />
