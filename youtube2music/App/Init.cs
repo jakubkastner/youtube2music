@@ -12,7 +12,7 @@ namespace youtube2music.App
         /// <summary>
         /// Main FormList with list of videos.
         /// </summary>
-        public static readonly FormSeznam formList = Application.OpenForms.OfType<FormSeznam>().FirstOrDefault();
+        public static FormSeznam FormList { get; } = Application.OpenForms.OfType<FormSeznam>().FirstOrDefault();
 
         /// <summary>
         /// Name of the program.
@@ -20,7 +20,7 @@ namespace youtube2music.App
         public static string Name { get; } = "youtube2music";
 
         /// <summary>
-        /// Types of music library (mp3/opus) and programs (youtube-dl, ffmpeg, mp3tag).
+        /// Types of music library (mp3, opus) and programs (youtube-dl, ffmpeg, mp3tag).
         /// </summary>
         [Flags]
         public enum LibraryOrProgram
@@ -33,13 +33,24 @@ namespace youtube2music.App
         };
 
         /// <summary>
-        /// Types of music library (mp3/opus).
+        /// Types of music library (mp3, opus).
         /// </summary>
         [Flags]
         public enum Library
         {
             Opus,
             Mp3
+        };
+
+        /// <summary>
+        /// Types of programs(youtube-dl, ffmpeg, mp3tag).
+        /// </summary>
+        [Flags]
+        public enum Program
+        {
+            YoutubeDl,
+            Ffmpeg,
+            Mp3tag
         };
     }
 }

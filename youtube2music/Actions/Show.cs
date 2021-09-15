@@ -79,9 +79,9 @@ namespace youtube2music.Actions
         public static void Operation(string text, string title = null)
         {
             if (!String.IsNullOrEmpty(title)) text = title.ToUpper() + ": " + text;
-            Init.formList.statusStripStatus.Invoke(new Action(() =>
+            Init.FormList.statusStripStatus.Invoke(new Action(() =>
             {
-                Init.formList.labelOperace.Text = text;
+                Init.FormList.labelOperace.Text = text;
             }));
         }
 
@@ -93,9 +93,9 @@ namespace youtube2music.Actions
         public static void Status(string text = "", string title = null)
         {
             if (!String.IsNullOrEmpty(title)) text = title.ToUpper() + ": " + text;
-            Init.formList.statusStripStatus.Invoke(new Action(() =>
+            Init.FormList.statusStripStatus.Invoke(new Action(() =>
             {
-                Init.formList.labelStav.Text = text;
+                Init.FormList.labelStav.Text = text;
             }));
         }
 
@@ -105,13 +105,13 @@ namespace youtube2music.Actions
         /// <param name="maximum">Maximum progressBar value</param>
         public static void Progress(int maximum = 0)
         {
-            Init.formList.statusStripStatus.Invoke(new Action(() =>
+            Init.FormList.statusStripStatus.Invoke(new Action(() =>
             {
-                Init.formList.progressBarStatus.Value = Init.formList.progressBarStatus.Minimum;
-                Init.formList.progressBarStatus.Maximum = maximum;
-                Init.formList.progressBarStatus.Visible = true;
+                Init.FormList.progressBarStatus.Value = Init.FormList.progressBarStatus.Minimum;
+                Init.FormList.progressBarStatus.Maximum = maximum;
+                Init.FormList.progressBarStatus.Visible = true;
             }));
-            TaskbarManager.Instance.SetProgressValue(Init.formList.progressBarStatus.Minimum, maximum);
+            TaskbarManager.Instance.SetProgressValue(Init.FormList.progressBarStatus.Minimum, maximum);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace youtube2music.Actions
             }
 
             // exit current instance
-            Init.formList.Close();
+            Init.FormList.Close();
         }
     }
 }

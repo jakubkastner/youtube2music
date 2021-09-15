@@ -12,14 +12,14 @@ namespace youtube2music.App.Paths
     /// </summary>
     public class Directories
     {
-        private static string appData;
-        private static string data;
-        private static readonly string nameData = "data";
-        private static string cache;
-        private static string currentCache;
-        private static readonly string nameCache = "cache";
         private static string libraryOpus;
         private static string libraryMp3;
+        private static readonly string nameData = "data";
+        private static readonly string nameCache = "cache";
+        private static string appData;
+        private static string data;
+        private static string cache;
+        private static string currentCache;
 
         /// <summary>
         /// Directory path for opus music library.
@@ -31,10 +31,6 @@ namespace youtube2music.App.Paths
                 LibraryCheck(Init.Library.Opus);
                 return libraryOpus;
             }
-            set
-            {
-                libraryOpus = value;
-            }
         }
         /// <summary>
         /// Directory path for mp3 music library.
@@ -45,10 +41,6 @@ namespace youtube2music.App.Paths
             {
                 LibraryCheck(Init.Library.Mp3);
                 return libraryMp3;
-            }
-            set
-            {
-                libraryMp3 = value;
             }
         }
 
@@ -111,33 +103,42 @@ namespace youtube2music.App.Paths
             }
         }
 
-
-
         /// <summary>
         /// Change music library (opus/mp3).
         /// </summary>
-        /// <param name="path">Path toi new directory</param>
+        /// <param name="path">Path to new directory</param>
         /// <param name="type">Type of directory</param>
-        /// <returns>true = succesfull, false = fail</returns>
-        public static bool LibraryChange(string path, Init.Library type)
+        /// <returns>Path to the new library or null</returns>
+        public static string LibraryChange(string path, Init.Library type)
         {
             // bad path
-            if (String.IsNullOrEmpty(path)) return false;
-            if (!FD.Directories.Exists(path)) return false;
+            if (String.IsNullOrEmpty(path)) return null;
+            if (!FD.Directories.Exists(path)) return null;
+
+            path = path.Trim();
+            Init.LibraryOrProgram typeLibrary;
 
             // opus
             if (type == Init.Library.Opus)
             {
-                libraryOpus = path.Trim();
-                return true;
+                libraryOpus = path;
+                typeLibrary = Init.LibraryOrProgram.LibraryOpus;
             }
             // mp3
-            libraryMp3 = path.Trim();
-            return true;
+            else
+            {
+                libraryMp3 = path;
+                typeLibrary = Init.LibraryOrProgram.LibraryMp3;
+            }
+
+            // change library in formList
+            Init.FormList.MenuPathSelect(typeLibrary);
+
+            return path;
         }
 
         /// <summary>
-        /// Check if the music library directory exists. If doesn't exists - clear it from formList.
+        /// Check if the music library directory exists. If doesn't exists - clear it from formList and set variable to null.
         /// </summary>
         /// <param name="type">Type of the direcotry (opus/mp3)</param>
         public static void LibraryCheck(Init.Library type)
@@ -150,7 +151,7 @@ namespace youtube2music.App.Paths
                     // directory doesn't exist
                     libraryOpus = null;
                     // remove library from formList
-                    Init.formList.LibraryDelete(type);
+                    Init.FormList.LibraryDelete(type);
                 }
                 return;
             }
@@ -161,7 +162,7 @@ namespace youtube2music.App.Paths
                 // directory doesn't exist
                 libraryMp3 = null;
                 // remove library from formList
-                Init.formList.LibraryDelete(type);
+                Init.FormList.LibraryDelete(type);
             }
         }
 
