@@ -1,7 +1,7 @@
 ﻿using Microsoft.WindowsAPICodePack.Taskbar;
 using System;
-using System.Linq;
 using System.Windows.Forms;
+using youtube2music.App;
 
 namespace youtube2music.Actions
 {
@@ -10,11 +10,6 @@ namespace youtube2music.Actions
     /// </summary>
     public static class Show
     {
-        /// <summary>
-        /// Main FormList with list of videos.
-        /// </summary>
-        static readonly FormSeznam formList = Application.OpenForms.OfType<FormSeznam>().FirstOrDefault();
-
         /// <summary>
         /// Show MessageBox
         /// </summary>
@@ -84,9 +79,9 @@ namespace youtube2music.Actions
         public static void Operation(string text, string title = null)
         {
             if (!String.IsNullOrEmpty(title)) text = title.ToUpper() + ": " + text;
-            formList.statusStripStatus.Invoke(new Action(() =>
+            Init.formList.statusStripStatus.Invoke(new Action(() =>
             {
-                formList.labelOperace.Text = text;
+                Init.formList.labelOperace.Text = text;
             }));
         }
 
@@ -98,9 +93,9 @@ namespace youtube2music.Actions
         public static void Status(string text = "", string title = null)
         {
             if (!String.IsNullOrEmpty(title)) text = title.ToUpper() + ": " + text;
-            formList.statusStripStatus.Invoke(new Action(() =>
+            Init.formList.statusStripStatus.Invoke(new Action(() =>
             {
-                formList.labelStav.Text = text;
+                Init.formList.labelStav.Text = text;
             }));
         }
 
@@ -110,13 +105,13 @@ namespace youtube2music.Actions
         /// <param name="maximum">Maximum progressBar value</param>
         public static void Progress(int maximum = 0)
         {
-            formList.statusStripStatus.Invoke(new Action(() =>
+            Init.formList.statusStripStatus.Invoke(new Action(() =>
             {
-                formList.progressBarStatus.Value = formList.progressBarStatus.Minimum;
-                formList.progressBarStatus.Maximum = maximum;
-                formList.progressBarStatus.Visible = true;
+                Init.formList.progressBarStatus.Value = Init.formList.progressBarStatus.Minimum;
+                Init.formList.progressBarStatus.Maximum = maximum;
+                Init.formList.progressBarStatus.Visible = true;
             }));
-            TaskbarManager.Instance.SetProgressValue(formList.progressBarStatus.Minimum, maximum);
+            TaskbarManager.Instance.SetProgressValue(Init.formList.progressBarStatus.Minimum, maximum);
         }
 
         /// <summary>
@@ -140,7 +135,7 @@ namespace youtube2music.Actions
             }
 
             // exit current instance
-            formList.Close();
+            Init.formList.Close();
         }
     }
 }

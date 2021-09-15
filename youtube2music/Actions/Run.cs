@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
-using System.Windows;
 
 namespace youtube2music.Actions
 {

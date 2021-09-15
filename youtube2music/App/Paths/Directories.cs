@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using youtube2music.App;
 
 namespace youtube2music.App.Paths
 {
@@ -27,7 +28,7 @@ namespace youtube2music.App.Paths
         {
             get
             {
-                if (!FD.Directories.Exists(libraryOpus)) libraryOpus = null;
+                LibraryCheck(Init.Library.Opus);
                 return libraryOpus;
             }
             set
@@ -42,7 +43,7 @@ namespace youtube2music.App.Paths
         {
             get
             {
-                if (!FD.Directories.Exists(libraryMp3)) libraryMp3 = null;
+                LibraryCheck(Init.Library.Mp3);
                 return libraryMp3;
             }
             set
@@ -107,6 +108,60 @@ namespace youtube2music.App.Paths
                     currentCache = Path.Combine(Cache, Process.GetCurrentProcess().Id.ToString());
                 }
                 return currentCache;
+            }
+        }
+
+
+
+        /// <summary>
+        /// Change music library (opus/mp3).
+        /// </summary>
+        /// <param name="path">Path toi new directory</param>
+        /// <param name="type">Type of directory</param>
+        /// <returns>true = succesfull, false = fail</returns>
+        public static bool LibraryChange(string path, Init.Library type)
+        {
+            // bad path
+            if (String.IsNullOrEmpty(path)) return false;
+            if (!FD.Directories.Exists(path)) return false;
+
+            // opus
+            if (type == Init.Library.Opus)
+            {
+                libraryOpus = path.Trim();
+                return true;
+            }
+            // mp3
+            libraryMp3 = path.Trim();
+            return true;
+        }
+
+        /// <summary>
+        /// Check if the music library directory exists. If doesn't exists - clear it from formList.
+        /// </summary>
+        /// <param name="type">Type of the direcotry (opus/mp3)</param>
+        public static void LibraryCheck(Init.Library type)
+        {            
+            // opus
+            if (type == Init.Library.Opus)
+            {
+                if (!FD.Directories.Exists(libraryOpus))
+                {
+                    // directory doesn't exist
+                    libraryOpus = null;
+                    // remove library from formList
+                    Init.formList.LibraryDelete(type);
+                }
+                return;
+            }
+
+            // mp3
+            if (!FD.Directories.Exists(libraryMp3))
+            {
+                // directory doesn't exist
+                libraryMp3 = null;
+                // remove library from formList
+                Init.formList.LibraryDelete(type);
             }
         }
 
