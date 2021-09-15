@@ -745,16 +745,6 @@ namespace youtube2music
 
         // HOTOVO 2019
         /// <summary>
-        /// Otevře složku s hudební hnihovnou v průzkumníku souborů.
-        /// </summary>
-        /// <param name="hudebniKnihovna">Cesta ke složce s hudební knihovnou</param>
-        /// <param name="textMenu">Text menu, na které se klikne</param>
-        private void OtevritKnihovnu(string hudebniKnihovna, string textMenu)
-        {
-        }
-
-        // HOTOVO 2019
-        /// <summary>
         /// Otevře složku s cestou souboru youtube-dl v průzkumníku souborů a vybere soubor.
         /// </summary>
         private void menuNastaveniYoutubeDLCestaVybrana_Click(object sender, EventArgs e)
