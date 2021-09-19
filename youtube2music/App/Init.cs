@@ -29,7 +29,8 @@ namespace youtube2music.App
             LibraryMp3,
             ProgramYoutubeDl,
             ProgramFfmpeg,
-            ProgramMp3tag
+            ProgramMp3tag,
+            Null
         };
 
         /// <summary>
@@ -52,5 +53,42 @@ namespace youtube2music.App
             Ffmpeg,
             Mp3tag
         };
+
+        /// <summary>
+        /// Get type of LibraryOrProgram from type Program.
+        /// </summary>
+        /// <param name="type">Program type</param>
+        /// <returns>LibraryOrProgram type, LibraryOrProgram.Null if doesn't exists</returns>
+        public static LibraryOrProgram GetType(Program type)
+        {
+            switch (type)
+            {
+                case Program.YoutubeDl:
+                    return LibraryOrProgram.ProgramYoutubeDl;
+                case Program.Ffmpeg:
+                    return LibraryOrProgram.ProgramFfmpeg;
+                case Program.Mp3tag:
+                    return LibraryOrProgram.ProgramMp3tag;
+                default:
+                    return LibraryOrProgram.Null;
+            }
+        }
+        /// <summary>
+        /// Get type of LibraryOrProgram from type Library.
+        /// </summary>
+        /// <param name="type">Library type</param>
+        /// <returns>LibraryOrProgram type, LibraryOrProgram.Null if doesn't exists</returns>
+        public static LibraryOrProgram GetType(Library type)
+        {
+            switch (type)
+            {
+                case Library.Opus:
+                    return LibraryOrProgram.LibraryOpus;
+                case Library.Mp3:
+                    return LibraryOrProgram.LibraryMp3;
+                default:
+                    return LibraryOrProgram.Null;
+            }
+        }
     }
 }

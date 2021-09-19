@@ -22,7 +22,6 @@ namespace youtube2music
         List<Video> videaVsechna = new List<Video>();
         SeznamInterpretu vsichniInterpreti = new SeznamInterpretu();
 
-
         // HOTOVO
         /**
         ZÍSKÁNÍ VYBRANÝCH VIDEÍ A SPUŠTĚNÍ ÚPRAVY VIDEÍ
@@ -668,336 +667,6 @@ namespace youtube2music
             // skryje se ProgressBar
             progressBarStatus.Visible = false;
             TaskbarManager.Instance.SetProgressValue(0, 0);
-        }       
-
-        /**
-         * 
-        SPUŠTĚNÍ PRŮZKUMNÍKU WINDOWS S VYBRANOU CESTOU SLOŽKY (HUDEBNÍ SLOŽKA, YOUTUBE-DL, FFMPEG
-         *
-        **/
-
-        /// <summary>
-        /// Open opus music library in the windows explorer.
-        /// </summary>
-        private void menuNastaveniKnihovnaOpusVybrana_Click(object sender, EventArgs e)
-        {
-            if (!Actions.Run.Program(Directories.LibraryOpus, true, false))
-            {
-                LibraryDelete(Init.Library.Opus);
-                Actions.Show.Error("Opening opus music library", "The mp3 music library directory doesn't exist.");
-            }
-        }
-
-        /// <summary>
-        /// Open mp3 music library in the windows explorer.
-        /// </summary>
-        private void menuNastaveniKnihovnaMp3Vybrana_Click(object sender, EventArgs e)
-        {
-            if (!Actions.Run.Program(Directories.LibraryMp3, true, false))
-            {
-                LibraryDelete(Init.Library.Mp3);
-                Actions.Show.Error("Opening mp3 music library", "The mp3 music library directory doesn't exist.");
-            }
-        }
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Otevře složku s cestou souboru youtube-dl v průzkumníku souborů a vybere soubor.
-        /// </summary>
-        private void menuNastaveniYoutubeDLCestaVybrana_Click(object sender, EventArgs e)
-        {
-            if (Files.ProgramYouTubeDl == null)
-            {
-                var menu = sender as ToolStripMenuItem;
-                Files.ProgramYouTubeDl = menu.Text;
-            }
-            if (!File.Exists(Files.ProgramYouTubeDl))
-            {
-                menuNastaveniYoutubeDLCestaVybrana.Text = "Není vybrána žádná cesta";
-                menuNastaveniYoutubeDLCestaVybrana.Enabled = false;
-                Files.ProgramYouTubeDl = null;
-                Actions.Show.Error("Spuštění průzkumníku souborů", "Složka programu YouTube-DL neexistuje.");
-                return;
-            }
-            if (!Actions.Run.Program("explorer", false, false, "/select, \"" + Files.ProgramYouTubeDl + "\""))
-            {
-                // TODO show error
-            }
-        }
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Otevře složku s cestou souboru ffmpeg v průzkumníku souborů a vybere soubor.
-        /// </summary>
-        private void menuNastaveniFFmpegCestaVybrana_Click(object sender, EventArgs e)
-        {
-            if (Files.ProgramFfmpeg == null)
-            {
-                var menu = sender as ToolStripMenuItem;
-                Files.ProgramFfmpeg = menu.Text;
-            }
-            if (!File.Exists(Files.ProgramFfmpeg))
-            {
-                // DODĚLAT ????????????
-                // -> i tak zůstane zaškrtnutá v seznamu naposledy vybraných, ale nelze vybrat, takže nemůže dojít k problému
-
-                menuNastaveniFFmpegCestaVybrana.Text = "Není vybrána žádná cesta";
-                menuNastaveniFFmpegCestaVybrana.Enabled = false;
-                Files.ProgramFfmpeg = null;
-                Actions.Show.Error("Spuštění průzkumníku souborů", "Složka programu FFMmpeg neexistuje.");
-                return;
-            }
-            if (!Actions.Run.Program("explorer", false, false, "/select, \"" + Files.ProgramFfmpeg + "\""))
-            {
-                // TODO show error
-            }            
-        }
-
-        /// <summary>
-        /// Otevře složku s cestou souboru mp3tag v průzkumníku souborů a vybere soubor.
-        /// </summary>
-        private void menuNastaveniMp3tagCestaVybrana_Click(object sender, EventArgs e)
-        {
-            if (Files.ProgramMp3tag == null)
-            {
-                var menu = sender as ToolStripMenuItem;
-                Files.ProgramMp3tag = menu.Text;
-            }
-            if (!File.Exists(Files.ProgramMp3tag))
-            {
-                menuNastaveniMp3tagCestaVybrana.Text = "Není vybrána žádná cesta";
-                menuNastaveniMp3tagCestaVybrana.Enabled = false;
-                Files.ProgramMp3tag = null;
-                Actions.Show.Error("Spuštění průzkumníku souborů", "Složka programu mp3tag neexistuje.");
-                return;
-            }
-            if (!Actions.Run.Program("explorer", false, false, "/select, \"" + Files.ProgramMp3tag + "\""))
-            {
-                // TODO show error
-            }
-        }
-
-        /**
-         * 
-        NASTAVENÍ SLOŽKY S HUDEBNÍ KNIHOVNOU NEBO CESTY S YOUTUBE-DL NEBO FFMPEG - vybrání nové složky
-         *
-        **/
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Uživatel vybere novou cestu složky hudbní knihovny opus.
-        /// </summary>
-        private void menuNastaveniKnihovnaOpusZmenit_Click(object sender, EventArgs e)
-        {
-            HudebniKnihovnaVyber(true);
-        }
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Uživatel vybere novou cestu složky hudbní knihovny mp3.
-        /// </summary>
-        private void menuNastaveniKnihovnaMp3Zmenit_Click(object sender, EventArgs e)
-        {
-            HudebniKnihovnaVyber(false);
-        }
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Uživatel vybere pomocí FolderBrowserDialogu novou složku s hudební knihovnou.
-        /// Ta se zobrazí v menu a automaticky se prohledají složky v nové hudební knihovně.
-        /// </summary>
-        /// <param name="opus">
-        /// true = hudební knihovna opus,
-        /// false = hudební knihovna mp3
-        /// </param>
-        private void HudebniKnihovnaVyber(bool opus)
-        {
-            string typ = opus ? "opus" : "mp3";
-            string hudebniKnihovna = opus ? Directories.LibraryOpus : Directories.LibraryMp3;
-
-            // hudební knihovna - uživatel vybere novou cestu složky
-            VistaFolderBrowserDialog vyberSlozky = new VistaFolderBrowserDialog();
-            vyberSlozky.Description = "Vyberte složku s hudební knihovnou " + typ;
-            vyberSlozky.UseDescriptionForTitle = true;
-            if (Directory.Exists(hudebniKnihovna))
-            {
-                vyberSlozky.SelectedPath = hudebniKnihovna;
-            }
-
-            if ((bool)vyberSlozky.ShowDialog())
-            {
-                // change the directory
-                Init.Library type = opus ? Init.Library.Opus : Init.Library.Mp3;
-                LibraryChange(type, vyberSlozky.SelectedPath);
-            }
-        }
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Uživatel změní cestu youtube-dl pomocí OpenFileDialogu, ta se zobrazí v menu.
-        /// </summary>
-        private void menuNastaveniYoutubeDLCestaZmenit_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog vyberSouboru = new OpenFileDialog();
-            vyberSouboru.Title = "Vyberte spustitelný soubor YoutubeDL:";
-            vyberSouboru.Filter = "Spustitelné soubory (*.exe)|*.exe|Všechny soubory (*.*)|*.*";
-            if (Directory.Exists(Path.GetDirectoryName(Files.ProgramYouTubeDl)))
-            {
-                vyberSouboru.InitialDirectory = Path.GetDirectoryName(Files.ProgramYouTubeDl);
-            }
-            if (vyberSouboru.ShowDialog() == DialogResult.OK)
-            {
-                if (vyberSouboru.FilterIndex == 2)
-                {
-                    // nejedná se o exe soubor
-                    Actions.Show.Notice("Změna cesty YouTube-DL", "Nejedná se o spustitelý soubor (*.exe)!", "Program nemusí fungovat správně.");
-                }
-                Files.ProgramYouTubeDl = vyberSouboru.FileName;
-                MenuPathSelect(Init.LibraryOrProgram.ProgramYoutubeDl);
-                Actions.Show.Operation("Cesta programu YouTube-DL úspěšně změněna: '" + Files.ProgramYouTubeDl + "'");
-            }
-        }
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Uživatel změní cestu ffmpeg pomocí OpenFileDialogu, ta se zobrazí v menu.
-        /// </summary>
-        private void menuNastaveniFFmpegCestaZmenit_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog vyberSouboru = new OpenFileDialog();
-            vyberSouboru.Title = "Vyberte spustitelný soubor FFmpeg:";
-            vyberSouboru.Filter = "Spustitelné soubory (*.exe)|*.exe|Všechny soubory (*.*)|*.*";
-            if (Directory.Exists(Path.GetDirectoryName(Files.ProgramFfmpeg)))
-            {
-                vyberSouboru.InitialDirectory = Path.GetDirectoryName(Files.ProgramFfmpeg);
-            }
-            if (vyberSouboru.ShowDialog() == DialogResult.OK)
-            {
-                if (vyberSouboru.FilterIndex == 2)
-                {
-                    // nejedná se o exe soubor
-                    Actions.Show.Notice("Změna cesty FFmpeg", "Nejedná se o spustitelý soubor (*.exe)!", "Program nemusí fungovat správně.");
-                }
-                Files.ProgramFfmpeg = vyberSouboru.FileName;
-                MenuPathSelect(Init.LibraryOrProgram.ProgramFfmpeg);
-                Actions.Show.Operation("Cesta programu FFmpeg úspěšně změněna: '" + Files.ProgramFfmpeg + "'");
-            }
-        }
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Uživatel změní cestu mp3tag pomocí OpenFileDialogu, ta se zobrazí v menu.
-        /// </summary>
-        private void menuNastaveniMp3tagCestaZmenit_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog vyberSouboru = new OpenFileDialog();
-            vyberSouboru.Title = "Vyberte spustitelný soubor mp3tag:";
-            vyberSouboru.Filter = "Spustitelné soubory (*.exe)|*.exe|Všechny soubory (*.*)|*.*";
-            if (Directory.Exists(Path.GetDirectoryName(Files.ProgramMp3tag)))
-            {
-                vyberSouboru.InitialDirectory = Path.GetDirectoryName(Files.ProgramMp3tag);
-            }
-            if (vyberSouboru.ShowDialog() == DialogResult.OK)
-            {
-                if (vyberSouboru.FilterIndex == 2)
-                {
-                    // nejedná se o exe soubor
-                    Actions.Show.Notice("Změna cesty mp3tag", "Nejedná se o spustitelý soubor (*.exe)!", "Program nemusí fungovat správně.");
-                }
-                Files.ProgramMp3tag = vyberSouboru.FileName;
-                MenuPathSelect(Init.LibraryOrProgram.ProgramMp3tag);
-                Actions.Show.Operation("Cesta programu mp3tag úspěšně změněna: '" + Files.ProgramMp3tag + "'");
-            }
-        }
-
-        /**
-         * 
-        NASTAVENÍ SLOŽKY S HUDEBNÍ KNIHOVNOU NEBO CESTY S YOUTUBE-DL NEBO FFMPEG - vybrání již dříve vybraných cest z menu
-         *
-        **/
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Uživatel vybral novou hudební knihovnu opus ze seznamu již dříve vybraných.
-        /// </summary>
-        private void menuNastaveniKnihovnaOpusNaposledyVybrane_Click(object sender, EventArgs e)
-        {
-            var menu = sender as ToolStripMenuItem;
-            LibraryChange(Init.Library.Opus, menu.Text);
-        }
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Uživatel vybral novou hudební knihovnu mp3 ze seznamu již dříve vybraných.
-        /// </summary>
-        private void menuNastaveniKnihovnaMp3NaposledyVybrane_Click(object sender, EventArgs e)
-        {
-            var menu = sender as ToolStripMenuItem;
-            LibraryChange(Init.Library.Mp3, menu.Text);
-        }
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Uživatel vybral novou cestu youtube-dl ze seznamu již dříve vybraných.
-        /// </summary>
-        private void menuNastaveniCestaYoutubeDLNaposledyVybrane_Click(object sender, EventArgs e)
-        {
-            var menu = sender as ToolStripMenuItem;
-            string novaCesta = menu.Text;
-            if (File.Exists(novaCesta))
-            {
-                Files.ProgramYouTubeDl = novaCesta;
-                MenuPathSelect(Init.LibraryOrProgram.ProgramYoutubeDl);
-                Actions.Show.Operation("Cesta programu YouTube-DL úspěšně změněna: '" + novaCesta + "'");
-            }
-            else
-            {
-                Actions.Show.Operation("Cesta programu YouTube-DL nemohla být změněna. Soubor '" + novaCesta + "' neexistuje.");
-                Actions.Show.Error("Změna cesty programu YouTube-DL", "Cesta nemohla být změněna.", "Soubor '" + novaCesta + "' neexistuje.", "Zkuste to prosím znovu");
-            }
-        }
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Uživatel vybral novou cestu ffmpeg ze seznamu již dříve vybraných.
-        /// </summary>
-        private void menuNastaveniCestaFFmpegNaposledyVybrane_Click(object sender, EventArgs e)
-        {
-            // ffmpeg - vybrere cestu z již dříve vybraných složek a zobrazí ji v menu
-            var menu = sender as ToolStripMenuItem;
-            string novaCesta = menu.Text;
-            if (File.Exists(novaCesta))
-            {
-                Files.ProgramFfmpeg = novaCesta;
-                MenuPathSelect(Init.LibraryOrProgram.ProgramFfmpeg);
-                Actions.Show.Operation("Cesta programu FFmpeg úspěšně změněna: '" + novaCesta + "'");
-            }
-            else
-            {
-                Actions.Show.Operation("Cesta programu FFmpeg nemohla být změněna. Soubor '" + novaCesta + "' neexistuje.");
-                Actions.Show.Error("Změna cesty programu FFmpeg", "Cesta nemohla být změněna.", "Soubor '" + novaCesta + "' neexistuje.", "Zkuste to prosím znovu");
-            }
-        }
-
-        /// <summary>
-        /// Uživatel vybral novou cestu mp3tag ze seznamu již dříve vybraných.
-        /// </summary>
-        private void menuNastaveniCestaMp3tagNaposledyVybrane_Click(object sender, EventArgs e)
-        {
-            // mp3tag - vybrere cestu z již dříve vybraných složek a zobrazí ji v menu
-            var menu = sender as ToolStripMenuItem;
-            string novaCesta = menu.Text;
-            if (File.Exists(novaCesta))
-            {
-                Files.ProgramMp3tag = novaCesta;
-                MenuPathSelect(Init.LibraryOrProgram.ProgramMp3tag);
-                Actions.Show.Operation("Cesta programu mp3tag úspěšně změněna: '" + novaCesta + "'");
-            }
-            else
-            {
-                Actions.Show.Operation("Cesta programu mp3tag nemohla být změněna. Soubor '" + novaCesta + "' neexistuje.");
-                Actions.Show.Error("Změna cesty programu mp3tag", "Cesta nemohla být změněna.", "Soubor '" + novaCesta + "' neexistuje.", "Zkuste to prosím znovu");
-            }
         }
 
 
@@ -1043,10 +712,12 @@ namespace youtube2music
             }
             else if (File.Exists(pridejCesty.First().Trim()))
             {
-                if (type == Init.LibraryOrProgram.ProgramYoutubeDl) Files.ProgramYouTubeDl = pridejCesty.First().Trim();
-                else if (type == Init.LibraryOrProgram.ProgramFfmpeg) Files.ProgramFfmpeg = pridejCesty.First().Trim();
-                else if (type == Init.LibraryOrProgram.ProgramMp3tag) Files.ProgramMp3tag = pridejCesty.First().Trim();
-                MenuPathSelect(type);
+                Init.Program programType;
+                if (type == Init.LibraryOrProgram.ProgramYoutubeDl) programType = Init.Program.YoutubeDl;
+                else if (type == Init.LibraryOrProgram.ProgramFfmpeg) programType = Init.Program.Ffmpeg;
+                else if (type == Init.LibraryOrProgram.ProgramMp3tag) programType = Init.Program.Mp3tag;
+                else return;
+                ProgramChange(programType, pridejCesty.First().Trim());
             }
         }
 
@@ -1514,10 +1185,9 @@ namespace youtube2music
                     return;
                 }
                 // uložení aktuální cesty a zobrazení v menu
-                Files.ProgramYouTubeDl = cilovaCesta;
                 menuStripMenu.Invoke(new Action(() =>
                 {
-                    MenuPathSelect(Init.LibraryOrProgram.ProgramYoutubeDl);
+                    ProgramChange(Init.Program.YoutubeDl, cilovaCesta);
                 }));
             }
             else
@@ -1567,10 +1237,9 @@ namespace youtube2music
                 backgroundWorkerStahniProgram.ReportProgress(6);
 
                 // uložení aktuální cesty a zobrazení v menu
-                Files.ProgramFfmpeg = Path.Combine(cilovaSlozka, nazevSouboru + ".exe");
                 menuStripMenu.Invoke(new Action(() =>
                 {
-                    MenuPathSelect(Init.LibraryOrProgram.ProgramFfmpeg);
+                    ProgramChange(Init.Program.Ffmpeg, Path.Combine(cilovaSlozka, nazevSouboru + ".exe"));
                 }));
             }
         }
@@ -1769,120 +1438,6 @@ namespace youtube2music
             }
         }
 
-
-        /*
-         *
-        ODSTRANĚNÍ HISTORIE CEST
-         *
-        */
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Kliknutí na smazání historie vybraných cest složky hudbní knihovny opus.
-        /// </summary>
-        private void menuNastaveniKnihovnaOpusNaposledyVymazat_Click(object sender, EventArgs e)
-        {
-            VymazatHistoriiMenu("0");
-        }
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Kliknutí na smazání historie vybraných cest složky hudbní knihovny mp3.
-        /// </summary>
-        private void menuNastaveniKnihovnaMp3NaposledyVymazat_Click(object sender, EventArgs e)
-        {
-            VymazatHistoriiMenu("1");
-        }
-        // HOTOVO 2019
-        /// <summary>
-        /// Kliknutí na smazání historie vybraných cest programu youtube-dl.
-        /// </summary>
-        private void menuNastaveniYoutubeDLCestaNaposledyVymazat_Click(object sender, EventArgs e)
-        {
-            VymazatHistoriiMenu("2");
-        }
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Kliknutí na smazání historie vybraných cest programu ffmpeg.
-        /// </summary>
-        private void menuNastaveniFFmpegCestaNaposledyVymazat_Click(object sender, EventArgs e)
-        {
-            VymazatHistoriiMenu("3");
-        }
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Kliknutí na smazání historie vybraných cest programu mp3tag.
-        /// </summary>
-        private void menuNastaveniMp3tagCestaNaposledyVymazat_Click(object sender, EventArgs e)
-        {
-            VymazatHistoriiMenu("4");
-        }
-
-        // HOTOVO 2019
-        /// <summary>
-        /// Odstraní z historie vybrané cesty hudbní knihovny / programů.
-        /// </summary>
-        /// <param name="typ">
-        ///     Typ cesty:
-        ///     0 = složky knihovny opus
-        ///     1 = složky knihovny mp3
-        ///     2 = cesty youtube-dl
-        ///     3 = cesty ffmpeg
-        ///     4 = cesty m3ptag
-        /// </param>
-        private void VymazatHistoriiMenu(string typ)
-        {
-            // získání položek
-            string aktualneVybrane;
-            ToolStripMenuItem menuSlozek;
-            // složky knihovny opus
-            if (typ == "0")
-            {
-                menuSlozek = menuNastaveniKnihovnaOpusNaposledyVybrane;
-                aktualneVybrane = Directories.LibraryOpus;
-            }
-            // složky knihovny mp3
-            else if (typ == "1")
-            {
-                menuSlozek = menuNastaveniKnihovnaMp3NaposledyVybrane;
-                aktualneVybrane = Directories.LibraryMp3;
-            }
-            // cesty youtube-dl
-            else if (typ == "2")
-            {
-                menuSlozek = menuNastaveniYoutubeDLCestaNaposledyVybrane;
-                aktualneVybrane = Files.ProgramYouTubeDl;
-            }
-            // cesty ffmpeg
-            else if (typ == "3")
-            {
-                menuSlozek = menuNastaveniFFmpegCestaNaposledyVybrane;
-                aktualneVybrane = Files.ProgramFfmpeg;
-            }
-            // cesty mp3tag
-            else if (typ == "4")
-            {
-                menuSlozek = menuNastaveniMp3tagCestaNaposledyVybrane;
-                aktualneVybrane = Files.ProgramMp3tag;
-            }
-            else
-            {
-                return;
-            }
-
-            // odstranění z menu
-            for (int i = 0; i < menuSlozek.DropDownItems.Count; i++)
-            {
-                if (menuSlozek.DropDownItems[i].Text != aktualneVybrane)
-                {
-                    // pokud se nejedná o aktuální cestu, odstraním ji z historie
-                    menuSlozek.DropDownItems.RemoveAt(i);
-                    i--;
-                }
-            }
-        }
 
         /*
          *
@@ -3032,12 +2587,5 @@ namespace youtube2music
             menuNastaveniUzivatelOdhlasit.Text = "Není přihlášen žádný uživatel";
             Actions.Show.Operation("Odhlášení z YouTube proběhlo úspěšně.");
         }
-
-
-        //////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////
-        ///////////////////  NEW CODE - ENGLISH - 2021  //////////////////
-        //////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////
     }
 }

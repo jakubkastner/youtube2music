@@ -117,18 +117,22 @@ namespace youtube2music.App
             path = path.Trim();
             Init.LibraryOrProgram typeLibrary;
 
-            // opus
-            if (type == Init.Library.Opus)
+            // set path
+            switch (type)
             {
-                libraryOpus = path;
-                typeLibrary = Init.LibraryOrProgram.LibraryOpus;
+                case Init.Library.Opus:
+                    libraryOpus = path;
+                    break;
+                case Init.Library.Mp3:
+                    libraryMp3 = path;
+                    break;
+                default:
+                    return null;
             }
-            // mp3
-            else
-            {
-                libraryMp3 = path;
-                typeLibrary = Init.LibraryOrProgram.LibraryMp3;
-            }
+
+            // get type
+            typeLibrary = Init.GetType(type);
+            if (typeLibrary == Init.LibraryOrProgram.Null) return null;
 
             // change library in formList
             Init.FormList.MenuPathSelect(typeLibrary);
@@ -141,28 +145,79 @@ namespace youtube2music.App
         /// </summary>
         /// <param name="type">Type of the direcotry (opus/mp3)</param>
         public static void LibraryCheck(Init.Library type)
-        {            
+        {
             // opus
             if (type == Init.Library.Opus)
             {
-                if (!FD.Directories.Exists(libraryOpus))
-                {
-                    // directory doesn't exist
-                    libraryOpus = null;
-                    // remove library from formList
-                    Init.FormList.LibraryDelete(type);
-                }
-                return;
+                if (FD.Directories.Exists(libraryOpus)) return;
+                // directory doesn't exist
+                libraryOpus = null;
             }
 
             // mp3
-            if (!FD.Directories.Exists(libraryMp3))
+            else if (type == Init.Library.Mp3)
             {
+                if (FD.Directories.Exists(libraryMp3)) return;
                 // directory doesn't exist
                 libraryMp3 = null;
-                // remove library from formList
-                Init.FormList.LibraryDelete(type);
             }
+            else
+            {
+                return;
+            }
+            // remove library from formList
+            Init.LibraryOrProgram libraryType = Init.GetType(type);
+            Init.FormList.MenuPathDelete(libraryType);
+        }
+
+        /// <summary>
+        /// Get the path of the music library based on the type.
+        /// </summary>
+        /// <param name="type">Music library type</param>
+        /// <param name="spaces">true = return spaces before and after path, false = return path without spaces</param>
+        /// <returns>Music library path, null = doesn't found</returns>
+        public static string GetDirectoryPath(Init.Library type, bool spaces = false)
+        {
+            string path;
+            switch (type)
+            {
+                case Init.Library.Opus:
+                    path = LibraryOpus;
+                    break;
+                case Init.Library.Mp3:
+                    path = LibraryMp3;
+                    break;
+                default:
+                    return null;
+            }
+            if (String.IsNullOrEmpty(path)) return null;
+            if (spaces) path = " " + path + " ";
+            return path;
+        }
+
+        /// <summary>
+        /// Get the name as string of the music library based on the type.
+        /// </summary>
+        /// <param name="type">Music library type</param>
+        /// <param name="spaces">true = return spaces before and after path, false = return path without spaces</param>
+        /// <returns>Music library name, empty = doesn't found</returns>
+        public static string GetDirectoryName(Init.Library type, bool spaces = false)
+        {
+            string name = spaces ? " " : "";
+            switch (type)
+            {
+                case Init.Library.Opus:
+                    name += "opus";
+                    break;
+                case Init.Library.Mp3:
+                    name += "mp3";
+                    break;
+                default:
+                    name = "";
+                    break;
+            }
+            if (spaces) name += " ";
+            return name;
         }
 
 

@@ -3,7 +3,8 @@ using System.Windows.Forms;
 
 namespace youtube2music
 {
-    public partial class FormSeznam : Form {
+    public partial class FormSeznam : Form 
+    {
 
         /**** TESTOVÁNÍ ****/
 

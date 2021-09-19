@@ -23,18 +23,43 @@ namespace youtube2music.App
         private static string downloadedVideosHistory;
         private static string youTubeUser;
 
+        private static string programYouTubeDl;
+        private static string programFfmpeg;
+        private static string programMp3tag;
+
         /// <summary>
         /// File path for program youtube-dl.
         /// </summary>
-        public static string ProgramYouTubeDl { get; set; }
+        public static string ProgramYouTubeDl
+        {
+            get
+            {
+                ProgramCheck(Init.Program.YoutubeDl);
+                return programYouTubeDl;
+            }
+        }
         /// <summary>
         /// File path for program FFmpeg.
         /// </summary>
-        public static string ProgramFfmpeg { get; set; }
+        public static string ProgramFfmpeg
+        {
+            get
+            {
+                ProgramCheck(Init.Program.Ffmpeg);
+                return programFfmpeg;
+            }
+        }
         /// <summary>
         /// File path for program mp3tag.
         /// </summary>
-        public static string ProgramMp3tag { get; set; }
+        public static string ProgramMp3tag
+        {
+            get
+            {
+                ProgramCheck(Init.Program.Mp3tag);
+                return programMp3tag;
+            }
+        }
 
         /// <summary>
         /// Get file path for history of opus music library.
@@ -140,6 +165,143 @@ namespace youtube2music.App
                 }
                 return youTubeUser;
             }
+        }
+
+
+
+        /// <summary>
+        /// Change path to program.
+        /// </summary>
+        /// <param name="path">New path to program</param>
+        /// <param name="type">Type of program</param>
+        /// <returns>New path to the program or null</returns>
+        public static string ProgramChange(string path, Init.Program type)
+        {
+            // bad path
+            if (String.IsNullOrEmpty(path)) return null;
+            if (!FD.Files.Exists(path)) return null;
+
+            path = path.Trim();
+            Init.LibraryOrProgram typeProgram;
+
+            // change program             
+            // set path
+            switch (type)
+            {
+                case Init.Program.YoutubeDl:
+                    programYouTubeDl = path;
+                    break;
+                case Init.Program.Ffmpeg:
+                    programFfmpeg = path;
+                    break;
+                case Init.Program.Mp3tag:
+                    programMp3tag = path;
+                    break;
+                default:
+                    return null;
+            }
+
+            // get type
+            typeProgram = Init.GetType(type);
+            if (typeProgram == Init.LibraryOrProgram.Null) return null;
+
+            // change library in formList
+            Init.FormList.MenuPathSelect(typeProgram);
+
+            return path;
+        }
+
+        /// <summary>
+        /// Check if the path to the program exists. If doesn't exists - clear it from formList and set variable to null.
+        /// </summary>
+        /// <param name="type">Program type</param>
+        public static void ProgramCheck(Init.Program type)
+        {
+            // youtube-dl
+            if (type == Init.Program.YoutubeDl)
+            {
+                if (FD.Files.Exists(programYouTubeDl)) return;
+                // program file doesn't exist
+                programYouTubeDl = null;              
+            }
+            // ffmpeg
+            else if (type == Init.Program.Ffmpeg)
+            {
+                if (FD.Files.Exists(programFfmpeg)) return;                
+                // program file doesn't exist
+                programFfmpeg = null;             
+            }
+            // mp3tag
+            else if (type == Init.Program.Mp3tag)
+            {
+                if (FD.Files.Exists(programMp3tag)) return;
+                // program file doesn't exist
+                programMp3tag = null;
+            }
+            else
+            {
+                return;
+            }
+
+            // remove program path from formList
+            Init.LibraryOrProgram programType = Init.GetType(type);
+            Init.FormList.MenuPathDelete(programType);
+        }
+
+        /// <summary>
+        /// Get the path of the program based on the type.
+        /// </summary>
+        /// <param name="type">Program type</param>
+        /// <param name="spaces">true = return spaces before and after path, false = return path without spaces</param>
+        /// <returns>Program path, null = doesn't found</returns>
+        public static string GetProgramPath(Init.Program type, bool spaces = false)
+        {
+            string path;
+            switch (type)
+            {
+                case Init.Program.YoutubeDl:
+                    path = ProgramYouTubeDl;
+                    break;
+                case Init.Program.Ffmpeg:
+                    path = ProgramFfmpeg;
+                    break;
+                case Init.Program.Mp3tag:
+                    path = ProgramMp3tag;
+                    break;
+                default:
+                    return null;
+            }
+            if (String.IsNullOrEmpty(path)) return null;
+            if (spaces) path = " " + path + " ";
+            return path;
+        }
+
+        /// <summary>
+        /// Get the name as string of the program based on the type.
+        /// </summary>
+        /// <param name="type">Program type</param>
+        /// <param name="spaces">true = return spaces before and after path, false = return path without spaces</param>
+        /// <returns>Program name, empty = doesn't found</returns>
+        public static string GetProgramName(Init.Program type, bool spaces = false)
+        {
+            string name = spaces ? " " : "";
+            switch (type)
+            {
+                case Init.Program.YoutubeDl:
+                    name += "youtube-dl";
+                    break;
+                case Init.Program.Ffmpeg:
+                    name += "ffmpeg";
+                    break;
+                case Init.Program.Mp3tag:
+                    name += "mp3tag";
+                    break;
+                default:
+                    name = "";
+                    break;
+            }
+            if (spaces) name += " ";
+            return name;
         }
     }
 }

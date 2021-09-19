@@ -136,5 +136,16 @@ namespace youtube2music.FD
             // file exists
             return true;
         }
+
+        /// <summary>
+        /// Get directory of file.
+        /// </summary>
+        /// <param name="path">File path</param>
+        /// <returns>Directory path, null = doesn't exist</returns>
+        public static string GetDirectory(string path)
+        {
+            if (!Exists(path)) return null;
+            return Path.GetDirectoryName(path);
+        }
     }
 }
