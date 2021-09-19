@@ -49,45 +49,45 @@
             this.menuVybratZrusit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuUpravit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveni = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniKnihovnaSlozkaOpus = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniKnihovnaOpusVybrana = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniKnihovnaOpusZmenit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsLibraryOpus = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsLibraryOpusSelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsLibraryOpusChange = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuNastaveniKnihovnaOpusNaposledyVybrane = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniKnihovnaOpusNaposledyVymazat = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniKnihovnaSlozkaMp3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniKnihovnaMp3Vybrana = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniKnihovnaMp3Zmenit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsLibraryOpusHistory = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsLibraryOpusHistoryClear = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsLibraryMp3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsLibraryMp3Selected = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsLibraryMp3Change = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuNastaveniKnihovnaMp3NaposledyVybrane = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniKnihovnaMp3NaposledyVymazat = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsLibraryMp3History = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsLibraryMp3HistoryClear = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniKnihovnaOpusProhledat = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.menuNastaveniUzivatel = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniUzivatelOdhlasit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuNastaveniYoutubeDL = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniYoutubeDLCestaVybrana = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniYoutubeDLCestaZmenit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsYoutubedl = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsYoutubedlSelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsYoutubedlChange = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuNastaveniYoutubeDLCestaNaposledyVybrane = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniYoutubeDLCestaNaposledyVymazat = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsYoutubedlHistory = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsYoutubedlHistoryClear = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniYoutubeDLStahnout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuNastaveniFFmpeg = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniFFmpegCestaVybrana = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniFFmpegCestaZmenit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsFfmpeg = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsFfmpegSelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsFfmpegChange = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuNastaveniFFmpegCestaNaposledyVybrane = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniFFmpegCestaNaposledyVymazat = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsFfmpegHistory = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsFfmpegHistoryClear = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniFFmpegStahnout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuNastaveniMp3tag = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniMp3tagCestaVybrana = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniMp3tagCestaZmenit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsMp3tag = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsMp3tagSelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsMp3tagChange = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuNastaveniMp3tagCestaNaposledyVybrane = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNastaveniMp3tagCestaNaposledyVymazat = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsMp3tagHistory = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettingsMp3tagHistoryClear = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNastaveniMp3tagStahnout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.menuNastaveniCacheOtevrit = new System.Windows.Forms.ToolStripMenuItem();
@@ -308,20 +308,20 @@
             // menuNastaveni
             // 
             this.menuNastaveni.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuNastaveniKnihovnaSlozkaOpus,
-            this.menuNastaveniKnihovnaSlozkaMp3,
+            this.menuSettingsLibraryOpus,
+            this.menuSettingsLibraryMp3,
             this.menuNastaveniKnihovnaOpusProhledat,
             this.toolStripSeparator13,
             this.menuNastaveniUzivatel,
             this.menuNastaveniUzivatelOdhlasit,
             this.toolStripSeparator2,
-            this.menuNastaveniYoutubeDL,
+            this.menuSettingsYoutubedl,
             this.menuNastaveniYoutubeDLStahnout,
             this.toolStripSeparator6,
-            this.menuNastaveniFFmpeg,
+            this.menuSettingsFfmpeg,
             this.menuNastaveniFFmpegStahnout,
             this.toolStripSeparator11,
-            this.menuNastaveniMp3tag,
+            this.menuSettingsMp3tag,
             this.menuNastaveniMp3tagStahnout,
             this.toolStripSeparator9,
             this.menuNastaveniCacheOtevrit,
@@ -333,97 +333,97 @@
             this.menuNastaveni.Size = new System.Drawing.Size(79, 23);
             this.menuNastaveni.Text = "NASTAVENÍ";
             // 
-            // menuNastaveniKnihovnaSlozkaOpus
+            // menuSettingsLibraryOpus
             // 
-            this.menuNastaveniKnihovnaSlozkaOpus.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuNastaveniKnihovnaOpusVybrana,
-            this.menuNastaveniKnihovnaOpusZmenit,
+            this.menuSettingsLibraryOpus.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuSettingsLibraryOpusSelected,
+            this.menuSettingsLibraryOpusChange,
             this.toolStripSeparator1,
-            this.menuNastaveniKnihovnaOpusNaposledyVybrane,
-            this.menuNastaveniKnihovnaOpusNaposledyVymazat});
-            this.menuNastaveniKnihovnaSlozkaOpus.Name = "menuNastaveniKnihovnaSlozkaOpus";
-            this.menuNastaveniKnihovnaSlozkaOpus.Size = new System.Drawing.Size(255, 22);
-            this.menuNastaveniKnihovnaSlozkaOpus.Text = "Složka s hudební knihovnou opus";
+            this.menuSettingsLibraryOpusHistory,
+            this.menuSettingsLibraryOpusHistoryClear});
+            this.menuSettingsLibraryOpus.Name = "menuSettingsLibraryOpus";
+            this.menuSettingsLibraryOpus.Size = new System.Drawing.Size(255, 22);
+            this.menuSettingsLibraryOpus.Text = "opus music library";
             // 
-            // menuNastaveniKnihovnaOpusVybrana
+            // menuSettingsLibraryOpusSelected
             // 
-            this.menuNastaveniKnihovnaOpusVybrana.Enabled = false;
-            this.menuNastaveniKnihovnaOpusVybrana.Name = "menuNastaveniKnihovnaOpusVybrana";
-            this.menuNastaveniKnihovnaOpusVybrana.Size = new System.Drawing.Size(331, 22);
-            this.menuNastaveniKnihovnaOpusVybrana.Text = "Nebyla vybrána žádná složka";
-            this.menuNastaveniKnihovnaOpusVybrana.Click += new System.EventHandler(this.menuNastaveniKnihovnaOpusVybrana_Click);
+            this.menuSettingsLibraryOpusSelected.Enabled = false;
+            this.menuSettingsLibraryOpusSelected.Name = "menuSettingsLibraryOpusSelected";
+            this.menuSettingsLibraryOpusSelected.Size = new System.Drawing.Size(273, 22);
+            this.menuSettingsLibraryOpusSelected.Text = "No folder selected";
+            this.menuSettingsLibraryOpusSelected.Click += new System.EventHandler(this.menuSettingsLibraryOpusSelected_Click);
             // 
-            // menuNastaveniKnihovnaOpusZmenit
+            // menuSettingsLibraryOpusChange
             // 
-            this.menuNastaveniKnihovnaOpusZmenit.Name = "menuNastaveniKnihovnaOpusZmenit";
-            this.menuNastaveniKnihovnaOpusZmenit.Size = new System.Drawing.Size(331, 22);
-            this.menuNastaveniKnihovnaOpusZmenit.Text = "Změnit složku";
-            this.menuNastaveniKnihovnaOpusZmenit.Click += new System.EventHandler(this.menuNastaveniKnihovnaOpusZmenit_Click);
+            this.menuSettingsLibraryOpusChange.Name = "menuSettingsLibraryOpusChange";
+            this.menuSettingsLibraryOpusChange.Size = new System.Drawing.Size(273, 22);
+            this.menuSettingsLibraryOpusChange.Text = "Change folder";
+            this.menuSettingsLibraryOpusChange.Click += new System.EventHandler(this.menuSettingsLibraryOpusChange_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(328, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(270, 6);
             // 
-            // menuNastaveniKnihovnaOpusNaposledyVybrane
+            // menuSettingsLibraryOpusHistory
             // 
-            this.menuNastaveniKnihovnaOpusNaposledyVybrane.Enabled = false;
-            this.menuNastaveniKnihovnaOpusNaposledyVybrane.Name = "menuNastaveniKnihovnaOpusNaposledyVybrane";
-            this.menuNastaveniKnihovnaOpusNaposledyVybrane.Size = new System.Drawing.Size(331, 22);
-            this.menuNastaveniKnihovnaOpusNaposledyVybrane.Text = "Nebyla nalezena žádná naposledy vybraná šložka";
+            this.menuSettingsLibraryOpusHistory.Enabled = false;
+            this.menuSettingsLibraryOpusHistory.Name = "menuSettingsLibraryOpusHistory";
+            this.menuSettingsLibraryOpusHistory.Size = new System.Drawing.Size(273, 22);
+            this.menuSettingsLibraryOpusHistory.Text = "No recently selected folder was found";
             // 
-            // menuNastaveniKnihovnaOpusNaposledyVymazat
+            // menuSettingsLibraryOpusHistoryClear
             // 
-            this.menuNastaveniKnihovnaOpusNaposledyVymazat.Name = "menuNastaveniKnihovnaOpusNaposledyVymazat";
-            this.menuNastaveniKnihovnaOpusNaposledyVymazat.Size = new System.Drawing.Size(331, 22);
-            this.menuNastaveniKnihovnaOpusNaposledyVymazat.Text = "Vymazat historii";
-            this.menuNastaveniKnihovnaOpusNaposledyVymazat.Click += new System.EventHandler(this.menuNastaveniKnihovnaOpusNaposledyVymazat_Click);
+            this.menuSettingsLibraryOpusHistoryClear.Name = "menuSettingsLibraryOpusHistoryClear";
+            this.menuSettingsLibraryOpusHistoryClear.Size = new System.Drawing.Size(273, 22);
+            this.menuSettingsLibraryOpusHistoryClear.Text = "Clear history";
+            this.menuSettingsLibraryOpusHistoryClear.Click += new System.EventHandler(this.menuSettingsLibraryOpusHistoryClear_Click);
             // 
-            // menuNastaveniKnihovnaSlozkaMp3
+            // menuSettingsLibraryMp3
             // 
-            this.menuNastaveniKnihovnaSlozkaMp3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuNastaveniKnihovnaMp3Vybrana,
-            this.menuNastaveniKnihovnaMp3Zmenit,
+            this.menuSettingsLibraryMp3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuSettingsLibraryMp3Selected,
+            this.menuSettingsLibraryMp3Change,
             this.toolStripSeparator8,
-            this.menuNastaveniKnihovnaMp3NaposledyVybrane,
-            this.menuNastaveniKnihovnaMp3NaposledyVymazat});
-            this.menuNastaveniKnihovnaSlozkaMp3.Name = "menuNastaveniKnihovnaSlozkaMp3";
-            this.menuNastaveniKnihovnaSlozkaMp3.Size = new System.Drawing.Size(255, 22);
-            this.menuNastaveniKnihovnaSlozkaMp3.Text = "Složka s hudební knihovnou mp3";
+            this.menuSettingsLibraryMp3History,
+            this.menuSettingsLibraryMp3HistoryClear});
+            this.menuSettingsLibraryMp3.Name = "menuSettingsLibraryMp3";
+            this.menuSettingsLibraryMp3.Size = new System.Drawing.Size(255, 22);
+            this.menuSettingsLibraryMp3.Text = "mp3 music library";
             // 
-            // menuNastaveniKnihovnaMp3Vybrana
+            // menuSettingsLibraryMp3Selected
             // 
-            this.menuNastaveniKnihovnaMp3Vybrana.Enabled = false;
-            this.menuNastaveniKnihovnaMp3Vybrana.Name = "menuNastaveniKnihovnaMp3Vybrana";
-            this.menuNastaveniKnihovnaMp3Vybrana.Size = new System.Drawing.Size(331, 22);
-            this.menuNastaveniKnihovnaMp3Vybrana.Text = "Nebyla vybrána žádná složka";
-            this.menuNastaveniKnihovnaMp3Vybrana.Click += new System.EventHandler(this.menuNastaveniKnihovnaMp3Vybrana_Click);
+            this.menuSettingsLibraryMp3Selected.Enabled = false;
+            this.menuSettingsLibraryMp3Selected.Name = "menuSettingsLibraryMp3Selected";
+            this.menuSettingsLibraryMp3Selected.Size = new System.Drawing.Size(273, 22);
+            this.menuSettingsLibraryMp3Selected.Text = "No folder selected";
+            this.menuSettingsLibraryMp3Selected.Click += new System.EventHandler(this.menuSettingsLibraryMp3Selected_Click);
             // 
-            // menuNastaveniKnihovnaMp3Zmenit
+            // menuSettingsLibraryMp3Change
             // 
-            this.menuNastaveniKnihovnaMp3Zmenit.Name = "menuNastaveniKnihovnaMp3Zmenit";
-            this.menuNastaveniKnihovnaMp3Zmenit.Size = new System.Drawing.Size(331, 22);
-            this.menuNastaveniKnihovnaMp3Zmenit.Text = "Změnit složku";
-            this.menuNastaveniKnihovnaMp3Zmenit.Click += new System.EventHandler(this.menuNastaveniKnihovnaMp3Zmenit_Click);
+            this.menuSettingsLibraryMp3Change.Name = "menuSettingsLibraryMp3Change";
+            this.menuSettingsLibraryMp3Change.Size = new System.Drawing.Size(273, 22);
+            this.menuSettingsLibraryMp3Change.Text = "Change directory";
+            this.menuSettingsLibraryMp3Change.Click += new System.EventHandler(this.menuSettingsLibraryMp3Change_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(328, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(270, 6);
             // 
-            // menuNastaveniKnihovnaMp3NaposledyVybrane
+            // menuSettingsLibraryMp3History
             // 
-            this.menuNastaveniKnihovnaMp3NaposledyVybrane.Enabled = false;
-            this.menuNastaveniKnihovnaMp3NaposledyVybrane.Name = "menuNastaveniKnihovnaMp3NaposledyVybrane";
-            this.menuNastaveniKnihovnaMp3NaposledyVybrane.Size = new System.Drawing.Size(331, 22);
-            this.menuNastaveniKnihovnaMp3NaposledyVybrane.Text = "Nebyla nalezena žádná naposledy vybraná šložka";
+            this.menuSettingsLibraryMp3History.Enabled = false;
+            this.menuSettingsLibraryMp3History.Name = "menuSettingsLibraryMp3History";
+            this.menuSettingsLibraryMp3History.Size = new System.Drawing.Size(273, 22);
+            this.menuSettingsLibraryMp3History.Text = "No recently selected folder was found";
             // 
-            // menuNastaveniKnihovnaMp3NaposledyVymazat
+            // menuSettingsLibraryMp3HistoryClear
             // 
-            this.menuNastaveniKnihovnaMp3NaposledyVymazat.Name = "menuNastaveniKnihovnaMp3NaposledyVymazat";
-            this.menuNastaveniKnihovnaMp3NaposledyVymazat.Size = new System.Drawing.Size(331, 22);
-            this.menuNastaveniKnihovnaMp3NaposledyVymazat.Text = "Vymazat historii";
-            this.menuNastaveniKnihovnaMp3NaposledyVymazat.Click += new System.EventHandler(this.menuNastaveniKnihovnaMp3NaposledyVymazat_Click);
+            this.menuSettingsLibraryMp3HistoryClear.Name = "menuSettingsLibraryMp3HistoryClear";
+            this.menuSettingsLibraryMp3HistoryClear.Size = new System.Drawing.Size(273, 22);
+            this.menuSettingsLibraryMp3HistoryClear.Text = "Clear history";
+            this.menuSettingsLibraryMp3HistoryClear.Click += new System.EventHandler(this.menuSettingsLibraryMp3HistoryClear_Click);
             // 
             // menuNastaveniKnihovnaOpusProhledat
             // 
@@ -459,51 +459,51 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(252, 6);
             // 
-            // menuNastaveniYoutubeDL
+            // menuSettingsYoutubedl
             // 
-            this.menuNastaveniYoutubeDL.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuNastaveniYoutubeDLCestaVybrana,
-            this.menuNastaveniYoutubeDLCestaZmenit,
+            this.menuSettingsYoutubedl.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuSettingsYoutubedlSelected,
+            this.menuSettingsYoutubedlChange,
             this.toolStripSeparator3,
-            this.menuNastaveniYoutubeDLCestaNaposledyVybrane,
-            this.menuNastaveniYoutubeDLCestaNaposledyVymazat});
-            this.menuNastaveniYoutubeDL.Name = "menuNastaveniYoutubeDL";
-            this.menuNastaveniYoutubeDL.Size = new System.Drawing.Size(255, 22);
-            this.menuNastaveniYoutubeDL.Text = "Cesta YouTube-DL";
+            this.menuSettingsYoutubedlHistory,
+            this.menuSettingsYoutubedlHistoryClear});
+            this.menuSettingsYoutubedl.Name = "menuSettingsYoutubedl";
+            this.menuSettingsYoutubedl.Size = new System.Drawing.Size(255, 22);
+            this.menuSettingsYoutubedl.Text = "youtube-dl path";
             // 
-            // menuNastaveniYoutubeDLCestaVybrana
+            // menuSettingsYoutubedlSelected
             // 
-            this.menuNastaveniYoutubeDLCestaVybrana.Enabled = false;
-            this.menuNastaveniYoutubeDLCestaVybrana.Name = "menuNastaveniYoutubeDLCestaVybrana";
-            this.menuNastaveniYoutubeDLCestaVybrana.Size = new System.Drawing.Size(326, 22);
-            this.menuNastaveniYoutubeDLCestaVybrana.Text = "Není vybraná žádná cesta";
-            this.menuNastaveniYoutubeDLCestaVybrana.Click += new System.EventHandler(this.menuNastaveniYoutubeDLCestaVybrana_Click);
+            this.menuSettingsYoutubedlSelected.Enabled = false;
+            this.menuSettingsYoutubedlSelected.Name = "menuSettingsYoutubedlSelected";
+            this.menuSettingsYoutubedlSelected.Size = new System.Drawing.Size(276, 22);
+            this.menuSettingsYoutubedlSelected.Text = "No path selected";
+            this.menuSettingsYoutubedlSelected.Click += new System.EventHandler(this.menuSettingsYoutubedlSelected_Click);
             // 
-            // menuNastaveniYoutubeDLCestaZmenit
+            // menuSettingsYoutubedlChange
             // 
-            this.menuNastaveniYoutubeDLCestaZmenit.Name = "menuNastaveniYoutubeDLCestaZmenit";
-            this.menuNastaveniYoutubeDLCestaZmenit.Size = new System.Drawing.Size(326, 22);
-            this.menuNastaveniYoutubeDLCestaZmenit.Text = "Změnit cestu programu";
-            this.menuNastaveniYoutubeDLCestaZmenit.Click += new System.EventHandler(this.menuNastaveniYoutubeDLCestaZmenit_Click);
+            this.menuSettingsYoutubedlChange.Name = "menuSettingsYoutubedlChange";
+            this.menuSettingsYoutubedlChange.Size = new System.Drawing.Size(276, 22);
+            this.menuSettingsYoutubedlChange.Text = "Change the program path";
+            this.menuSettingsYoutubedlChange.Click += new System.EventHandler(this.menuSettingsYoutubedlChange_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(323, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(273, 6);
             // 
-            // menuNastaveniYoutubeDLCestaNaposledyVybrane
+            // menuSettingsYoutubedlHistory
             // 
-            this.menuNastaveniYoutubeDLCestaNaposledyVybrane.Enabled = false;
-            this.menuNastaveniYoutubeDLCestaNaposledyVybrane.Name = "menuNastaveniYoutubeDLCestaNaposledyVybrane";
-            this.menuNastaveniYoutubeDLCestaNaposledyVybrane.Size = new System.Drawing.Size(326, 22);
-            this.menuNastaveniYoutubeDLCestaNaposledyVybrane.Text = "Nebyly nalezeny žádné naposledy vybrané cesty";
+            this.menuSettingsYoutubedlHistory.Enabled = false;
+            this.menuSettingsYoutubedlHistory.Name = "menuSettingsYoutubedlHistory";
+            this.menuSettingsYoutubedlHistory.Size = new System.Drawing.Size(276, 22);
+            this.menuSettingsYoutubedlHistory.Text = "No recently selected paths were found";
             // 
-            // menuNastaveniYoutubeDLCestaNaposledyVymazat
+            // menuSettingsYoutubedlHistoryClear
             // 
-            this.menuNastaveniYoutubeDLCestaNaposledyVymazat.Name = "menuNastaveniYoutubeDLCestaNaposledyVymazat";
-            this.menuNastaveniYoutubeDLCestaNaposledyVymazat.Size = new System.Drawing.Size(326, 22);
-            this.menuNastaveniYoutubeDLCestaNaposledyVymazat.Text = "Vymazat historii";
-            this.menuNastaveniYoutubeDLCestaNaposledyVymazat.Click += new System.EventHandler(this.menuNastaveniYoutubeDLCestaNaposledyVymazat_Click);
+            this.menuSettingsYoutubedlHistoryClear.Name = "menuSettingsYoutubedlHistoryClear";
+            this.menuSettingsYoutubedlHistoryClear.Size = new System.Drawing.Size(276, 22);
+            this.menuSettingsYoutubedlHistoryClear.Text = "Clear history";
+            this.menuSettingsYoutubedlHistoryClear.Click += new System.EventHandler(this.menuSettingsYoutubedlHistoryClear_Click);
             // 
             // menuNastaveniYoutubeDLStahnout
             // 
@@ -517,51 +517,51 @@
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(252, 6);
             // 
-            // menuNastaveniFFmpeg
+            // menuSettingsFfmpeg
             // 
-            this.menuNastaveniFFmpeg.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuNastaveniFFmpegCestaVybrana,
-            this.menuNastaveniFFmpegCestaZmenit,
+            this.menuSettingsFfmpeg.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuSettingsFfmpegSelected,
+            this.menuSettingsFfmpegChange,
             this.toolStripSeparator4,
-            this.menuNastaveniFFmpegCestaNaposledyVybrane,
-            this.menuNastaveniFFmpegCestaNaposledyVymazat});
-            this.menuNastaveniFFmpeg.Name = "menuNastaveniFFmpeg";
-            this.menuNastaveniFFmpeg.Size = new System.Drawing.Size(255, 22);
-            this.menuNastaveniFFmpeg.Text = "Cesta FFmpeg";
+            this.menuSettingsFfmpegHistory,
+            this.menuSettingsFfmpegHistoryClear});
+            this.menuSettingsFfmpeg.Name = "menuSettingsFfmpeg";
+            this.menuSettingsFfmpeg.Size = new System.Drawing.Size(255, 22);
+            this.menuSettingsFfmpeg.Text = "ffmpeg path";
             // 
-            // menuNastaveniFFmpegCestaVybrana
+            // menuSettingsFfmpegSelected
             // 
-            this.menuNastaveniFFmpegCestaVybrana.Enabled = false;
-            this.menuNastaveniFFmpegCestaVybrana.Name = "menuNastaveniFFmpegCestaVybrana";
-            this.menuNastaveniFFmpegCestaVybrana.Size = new System.Drawing.Size(326, 22);
-            this.menuNastaveniFFmpegCestaVybrana.Text = "Není vybrána žádná cesta";
-            this.menuNastaveniFFmpegCestaVybrana.Click += new System.EventHandler(this.menuNastaveniFFmpegCestaVybrana_Click);
+            this.menuSettingsFfmpegSelected.Enabled = false;
+            this.menuSettingsFfmpegSelected.Name = "menuSettingsFfmpegSelected";
+            this.menuSettingsFfmpegSelected.Size = new System.Drawing.Size(276, 22);
+            this.menuSettingsFfmpegSelected.Text = "No path selected";
+            this.menuSettingsFfmpegSelected.Click += new System.EventHandler(this.menuSettingsFfmpegSelected_Click);
             // 
-            // menuNastaveniFFmpegCestaZmenit
+            // menuSettingsFfmpegChange
             // 
-            this.menuNastaveniFFmpegCestaZmenit.Name = "menuNastaveniFFmpegCestaZmenit";
-            this.menuNastaveniFFmpegCestaZmenit.Size = new System.Drawing.Size(326, 22);
-            this.menuNastaveniFFmpegCestaZmenit.Text = "Změnit cestu programu";
-            this.menuNastaveniFFmpegCestaZmenit.Click += new System.EventHandler(this.menuNastaveniFFmpegCestaZmenit_Click);
+            this.menuSettingsFfmpegChange.Name = "menuSettingsFfmpegChange";
+            this.menuSettingsFfmpegChange.Size = new System.Drawing.Size(276, 22);
+            this.menuSettingsFfmpegChange.Text = "Change the program path";
+            this.menuSettingsFfmpegChange.Click += new System.EventHandler(this.menuSettingsFfmpegChange_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(323, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(273, 6);
             // 
-            // menuNastaveniFFmpegCestaNaposledyVybrane
+            // menuSettingsFfmpegHistory
             // 
-            this.menuNastaveniFFmpegCestaNaposledyVybrane.Enabled = false;
-            this.menuNastaveniFFmpegCestaNaposledyVybrane.Name = "menuNastaveniFFmpegCestaNaposledyVybrane";
-            this.menuNastaveniFFmpegCestaNaposledyVybrane.Size = new System.Drawing.Size(326, 22);
-            this.menuNastaveniFFmpegCestaNaposledyVybrane.Text = "Nebyly nalezeny žádné naposledy vybrané cesty";
+            this.menuSettingsFfmpegHistory.Enabled = false;
+            this.menuSettingsFfmpegHistory.Name = "menuSettingsFfmpegHistory";
+            this.menuSettingsFfmpegHistory.Size = new System.Drawing.Size(276, 22);
+            this.menuSettingsFfmpegHistory.Text = "No recently selected paths were found";
             // 
-            // menuNastaveniFFmpegCestaNaposledyVymazat
+            // menuSettingsFfmpegHistoryClear
             // 
-            this.menuNastaveniFFmpegCestaNaposledyVymazat.Name = "menuNastaveniFFmpegCestaNaposledyVymazat";
-            this.menuNastaveniFFmpegCestaNaposledyVymazat.Size = new System.Drawing.Size(326, 22);
-            this.menuNastaveniFFmpegCestaNaposledyVymazat.Text = "Vymazat historii";
-            this.menuNastaveniFFmpegCestaNaposledyVymazat.Click += new System.EventHandler(this.menuNastaveniFFmpegCestaNaposledyVymazat_Click);
+            this.menuSettingsFfmpegHistoryClear.Name = "menuSettingsFfmpegHistoryClear";
+            this.menuSettingsFfmpegHistoryClear.Size = new System.Drawing.Size(276, 22);
+            this.menuSettingsFfmpegHistoryClear.Text = "Clear history";
+            this.menuSettingsFfmpegHistoryClear.Click += new System.EventHandler(this.menuSettingsFfmpegHistoryClear_Click);
             // 
             // menuNastaveniFFmpegStahnout
             // 
@@ -575,51 +575,51 @@
             this.toolStripSeparator11.Name = "toolStripSeparator11";
             this.toolStripSeparator11.Size = new System.Drawing.Size(252, 6);
             // 
-            // menuNastaveniMp3tag
+            // menuSettingsMp3tag
             // 
-            this.menuNastaveniMp3tag.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuNastaveniMp3tagCestaVybrana,
-            this.menuNastaveniMp3tagCestaZmenit,
+            this.menuSettingsMp3tag.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuSettingsMp3tagSelected,
+            this.menuSettingsMp3tagChange,
             this.toolStripSeparator12,
-            this.menuNastaveniMp3tagCestaNaposledyVybrane,
-            this.menuNastaveniMp3tagCestaNaposledyVymazat});
-            this.menuNastaveniMp3tag.Name = "menuNastaveniMp3tag";
-            this.menuNastaveniMp3tag.Size = new System.Drawing.Size(255, 22);
-            this.menuNastaveniMp3tag.Text = "Cesta mp3tag";
+            this.menuSettingsMp3tagHistory,
+            this.menuSettingsMp3tagHistoryClear});
+            this.menuSettingsMp3tag.Name = "menuSettingsMp3tag";
+            this.menuSettingsMp3tag.Size = new System.Drawing.Size(255, 22);
+            this.menuSettingsMp3tag.Text = "mp3tag path";
             // 
-            // menuNastaveniMp3tagCestaVybrana
+            // menuSettingsMp3tagSelected
             // 
-            this.menuNastaveniMp3tagCestaVybrana.Enabled = false;
-            this.menuNastaveniMp3tagCestaVybrana.Name = "menuNastaveniMp3tagCestaVybrana";
-            this.menuNastaveniMp3tagCestaVybrana.Size = new System.Drawing.Size(326, 22);
-            this.menuNastaveniMp3tagCestaVybrana.Text = "Není vybrána žádná cesta";
-            this.menuNastaveniMp3tagCestaVybrana.Click += new System.EventHandler(this.menuNastaveniMp3tagCestaVybrana_Click);
+            this.menuSettingsMp3tagSelected.Enabled = false;
+            this.menuSettingsMp3tagSelected.Name = "menuSettingsMp3tagSelected";
+            this.menuSettingsMp3tagSelected.Size = new System.Drawing.Size(276, 22);
+            this.menuSettingsMp3tagSelected.Text = "No path selected";
+            this.menuSettingsMp3tagSelected.Click += new System.EventHandler(this.menuSettingsMp3tagSelected_Click);
             // 
-            // menuNastaveniMp3tagCestaZmenit
+            // menuSettingsMp3tagChange
             // 
-            this.menuNastaveniMp3tagCestaZmenit.Name = "menuNastaveniMp3tagCestaZmenit";
-            this.menuNastaveniMp3tagCestaZmenit.Size = new System.Drawing.Size(326, 22);
-            this.menuNastaveniMp3tagCestaZmenit.Text = "Změnit cestu programu";
-            this.menuNastaveniMp3tagCestaZmenit.Click += new System.EventHandler(this.menuNastaveniMp3tagCestaZmenit_Click);
+            this.menuSettingsMp3tagChange.Name = "menuSettingsMp3tagChange";
+            this.menuSettingsMp3tagChange.Size = new System.Drawing.Size(276, 22);
+            this.menuSettingsMp3tagChange.Text = "Change the program path";
+            this.menuSettingsMp3tagChange.Click += new System.EventHandler(this.menuSettingsMp3tagChange_Click);
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(323, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(273, 6);
             // 
-            // menuNastaveniMp3tagCestaNaposledyVybrane
+            // menuSettingsMp3tagHistory
             // 
-            this.menuNastaveniMp3tagCestaNaposledyVybrane.Enabled = false;
-            this.menuNastaveniMp3tagCestaNaposledyVybrane.Name = "menuNastaveniMp3tagCestaNaposledyVybrane";
-            this.menuNastaveniMp3tagCestaNaposledyVybrane.Size = new System.Drawing.Size(326, 22);
-            this.menuNastaveniMp3tagCestaNaposledyVybrane.Text = "Nebyly nalezeny žádné naposledy vybrané cesty";
+            this.menuSettingsMp3tagHistory.Enabled = false;
+            this.menuSettingsMp3tagHistory.Name = "menuSettingsMp3tagHistory";
+            this.menuSettingsMp3tagHistory.Size = new System.Drawing.Size(276, 22);
+            this.menuSettingsMp3tagHistory.Text = "No recently selected paths were found";
             // 
-            // menuNastaveniMp3tagCestaNaposledyVymazat
+            // menuSettingsMp3tagHistoryClear
             // 
-            this.menuNastaveniMp3tagCestaNaposledyVymazat.Name = "menuNastaveniMp3tagCestaNaposledyVymazat";
-            this.menuNastaveniMp3tagCestaNaposledyVymazat.Size = new System.Drawing.Size(326, 22);
-            this.menuNastaveniMp3tagCestaNaposledyVymazat.Text = "Vymazat historii";
-            this.menuNastaveniMp3tagCestaNaposledyVymazat.Click += new System.EventHandler(this.menuNastaveniMp3tagCestaNaposledyVymazat_Click);
+            this.menuSettingsMp3tagHistoryClear.Name = "menuSettingsMp3tagHistoryClear";
+            this.menuSettingsMp3tagHistoryClear.Size = new System.Drawing.Size(276, 22);
+            this.menuSettingsMp3tagHistoryClear.Text = "Clear history";
+            this.menuSettingsMp3tagHistoryClear.Click += new System.EventHandler(this.menuSettingsMp3tagHistoryClear_Click);
             // 
             // menuNastaveniMp3tagStahnout
             // 
@@ -1036,11 +1036,11 @@
         private System.Windows.Forms.ToolStripMenuItem menuVybratZrusit;
         private System.Windows.Forms.ToolStripMenuItem menuUpravit;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveni;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaSlozkaOpus;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaOpusVybrana;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaOpusZmenit;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsLibraryOpus;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsLibraryOpusSelected;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsLibraryOpusChange;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaOpusNaposledyVybrane;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsLibraryOpusHistory;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaOpusProhledat;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem menuStahnout;
@@ -1048,23 +1048,23 @@
         private System.ComponentModel.BackgroundWorker backgroundWorkerProhledejSlozky;
         private System.Windows.Forms.ToolStripMenuItem menuOdstranit;
         private System.ComponentModel.BackgroundWorker backgroundWorkerPridejVidea;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniYoutubeDL;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniYoutubeDLCestaVybrana;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniYoutubeDLCestaZmenit;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniFFmpeg;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniFFmpegCestaVybrana;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniFFmpegCestaZmenit;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsYoutubedl;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsYoutubedlSelected;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsYoutubedlChange;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsFfmpeg;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsFfmpegSelected;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsFfmpegChange;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniYoutubeDLCestaNaposledyVybrane;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsYoutubedlHistory;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniFFmpegCestaNaposledyVybrane;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsFfmpegHistory;
         private System.ComponentModel.BackgroundWorker backgroundWorkerStahniProgram;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniFFmpegStahnout;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniYoutubeDLStahnout;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaOpusNaposledyVymazat;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniYoutubeDLCestaNaposledyVymazat;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniFFmpegCestaNaposledyVymazat;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsLibraryOpusHistoryClear;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsYoutubedlHistoryClear;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsFfmpegHistoryClear;
         private BrightIdeasSoftware.ObjectListView objectListViewSeznamVidei;
         private BrightIdeasSoftware.OLVColumn olvColumn3;
         private BrightIdeasSoftware.OLVColumn olvColumn4;
@@ -1087,12 +1087,12 @@
         private BrightIdeasSoftware.OLVColumn olvColumn1;
         private System.Windows.Forms.ToolStripMenuItem menuVybratSlozkaNenalezena;
         private System.Windows.Forms.ToolStripMenuItem menuVybratNeprejmenovana;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaSlozkaMp3;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaMp3Vybrana;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaMp3Zmenit;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsLibraryMp3;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsLibraryMp3Selected;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsLibraryMp3Change;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaMp3NaposledyVybrane;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniKnihovnaMp3NaposledyVymazat;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsLibraryMp3History;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsLibraryMp3HistoryClear;
         private System.Windows.Forms.ToolStripMenuItem menuPridatAlbum;
         private System.Windows.Forms.ToolStripMenuItem pŘIDATALBUMToolStripMenuItem;
         private BrightIdeasSoftware.OLVColumn olvColumn2;
@@ -1108,12 +1108,12 @@
         private System.ComponentModel.BackgroundWorker backgroundWorkerSmazHistorii;
         private BrightIdeasSoftware.OLVColumn olvColumn14;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniMp3tag;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniMp3tagCestaVybrana;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniMp3tagCestaZmenit;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsMp3tag;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsMp3tagSelected;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsMp3tagChange;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniMp3tagCestaNaposledyVybrane;
-        private System.Windows.Forms.ToolStripMenuItem menuNastaveniMp3tagCestaNaposledyVymazat;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsMp3tagHistory;
+        private System.Windows.Forms.ToolStripMenuItem menuSettingsMp3tagHistoryClear;
         private System.Windows.Forms.ToolStripMenuItem menuNastaveniMp3tagStahnout;
         private System.Windows.Forms.ToolStripMenuItem menuMp3tag;
         private System.Windows.Forms.ToolStripMenuItem menuMp3tagMp3;

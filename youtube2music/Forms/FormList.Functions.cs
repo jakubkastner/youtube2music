@@ -20,7 +20,7 @@ namespace youtube2music
         /// <return>true = succesfull, false = failed</return>
         private bool ProgramChange(Init.Program type, string path)
         {
-            string typeName = Files.GetProgramName(type);
+            string typeName = Files.ProgramGetName(type);
             // change program path
             string pathNew = Files.ProgramChange(path, type);
 
@@ -44,7 +44,7 @@ namespace youtube2music
         /// <return>true = succesfull, false = failed</return>
         private bool LibraryChange(Init.Library type, string path)
         {
-            string typeName = Directories.GetDirectoryName(type, true);
+            string typeName = Directories.LibraryGetType(type, true);
             // change music library
             string pathNew = Directories.LibraryChange(path, type);
 
@@ -67,8 +67,8 @@ namespace youtube2music
         private void ProgramSelect(Init.Program type)
         {
             // init variables
-            string typeName = Files.GetProgramName(type, true);
-            string path = Files.GetProgramPath(type);
+            string typeName = Files.ProgramGetName(type, true);
+            string path = Files.ProgramGetPath(type);
 
             // show dialog to select new program path
             OpenFileDialog selectFile = new OpenFileDialog();
@@ -100,8 +100,8 @@ namespace youtube2music
         private void LibrarySelect(Init.Library type)
         {
             // init variables
-            string typeName = Directories.GetDirectoryName(type, true);
-            string path = Directories.GetDirectoryPath(type);
+            string typeName = Directories.LibraryGetType(type, true);
+            string path = Directories.LibraryGetPath(type);
 
             // show dialog to select new directory
             VistaFolderBrowserDialog selectDirectory = new VistaFolderBrowserDialog();
@@ -135,28 +135,28 @@ namespace youtube2music
             switch (type)
             {
                 case Init.LibraryOrProgram.LibraryOpus:
-                    menuHistory = menuNastaveniKnihovnaOpusNaposledyVybrane;
-                    menuSelectedPath = menuNastaveniKnihovnaOpusVybrana;
+                    menuHistory = menuSettingsLibraryOpusHistory;
+                    menuSelectedPath = menuSettingsLibraryOpusSelected;
                     menuSelectedText = "No music library folder selected";
                     menuHistoryText = "folders";
                     break;
                 case Init.LibraryOrProgram.LibraryMp3:
-                    menuHistory = menuNastaveniKnihovnaMp3NaposledyVybrane;
-                    menuSelectedPath = menuNastaveniKnihovnaMp3Vybrana;
+                    menuHistory = menuSettingsLibraryMp3History;
+                    menuSelectedPath = menuSettingsLibraryMp3Selected;
                     menuSelectedText = "No music library folder selected";
                     menuHistoryText = "folders";
                     break;
-                case Init.LibraryOrProgram.ProgramYoutubeDl:
-                    menuHistory = menuNastaveniYoutubeDLCestaNaposledyVybrane;
-                    menuSelectedPath = menuNastaveniYoutubeDLCestaVybrana;
+                case Init.LibraryOrProgram.ProgramYoutubedl:
+                    menuHistory = menuSettingsYoutubedlHistory;
+                    menuSelectedPath = menuSettingsYoutubedlSelected;
                     break;
                 case Init.LibraryOrProgram.ProgramFfmpeg:
-                    menuHistory = menuNastaveniFFmpegCestaNaposledyVybrane;
-                    menuSelectedPath = menuNastaveniFFmpegCestaVybrana;
+                    menuHistory = menuSettingsFfmpegHistory;
+                    menuSelectedPath = menuSettingsFfmpegSelected;
                     break;
                 case Init.LibraryOrProgram.ProgramMp3tag:
-                    menuHistory = menuNastaveniMp3tagCestaNaposledyVybrane;
-                    menuSelectedPath = menuNastaveniMp3tagCestaVybrana;
+                    menuHistory = menuSettingsMp3tagHistory;
+                    menuSelectedPath = menuSettingsMp3tagSelected;
                     break;
                 case Init.LibraryOrProgram.Null:
                     return;
@@ -252,30 +252,30 @@ namespace youtube2music
             {
                 case Init.LibraryOrProgram.LibraryOpus:
                     path = Directories.LibraryOpus;
-                    menuHistory = menuNastaveniKnihovnaOpusNaposledyVybrane;
-                    menuSelectedPath = menuNastaveniKnihovnaOpusVybrana;
+                    menuHistory = menuSettingsLibraryOpusHistory;
+                    menuSelectedPath = menuSettingsLibraryOpusSelected;
                     menuSelectedText = "Open folder ";
                     break;
                 case Init.LibraryOrProgram.LibraryMp3:
                     path = Directories.LibraryMp3;
-                    menuHistory = menuNastaveniKnihovnaMp3NaposledyVybrane;
-                    menuSelectedPath = menuNastaveniKnihovnaMp3Vybrana;
+                    menuHistory = menuSettingsLibraryMp3History;
+                    menuSelectedPath = menuSettingsLibraryMp3Selected;
                     menuSelectedText = "Open folder ";
                     break;
-                case Init.LibraryOrProgram.ProgramYoutubeDl:
-                    path = Files.ProgramYouTubeDl;
-                    menuHistory = menuNastaveniYoutubeDLCestaNaposledyVybrane;
-                    menuSelectedPath = menuNastaveniYoutubeDLCestaVybrana;
+                case Init.LibraryOrProgram.ProgramYoutubedl:
+                    path = Files.ProgramYoutubedl;
+                    menuHistory = menuSettingsYoutubedlHistory;
+                    menuSelectedPath = menuSettingsYoutubedlSelected;
                     break;
                 case Init.LibraryOrProgram.ProgramFfmpeg:
                     path = Files.ProgramFfmpeg;
-                    menuHistory = menuNastaveniFFmpegCestaNaposledyVybrane;
-                    menuSelectedPath = menuNastaveniFFmpegCestaVybrana;
+                    menuHistory = menuSettingsFfmpegHistory;
+                    menuSelectedPath = menuSettingsFfmpegSelected;
                     break;
                 case Init.LibraryOrProgram.ProgramMp3tag:
                     path = Files.ProgramMp3tag;
-                    menuHistory = menuNastaveniMp3tagCestaNaposledyVybrane;
-                    menuSelectedPath = menuNastaveniMp3tagCestaVybrana;
+                    menuHistory = menuSettingsMp3tagHistory;
+                    menuSelectedPath = menuSettingsMp3tagSelected;
                     break;
                 default:
                     return;
@@ -303,7 +303,7 @@ namespace youtube2music
             if (!found)
             {
                 // path not found in the menu, I will add it to the menu 
-                MenuCestaPridat(path, type);
+                MenuPathHistoryAdd(path, type);
             }
 
             // menu settings with path
@@ -337,23 +337,23 @@ namespace youtube2music
             switch (type)
             {
                 case Init.LibraryOrProgram.LibraryOpus:
-                    menuHistory = menuNastaveniKnihovnaOpusNaposledyVybrane;
+                    menuHistory = menuSettingsLibraryOpusHistory;
                     pathCurrent = Directories.LibraryOpus;
                     break;
                 case Init.LibraryOrProgram.LibraryMp3:
-                    menuHistory = menuNastaveniKnihovnaMp3NaposledyVybrane;
+                    menuHistory = menuSettingsLibraryMp3History;
                     pathCurrent = Directories.LibraryMp3;
                     break;
-                case Init.LibraryOrProgram.ProgramYoutubeDl:
-                    menuHistory = menuNastaveniYoutubeDLCestaNaposledyVybrane;
-                    pathCurrent = Files.ProgramYouTubeDl;
+                case Init.LibraryOrProgram.ProgramYoutubedl:
+                    menuHistory = menuSettingsYoutubedlHistory;
+                    pathCurrent = Files.ProgramYoutubedl;
                     break;
                 case Init.LibraryOrProgram.ProgramFfmpeg:
-                    menuHistory = menuNastaveniFFmpegCestaNaposledyVybrane;
+                    menuHistory = menuSettingsFfmpegHistory;
                     pathCurrent = Files.ProgramFfmpeg;
                     break;
                 case Init.LibraryOrProgram.ProgramMp3tag:
-                    menuHistory = menuNastaveniMp3tagCestaNaposledyVybrane;
+                    menuHistory = menuSettingsMp3tagHistory;
                     pathCurrent = Files.ProgramMp3tag;
                     break;
                 case Init.LibraryOrProgram.Null:
@@ -372,6 +372,80 @@ namespace youtube2music
                     i--;
                 }
             }
+        }
+
+
+        /// <summary>
+        /// Add new path to history menu.
+        /// </summary>
+        /// <param name="pathNew">New path</param>
+        /// <param name="type">Path type</param>
+        private void MenuPathHistoryAdd(string pathNew, Init.LibraryOrProgram type)
+        {
+            string typeText;
+            // check if directory or file exists
+            if (type == Init.LibraryOrProgram.LibraryOpus || type == Init.LibraryOrProgram.LibraryMp3)
+            {
+                // folder
+                if (!FD.Directories.Exists(pathNew)) return;
+                typeText = "folder";
+            }
+            else if (type == Init.LibraryOrProgram.ProgramYoutubedl || type == Init.LibraryOrProgram.ProgramFfmpeg || type == Init.LibraryOrProgram.ProgramMp3tag)
+            {
+                // file
+                if (!FD.Files.Exists(pathNew)) return;
+                typeText = "file";
+            }
+            else
+            {
+                return;
+            }
+
+            // init variables
+            ToolStripMenuItem menuNew = new ToolStripMenuItem(pathNew);
+            menuNew.Text = pathNew;
+            ToolStripMenuItem menuHistory;
+            string pathSeleted;
+
+            // and add click function
+            switch (type)
+            {
+                case Init.LibraryOrProgram.LibraryOpus:
+                    menuHistory = menuSettingsLibraryOpusHistory;
+                    pathSeleted = Directories.LibraryOpus;
+                    menuNew.Click += new EventHandler(menuSettingsLibraryOpusHistoryPath_Click);
+                    break;
+                case Init.LibraryOrProgram.LibraryMp3:
+                    menuHistory = menuSettingsLibraryMp3History;
+                    pathSeleted = Directories.LibraryMp3;
+                    menuNew.Click += new EventHandler(menuSettingsLibraryMp3HistoryPath_Click);
+                    break;
+                case Init.LibraryOrProgram.ProgramYoutubedl:
+                    menuHistory = menuSettingsYoutubedlHistory;
+                    pathSeleted = Files.ProgramYoutubedl;
+                    menuNew.Click += new EventHandler(menuSettingsYoutubedlHistoryPath_Click);
+                    break;
+                case Init.LibraryOrProgram.ProgramFfmpeg:
+                    menuHistory = menuSettingsFfmpegHistory;
+                    pathSeleted = Files.ProgramFfmpeg;
+                    menuNew.Click += new EventHandler(menuSettingsFfmpegHistoryPath_Click);
+                    break;
+                case Init.LibraryOrProgram.ProgramMp3tag:
+                    menuHistory = menuSettingsMp3tagHistory;
+                    pathSeleted = Files.ProgramMp3tag;
+                    menuNew.Click += new EventHandler(menuSettingsMp3tagHistoryPath_Click);
+                    break;
+                default:
+                    return;
+            }
+
+            // set menu text and add new menu to history menu
+            menuNew.Checked = (menuNew.Text == pathSeleted);
+            menuNew.ToolTipText = "Select " + typeText + " '" + pathNew + "'";
+
+            menuHistory.DropDownItems.Add(menuNew);
+            menuHistory.Text = "Recently seleted " + typeText + "s";
+            menuHistory.Enabled = true;
         }
     }
 }

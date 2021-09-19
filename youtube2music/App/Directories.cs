@@ -176,7 +176,7 @@ namespace youtube2music.App
         /// <param name="type">Music library type</param>
         /// <param name="spaces">true = return spaces before and after path, false = return path without spaces</param>
         /// <returns>Music library path, null = doesn't found</returns>
-        public static string GetDirectoryPath(Init.Library type, bool spaces = false)
+        public static string LibraryGetPath(Init.Library type, bool spaces = false)
         {
             string path;
             switch (type)
@@ -201,7 +201,7 @@ namespace youtube2music.App
         /// <param name="type">Music library type</param>
         /// <param name="spaces">true = return spaces before and after path, false = return path without spaces</param>
         /// <returns>Music library name, empty = doesn't found</returns>
-        public static string GetDirectoryName(Init.Library type, bool spaces = false)
+        public static string LibraryGetType(Init.Library type, bool spaces = false)
         {
             string name = spaces ? " " : "";
             switch (type)

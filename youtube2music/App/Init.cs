@@ -27,7 +27,7 @@ namespace youtube2music.App
         {
             LibraryOpus,
             LibraryMp3,
-            ProgramYoutubeDl,
+            ProgramYoutubedl,
             ProgramFfmpeg,
             ProgramMp3tag,
             Null
@@ -49,7 +49,7 @@ namespace youtube2music.App
         [Flags]
         public enum Program
         {
-            YoutubeDl,
+            Youtubedl,
             Ffmpeg,
             Mp3tag
         };
@@ -63,8 +63,8 @@ namespace youtube2music.App
         {
             switch (type)
             {
-                case Program.YoutubeDl:
-                    return LibraryOrProgram.ProgramYoutubeDl;
+                case Program.Youtubedl:
+                    return LibraryOrProgram.ProgramYoutubedl;
                 case Program.Ffmpeg:
                     return LibraryOrProgram.ProgramFfmpeg;
                 case Program.Mp3tag:

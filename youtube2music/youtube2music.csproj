@@ -139,10 +139,10 @@
     <Compile Include="Forms\FormList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormListFunctions.cs">
+    <Compile Include="Forms\FormList.Functions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormListTesting.cs">
+    <Compile Include="Forms\FormList.Testing.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="YouTube\User.cs" />

@@ -8,7 +8,7 @@ namespace youtube2music.App
     /// </summary>
     public class Files
     {
-        private static readonly string nameProgramYouTubeDl = "youtubedl.txt";
+        private static readonly string nameProgramYoutubeDl = "youtubedl.txt";
         private static readonly string nameProgramFfmpeg = "ffmpeg.txt";
         private static readonly string nameProgramMp3tag = "mp3tag.txt";
         private static readonly string nameLibraryOpus = "library_opus.txt";
@@ -17,25 +17,25 @@ namespace youtube2music.App
         private static readonly string nameYouTubeUser = "Google.Apis.Auth.OAuth2.Responses.TokenResponse-user";
         private static string libraryOpusHistory;
         private static string libraryMp3History;
-        private static string programYouTubeDlHistory;
+        private static string programYoutubedlHistory;
         private static string programFfmpegHistory;
         private static string programMp3tagHistory;
         private static string downloadedVideosHistory;
         private static string youTubeUser;
 
-        private static string programYouTubeDl;
+        private static string programYoutubedl;
         private static string programFfmpeg;
         private static string programMp3tag;
 
         /// <summary>
         /// File path for program youtube-dl.
         /// </summary>
-        public static string ProgramYouTubeDl
+        public static string ProgramYoutubedl
         {
             get
             {
-                ProgramCheck(Init.Program.YoutubeDl);
-                return programYouTubeDl;
+                ProgramCheck(Init.Program.Youtubedl);
+                return programYoutubedl;
             }
         }
         /// <summary>
@@ -98,12 +98,12 @@ namespace youtube2music.App
         {
             get
             {
-                if (String.IsNullOrEmpty(programYouTubeDlHistory))
+                if (String.IsNullOrEmpty(programYoutubedlHistory))
                 {
                     if (Directories.Data == null) return null;
-                    programYouTubeDlHistory = Path.Combine(Directories.Data, nameProgramYouTubeDl);
+                    programYoutubedlHistory = Path.Combine(Directories.Data, nameProgramYoutubeDl);
                 }
-                return programYouTubeDlHistory;
+                return programYoutubedlHistory;
             }
         }
         /// <summary>
@@ -188,8 +188,8 @@ namespace youtube2music.App
             // set path
             switch (type)
             {
-                case Init.Program.YoutubeDl:
-                    programYouTubeDl = path;
+                case Init.Program.Youtubedl:
+                    programYoutubedl = path;
                     break;
                 case Init.Program.Ffmpeg:
                     programFfmpeg = path;
@@ -218,11 +218,11 @@ namespace youtube2music.App
         public static void ProgramCheck(Init.Program type)
         {
             // youtube-dl
-            if (type == Init.Program.YoutubeDl)
+            if (type == Init.Program.Youtubedl)
             {
-                if (FD.Files.Exists(programYouTubeDl)) return;
+                if (FD.Files.Exists(programYoutubedl)) return;
                 // program file doesn't exist
-                programYouTubeDl = null;              
+                programYoutubedl = null;              
             }
             // ffmpeg
             else if (type == Init.Program.Ffmpeg)
@@ -254,13 +254,13 @@ namespace youtube2music.App
         /// <param name="type">Program type</param>
         /// <param name="spaces">true = return spaces before and after path, false = return path without spaces</param>
         /// <returns>Program path, null = doesn't found</returns>
-        public static string GetProgramPath(Init.Program type, bool spaces = false)
+        public static string ProgramGetPath(Init.Program type, bool spaces = false)
         {
             string path;
             switch (type)
             {
-                case Init.Program.YoutubeDl:
-                    path = ProgramYouTubeDl;
+                case Init.Program.Youtubedl:
+                    path = ProgramYoutubedl;
                     break;
                 case Init.Program.Ffmpeg:
                     path = ProgramFfmpeg;
@@ -282,12 +282,12 @@ namespace youtube2music.App
         /// <param name="type">Program type</param>
         /// <param name="spaces">true = return spaces before and after path, false = return path without spaces</param>
         /// <returns>Program name, empty = doesn't found</returns>
-        public static string GetProgramName(Init.Program type, bool spaces = false)
+        public static string ProgramGetName(Init.Program type, bool spaces = false)
         {
             string name = spaces ? " " : "";
             switch (type)
             {
-                case Init.Program.YoutubeDl:
+                case Init.Program.Youtubedl:
                     name += "youtube-dl";
                     break;
                 case Init.Program.Ffmpeg:

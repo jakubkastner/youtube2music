@@ -20,7 +20,7 @@ namespace youtube2music
         /// <summary>
         /// Opens opus music library in file explorer.
         /// </summary>
-        private void menuNastaveniKnihovnaOpusVybrana_Click(object sender, EventArgs e)
+        private void menuSettingsLibraryOpusSelected_Click(object sender, EventArgs e)
         {
             if (!Actions.Run.Program(Directories.LibraryOpus, true, false))
             {
@@ -31,7 +31,7 @@ namespace youtube2music
         /// <summary>
         /// Opens mp3 music library in file explorer.
         /// </summary>
-        private void menuNastaveniKnihovnaMp3Vybrana_Click(object sender, EventArgs e)
+        private void menuSettingsLibraryMp3Selected_Click(object sender, EventArgs e)
         {
             if (!Actions.Run.Program(Directories.LibraryMp3, true, false))
             {
@@ -42,13 +42,13 @@ namespace youtube2music
         /// <summary>
         /// Opens the folder with the path of the youtube-dl file in file explorer and selects the file.
         /// </summary>
-        private void menuNastaveniYoutubeDLCestaVybrana_Click(object sender, EventArgs e)
+        private void menuSettingsYoutubedlSelected_Click(object sender, EventArgs e)
         {
             // get path
-            string path = Files.ProgramYouTubeDl;
+            string path = Files.ProgramYoutubedl;
             if (String.IsNullOrEmpty(path))
             {
-                MenuPathDelete(Init.LibraryOrProgram.ProgramYoutubeDl);
+                MenuPathDelete(Init.LibraryOrProgram.ProgramYoutubedl);
                 Actions.Show.Error("Opening youtube-dl file", "The youtube-dl path doesn't exist.");
                 return;
             }
@@ -61,7 +61,7 @@ namespace youtube2music
         /// <summary>
         /// Opens the folder with the path of the ffmpeg file in file explorer and selects the file.
         /// </summary>
-        private void menuNastaveniFFmpegCestaVybrana_Click(object sender, EventArgs e)
+        private void menuSettingsFfmpegSelected_Click(object sender, EventArgs e)
         {
             // get path
             string path = Files.ProgramFfmpeg;
@@ -80,7 +80,7 @@ namespace youtube2music
         /// <summary>
         /// Opens the folder with the path of the mp3tag file in file explorer and selects the file.
         /// </summary>
-        private void menuNastaveniMp3tagCestaVybrana_Click(object sender, EventArgs e)
+        private void menuSettingsMp3tagSelected_Click(object sender, EventArgs e)
         {
             // get path
             string path = Files.ProgramMp3tag;
@@ -102,35 +102,35 @@ namespace youtube2music
         /// <summary>
         /// User changes the path of the opus music library using the FolderBrowserDialog.
         /// </summary>
-        private void menuNastaveniKnihovnaOpusZmenit_Click(object sender, EventArgs e)
+        private void menuSettingsLibraryOpusChange_Click(object sender, EventArgs e)
         {
             LibrarySelect(Init.Library.Opus);
         }
         /// <summary>
         /// User changes the path of the mp3 music library using the FolderBrowserDialog.
         /// </summary>
-        private void menuNastaveniKnihovnaMp3Zmenit_Click(object sender, EventArgs e)
+        private void menuSettingsLibraryMp3Change_Click(object sender, EventArgs e)
         {
             LibrarySelect(Init.Library.Mp3);
         }
         /// <summary>
         /// User changes the path of the youtube-dl using the OpenFileDialog.
         /// </summary>
-        private void menuNastaveniYoutubeDLCestaZmenit_Click(object sender, EventArgs e)
+        private void menuSettingsYoutubedlChange_Click(object sender, EventArgs e)
         {
-            ProgramSelect(Init.Program.YoutubeDl);
+            ProgramSelect(Init.Program.Youtubedl);
         }
         /// <summary>
         /// User changes the path of the ffmpeg using the OpenFileDialog.
         /// </summary>
-        private void menuNastaveniFFmpegCestaZmenit_Click(object sender, EventArgs e)
+        private void menuSettingsFfmpegChange_Click(object sender, EventArgs e)
         {
             ProgramSelect(Init.Program.Ffmpeg);
         }
         /// <summary>
         /// User changes the path of the mp3tag using the OpenFileDialog.
         /// </summary>
-        private void menuNastaveniMp3tagCestaZmenit_Click(object sender, EventArgs e)
+        private void menuSettingsMp3tagChange_Click(object sender, EventArgs e)
         {
             ProgramSelect(Init.Program.Mp3tag);
         }
@@ -140,7 +140,7 @@ namespace youtube2music
         /// <summary>
         /// User selected a new opus music library from a list of previously selected paths.
         /// </summary>
-        private void menuNastaveniKnihovnaOpusNaposledyVybrane_Click(object sender, EventArgs e)
+        private void menuSettingsLibraryOpusHistoryPath_Click(object sender, EventArgs e)
         {
             var menu = sender as ToolStripMenuItem;
             if (!LibraryChange(Init.Library.Opus, menu.Text))
@@ -151,7 +151,7 @@ namespace youtube2music
         /// <summary>
         /// User selected a new mp3 music library from a list of previously selected paths.
         /// </summary>
-        private void menuNastaveniKnihovnaMp3NaposledyVybrane_Click(object sender, EventArgs e)
+        private void menuSettingsLibraryMp3HistoryPath_Click(object sender, EventArgs e)
         {
             var menu = sender as ToolStripMenuItem;
             if (!LibraryChange(Init.Library.Mp3, menu.Text))
@@ -162,18 +162,18 @@ namespace youtube2music
         /// <summary>
         /// User selected a new youtube-dl path from a list of previously selected paths.
         /// </summary>
-        private void menuNastaveniCestaYoutubeDLNaposledyVybrane_Click(object sender, EventArgs e)
+        private void menuSettingsYoutubedlHistoryPath_Click(object sender, EventArgs e)
         {
             var menu = sender as ToolStripMenuItem;
-            if (!ProgramChange(Init.Program.YoutubeDl, menu.Text))
+            if (!ProgramChange(Init.Program.Youtubedl, menu.Text))
             {
-                MenuPathDelete(Init.LibraryOrProgram.ProgramYoutubeDl, menu.Text);
+                MenuPathDelete(Init.LibraryOrProgram.ProgramYoutubedl, menu.Text);
             }
         }
         /// <summary>
         /// User selected a new ffmpeg path from a list of previously selected paths.
         /// </summary>
-        private void menuNastaveniCestaFFmpegNaposledyVybrane_Click(object sender, EventArgs e)
+        private void menuSettingsFfmpegHistoryPath_Click(object sender, EventArgs e)
         {
             var menu = sender as ToolStripMenuItem;
             if (!ProgramChange(Init.Program.Ffmpeg, menu.Text))
@@ -184,7 +184,7 @@ namespace youtube2music
         /// <summary>
         /// User selected a new mp3tag path from a list of previously selected paths.
         /// </summary>
-        private void menuNastaveniCestaMp3tagNaposledyVybrane_Click(object sender, EventArgs e)
+        private void menuSettingsMp3tagHistoryPath_Click(object sender, EventArgs e)
         {
             var menu = sender as ToolStripMenuItem;
             if (!ProgramChange(Init.Program.Mp3tag, menu.Text))
@@ -198,39 +198,39 @@ namespace youtube2music
         /// <summary>
         /// Click to clear the history of selected opus music library paths.
         /// </summary>
-        private void menuNastaveniKnihovnaOpusNaposledyVymazat_Click(object sender, EventArgs e)
+        private void menuSettingsLibraryOpusHistoryClear_Click(object sender, EventArgs e)
         {
             MenuPathHistoryClearAll(Init.LibraryOrProgram.LibraryOpus);
         }
         /// <summary>
         /// Click to clear the history of selected mp3 music library paths.
         /// </summary>
-        private void menuNastaveniKnihovnaMp3NaposledyVymazat_Click(object sender, EventArgs e)
+        private void menuSettingsLibraryMp3HistoryClear_Click(object sender, EventArgs e)
         {
             MenuPathHistoryClearAll(Init.LibraryOrProgram.LibraryMp3);
         }
         /// <summary>
         /// Click to clear the history of selected youtube-dl paths.
         /// </summary>
-        private void menuNastaveniYoutubeDLCestaNaposledyVymazat_Click(object sender, EventArgs e)
+        private void menuSettingsYoutubedlHistoryClear_Click(object sender, EventArgs e)
         {
-            MenuPathHistoryClearAll(Init.LibraryOrProgram.ProgramYoutubeDl);
+            MenuPathHistoryClearAll(Init.LibraryOrProgram.ProgramYoutubedl);
         }
         /// <summary>
         /// Click to clear the history of selected ffmpeg paths.
         /// </summary>
-        private void menuNastaveniFFmpegCestaNaposledyVymazat_Click(object sender, EventArgs e)
+        private void menuSettingsFfmpegHistoryClear_Click(object sender, EventArgs e)
         {
             MenuPathHistoryClearAll(Init.LibraryOrProgram.ProgramFfmpeg);
         }
         /// <summary>
         /// Click to clear the history of selected mp3tag paths.
         /// </summary>
-        private void menuNastaveniMp3tagCestaNaposledyVymazat_Click(object sender, EventArgs e)
+        private void menuSettingsMp3tagHistoryClear_Click(object sender, EventArgs e)
         {
             MenuPathHistoryClearAll(Init.LibraryOrProgram.ProgramMp3tag);
         }
         #endregion
-
+        
     }
 }
