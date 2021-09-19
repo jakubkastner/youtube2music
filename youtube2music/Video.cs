@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using youtube2music.App;
 
 namespace youtube2music
 {
@@ -118,7 +119,7 @@ namespace youtube2music
                 string vrat = Slozka;
                 if (!String.IsNullOrEmpty(vrat))
                 {
-                    vrat = Slozka.Replace(App.Paths.Directories.LibraryOpus, "");
+                    vrat = Slozka.Replace(Directories.LibraryOpus, "");
                 }
                 return vrat;
             }

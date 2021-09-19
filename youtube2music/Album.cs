@@ -43,7 +43,7 @@ namespace youtube2music
 
                 // žánr dle složky
                 string slozka = this.Slozka;
-                slozka = slozka.Replace(App.Paths.Directories.LibraryOpus, "");
+                slozka = slozka.Replace(App.Directories.LibraryOpus, "");
                 
                 List<String> rozdelenaSlozka = slozka.Split('\\').ToList();
                 zanr += rozdelenaSlozka[1];
@@ -81,7 +81,7 @@ namespace youtube2music
                 {
                     return "";
                 }
-                slozka = slozka.Replace(App.Paths.Directories.LibraryOpus, "");
+                slozka = slozka.Replace(App.Directories.LibraryOpus, "");
 
                 List<String> rozdelenaSlozka = slozka.Split('\\').ToList();
                 return rozdelenaSlozka[1];                

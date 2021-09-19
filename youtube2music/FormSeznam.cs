@@ -22,10 +22,6 @@ namespace youtube2music
         List<Video> videaVsechna = new List<Video>();
         SeznamInterpretu vsichniInterpreti = new SeznamInterpretu();
 
-        public FormSeznam()
-        {
-            InitializeComponent();            
-        }
 
         // HOTOVO
         /**

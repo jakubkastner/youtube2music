@@ -95,15 +95,15 @@ namespace youtube2music
                 if (String.IsNullOrEmpty(textBoxSlozka.Text))
                 {
                     // nejedná se o existující složku ani soubor
-                    textBoxSlozka.Text = App.Paths.Directories.LibraryOpus;
+                    textBoxSlozka.Text = Directories.LibraryOpus;
                 }
             }
 
 
             // získej žánry hudebních složek
             List<string> zanrySlozky = new List<string>();
-            List<string> zanrySlozkyMp3 = ZiskejNazvySlozek(App.Paths.Directories.LibraryOpus);
-            List<string> zanrySlozkyOpus = ZiskejNazvySlozek(App.Paths.Directories.LibraryMp3);
+            List<string> zanrySlozkyMp3 = ZiskejNazvySlozek(Directories.LibraryOpus);
+            List<string> zanrySlozkyOpus = ZiskejNazvySlozek(Directories.LibraryMp3);
             if (zanrySlozkyMp3 != null)
             {
                 zanrySlozky = zanrySlozkyMp3;
@@ -371,7 +371,7 @@ namespace youtube2music
             if (String.IsNullOrEmpty(textBoxSlozka.Text))
             {
                 // nejedná se o existující složku ani soubor
-                textBoxSlozka.Text = App.Paths.Directories.LibraryOpus;
+                textBoxSlozka.Text = App.Directories.LibraryOpus;
                 if (checkBoxSlozkaMenitAuto.Checked)
                 {
                     NajitSlozku();
@@ -400,7 +400,7 @@ namespace youtube2music
             if (String.IsNullOrEmpty(novyAlbum.Slozka))
             {
                 // nejedná se o existující složku ani soubor
-                textBoxSlozka.Text = Path.Combine(App.Paths.Directories.LibraryOpus, zanr, interpretAlba.Jmeno, novyAlbum.Rok + " " + novyAlbum.Nazev);
+                textBoxSlozka.Text = Path.Combine(App.Directories.LibraryOpus, zanr, interpretAlba.Jmeno, novyAlbum.Rok + " " + novyAlbum.Nazev);
             }
             else
             {
@@ -449,7 +449,7 @@ namespace youtube2music
             else
             {
                 // nejedná se o existující složku ani soubor
-                vyberSlozky.SelectedPath = App.Paths.Directories.LibraryOpus + "\\";
+                vyberSlozky.SelectedPath = App.Directories.LibraryOpus + "\\";
             }
             if ((bool)vyberSlozky.ShowDialog())
             {

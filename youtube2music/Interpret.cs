@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using youtube2music.App.Paths;
+using youtube2music.App;
 
 namespace youtube2music
 {

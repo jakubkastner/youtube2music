@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Windows.Forms;
 using youtube2music.App;
-using youtube2music.App.Paths;
 
 namespace youtube2music
 {
     public partial class FormSeznam : Form
     {
+        public FormSeznam()
+        {
+            InitializeComponent();
+        }
+
         /// <summary>
         /// Change or add new music directory to new folder.
         /// </summary>

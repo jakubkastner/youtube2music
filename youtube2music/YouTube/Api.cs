@@ -38,7 +38,7 @@ namespace youtube2music.YouTube
                     new[] { YouTubeService.Scope.YoutubeReadonly },
                     "user",
                     CancellationToken.None,
-                    new FileDataStore(Path.Combine(App.Paths.Directories.Data))
+                    new FileDataStore(Path.Combine(App.Directories.Data))
                 ).Result;
             }
 
