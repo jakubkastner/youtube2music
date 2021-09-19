@@ -134,8 +134,14 @@
     <Compile Include="Actions\Run.cs" />
     <Compile Include="Album.cs" />
     <Compile Include="App\Init.cs" />
-    <Compile Include="App\Paths\Directories.cs" />
-    <Compile Include="App\Paths\Files.cs" />
+    <Compile Include="App\Directories.cs" />
+    <Compile Include="App\Files.cs" />
+    <Compile Include="Form\FormList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormListTesting.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="YouTube\User.cs" />
     <Compile Include="Chyba.cs" />
     <Compile Include="Deezer.cs" />

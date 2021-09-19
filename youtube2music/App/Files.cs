@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace youtube2music.App.Paths
+namespace youtube2music.App
 {
     /// <summary>
     /// Get program path for files.

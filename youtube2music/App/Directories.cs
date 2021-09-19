@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using youtube2music.App;
 
-namespace youtube2music.App.Paths
+namespace youtube2music.App
 {
     /// <summary>
     /// Get program path for directories.
