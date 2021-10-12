@@ -534,15 +534,6 @@ namespace youtube2music
             }
         }
 
-        /*******************************************************************************************************/
-        /*******************************************************************************************************/
-        /*******************************************************************************************************/
-        /*******************************************************************************************************/
-        /*******************************************************************************************************/
-        /*******************************************************************************************************/
-        /*******************************************************************************************************/
-
-
         /**
          * 
         SPOUŠTĚNÍ PROGRAMU
@@ -634,7 +625,11 @@ namespace youtube2music
         private void backgroundWorkerNactiProgram_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             // nastaví hodnotu ProgressBaru
-            progressBarStatus.Value = e.ProgressPercentage;
+            int hodnota = e.ProgressPercentage;
+
+            // TODO zde program padal -> spouštěl se backgroundworker s prohledáváním složek, který nastavuje hodnutu max na 1
+            if (hodnota <= progressBarStatus.Maximum) progressBarStatus.Value = e.ProgressPercentage;
+
             TaskbarManager.Instance.SetProgressValue(e.ProgressPercentage, progressBarStatus.Maximum);
         }
 
@@ -765,7 +760,7 @@ namespace youtube2music
         {
             // prohledá složky a zapíše je do souboru
             Actions.Show.Operation("Probíhá prohledávání složek hudební knihovny.");
-            Actions.Show.Progress(1);
+            //Actions.Show.Progress(1);
 
             if (Directories.LibraryOpus == null)
             {
