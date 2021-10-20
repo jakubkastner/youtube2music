@@ -53,7 +53,7 @@ namespace youtube2music.YouTube
         /// <summary>
         /// Get currently logged in user id and name of he channel.
         /// </summary>
-        internal static void GetUser()
+        internal static User GetUser()
         {
             // YouTube API request
             var request = serviceYT.Channels.List("brandingSettings");
@@ -61,14 +61,14 @@ namespace youtube2music.YouTube
 
             // YouTube API result
             var result = request.Execute();
-            if (result.Items == null) return;
-            if (result.Items.Count == 0) return;
+            if (result.Items == null) return null;
+            if (result.Items.Count == 0) return null;
 
             var channel = result.Items[0];
-            if (String.IsNullOrEmpty(channel.BrandingSettings.Channel.Title)) return;
+            if (String.IsNullOrEmpty(channel.BrandingSettings.Channel.Title)) return null;
 
-            User.Id = channel.Id;
-            User.ChannelName = channel.BrandingSettings.Channel.Title;
+            User youtubeUser = new User(channel.Id, channel.BrandingSettings.Channel.Title);
+            return youtubeUser;
         }
 
 
@@ -128,26 +128,26 @@ namespace youtube2music.YouTube
             return playlistID;
         }
 
-        internal static void ZiskejNazevUzivatele()
+        internal static User ZiskejNazevUzivatele()
         {
             var pozadavek = serviceYT.Channels.List("brandingSettings");
             pozadavek.Mine = true;
             var odpoved = pozadavek.Execute();
             if (odpoved.Items == null)
             {
-                return;
+                return null;
             }
             if (odpoved.Items.Count == 0)
             {
-                return;
+                return null;
             }
             var kanal = odpoved.Items[0];
             if (kanal.BrandingSettings.Channel.Title == null)
             {
-                return;
+                return null;
             }
-            YouTube.User.Id = kanal.Id;
-            YouTube.User.ChannelName = kanal.BrandingSettings.Channel.Title;
+            User newUser = new User(kanal.Id, kanal.BrandingSettings.Channel.Title);
+            return newUser;
         }
 
         /// <summary>

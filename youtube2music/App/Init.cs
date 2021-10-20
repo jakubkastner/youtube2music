@@ -14,10 +14,12 @@ namespace youtube2music.App
         /// </summary>
         public static FormSeznam FormList { get; } = Application.OpenForms.OfType<FormSeznam>().FirstOrDefault();
 
-        /// <summary>
-        /// Name of the program.
-        /// </summary>
-        public static string Name { get; } = "youtube2music";
+        public static Programs ProgramYoutubedl { get; } = new Programs(Variables.ProgramYoutubedlFileName);
+        public static Programs ProgramFfmpeg { get; } = new Programs(Variables.ProgramFfmpegFileName);
+        public static Programs ProgramMp3tag { get; } = new Programs(Variables.ProgramMp3tagFileName);
+
+
+
 
         /// <summary>
         /// Types of music library (mp3, opus) and programs (youtube-dl, ffmpeg, mp3tag).

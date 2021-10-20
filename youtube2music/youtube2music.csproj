@@ -12,6 +12,9 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,9 +29,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -136,6 +136,9 @@
     <Compile Include="App\Init.cs" />
     <Compile Include="App\Directories.cs" />
     <Compile Include="App\Files.cs" />
+    <Compile Include="App\_Variables.cs" />
+    <Compile Include="App\_Libraries.cs" />
+    <Compile Include="App\_Programs.cs" />
     <Compile Include="Forms\FormList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,6 +148,7 @@
     <Compile Include="Forms\FormList.Testing.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="YouTube\Init.cs" />
     <Compile Include="YouTube\User.cs" />
     <Compile Include="Chyba.cs" />
     <Compile Include="Deezer.cs" />

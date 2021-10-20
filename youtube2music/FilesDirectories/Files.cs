@@ -10,8 +10,9 @@ namespace youtube2music.FD
         /// Gets content (reads and saves to list) line by line for the specific file.
         /// </summary>
         /// <param name="path">File path</param>
+        /// <param name="unique">No duplicites</param>
         /// <returns>The contents of the file line by line as list</returns>
-        public static List<string> Read(string path)
+        public static List<string> Read(string path, bool unique = false)
         {
             // file doesn't exists
             if (!Exists(path)) return null;
@@ -25,8 +26,13 @@ namespace youtube2music.FD
                     // read lines from file
                     while (!reader.EndOfStream)
                     {
+                        string currentLine = reader.ReadLine();
+                        // empty
+                        if (String.IsNullOrEmpty(currentLine)) continue;
+                        // duplicates
+                        if (unique && lines.Contains(currentLine)) continue;
                         // save lines to list
-                        lines.Add(reader.ReadLine());
+                        lines.Add(currentLine);
                     }
                 }
             }

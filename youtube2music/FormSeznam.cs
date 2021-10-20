@@ -593,7 +593,7 @@ namespace youtube2music
             menuStripMenu.Invoke(new Action(() =>
             {
                 // login user from YouTube
-                if (!YouTube.User.Login())
+                if (!YouTube.Init.Login())
                 {
                     // TODO show error
                 }
@@ -2452,7 +2452,7 @@ namespace youtube2music
 
         private void menuNastaveniUzivatel_Click(object sender, EventArgs e)
         {
-            if (!Actions.Run.Program(YouTube.User.ChannelUrl))
+            if (!Actions.Run.Program(YouTube.Init.LoggedInUser.ChannelUrl))
             {
                 // TODO show error
             }

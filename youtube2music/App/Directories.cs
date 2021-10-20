@@ -54,7 +54,7 @@ namespace youtube2music.App
                 if (String.IsNullOrEmpty(appData))
                 {
                     // %appdata%/youtube2music
-                    appData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Init.Name);
+                    appData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Variables.ProgramName);
                 }
                 return appData;
             }
