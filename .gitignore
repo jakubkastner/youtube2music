@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 /youtube-renamer/Firefox
 /youtube2music/Firefox
+/youtube2music/YouTube/ApiSecrects.cs

@@ -148,6 +148,8 @@
     <Compile Include="Forms\FormList.Testing.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="YouTube\ApiSecrects_example.cs" />
+    <Compile Include="YouTube\ApiSecrects.cs" />
     <Compile Include="YouTube\Init.cs" />
     <Compile Include="YouTube\User.cs" />
     <Compile Include="Chyba.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
@@ -27,7 +28,7 @@ namespace youtube2music.YouTube
         {
             UserCredential credential;
             // init json for api
-            string apiInit = @"{""installed"":{""client_id"":""806982074560-2h1sptig11iq8hrl4ink1jetllv1vlm9.apps.googleusercontent.com"",""project_id"":""youtube-renamer"",""auth_uri"":""https://accounts.google.com/o/oauth2/auth"",""token_uri"":""https://accounts.google.com/o/oauth2/token"",""auth_provider_x509_cert_url"":""https://www.googleapis.com/oauth2/v1/certs"",""client_secret"":""FDJhnbA5J2BLPpSxVD01vz4K"",""redirect_uris"":[""urn:ietf:wg:oauth:2.0:oob"",""http://localhost""]}}";
+            string apiInit = @"{""installed"":{""client_id"":""" + ApiSecrects.ClientID + @""",""project_id"":""" + ApiSecrects.ProjectID + @""",""auth_uri"":""https://accounts.google.com/o/oauth2/auth"",""token_uri"":""https://accounts.google.com/o/oauth2/token"",""auth_provider_x509_cert_url"":""https://www.googleapis.com/oauth2/v1/certs"",""client_secret"":""" + ApiSecrects.ClientSecret + @""",""redirect_uris"":[""urn:ietf:wg:oauth:2.0:oob"",""http://localhost""]}}";
 
             // read anit api json
             using (var reader = new MemoryStream(System.Text.Encoding.ASCII.GetBytes(apiInit)))
