@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "youtube2music", "youtube2music\youtube2music.csproj", "{BE6E46A3-5F60-4EEF-9E2F-43DC3A3B6D30}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "youtube2music_installer", "youtube2music_installer\youtube2music_installer.vdproj", "{C6D756DC-A6BC-4235-B3E2-92D3D47702EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{BE6E46A3-5F60-4EEF-9E2F-43DC3A3B6D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE6E46A3-5F60-4EEF-9E2F-43DC3A3B6D30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE6E46A3-5F60-4EEF-9E2F-43DC3A3B6D30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6D756DC-A6BC-4235-B3E2-92D3D47702EA}.Debug|Any CPU.ActiveCfg = Debug
+		{C6D756DC-A6BC-4235-B3E2-92D3D47702EA}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
