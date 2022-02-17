@@ -1,12 +1,11 @@
-﻿using Gecko;
-using Ookii.Dialogs.Wpf;
+﻿using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace youtube2music
 {
@@ -39,12 +38,24 @@ namespace youtube2music
         public FormUprava(List<Video> upravovanaVideaForm)
         {
             InitializeComponent();
-            // prohlížeč
-            Xpcom.Initialize("Firefox");
-            Gecko.GeckoPreferences.User["general.useragent.override"] = "User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0";
 
             upravovanaVidea = upravovanaVideaForm;
             hudebniKnihovna = App.Directories.LibraryOpus;
+        }
+
+        private async Task InitWeb()
+        {
+            await webViewVideo.EnsureCoreWebView2Async();
+        }
+
+        private async void BrowserNavigate(string url)
+        {
+
+            if (webViewVideo == null || webViewVideo.CoreWebView2 == null)
+            {
+                await InitWeb();
+            }
+            webViewVideo.CoreWebView2.Navigate(url);
         }
 
         /// <summary>
@@ -212,7 +223,7 @@ namespace youtube2music
                     checkBoxPuvodniNazevVybrane.Enabled = true;
                     checkBoxPuvodniNazevPlaylist.Enabled = true;
                 }
-                geckoWebBrowserVideo.Navigate("https://www.youtube.com/embed/" + upravovaneVideo.ID);
+                BrowserNavigate("https://www.youtube.com/embed/" + upravovaneVideo.ID);
             }
 
             // nadpis programu
@@ -519,6 +530,8 @@ namespace youtube2music
         /// </summary>
         private void FormUprava_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // stops the video being played on youtube
+            BrowserNavigate("https://google.com");
             Ulozit();
         }
 
@@ -814,7 +827,7 @@ namespace youtube2music
         private void label7_Click(object sender, EventArgs e)
         {
             // otevření stránky videa klasicky
-            geckoWebBrowserVideo.Navigate("https://www.youtube.com/watch?v=" + upravovaneVideo.ID);
+            BrowserNavigate("https://www.youtube.com/watch?v=" + upravovaneVideo.ID);
         }
 
         private void linkLabelPlaylist_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

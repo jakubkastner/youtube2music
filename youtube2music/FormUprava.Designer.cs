@@ -62,7 +62,6 @@
             this.labelInterpret = new System.Windows.Forms.Label();
             this.labelSkladba = new System.Windows.Forms.Label();
             this.linkLabelID = new System.Windows.Forms.LinkLabel();
-            this.geckoWebBrowserVideo = new Gecko.GeckoWebBrowser();
             this.linkLabelKanal = new System.Windows.Forms.LinkLabel();
             this.checkBoxStejnyZanrPlaylist = new System.Windows.Forms.CheckBox();
             this.checkBoxStejnaSlozkaPlaylist = new System.Windows.Forms.CheckBox();
@@ -83,6 +82,8 @@
             this.buttonPuvodniNazev = new System.Windows.Forms.Button();
             this.checkBoxPuvodniNazevVybrane = new System.Windows.Forms.CheckBox();
             this.checkBoxPuvodniNazevPlaylist = new System.Windows.Forms.CheckBox();
+            this.webViewVideo = new Microsoft.Web.WebView2.WinForms.WebView2();
+            ((System.ComponentModel.ISupportInitialize)(this.webViewVideo)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxInterpret
@@ -448,18 +449,6 @@
             this.linkLabelID.TabIndex = 28;
             this.linkLabelID.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelID_LinkClicked);
             // 
-            // geckoWebBrowserVideo
-            // 
-            this.geckoWebBrowserVideo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.geckoWebBrowserVideo.FrameEventsPropagateToMainWindow = false;
-            this.geckoWebBrowserVideo.Location = new System.Drawing.Point(409, 26);
-            this.geckoWebBrowserVideo.Name = "geckoWebBrowserVideo";
-            this.geckoWebBrowserVideo.Size = new System.Drawing.Size(518, 269);
-            this.geckoWebBrowserVideo.TabIndex = 44;
-            this.geckoWebBrowserVideo.UseHttpActivityObserver = false;
-            // 
             // linkLabelKanal
             // 
             this.linkLabelKanal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -688,17 +677,30 @@
             this.checkBoxPuvodniNazevPlaylist.UseVisualStyleBackColor = true;
             this.checkBoxPuvodniNazevPlaylist.CheckedChanged += new System.EventHandler(this.checkBoxZmena_CheckedChanged);
             // 
+            // webViewVideo
+            // 
+            this.webViewVideo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.webViewVideo.CreationProperties = null;
+            this.webViewVideo.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.webViewVideo.Location = new System.Drawing.Point(412, 25);
+            this.webViewVideo.Name = "webViewVideo";
+            this.webViewVideo.Size = new System.Drawing.Size(515, 265);
+            this.webViewVideo.TabIndex = 49;
+            this.webViewVideo.ZoomFactor = 1D;
+            // 
             // FormUprava
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(939, 831);
+            this.Controls.Add(this.webViewVideo);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.textBoxStopa);
             this.Controls.Add(this.buttonPuvodniNazev);
             this.Controls.Add(this.buttonProhodit);
-            this.Controls.Add(this.geckoWebBrowserVideo);
             this.Controls.Add(this.labelInterpret);
             this.Controls.Add(this.checkBoxStejnyZanrPlaylist);
             this.Controls.Add(this.checkBoxStejnyZanrVybrane);
@@ -756,6 +758,7 @@
             this.Text = "Úprava videa";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormUprava_FormClosing);
             this.Load += new System.EventHandler(this.FormUprava_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.webViewVideo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -796,7 +799,6 @@
         private System.Windows.Forms.Label labelInterpret;
         private System.Windows.Forms.Label labelSkladba;
         private System.Windows.Forms.LinkLabel linkLabelID;
-        private Gecko.GeckoWebBrowser geckoWebBrowserVideo;
         private System.Windows.Forms.LinkLabel linkLabelKanal;
         private System.Windows.Forms.CheckBox checkBoxStejnyZanrPlaylist;
         private System.Windows.Forms.CheckBox checkBoxStejnaSlozkaPlaylist;
@@ -817,5 +819,6 @@
         private System.Windows.Forms.Button buttonPuvodniNazev;
         private System.Windows.Forms.CheckBox checkBoxPuvodniNazevVybrane;
         private System.Windows.Forms.CheckBox checkBoxPuvodniNazevPlaylist;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webViewVideo;
     }
 }

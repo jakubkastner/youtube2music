@@ -1681,6 +1681,18 @@ namespace youtube2music
             else if (menuPridatAlbum.Text == "ZASTAVUJI PŘIDÁVÁNÍ") { }
             else
             {
+                if (String.IsNullOrEmpty(App.Directories.LibraryOpus))
+                {
+                    Actions.Show.Error("Adding album", "Cannot add album, because you dont have selected your opus music library.");
+                    Actions.Show.Operation("Videa z albumu se nepodařilo přidat.");
+                    return;
+                }
+                if (String.IsNullOrEmpty(App.Directories.LibraryMp3))
+                {
+                    Actions.Show.Error("Adding album", "Cannot add album, because you dont have selected your mp3 music library.");
+                    Actions.Show.Operation("Videa z albumu se nepodařilo přidat.");
+                    return;
+                }
                 // spustí přidávání videí
                 if (!backgroundWorkerPridejVidea.IsBusy)
                 {
