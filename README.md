@@ -17,7 +17,7 @@ Windows application for better organization of music downloaded using [youtube-d
 
 # ⏬ Download
 The program is free to download at this link:
-* [Download msi installer here](https://github.com/jakubkastner/youtube2music/releases/download/0.0.1-b/youtube2music_installer.msi)
+* [Download msi installer here](https://github.com/jakubkastner/youtube2music/releases/download/0.0.1/youtube2music_installer.msi)
 
 # 🔍 How program works
 * Add a link to a YouTube video or playlist or YouTube Music Album.
