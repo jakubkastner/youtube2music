@@ -123,6 +123,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_32C2DEE8932B584B2FC501C535F82D4C"
+        "OwnerKey" = "8:_A58F19D66FD24FC29C0CC3CBA78C5AA8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_339400C0743F0A25BAB3FCDC9A22148D"
         "OwnerKey" = "8:_A58F19D66FD24FC29C0CC3CBA78C5AA8"
         "MsmSig" = "8:_UNDEFINED"
@@ -165,6 +171,24 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_4899799F4B76EC8BB83C746A13863293"
+        "OwnerKey" = "8:_A58F19D66FD24FC29C0CC3CBA78C5AA8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4899799F4B76EC8BB83C746A13863293"
+        "OwnerKey" = "8:_E5E32D148BB05C52D3E10DD290C14D92"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4899799F4B76EC8BB83C746A13863293"
+        "OwnerKey" = "8:_32C2DEE8932B584B2FC501C535F82D4C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_4E878F6FDD9707286E6B437657331C88"
         "OwnerKey" = "8:_A58F19D66FD24FC29C0CC3CBA78C5AA8"
         "MsmSig" = "8:_UNDEFINED"
@@ -179,6 +203,12 @@
         {
         "MsmKey" = "8:_618BE3F0EE6F76B152D331CF4E93EF37"
         "OwnerKey" = "8:_A58F19D66FD24FC29C0CC3CBA78C5AA8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_655365F7F94F4C51804E20AC8779D5B0"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -261,14 +291,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E53859B813F7B8DE680414561C0AF42B"
+        "MsmKey" = "8:_E5E32D148BB05C52D3E10DD290C14D92"
         "OwnerKey" = "8:_A58F19D66FD24FC29C0CC3CBA78C5AA8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E53859B813F7B8DE680414561C0AF42B"
-        "OwnerKey" = "8:_F8A84718AECF057775457985AAB56489"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -279,20 +303,26 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_F8A84718AECF057775457985AAB56489"
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_A58F19D66FD24FC29C0CC3CBA78C5AA8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E37058DF57887788BA6DE277B2C6591E"
+        "OwnerKey" = "8:_E5E32D148BB05C52D3E10DD290C14D92"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A58F19D66FD24FC29C0CC3CBA78C5AA8"
+        "OwnerKey" = "8:_32C2DEE8932B584B2FC501C535F82D4C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4899799F4B76EC8BB83C746A13863293"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -394,18 +424,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F8A84718AECF057775457985AAB56489"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E53859B813F7B8DE680414561C0AF42B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_6C2BE90AAD71F3BA5EAC09C9C5C9638A"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -413,6 +431,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_18A7ADFCA5AEDDC4FA7A2EC51E309CEC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E37058DF57887788BA6DE277B2C6591E"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -433,6 +457,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -449,6 +489,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -494,7 +542,7 @@
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -525,7 +573,7 @@
             "SourcePath" = "8:taglib-sharp.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -556,7 +604,7 @@
             "SourcePath" = "8:System.IO.Compression.FileSystem.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -587,7 +635,7 @@
             "SourcePath" = "8:Google.Apis.Auth.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -618,7 +666,7 @@
             "SourcePath" = "8:Google.Apis.Core.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -649,7 +697,38 @@
             "SourcePath" = "8:Microsoft.WindowsAPICodePack.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_32C2DEE8932B584B2FC501C535F82D4C"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.Web.WebView2.WinForms, Version=1.0.1108.44, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_32C2DEE8932B584B2FC501C535F82D4C"
+                    {
+                    "Name" = "8:Microsoft.Web.WebView2.WinForms.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Microsoft.Web.WebView2.WinForms.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -680,7 +759,7 @@
             "SourcePath" = "8:Google.Apis.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -711,7 +790,7 @@
             "SourcePath" = "8:Google.Apis.YouTube.v3.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -742,7 +821,38 @@
             "SourcePath" = "8:Ookii.Dialogs.Wpf.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4899799F4B76EC8BB83C746A13863293"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.Web.WebView2.Core, Version=1.0.1108.44, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_4899799F4B76EC8BB83C746A13863293"
+                    {
+                    "Name" = "8:Microsoft.Web.WebView2.Core.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Microsoft.Web.WebView2.Core.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -773,7 +883,7 @@
             "SourcePath" = "8:Google.Apis.Oauth2.v2.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -804,7 +914,7 @@
             "SourcePath" = "8:Google.Apis.Auth.PlatformServices.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -835,7 +945,7 @@
             "SourcePath" = "8:ObjectListView.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -848,6 +958,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_655365F7F94F4C51804E20AC8779D5B0"
+            {
+            "SourcePath" = "8:..\\youtube2music\\bin\\Debug\\runtimes\\win-x86\\native\\WebView2Loader.dll"
+            "TargetName" = "8:WebView2Loader.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_66D5032D855531D1E7503AD242247B69"
@@ -866,7 +996,7 @@
             "SourcePath" = "8:Google.Apis.PlatformServices.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -897,7 +1027,7 @@
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -928,7 +1058,7 @@
             "SourcePath" = "8:Microsoft.WindowsAPICodePack.Shell.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -964,7 +1094,7 @@
             "SourcePath" = "8:policy.2.0.taglib-sharp.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -995,7 +1125,7 @@
             "SourcePath" = "8:Zlib.Portable.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1026,7 +1156,7 @@
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1057,7 +1187,7 @@
             "SourcePath" = "8:Microsoft.WindowsAPICodePack.ShellExtensions.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1088,7 +1218,7 @@
             "SourcePath" = "8:System.IO.Compression.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1103,23 +1233,23 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E53859B813F7B8DE680414561C0AF42B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E5E32D148BB05C52D3E10DD290C14D92"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Geckofx-Core, Version=45.0.34.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Microsoft.Web.WebView2.Wpf, Version=1.0.1108.44, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E53859B813F7B8DE680414561C0AF42B"
+                    "_E5E32D148BB05C52D3E10DD290C14D92"
                     {
-                    "Name" = "8:Geckofx-Core.dll"
+                    "Name" = "8:Microsoft.Web.WebView2.Wpf.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Geckofx-Core.dll"
+            "SourcePath" = "8:Microsoft.Web.WebView2.Wpf.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1139,7 +1269,7 @@
             "SourcePath" = "8:..\\youtube2music\\favicon.ico"
             "TargetName" = "8:favicon.ico"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1152,37 +1282,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F8A84718AECF057775457985AAB56489"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Geckofx-Winforms, Version=45.0.34.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_F8A84718AECF057775457985AAB56489"
-                    {
-                    "Name" = "8:Geckofx-Winforms.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Geckofx-Winforms.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -1223,28 +1322,6 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_FA994FC9604C476091E102DCAC7F590F"
-                    {
-                    "Name" = "8:jakubkastner"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_040D6C256DC34E68BFDCC9DBCC271262"
-                        "Folders"
-                        {
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_4117997E7C2045B296DF9B0FA3C3DD99"
-                            {
-                            "Name" = "8:youtube2music"
-                            "AlwaysCreate" = "11:FALSE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_48422E9681CB477786A0D8B506325372"
-                                "Folders"
-                                {
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -1263,15 +1340,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:youtube2music"
-        "ProductCode" = "8:{8976369F-C9C7-40A0-B3D4-1BFE7B011F61}"
-        "PackageCode" = "8:{907D8802-0787-44CE-B88E-64CB0348802B}"
+        "ProductCode" = "8:{77646D98-D979-49AB-ABA2-511358257D77}"
+        "PackageCode" = "8:{AD8DEF01-2939-4E8E-ADD3-13449B5CF998}"
         "UpgradeCode" = "8:{6DE372A7-BE62-4819-A138-E22C387297A3}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:0.0.1"
         "Manufacturer" = "8:jakubkastner"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/jakubkastner/youtube2music"
@@ -1281,7 +1358,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:https://github.com/jakubkastner"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_E701442BCFBB4F638A452411F5A727BB"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -1384,7 +1461,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_7C170097AF3B48F79A8FE5AC79755DC4"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4480F7ECB0A8480881C98ECCBC2FF542"
             {
             "Name" = "8:youtube2music"
             "Arguments" = "8:"
@@ -1394,7 +1471,7 @@
             "Transitive" = "11:FALSE"
             "Target" = "8:_A58F19D66FD24FC29C0CC3CBA78C5AA8"
             "Folder" = "8:_0092DA700C314DAFA16F1910B6B115F5"
-            "WorkingFolder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "WorkingFolder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Icon" = "8:_E701442BCFBB4F638A452411F5A727BB"
             "Feature" = "8:"
             }
@@ -1407,8 +1484,8 @@
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
             "Target" = "8:_A58F19D66FD24FC29C0CC3CBA78C5AA8"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
-            "WorkingFolder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
+            "WorkingFolder" = "8:"
             "Icon" = "8:_E701442BCFBB4F638A452411F5A727BB"
             "Feature" = "8:"
             }
@@ -1816,7 +1893,7 @@
             "SourcePath" = "8:..\\youtube2music\\obj\\Debug\\youtube2music.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_4117997E7C2045B296DF9B0FA3C3DD99"
+            "Folder" = "8:_2688F0800F3E46DC8B58E8BB13A9A1E5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"

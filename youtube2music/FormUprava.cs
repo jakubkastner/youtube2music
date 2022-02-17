@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Threading.Tasks;
+using Microsoft.Web.WebView2.Core;
 
 namespace youtube2music
 {
@@ -45,7 +46,9 @@ namespace youtube2music
 
         private async Task InitWeb()
         {
-            await webViewVideo.EnsureCoreWebView2Async();
+            // set web cache directory
+            var env = await CoreWebView2Environment.CreateAsync(null, App.Directories.Cache);
+            await webViewVideo.EnsureCoreWebView2Async(env);
         }
 
         private async void BrowserNavigate(string url)
